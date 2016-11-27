@@ -1,14 +1,430 @@
-package com.nni.gamevate.pixelwizard.skills.color;
+package com.nni.gamevate.pixelwizard.spells.color;
 
-public class SpellColor {
+/**
+ * 
+ * @author Marcus Garmon 11/27/2016
+ * 
+ * The Spell Color determine the speed that the spell can travel and the
+ * and how long the spell can be cast again. The color also determines any special effects
+ * like maybe a burn, heal, explode.
+ */
 
-	public static final int RED = 1;
-	public static final int WHITE = 2;
-	public static final int BLUE = 3;
-	public static final int YELLOW = 4;
-	public static final int ORANGE = 5;
-	public static final int GREY = 6;
-	public static final int GREEN = 7;
-	public static final int PURPLE = 8;
+public abstract class SpellColor {
 
+   private double _speedMultiplier;
+   private long _cooldown;
+   
+   public SpellColor(){
+      _speedMultiplier = 1.0;
+      _cooldown = 3000;
+      initSpellEffect();
+   }
+   
+   public double getSpeedMultiplier(){
+      return _speedMultiplier;
+   }
+   
+   public void setSpeedMultiplier(double speedMultiplier){
+      _speedMultiplier = speedMultiplier;
+   }
+   
+   public long getCooldown(){
+      return _cooldown;
+   }
+   
+   public void setCooldown(long cooldown){
+      _cooldown = cooldown;
+   }
+   
+   public abstract void initSpellEffect();
+}ltiplier;
+   private long _cooldown;
+   
+   public SpellColor(){
+      _speedMultiplier = 1.0;
+      _cooldown = 3000;
+      initSpellEffect();
+   }
+   
+   public double getSpeedMultiplier(){
+      return _speedMultiplier;
+   }
+   
+   public void setSpeedMultiplier(double speedMultiplier){
+      _speedMultiplier = speedMultiplier;
+   }
+   
+   public long getCooldown(){
+      return _cooldown;
+   }
+   
+   public void setCooldown(long cooldown){
+      _cooldown = cooldown;
+   }
+   
+   public abstract void initSpellEffect();
+}ltiplier;
+   private long _cooldown;
+   
+   public SpellColor(){
+      _speedMultiplier = 1.0;
+      _cooldown = 3000;
+      initSpellEffect();
+   }
+   
+   public double getSpeedMultiplier(){
+      return _speedMultiplier;
+   }
+   
+   public void setSpeedMultiplier(double speedMultiplier){
+      _speedMultiplier = speedMultiplier;
+   }
+   
+   public long getCooldown(){
+      return _cooldown;
+   }
+   
+   public void setCooldown(long cooldown){
+      _cooldown = cooldown;
+   }
+   
+   public abstract void initSpellEffect();
+}ltiplier;
+   private long _cooldown;
+   
+   public SpellColor(){
+      _speedMultiplier = 1.0;
+      _cooldown = 3000;
+      initSpellEffect();
+   }
+   
+   public double getSpeedMultiplier(){
+      return _speedMultiplier;
+   }
+   
+   public void setSpeedMultiplier(double speedMultiplier){
+      _speedMultiplier = speedMultiplier;
+   }
+   
+   public long getCooldown(){
+      return _cooldown;
+   }
+   
+   public void setCooldown(long cooldown){
+      _cooldown = cooldown;
+   }
+   
+   public abstract void initSpellEffect();
+}ltiplier;
+   private long _cooldown;
+   
+   public SpellColor(){
+      _speedMultiplier = 1.0;
+      _cooldown = 3000;
+      initSpellEffect();
+   }
+   
+   public double getSpeedMultiplier(){
+      return _speedMultiplier;
+   }
+   
+   public void setSpeedMultiplier(double speedMultiplier){
+      _speedMultiplier = speedMultiplier;
+   }
+   
+   public long getCooldown(){
+      return _cooldown;
+   }
+   
+   public void setCooldown(long cooldown){
+      _cooldown = cooldown;
+   }
+   
+   public abstract void initSpellEffect();
+}ltiplier;
+   private long _cooldown;
+   
+   public SpellColor(){
+      _speedMultiplier = 1.0;
+      _cooldown = 3000;
+      initSpellEffect();
+   }
+   
+   public double getSpeedMultiplier(){
+      return _speedMultiplier;
+   }
+   
+   public void setSpeedMultiplier(double speedMultiplier){
+      _speedMultiplier = speedMultiplier;
+   }
+   
+   public long getCooldown(){
+      return _cooldown;
+   }
+   
+   public void setCooldown(long cooldown){
+      _cooldown = cooldown;
+   }
+   
+   public abstract void initSpellEffect();
+}ltiplier;
+   private long _cooldown;
+   
+   public SpellColor(){
+      _speedMultiplier = 1.0;
+      _cooldown = 3000;
+      initSpellEffect();
+   }
+   
+   public double getSpeedMultiplier(){
+      return _speedMultiplier;
+   }
+   
+   public void setSpeedMultiplier(double speedMultiplier){
+      _speedMultiplier = speedMultiplier;
+   }
+   
+   public long getCooldown(){
+      return _cooldown;
+   }
+   
+   public void setCooldown(long cooldown){
+      _cooldown = cooldown;
+   }
+   
+   public abstract void initSpellEffect();
+}ltiplier;
+   private long _cooldown;
+   
+   public SpellColor(){
+      _speedMultiplier = 1.0;
+      _cooldown = 3000;
+      initSpellEffect();
+   }
+   
+   public double getSpeedMultiplier(){
+      return _speedMultiplier;
+   }
+   
+   public void setSpeedMultiplier(double speedMultiplier){
+      _speedMultiplier = speedMultiplier;
+   }
+   
+   public long getCooldown(){
+      return _cooldown;
+   }
+   
+   public void setCooldown(long cooldown){
+      _cooldown = cooldown;
+   }
+   
+   public abstract void initSpellEffect();
+}ltiplier;
+   private long _cooldown;
+   
+   public SpellColor(){
+      _speedMultiplier = 1.0;
+      _cooldown = 3000;
+      initSpellEffect();
+   }
+   
+   public double getSpeedMultiplier(){
+      return _speedMultiplier;
+   }
+   
+   public void setSpeedMultiplier(double speedMultiplier){
+      _speedMultiplier = speedMultiplier;
+   }
+   
+   public long getCooldown(){
+      return _cooldown;
+   }
+   
+   public void setCooldown(long cooldown){
+      _cooldown = cooldown;
+   }
+   
+   public abstract void initSpellEffect();
+}ltiplier;
+   private long _cooldown;
+   
+   public SpellColor(){
+      _speedMultiplier = 1.0;
+      _cooldown = 3000;
+      initSpellEffect();
+   }
+   
+   public double getSpeedMultiplier(){
+      return _speedMultiplier;
+   }
+   
+   public void setSpeedMultiplier(double speedMultiplier){
+      _speedMultiplier = speedMultiplier;
+   }
+   
+   public long getCooldown(){
+      return _cooldown;
+   }
+   
+   public void setCooldown(long cooldown){
+      _cooldown = cooldown;
+   }
+   
+   public abstract void initSpellEffect();
+}ltiplier;
+   private long _cooldown;
+   
+   public SpellColor(){
+      _speedMultiplier = 1.0;
+      _cooldown = 3000;
+      initSpellEffect();
+   }
+   
+   public double getSpeedMultiplier(){
+      return _speedMultiplier;
+   }
+   
+   public void setSpeedMultiplier(double speedMultiplier){
+      _speedMultiplier = speedMultiplier;
+   }
+   
+   public long getCooldown(){
+      return _cooldown;
+   }
+   
+   public void setCooldown(long cooldown){
+      _cooldown = cooldown;
+   }
+   
+   public abstract void initSpellEffect();
+}ltiplier;
+   private long _cooldown;
+   
+   public SpellColor(){
+      _speedMultiplier = 1.0;
+      _cooldown = 3000;
+      initSpellEffect();
+   }
+   
+   public double getSpeedMultiplier(){
+      return _speedMultiplier;
+   }
+   
+   public void setSpeedMultiplier(double speedMultiplier){
+      _speedMultiplier = speedMultiplier;
+   }
+   
+   public long getCooldown(){
+      return _cooldown;
+   }
+   
+   public void setCooldown(long cooldown){
+      _cooldown = cooldown;
+   }
+   
+   public abstract void initSpellEffect();
+}ltiplier;
+   private long _cooldown;
+   
+   public SpellColor(){
+      _speedMultiplier = 1.0;
+      _cooldown = 3000;
+      initSpellEffect();
+   }
+   
+   public double getSpeedMultiplier(){
+      return _speedMultiplier;
+   }
+   
+   public void setSpeedMultiplier(double speedMultiplier){
+      _speedMultiplier = speedMultiplier;
+   }
+   
+   public long getCooldown(){
+      return _cooldown;
+   }
+   
+   public void setCooldown(long cooldown){
+      _cooldown = cooldown;
+   }
+   
+   public abstract void initSpellEffect();
+}ltiplier;
+   private long _cooldown;
+   
+   public SpellColor(){
+      _speedMultiplier = 1.0;
+      _cooldown = 3000;
+      initSpellEffect();
+   }
+   
+   public double getSpeedMultiplier(){
+      return _speedMultiplier;
+   }
+   
+   public void setSpeedMultiplier(double speedMultiplier){
+      _speedMultiplier = speedMultiplier;
+   }
+   
+   public long getCooldown(){
+      return _cooldown;
+   }
+   
+   public void setCooldown(long cooldown){
+      _cooldown = cooldown;
+   }
+   
+   public abstract void initSpellEffect();
+}ltiplier;
+   private long _cooldown;
+   
+   public SpellColor(){
+      _speedMultiplier = 1.0;
+      _cooldown = 3000;
+      initSpellEffect();
+   }
+   
+   public double getSpeedMultiplier(){
+      return _speedMultiplier;
+   }
+   
+   public void setSpeedMultiplier(double speedMultiplier){
+      _speedMultiplier = speedMultiplier;
+   }
+   
+   public long getCooldown(){
+      return _cooldown;
+   }
+   
+   public void setCooldown(long cooldown){
+      _cooldown = cooldown;
+   }
+   
+   public abstract void initSpellEffect();
+}ltiplier;
+   private long _cooldown;
+   
+   public SpellColor(){
+      _speedMultiplier = 1.0;
+      _cooldown = 3000;
+      initSpellEffect();
+   }
+   
+   public double getSpeedMultiplier(){
+      return _speedMultiplier;
+   }
+   
+   public void setSpeedMultiplier(double speedMultiplier){
+      _speedMultiplier = speedMultiplier;
+   }
+   
+   public long getCooldown(){
+      return _cooldown;
+   }
+   
+   public void setCooldown(long cooldown){
+      _cooldown = cooldown;
+   }
+   
+   public abstract void initSpellEffect();
 }

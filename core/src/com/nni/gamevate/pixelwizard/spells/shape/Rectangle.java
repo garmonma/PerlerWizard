@@ -1,5 +1,6 @@
-package com.nni.gamevate.pixelwizard.skills.shape;
+package com.nni.gamevate.pixelwizard.spells.shape;
 
 public class Rectangle extends SpellShape {
+
 
 }
