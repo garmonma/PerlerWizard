@@ -1,10 +1,5 @@
 package com.nni.gamevate.pixelwizard.spells.color;
 
-public class Red {
-
-}
-package com.nni.gamevate.pixelwizard.spells.color;
-
 /**
  * 
  * @author Marcus Garmon 11/27/2016
