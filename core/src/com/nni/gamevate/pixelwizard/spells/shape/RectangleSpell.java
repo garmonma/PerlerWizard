@@ -1,6 +1,6 @@
 package com.nni.gamevate.pixelwizard.spells.shape;
 
-public class Rectangle extends SpellShape {
+public class RectangleSpell extends SpellShape {
 
 
 }
