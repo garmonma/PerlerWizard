@@ -8,7 +8,7 @@ public class GameWorld {
 	private Hero _hero;
 	
 	public GameWorld(){
-		_hero = new Hero(800/2 - 64/2, 20, 64, 64);
+		_hero = new Hero(64, 64, 800/2 - 64/2, 20);
 	}
 	
 	public void update(float delta){
