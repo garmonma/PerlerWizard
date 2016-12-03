@@ -1,4 +1,4 @@
-package com.nni.gamevate.pixelwizard.spells.color;
+package com.nni.gamevate.pixelwizard.object.spells.color;
 
 /**
  * 

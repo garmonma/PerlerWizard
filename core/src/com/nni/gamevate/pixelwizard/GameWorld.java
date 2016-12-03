@@ -1,7 +1,7 @@
 package com.nni.gamevate.pixelwizard;
 
 import com.badlogic.gdx.Gdx;
-import com.nni.gamevate.pixelwizard.character.Hero;
+import com.nni.gamevate.pixelwizard.object.character.Hero;
 
 public class GameWorld {
 

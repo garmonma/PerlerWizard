@@ -1,4 +1,4 @@
-package com.nni.gamevate.pixelwizard.spells.shape;
+package com.nni.gamevate.pixelwizard.object.spells.shape;
 
 /**
  * 
