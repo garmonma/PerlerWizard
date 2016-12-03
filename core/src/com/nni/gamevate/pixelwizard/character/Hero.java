@@ -1,90 +1,60 @@
 package com.nni.gamevate.pixelwizard.character;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.math.Vector2;
 
-public class Hero implements Drawable {
+public class Hero {
+	private Vector2 _position;
+
+	private int _width;
+	private int _height;
+
+	public Hero(float x, float y, int width, int height) {
+		_width = width;
+		_height = height;
+		_position = new Vector2(x, y);
+
+	}
+
+	public void update(float delta) {
+		
+		onKeyPress();
+		if (_position.x < 150)
+			_position.x = 150;
+
+		if (_position.x > 650 - 64)
+			_position.x = 650 - 64;
+	}
+
+	public void onKeyPress() {
+		if (Gdx.input.isKeyPressed(Keys.LEFT))
+			_position.x -= 200 * Gdx.graphics.getDeltaTime();
+		if (Gdx.input.isKeyPressed(Keys.RIGHT))
+			_position.x += 200 * Gdx.graphics.getDeltaTime();
+	}
 	
-	public Hero(){
-		
-	}
-	
-	@Override
-	public void draw(Batch batch, float x, float y, float width, float height) {
-		// TODO Auto-generated method stub
+	public void onClick(){
 		
 	}
 
-	@Override
-	public float getLeftWidth() {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean isCasting() {
+		return true;
 	}
 
-	@Override
-	public void setLeftWidth(float leftWidth) {
-		// TODO Auto-generated method stub
-		
+	public float getX() {
+		return _position.x;
 	}
 
-	@Override
-	public float getRightWidth() {
-		// TODO Auto-generated method stub
-		return 0;
+	public float getY() {
+		return _position.y;
 	}
 
-	@Override
-	public void setRightWidth(float rightWidth) {
-		// TODO Auto-generated method stub
-		
+	public int getHeight() {
+		return _height;
 	}
 
-	@Override
-	public float getTopHeight() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getWidth() {
+		return _width;
 	}
-
-	@Override
-	public void setTopHeight(float topHeight) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public float getBottomHeight() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setBottomHeight(float bottomHeight) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public float getMinWidth() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setMinWidth(float minWidth) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public float getMinHeight() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setMinHeight(float minHeight) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

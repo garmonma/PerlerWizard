@@ -2,6 +2,7 @@ package com.nni.gamevate.pixelwizard.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.nni.gamevate.pixelwizard.PixelWizard;
 
 /**
@@ -11,9 +12,12 @@ import com.nni.gamevate.pixelwizard.PixelWizard;
  */
 public class MainMenuScreen extends AbstractScreen {
 
+	private OrthographicCamera _camera;
 	public MainMenuScreen(final PixelWizard pixelWizard) {
 		super(pixelWizard);
 		System.out.println("On Main Menu Screen");
+		_camera = new OrthographicCamera();
+		_camera.setToOrtho(false, 800, 480);
 	}
 
 	@Override

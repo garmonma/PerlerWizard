@@ -16,7 +16,7 @@ public class SplashScreen extends AbstractScreen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		if (Gdx.input.justTouched())
-			getGame().setScreen(new MainMenuScreen(getGame()));
+			getGame().setScreen(new GameScreen(getGame()));
 	}
 
 	@Override

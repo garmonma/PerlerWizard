@@ -13,12 +13,11 @@ public abstract class AbstractScreen implements Screen {
 
 	final PixelWizard _pixelWizard;
 
-	OrthographicCamera _camera;
+	
 
 	public AbstractScreen(final PixelWizard pixelWizard) {
 		_pixelWizard = pixelWizard;
-		_camera = new OrthographicCamera();
-		_camera.setToOrtho(false, 800, 480);
+		
 	}
 
 	@Override

@@ -1,9 +1,12 @@
 package com.nni.gamevate.pixelwizard.spells;
 
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Shape2D;
 import com.nni.gamevate.pixelwizard.spells.color.SpellColor;
 import com.nni.gamevate.pixelwizard.spells.shape.SpellShape;
 
-public class Spell implements SpellInterface {
+public final class Spell implements SpellInterface {
    private static final double BASE_SPEED = 100;
    private static final int DEFAULT_BOUNCE_COUNT = 3;
    private static final int DEFAULT_DAMAGE = 1;
@@ -26,9 +29,12 @@ public class Spell implements SpellInterface {
    
    private long _spellTimer;
    
-   public Spell(SpellColor color, SpellShape shape){
+   private Shape2D _bindingShape;
+   
+   public Spell(float x, float y, int width, int height, SpellColor color, SpellShape shape){
       _color = color;
       _shape = shape;
+      _bindingShape = determineBindingShape(shape.toString());
       
       _speed = BASE_SPEED * _color.getSpeedMultiplier();
       _spellTimer = _color.getCooldown();
@@ -86,5 +92,19 @@ public class Spell implements SpellInterface {
    
    public double getSpellTimer(){
       return _spellTimer;
+   }
+   
+   private Shape2D determineBindingShape(String shapeDefinition){
+	   if(shapeDefinition.equalsIgnoreCase("circle")){
+		   Circle circle = new Circle();
+		   
+		   return circle;
+	   } else if(shapeDefinition.equalsIgnoreCase("rectangle")){
+		   Rectangle rectangle = new Rectangle();
+		   
+		   return rectangle;
+	   }
+	   
+	   return null;
    }
 }
