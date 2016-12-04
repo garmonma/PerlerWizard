@@ -60,9 +60,12 @@ public class GameRenderer {
 		_shapeRenderer.begin(ShapeType.Filled);
 		_shapeRenderer.setColor(Color.WHITE);
 		
-		_shapeRenderer.circle(750, 20, 10);
+		_shapeRenderer.circle(700, 40, 10);
+		_shapeRenderer.circle(800, 40, 10);
 		
 		_shapeRenderer.end();
+		
+		
 		
 		//Drawing hero
 		_shapeRenderer.begin(ShapeType.Line);
@@ -79,7 +82,6 @@ public class GameRenderer {
 		for(Spell spell: _world.getSpells()){
 			Gdx.app.log("Spell", "Drawing");
 			if(spell.getSpellColor().equalsIgnoreCase("red")){
-				
 				_shapeRenderer.setColor(Color.RED);
 			} else if(spell.getSpellColor().equalsIgnoreCase("white")) {
 				Gdx.app.log("Spell", "White");

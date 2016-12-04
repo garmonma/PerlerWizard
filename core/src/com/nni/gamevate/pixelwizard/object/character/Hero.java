@@ -28,6 +28,14 @@ public class Hero extends GameObject {
 			_position.x -= 200 * Gdx.graphics.getDeltaTime();
 		if (Gdx.input.isKeyPressed(Keys.RIGHT))
 			_position.x += 200 * Gdx.graphics.getDeltaTime();
+		
+		if(Gdx.input.getX() == 700 && Gdx.input.getY() == 40){
+			_position.x -= 200 * Gdx.graphics.getDeltaTime();
+		}
+		
+		if(Gdx.input.getX() == 800 && Gdx.input.getY() == 40){
+			_position.x += 200 * Gdx.graphics.getDeltaTime();
+		}
 	}
 	
 	public void onClick(){

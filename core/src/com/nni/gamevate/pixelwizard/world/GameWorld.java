@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.utils.Array;
 import com.nni.gamevate.pixelwizard.object.character.Hero;
+import com.nni.gamevate.pixelwizard.object.enemies.Enemy;
+import com.nni.gamevate.pixelwizard.object.spells.EnemySpell;
 import com.nni.gamevate.pixelwizard.object.spells.Spell;
 import com.nni.gamevate.pixelwizard.object.spells.color.RedSpell;
 import com.nni.gamevate.pixelwizard.object.spells.color.SpellColor;
@@ -15,6 +17,8 @@ public class GameWorld {
 
 	private Hero _hero;
 	private Array<Spell> _spells;
+	private Array<Enemy> _enemies;
+	private Array<EnemySpell> _enemySpells;
 	
 	private String _selectedColor;
 	private String _selectedShape;
@@ -33,7 +37,7 @@ public class GameWorld {
 	public void update(float delta){
 		Gdx.app.log("GameWorld", "update");
 		
-		if(Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.SPACE) ){
+		if(Gdx.input.isKeyPressed(Keys.SPACE) ){
 			_nextSpellColor = GetSpellColor();
 			
 			if(_nextSpellColor != null){
