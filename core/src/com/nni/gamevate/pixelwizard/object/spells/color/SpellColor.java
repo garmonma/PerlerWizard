@@ -16,7 +16,7 @@ public abstract class SpellColor {
    
    public SpellColor(){
       _speedMultiplier = 1.0;
-      _cooldown = 3000;
+      _cooldown = 180;
       initSpellEffect();
    }
    

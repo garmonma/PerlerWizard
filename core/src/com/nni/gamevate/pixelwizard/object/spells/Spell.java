@@ -1,11 +1,15 @@
 package com.nni.gamevate.pixelwizard.object.spells;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.nni.gamevate.pixelwizard.object.GameObject;
+import com.nni.gamevate.pixelwizard.object.spells.color.RedSpell;
 import com.nni.gamevate.pixelwizard.object.spells.color.SpellColor;
+import com.nni.gamevate.pixelwizard.object.spells.color.WhiteSpell;
+import com.nni.gamevate.pixelwizard.object.spells.shape.CircleSpell;
 import com.nni.gamevate.pixelwizard.object.spells.shape.SpellShape;
 
 public final class Spell extends GameObject implements SpellInterface {
@@ -34,6 +38,10 @@ public final class Spell extends GameObject implements SpellInterface {
 	private Shape2D _bindingShape;
 
 	private Vector2 _velocity;
+	
+	private boolean _isEvaporated;
+	
+	private boolean movingUp ;
 
 	public Spell(int width, int height, float x, float y, SpellColor color, SpellShape shape) {
 		super(width, height, x, y);
@@ -50,11 +58,33 @@ public final class Spell extends GameObject implements SpellInterface {
 
 		_bounceCount = DEFAULT_BOUNCE_COUNT;
 		_bounceCounter = _bounceCount;
+		
+		_isEvaporated = false;
+		
+		movingUp = true;
 
 	}
 
 	@Override
 	public void update(float delta) {
+		Gdx.app.log("Spell Timer",  Long.toString(_spellTimer));
+		_spellTimer -= delta;
+		
+		if(_spellTimer <= 0){
+			if(_color instanceof WhiteSpell) 
+				WhiteSpell._onCooldown = false;
+			
+			if(_color instanceof RedSpell) 
+				RedSpell._onCooldown = false;
+		}
+		
+		if(movingUp){
+			_position.y += 200 * Gdx.graphics.getDeltaTime();
+		} else {
+			_position.y -= 200 * Gdx.graphics.getDeltaTime();
+		}
+		
+		
 		if (_position.x < 150) {
 			bounceOffWall("left");
 		}
@@ -65,6 +95,7 @@ public final class Spell extends GameObject implements SpellInterface {
 		
 		if(_position.y > 480){
 			bounceOffWall("top");
+			
 		}
 		
 		if(_position.y < 1){
@@ -84,6 +115,8 @@ public final class Spell extends GameObject implements SpellInterface {
 			_spin = _spin - .1;
 			if (_spin < MIN_SPIN)
 				_spin = MIN_SPIN;
+		} else if(side.equalsIgnoreCase("top")){
+			movingUp = false;
 		}
 	}
 
@@ -95,8 +128,12 @@ public final class Spell extends GameObject implements SpellInterface {
 
 	@Override
 	public void evaporate() {
-		// TODO Auto-generated method stub
+		_isEvaporated = true;
 
+	}
+	
+	public boolean isEvaporated(){
+		return isEvaporated();
 	}
 
 	@Override
@@ -120,6 +157,14 @@ public final class Spell extends GameObject implements SpellInterface {
 	public double getSpellTimer() {
 		return _spellTimer;
 	}
+	
+	public String getSpellColor(){
+		return _color.toString();
+	}
+	
+	public String getSpellShape(){
+		return _shape.toString();
+	}
 
 	private Shape2D determineBindingShape(String shapeDefinition) {
 		if (shapeDefinition.equalsIgnoreCase("circle")) {
@@ -134,4 +179,6 @@ public final class Spell extends GameObject implements SpellInterface {
 
 		return null;
 	}
+	
+	
 }

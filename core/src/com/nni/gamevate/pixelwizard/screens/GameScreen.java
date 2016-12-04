@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.nni.gamevate.pixelwizard.GameRenderer;
-import com.nni.gamevate.pixelwizard.GameWorld;
 import com.nni.gamevate.pixelwizard.PixelWizard;
+import com.nni.gamevate.pixelwizard.world.GameWorld;
 
 /**
  * 

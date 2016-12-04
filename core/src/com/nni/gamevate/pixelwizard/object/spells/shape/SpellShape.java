@@ -14,10 +14,12 @@ public abstract class SpellShape {
    
    private double _dmgMultiplier;
    private double _spinMultiplier;
+  
    
    public SpellShape(){
       _dmgMultiplier = 1.0;
       _spinMultiplier = 1.0;
+      
    }
    
    public double getDmgMultiplier(){

@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.nni.gamevate.pixelwizard.object.spells.Spell;
+import com.nni.gamevate.pixelwizard.world.GameWorld;
 
 public class GameRenderer {
 
@@ -62,6 +64,7 @@ public class GameRenderer {
 		
 		_shapeRenderer.end();
 		
+		//Drawing hero
 		_shapeRenderer.begin(ShapeType.Line);
 		_shapeRenderer.setColor(Color.BLUE);
 		
@@ -70,6 +73,24 @@ public class GameRenderer {
 		
 		_shapeRenderer.end();
 		
+		//Drawing active spells
+		_shapeRenderer.begin(ShapeType.Filled);
 		
+		for(Spell spell: _world.getSpells()){
+			Gdx.app.log("Spell", "Drawing");
+			if(spell.getSpellColor().equalsIgnoreCase("red")){
+				
+				_shapeRenderer.setColor(Color.RED);
+			} else if(spell.getSpellColor().equalsIgnoreCase("white")) {
+				Gdx.app.log("Spell", "White");
+				_shapeRenderer.setColor(Color.WHITE);
+			}
+			
+			if(spell.getSpellShape().equalsIgnoreCase("circle")){
+				_shapeRenderer.circle(spell.getX(), spell.getY(), spell.getHeight() / 2);
+			}
+		}
+	
+		_shapeRenderer.end();
 	}
 }
