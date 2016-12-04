@@ -4,6 +4,17 @@ import com.badlogic.gdx.InputProcessor;
 
 public class InputHandler implements InputProcessor {
 
+	private boolean _dragging;
+	private boolean _moveLeft;
+	private boolean _moveRight;
+
+
+	public InputHandler(){
+		_dragging = false;
+		_moveLeft = false;
+		_moveRight = false;
+	}
+
 	@Override
 	public boolean keyDown(int keycode) {
 		return false;
@@ -21,6 +32,17 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
+		if(screenX == 700 && screenY == 40){
+			_moveLeft = true;
+		}
+
+		if(screenX == 775 && screenY == 40){
+			_moveRight = true;
+		}
+
+		_dragging = true;
+
 		return false;
 	}
 
@@ -31,6 +53,8 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		if(!_dragging) return false;
+
 		return false;
 	}
 

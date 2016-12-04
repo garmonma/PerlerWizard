@@ -14,13 +14,15 @@ public class GameRenderer {
 	private GameWorld _world;
 	private OrthographicCamera _camera;
 	
-	ShapeRenderer _shapeRenderer;
+	private ShapeRenderer _shapeRenderer;
 
 	
 	public GameRenderer(GameWorld world){
 		_world = world;	
 		_camera = new OrthographicCamera();
 		_camera.setToOrtho(false, 800, 480);
+
+
 		
 		_shapeRenderer = new ShapeRenderer();
 		_shapeRenderer.setProjectionMatrix(_camera.combined);
