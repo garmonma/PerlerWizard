@@ -1,6 +1,9 @@
 package com.nni.gamevate.pixelwizard.object.spells.color;
 
+import java.sql.Time;
+
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.TimeUtils;
 
 /**
  * 
@@ -11,12 +14,23 @@ import com.badlogic.gdx.graphics.Color;
  *
  */
 public class WhiteSpell extends SpellColor {
-
-	public static boolean _onCooldown;
+	private static long lastSpell;
 
 	public WhiteSpell() {
-		_onCooldown = true;
 		_color = Color.WHITE;
+		lastSpell = TimeUtils.nanoTime();
+	}
+	
+	private static boolean onCooldown(long cooldown){
+		if(TimeUtils.timeSinceNanos(WhiteSpell.lastSpell) > cooldown){
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public boolean isOnCooldown(long cooldown){
+		return WhiteSpell.onCooldown(cooldown);
 	}
 
 	@Override

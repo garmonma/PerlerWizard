@@ -19,7 +19,7 @@ public abstract class SpellColor {
    
    public SpellColor(){
       _speedMultiplier = 1.0;
-      _cooldown = 180;
+      _cooldown = 3000000000l;
       initSpellEffect();
    }
    
@@ -40,6 +40,8 @@ public abstract class SpellColor {
    }
    
    public abstract void initSpellEffect();
+   
+   public abstract boolean isOnCooldown(long cooldown);
    
    public Color getColor(){
 	   return _color;

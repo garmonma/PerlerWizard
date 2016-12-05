@@ -1,15 +1,18 @@
 package com.nni.gamevate.pixelwizard.utils;
 
 import com.badlogic.gdx.InputProcessor;
+import com.nni.gamevate.pixelwizard.world.GameWorld;
 
 public class InputHandler implements InputProcessor {
 
 	private boolean _dragging;
 	private boolean _moveLeft;
 	private boolean _moveRight;
+	private GameWorld _world;
 
 
-	public InputHandler(){
+	public InputHandler(GameWorld world){
+		_world = world;
 		_dragging = false;
 		_moveLeft = false;
 		_moveRight = false;
@@ -32,18 +35,9 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		_world.castSpell();
 
-		if(screenX == 700 && screenY == 40){
-			_moveLeft = true;
-		}
-
-		if(screenX == 775 && screenY == 40){
-			_moveRight = true;
-		}
-
-		_dragging = true;
-
-		return false;
+		return true;
 	}
 
 	@Override
@@ -54,8 +48,12 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		if(!_dragging) return false;
+		
+		if(pointer == 1){
+			
+		}
 
-		return false;
+		return true;
 	}
 
 	@Override

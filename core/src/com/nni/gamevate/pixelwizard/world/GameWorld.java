@@ -3,6 +3,7 @@ package com.nni.gamevate.pixelwizard.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.pixelwizard.object.character.Hero;
 import com.nni.gamevate.pixelwizard.object.enemies.Enemy;
 import com.nni.gamevate.pixelwizard.object.spells.EnemySpell;
@@ -13,6 +14,7 @@ import com.nni.gamevate.pixelwizard.object.spells.color.WhiteSpell;
 import com.nni.gamevate.pixelwizard.object.spells.shape.CircleSpell;
 import com.nni.gamevate.pixelwizard.object.spells.shape.RectangleSpell;
 import com.nni.gamevate.pixelwizard.object.spells.shape.SpellShape;
+import com.nni.gamevate.pixelwizard.utils.InputHandler;
 
 public class GameWorld {
 
@@ -23,7 +25,9 @@ public class GameWorld {
 	
 	private ShapeSelector _shapeSelector;
 	private ColorSelector _colorSelector;
-
+	private long _lastSpell;
+	
+	private InputHandler _inputHandler;
 	
 	public GameWorld(){
 		_hero = new Hero(64, 64, 800/2 - 64/2, 20);
@@ -34,22 +38,19 @@ public class GameWorld {
 		_shapeSelector = new ShapeSelector();
 		_colorSelector = new ColorSelector();
 		loadSelectors();
+		
+		_inputHandler = new InputHandler(this);
+		Gdx.input.setInputProcessor(_inputHandler);
 	}
 	
 	public void update(float delta){
-		Gdx.app.log("GameWorld", "update");
+		//Gdx.app.log("GameWorld", "update");
 		
-		if(Gdx.input.isKeyPressed(Keys.SPACE) && _spells.size <= 8){
-			if(_colorSelector.getSpellColor() != null){
-				Spell spell = new Spell(16, 16, 
-						_hero.getX(), _hero.getY(), _colorSelector.getSpellColor(), _shapeSelector.getSpellShape());
-				
-				_colorSelector.rotateDown();
-				_shapeSelector.rotateLeft();
-				
-				_spells.add(spell);	
-			}	
-		}
+	//	if(Gdx.input.isKeyPressed(Keys.SPACE) && _spells.size <= 8){
+			castSpell();
+			
+		//}
+		
 		
 		for(Spell spell: _spells){
 			spell.update(delta);
@@ -84,5 +85,25 @@ public class GameWorld {
 		_colorSelector.insert(new RedSpell(), 1);
 		_colorSelector.insert(new WhiteSpell(), 2);
 		_colorSelector.insert(new RedSpell(), 3);
+	}
+	
+	public void castSpell(){
+		// 1.5 second global cooldown;
+		
+		if(TimeUtils.timeSinceNanos(_lastSpell) > 1500000000){	
+			Gdx.app.log("Cooldown", 
+					_colorSelector.getSpellColor().isOnCooldown(_colorSelector.getSpellColor().getCooldown()) + ""); 
+			
+			if(!_colorSelector.getSpellColor().isOnCooldown(_colorSelector.getSpellColor().getCooldown())){	
+				Spell spell = new Spell(16, 16, 
+						_hero.getX(), _hero.getY(), _colorSelector.getSpellColor(), _shapeSelector.getSpellShape());
+				
+				_colorSelector.rotateDown();
+				_shapeSelector.rotateLeft();
+				
+				_spells.add(spell);	
+				_lastSpell = TimeUtils.nanoTime();
+			}	
+		}
 	}
 }

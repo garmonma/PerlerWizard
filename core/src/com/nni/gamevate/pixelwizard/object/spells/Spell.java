@@ -13,7 +13,7 @@ import com.nni.gamevate.pixelwizard.object.spells.shape.CircleSpell;
 import com.nni.gamevate.pixelwizard.object.spells.shape.SpellShape;
 
 public final class Spell extends GameObject implements SpellInterface {
-	private static final double BASE_SPEED = 100;
+	private static final double BASE_SPEED = 200;
 	private static final int DEFAULT_BOUNCE_COUNT = 3;
 	private static final int DEFAULT_DAMAGE = 1;
 	private static final int DEFAULT_SPIN = 0;
@@ -35,8 +35,6 @@ public final class Spell extends GameObject implements SpellInterface {
 
 	private long _spellTimer;
 
-	private Shape2D _bindingShape;
-
 	private Vector2 _velocity;
 	
 	private boolean _isEvaporated;
@@ -48,7 +46,6 @@ public final class Spell extends GameObject implements SpellInterface {
 
 		_color = color;
 		_shape = shape;
-		_bindingShape = determineBindingShape(shape.toString());
 
 		_speed = BASE_SPEED * _color.getSpeedMultiplier();
 		_spellTimer = _color.getCooldown();
@@ -67,21 +64,10 @@ public final class Spell extends GameObject implements SpellInterface {
 
 	@Override
 	public void update(float delta) {
-		Gdx.app.log("Spell Timer",  Long.toString(_spellTimer));
-		_spellTimer -= delta;
-		
-		if(_spellTimer <= 0){
-			if(_color instanceof WhiteSpell) 
-				WhiteSpell._onCooldown = false;
-			
-			if(_color instanceof RedSpell) 
-				RedSpell._onCooldown = false;
-		}
-		
 		if(movingUp){
-			_position.y += 200 * Gdx.graphics.getDeltaTime();
+			_position.y += _speed * Gdx.graphics.getDeltaTime();
 		} else {
-			_position.y -= 200 * Gdx.graphics.getDeltaTime();
+			_position.y -= _speed * Gdx.graphics.getDeltaTime();
 		}
 		
 		
@@ -125,6 +111,11 @@ public final class Spell extends GameObject implements SpellInterface {
 		// TODO Auto-generated method stub
 
 	}
+	
+	public void bounceOffShield(Vector2 shieldPosition){
+		
+		movingUp = true;
+	}
 
 	@Override
 	public void evaporate() {
@@ -137,7 +128,7 @@ public final class Spell extends GameObject implements SpellInterface {
 	}
 
 	@Override
-	public void transfiguration() {
+	public void transfiguration(EnemySpell enemySpell) {
 		// TODO Auto-generated method stub
 
 	}
@@ -165,20 +156,4 @@ public final class Spell extends GameObject implements SpellInterface {
 	public String getSpellShape(){
 		return _shape.toString();
 	}
-
-	private Shape2D determineBindingShape(String shapeDefinition) {
-		if (shapeDefinition.equalsIgnoreCase("circle")) {
-			Circle circle = new Circle();
-
-			return circle;
-		} else if (shapeDefinition.equalsIgnoreCase("rectangle")) {
-			Rectangle rectangle = new Rectangle();
-
-			return rectangle;
-		}
-
-		return null;
-	}
-	
-	
 }

@@ -1,6 +1,7 @@
 package com.nni.gamevate.pixelwizard.object.spells.color;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.TimeUtils;
 
 /**
  * 
@@ -13,21 +14,34 @@ import com.badlogic.gdx.graphics.Color;
  */
 public class RedSpell extends SpellColor {
 
-	public static boolean _onCooldown;
+	private static long lastSpell;
 
 	public RedSpell() {
-		_onCooldown = true;
 		_color = Color.RED;
+		lastSpell = TimeUtils.nanoTime();
 	}
 
 	@Override
 	public void initSpellEffect() {
 		setSpeedMultiplier(1.3);
-		setCooldown(210);
+		setCooldown(4000000000l);
+	}
+	
+	private static boolean onCooldown(long cooldown){
+		if(TimeUtils.timeSinceNanos(RedSpell.lastSpell) > cooldown){
+			return false;
+		}
+		
+		return true;
 	}
 
 	@Override
 	public String toString() {
 		return "red";
+	}
+
+	@Override
+	public boolean isOnCooldown(long cooldown) {
+		return RedSpell.onCooldown(cooldown);
 	}
 }
