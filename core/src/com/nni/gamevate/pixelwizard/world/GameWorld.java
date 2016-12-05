@@ -11,6 +11,7 @@ import com.nni.gamevate.pixelwizard.object.spells.color.RedSpell;
 import com.nni.gamevate.pixelwizard.object.spells.color.SpellColor;
 import com.nni.gamevate.pixelwizard.object.spells.color.WhiteSpell;
 import com.nni.gamevate.pixelwizard.object.spells.shape.CircleSpell;
+import com.nni.gamevate.pixelwizard.object.spells.shape.RectangleSpell;
 import com.nni.gamevate.pixelwizard.object.spells.shape.SpellShape;
 
 public class GameWorld {
@@ -20,29 +21,31 @@ public class GameWorld {
 	private Array<Enemy> _enemies;
 	private Array<EnemySpell> _enemySpells;
 	
-	private String _selectedColor;
-	private String _selectedShape;
-	
-	private SpellShape _nextSpellShape;
-	private SpellColor _nextSpellColor;
+	private ShapeSelector _shapeSelector;
+	private ColorSelector _colorSelector;
+
 	
 	public GameWorld(){
 		_hero = new Hero(64, 64, 800/2 - 64/2, 20);
 		_spells = new Array<Spell>();
+		_enemies = new Array<Enemy>();
+		_enemySpells = new Array<EnemySpell>();
 		
-		_selectedShape = "x";
-		_selectedColor = "white";
+		_shapeSelector = new ShapeSelector();
+		_colorSelector = new ColorSelector();
+		loadSelectors();
 	}
 	
 	public void update(float delta){
 		Gdx.app.log("GameWorld", "update");
 		
-		if(Gdx.input.isKeyPressed(Keys.SPACE) ){
-			_nextSpellColor = GetSpellColor();
-			
-			if(_nextSpellColor != null){
+		if(Gdx.input.isKeyPressed(Keys.SPACE) && _spells.size <= 8){
+			if(_colorSelector.getSpellColor() != null){
 				Spell spell = new Spell(16, 16, 
-						_hero.getX(), _hero.getY(), _nextSpellColor, new CircleSpell());
+						_hero.getX(), _hero.getY(), _colorSelector.getSpellColor(), _shapeSelector.getSpellShape());
+				
+				_colorSelector.rotateDown();
+				_shapeSelector.rotateLeft();
 				
 				_spells.add(spell);	
 			}	
@@ -63,25 +66,23 @@ public class GameWorld {
 		return _spells;
 	}
 	
-	public SpellColor GetSpellColor(){
-		if(_selectedColor.equalsIgnoreCase("white")){
-			if(!WhiteSpell._onCooldown)
-				return new WhiteSpell();
-		} 
-		
-		if(_selectedColor.equalsIgnoreCase("red")){
-			if(!RedSpell._onCooldown)
-				return new RedSpell();
-		} 
-		
-		return null;
+	public ShapeSelector getShapeSelector(){
+		return _shapeSelector;
 	}
 	
-	public void setSelectedShape(String selectedShape){
-		_selectedShape = selectedShape;
+	public ColorSelector getColorSelector(){
+		return _colorSelector;
 	}
 	
-	public void setSelectedColor(String selectedColor){
-		_selectedColor = selectedColor;
+	private void loadSelectors(){
+		_shapeSelector.insert(new CircleSpell(), 0);
+		_shapeSelector.insert(new RectangleSpell(), 1);
+		_shapeSelector.insert(new CircleSpell(), 2);
+		_shapeSelector.insert(new RectangleSpell(), 3);
+		
+		_colorSelector.insert(new WhiteSpell(), 0);
+		_colorSelector.insert(new RedSpell(), 1);
+		_colorSelector.insert(new WhiteSpell(), 2);
+		_colorSelector.insert(new RedSpell(), 3);
 	}
 }

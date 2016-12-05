@@ -1,5 +1,7 @@
 package com.nni.gamevate.pixelwizard.object.spells.color;
 
+import com.badlogic.gdx.graphics.Color;
+
 /**
  * 
  * @author Marcus Garmon
@@ -13,8 +15,8 @@ public class WhiteSpell extends SpellColor {
 	public static boolean _onCooldown;
 
 	public WhiteSpell() {
-
 		_onCooldown = true;
+		_color = Color.WHITE;
 	}
 
 	@Override

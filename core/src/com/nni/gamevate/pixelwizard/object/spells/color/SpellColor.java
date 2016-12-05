@@ -1,5 +1,7 @@
 package com.nni.gamevate.pixelwizard.object.spells.color;
 
+import com.badlogic.gdx.graphics.Color;
+
 /**
  * 
  * @author Marcus Garmon 11/27/2016
@@ -13,6 +15,7 @@ public abstract class SpellColor {
 
    private double _speedMultiplier;
    private long _cooldown;
+   protected Color _color;
    
    public SpellColor(){
       _speedMultiplier = 1.0;
@@ -37,4 +40,8 @@ public abstract class SpellColor {
    }
    
    public abstract void initSpellEffect();
+   
+   public Color getColor(){
+	   return _color;
+   }
 }

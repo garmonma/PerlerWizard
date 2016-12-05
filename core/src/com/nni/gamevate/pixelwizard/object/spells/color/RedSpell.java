@@ -1,5 +1,7 @@
 package com.nni.gamevate.pixelwizard.object.spells.color;
 
+import com.badlogic.gdx.graphics.Color;
+
 /**
  * 
  * @author Marcus Garmon 11/27/2016
@@ -15,6 +17,7 @@ public class RedSpell extends SpellColor {
 
 	public RedSpell() {
 		_onCooldown = true;
+		_color = Color.RED;
 	}
 
 	@Override
