@@ -144,4 +144,9 @@ public class GameRenderer {
 
 		_shapeRenderer.end();
 	}
+
+	public OrthographicCamera getCamera() {
+		// TODO Auto-generated method stub
+		return _camera;
+	}
 }

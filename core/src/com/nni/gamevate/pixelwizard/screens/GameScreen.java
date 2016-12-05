@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.nni.gamevate.pixelwizard.GameRenderer;
 import com.nni.gamevate.pixelwizard.PixelWizard;
+import com.nni.gamevate.pixelwizard.utils.InputHandler;
 import com.nni.gamevate.pixelwizard.world.GameWorld;
 
 /**
@@ -26,6 +27,7 @@ public class GameScreen extends AbstractScreen {
 		
 		_world = new  GameWorld();
 		_renderer = new GameRenderer(_world);
+		Gdx.input.setInputProcessor(new InputHandler(_world, _renderer.getCamera()));
 	}
 	
 	@Override
@@ -34,7 +36,7 @@ public class GameScreen extends AbstractScreen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		_world.update(delta);
-		_renderer.render();
+		_renderer.render();	
 	}
 		
 	@Override
