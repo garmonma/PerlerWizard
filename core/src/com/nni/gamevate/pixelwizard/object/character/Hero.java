@@ -32,7 +32,7 @@ public class Hero extends GameObject {
 		}
 
 		if (getX() > 650 - 32){
-			_position.x = 650 - 32;
+			_position.x = 650 - _width;
 			
 		}
 		

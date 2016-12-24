@@ -12,8 +12,8 @@ package com.nni.gamevate.pixelwizard.object.spells.shape;
 
 public abstract class SpellShape {
    
-   private double _dmgMultiplier;
-   private double _spinMultiplier;
+   protected double _dmgMultiplier;
+   protected double _spinMultiplier;
   
    
    public SpellShape(){

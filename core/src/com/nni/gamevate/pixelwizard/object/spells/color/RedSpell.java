@@ -23,7 +23,7 @@ public class RedSpell extends SpellColor {
 
 	@Override
 	public void initSpellEffect() {
-		setSpeedMultiplier(1.3);
+		setSpeedMultiplier(1.3f);
 		setCooldown(3000000000l);
 	}
 	

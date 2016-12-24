@@ -3,7 +3,6 @@ package com.nni.gamevate.pixelwizard.world;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.pixelwizard.levelloader.Level;
@@ -53,7 +52,6 @@ public class GameWorld {
 	}
 	
 	public void update(float delta){
-
 		for(Spell spell: _spells){
 			if(spell.isEvaporated()){
 				Gdx.app.log("Spell Evaporate", "Spell Evaporated!");
@@ -64,25 +62,26 @@ public class GameWorld {
 		}
 		
 		for(Enemy enemy: _enemies){
-			enemy.update(delta);
-				
 			for(Spell spell: _spells){
 				if(spell.collided(enemy)){
-					spell.bounceOffEnemy();
+					spell.bounceOffEnemy(enemy);
 					
 					if(enemy.dead(spell.getDmg())){
 						removeEnemy(enemy);
 					}
 				}
 			}
+			
+			enemy.update(delta);
 		}
 		
-		_hero.update(delta);
 		for(Spell spell: _spells){
 			if(spell.collided(_hero.getShield())){
-				spell.bounceOffShield();
+				spell.bounceOffShield(_hero.getShield());
 			}
 		}
+		
+		_hero.update(delta);	
 	}
 	
 	public void castSpell(){
@@ -93,8 +92,10 @@ public class GameWorld {
 			if(!_colorSelector.getSpellColor()
 					.isOnCooldown(_colorSelector.getSpellColor().getCooldown())){	
 				Spell spell = new Spell(16, 16, 
-						_hero.getX() + _hero.getWidth() / 2, _hero.getY() + _hero.getHeight() + 10, 
-						_colorSelector.getSpellColor(), _shapeSelector.getSpellShape());
+						_hero.getShield().getX() + _hero.getShield().getWidth() / 2, 
+						_hero.getShield().getY() + _hero.getShield().getHeight() + 10, 
+						_colorSelector.getSpellColor(),
+						_shapeSelector.getSpellShape());
 				
 				_colorSelector.rotateDown();
 				_shapeSelector.rotateLeft();

@@ -13,21 +13,21 @@ import com.badlogic.gdx.graphics.Color;
 
 public abstract class SpellColor {
 
-   private double _speedMultiplier;
+   private float _speedMultiplier;
    private long _cooldown;
    protected Color _color;
    
    public SpellColor(){
-      _speedMultiplier = 1.0;
+      _speedMultiplier = 1.0f;
       _cooldown = 3000000000l;
       initSpellEffect();
    }
    
-   public double getSpeedMultiplier(){
+   public float getSpeedMultiplier(){
       return _speedMultiplier;
    }
    
-   public void setSpeedMultiplier(double speedMultiplier){
+   public void setSpeedMultiplier(float speedMultiplier){
       _speedMultiplier = speedMultiplier;
    }
    
