@@ -3,24 +3,46 @@ package com.nni.gamevate.pixelwizard.object.character;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
+import com.nni.gamevate.pixelwizard.object.Collidable;
 import com.nni.gamevate.pixelwizard.object.GameObject;
 
 public class Hero extends GameObject {
+	
+	private Shield _shield;
 
 	public Hero(int width, int height, float x, float y) {
 		super(width, height, x, y);
 
+	}
+	
+	public void setShield(Shield shield){
+		_shield = shield;
+	}
+	
+	public Shield getShield(){
+		return _shield;
 	}
 
 	@Override
 	public void update(float delta) {
 		
 		onKeyPress();
-		if (getX() < 150)
+		if (getX() < 150){
 			_position.x = 150;
+		}
 
-		if (getX() > 650 - 64)
-			_position.x = 650 - 64;
+		if (getX() > 650 - 32){
+			_position.x = 650 - 32;
+			
+		}
+		
+		_shield.setX(_position.x - 5);
+	}
+	
+	@Override
+	public boolean collided(Collidable object) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	public void onKeyPress() {
@@ -45,4 +67,6 @@ public class Hero extends GameObject {
 	public boolean isCasting() {
 		return true;
 	}
+
+	
 }

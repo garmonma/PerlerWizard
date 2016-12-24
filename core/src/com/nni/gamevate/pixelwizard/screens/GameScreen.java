@@ -13,9 +13,7 @@ import com.nni.gamevate.pixelwizard.utils.InputHandler;
 import com.nni.gamevate.pixelwizard.world.GameWorld;
 
 /**
- * 
  * @author Marcus Garmon
- *
  */
 public class GameScreen extends AbstractScreen {
 	private GameWorld _world;

@@ -1,10 +1,7 @@
 package com.nni.gamevate.pixelwizard.utils;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.nni.gamevate.pixelwizard.world.GameWorld;
 
@@ -46,29 +43,33 @@ public class InputHandler implements InputProcessor {
 
 		if(_touchCords.x > 54 && _touchCords.x < 88
 				&& _touchCords.y > 20 && _touchCords.y < 70){
-			if( _world.getSpells().size <= 8)
+			//if( _world.getSpells().size <= 8)
 				_world.castSpell();
 	
 			return true;
 		}
 
 		// TODO dragging shapes
-		if(true){
+		if((_touchCords.x > 20 && _touchCords.x < 54
+				&& _touchCords.y > 20 && _touchCords.y < 70)
+			|| (_touchCords.x > 88 && _touchCords.x < 120 
+					&& _touchCords.y > 20 && _touchCords.y < 70)){
 			_dragging = true;
 			return true;
 		}
 
 		// TODO dragging colors
-		if(true){
+		if(_touchCords.y > 54 && _touchCords.y < 150 
+				&& _touchCords.x > 54 && _touchCords.x < 88){
 			_dragging = true;
 			return true;
 		}
 
 		// TODO dragging analog
-		if(true){
-			_dragging = true;
-			return true;
-		}
+//		if(true){
+//			_dragging = true;
+//			return true;
+//		}
 
 		return false;
 	}
@@ -89,9 +90,15 @@ public class InputHandler implements InputProcessor {
 			return false;
 
 		// TODO dragging color
-		if(true){
+		if(_touchCords.x > 54 && _touchCords.x < 88
+				&& _touchCords.y < 120){
+			_world.getColorSelector().rotateDown();
+			_dragging = false;
 			return true;
-		} else if(true) {
+		} else if(_touchCords.x > 54 && _touchCords.x < 88
+				&& _touchCords.y > 120) {
+			_world.getColorSelector().rotateUp();
+			_dragging = false;
 			return true;
 		}
 

@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.TimeUtils;
  */
 public class RedSpell extends SpellColor {
 
-	private static long lastSpell;
+	public static long lastSpell;
 
 	public RedSpell() {
 		_color = Color.RED;
@@ -24,7 +24,7 @@ public class RedSpell extends SpellColor {
 	@Override
 	public void initSpellEffect() {
 		setSpeedMultiplier(1.3);
-		setCooldown(4000000000l);
+		setCooldown(3000000000l);
 	}
 	
 	private static boolean onCooldown(long cooldown){
@@ -44,4 +44,11 @@ public class RedSpell extends SpellColor {
 	public boolean isOnCooldown(long cooldown) {
 		return RedSpell.onCooldown(cooldown);
 	}
+
+	@Override
+	public void reset() {
+		RedSpell.lastSpell = TimeUtils.nanoTime();	
+	}
+	
+	
 }

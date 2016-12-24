@@ -1,15 +1,14 @@
 package com.nni.gamevate.pixelwizard.object.spells;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.nni.gamevate.pixelwizard.object.Collidable;
 import com.nni.gamevate.pixelwizard.object.GameObject;
-import com.nni.gamevate.pixelwizard.object.spells.color.RedSpell;
+import com.nni.gamevate.pixelwizard.object.character.Hero;
+import com.nni.gamevate.pixelwizard.object.character.Shield;
+import com.nni.gamevate.pixelwizard.object.enemies.Enemy;
 import com.nni.gamevate.pixelwizard.object.spells.color.SpellColor;
-import com.nni.gamevate.pixelwizard.object.spells.color.WhiteSpell;
-import com.nni.gamevate.pixelwizard.object.spells.shape.CircleSpell;
 import com.nni.gamevate.pixelwizard.object.spells.shape.SpellShape;
 
 public final class Spell extends GameObject implements SpellInterface {
@@ -21,50 +20,66 @@ public final class Spell extends GameObject implements SpellInterface {
 	private static final int MIN_SPIN = -1;
 
 	private SpellColor _color;
-
 	private SpellShape _shape;
-
 	private double _speed;
-
 	private double _dmg;
-
 	private double _spin;
-
 	private int _bounceCount;
 	private int _bounceCounter;
-
 	private long _spellTimer;
-
-	private Vector2 _velocity;
-	
 	private boolean _isEvaporated;
+	private boolean _movingUp ;
 	
-	private boolean movingUp ;
+	private Vector2 _velocity;
+	private Vector2 _direction;
 
 	public Spell(int width, int height, float x, float y, SpellColor color, SpellShape shape) {
 		super(width, height, x, y);
-
 		_color = color;
 		_shape = shape;
-
 		_speed = BASE_SPEED * _color.getSpeedMultiplier();
 		_spellTimer = _color.getCooldown();
-
 		_dmg = DEFAULT_DAMAGE * _shape.getDmgMultiplier();
 		_spin = DEFAULT_SPIN;
-
 		_bounceCount = DEFAULT_BOUNCE_COUNT;
 		_bounceCounter = _bounceCount;
-		
 		_isEvaporated = false;
+		_movingUp = true;
 		
-		movingUp = true;
+	}
+	
+	@Override
+	public boolean collided(Collidable object) {
+		if(object instanceof Enemy){
+			if(getX() >= ((Enemy) object).getX() 
+					&& getX()  <= ((Enemy) object).getWidth() + ((Enemy) object).getX() 
+					&& getY() >= ((Enemy) object).getY()
+					&& getY() <= ((Enemy) object).getHeight() + ((Enemy) object).getY()
+					){
+				
+				Gdx.app.log("Spell Collision", "Collided with enemy!");				
+				return true;	
+			}
+		}
+		
+		if(object instanceof Shield){
+			if(getX() >= ((Shield) object).getX() 
+					&& getX() <= ((Shield) object).getWidth() + ((Shield) object).getX() 
+					&& getY() >= ((Shield) object).getY()
+					&& getY() <= ((Shield) object).getHeight() + ((Shield) object).getY()
+					){
+				
+				Gdx.app.log("Spell Collision", "Collided with Shield!");				
+				return true;	
+			}
+		}
 
+		return false;
 	}
 
 	@Override
 	public void update(float delta) {
-		if(movingUp){
+		if(_movingUp){
 			_position.y += _speed * Gdx.graphics.getDeltaTime();
 		} else {
 			_position.y -= _speed * Gdx.graphics.getDeltaTime();
@@ -80,8 +95,7 @@ public final class Spell extends GameObject implements SpellInterface {
 		}
 		
 		if(_position.y > 480){
-			bounceOffWall("top");
-			
+			bounceOffWall("top");		
 		}
 		
 		if(_position.y < 1){
@@ -91,6 +105,10 @@ public final class Spell extends GameObject implements SpellInterface {
 
 	@Override
 	public void bounceOffWall(String side) {
+		
+		if(_bounceCounter-- == 0)
+			evaporate();
+		
 
 		// Side can be left, right or center when bouncing off an object.
 		if (side.equalsIgnoreCase("left")) {
@@ -102,19 +120,30 @@ public final class Spell extends GameObject implements SpellInterface {
 			if (_spin < MIN_SPIN)
 				_spin = MIN_SPIN;
 		} else if(side.equalsIgnoreCase("top")){
-			movingUp = false;
+			_movingUp = false;
 		}
 	}
 
 	@Override
-	public void bounceOffEnemy(String side, String enemy) {
-		// TODO Auto-generated method stub
+	public void bounceOffEnemy() {
+		
+		if(_bounceCounter-- == 0)
+			evaporate();
+		
+		if(_movingUp){
+			_movingUp = false;
+		} else {
+			_movingUp = true;
+		}
 
 	}
 	
-	public void bounceOffShield(Vector2 shieldPosition){
+	@Override
+	public void bounceOffShield(){
+		if(_bounceCounter-- == 0)
+			evaporate();
 		
-		movingUp = true;
+		_movingUp = true;
 	}
 
 	@Override
@@ -124,7 +153,7 @@ public final class Spell extends GameObject implements SpellInterface {
 	}
 	
 	public boolean isEvaporated(){
-		return isEvaporated();
+		return _isEvaporated;
 	}
 
 	@Override
@@ -156,4 +185,6 @@ public final class Spell extends GameObject implements SpellInterface {
 	public String getSpellShape(){
 		return _shape.toString();
 	}
+
+
 }

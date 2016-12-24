@@ -1,7 +1,5 @@
 package com.nni.gamevate.pixelwizard.object.spells.color;
 
-import java.sql.Time;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.TimeUtils;
 
@@ -41,5 +39,11 @@ public class WhiteSpell extends SpellColor {
 	@Override
 	public String toString() {
 		return "white";
+	}
+
+	@Override
+	public void reset() {
+		WhiteSpell.lastSpell = TimeUtils.nanoTime();
+		
 	}
 }

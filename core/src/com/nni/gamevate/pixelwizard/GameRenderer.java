@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.nni.gamevate.pixelwizard.object.enemies.Enemy;
 import com.nni.gamevate.pixelwizard.object.spells.Spell;
 import com.nni.gamevate.pixelwizard.world.GameWorld;
 
@@ -39,6 +40,7 @@ public class GameRenderer {
 		drawSkillBar();
 		drawAnalogControl();
 		drawHero();
+		drawEnemies();
 		drawSpells();
 		
 	}
@@ -51,8 +53,27 @@ public class GameRenderer {
 		_shapeRenderer.rect(_world.getHero().getX(), _world.getHero().getY(),
 				_world.getHero().getWidth(), _world.getHero().getHeight());
 		
+		_shapeRenderer.rect(_world.getHero().getShield().getX(), _world.getHero().getShield().getY(),
+				_world.getHero().getShield().getWidth(), _world.getHero().getShield().getHeight());
+		
+		
 		_shapeRenderer.end();
 	}
+	
+	private void drawEnemies(){
+		_shapeRenderer.begin(ShapeType.Line);
+		_shapeRenderer.setColor(Color.RED);
+		for(Enemy enemy: _world.getEnemies()){
+			_shapeRenderer.rect(enemy.getX(), enemy.getY(), 
+					enemy.getWidth(), enemy.getHeight());
+			
+			_shapeRenderer.rect(enemy.getCollisionBounds().x, enemy.getCollisionBounds().y, 
+					enemy.getCollisionBounds().width, enemy.getCollisionBounds().height);
+		}
+		
+		_shapeRenderer.end();
+	}
+	
 	
 	private void drawGameBounds(){
 		_shapeRenderer.begin(ShapeType.Filled);

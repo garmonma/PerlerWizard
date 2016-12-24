@@ -2,7 +2,7 @@ package com.nni.gamevate.pixelwizard.object;
 
 import com.badlogic.gdx.math.Vector2;
 
-public abstract class GameObject {
+public abstract class GameObject implements Collidable {
 
 	protected int _width;
 	protected int _height;

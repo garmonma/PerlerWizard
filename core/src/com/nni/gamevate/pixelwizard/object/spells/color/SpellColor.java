@@ -43,6 +43,8 @@ public abstract class SpellColor {
    
    public abstract boolean isOnCooldown(long cooldown);
    
+   public abstract void reset();
+	   
    public Color getColor(){
 	   return _color;
    }

@@ -1,6 +1,6 @@
 package com.nni.gamevate.pixelwizard.object.spells;
 
-import com.badlogic.gdx.math.Vector2;
+import com.nni.gamevate.pixelwizard.object.Collidable;
 import com.nni.gamevate.pixelwizard.object.GameObject;
 
 public class EnemySpell extends GameObject implements SpellInterface {
@@ -16,7 +16,7 @@ public class EnemySpell extends GameObject implements SpellInterface {
 	}
 
 	@Override
-	public void bounceOffEnemy(String side, String enemy) {
+	public void bounceOffEnemy() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -34,7 +34,7 @@ public class EnemySpell extends GameObject implements SpellInterface {
 	}
 
 	@Override
-	public void bounceOffShield(Vector2 shieldPosition) {
+	public void bounceOffShield() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -43,5 +43,11 @@ public class EnemySpell extends GameObject implements SpellInterface {
 	public void transfiguration(EnemySpell enemySpell) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean collided(Collidable object) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
