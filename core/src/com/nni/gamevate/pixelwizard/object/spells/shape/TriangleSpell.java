@@ -6,31 +6,11 @@ import com.nni.gamevate.pixelwizard.object.enemies.Enemy;
 import com.nni.gamevate.pixelwizard.object.spells.Spell;
 import com.nni.gamevate.pixelwizard.object.walls.Wall;
 
-public class CircleSpell extends SpellShape{
-	
-	
-	
-	public CircleSpell(){
-		
-	}
-		
-	@Override
-	public String toString() {
-		return "circle";
-	}
+public class TriangleSpell extends SpellShape {
 
+	@Override
 	protected void bounceOffShield(Spell spell, Shield shield) {
-		if (spell.getX() <= shield.getX() + ((shield.getWidth() / 3) * 1)) {
-			// bounceRight(); angle = 45 degrees;
-			_bounceAngle = 45;
-		} else if (spell.getX() <= shield.getX() + ((shield.getWidth() / 3) * 2)) {
-			// bounceStraight angle 90 degrees;
-			_bounceAngle = 90;
-		} else if (spell.getX() <= shield.getX() + ((shield.getWidth() / 3) * 3)) {
-			// bounceLeft() angle = 135 degrees;
-			_bounceAngle = 135;
-		}// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub
 		
 	}
 
@@ -51,4 +31,5 @@ public class CircleSpell extends SpellShape{
 		// TODO Auto-generated method stub
 		
 	}
+
 }

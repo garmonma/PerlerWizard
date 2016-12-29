@@ -64,7 +64,6 @@ public class GameWorld {
 		for(Enemy enemy: _enemies){
 			for(Spell spell: _spells){
 				if(spell.collided(enemy)){
-					spell.bounceOffEnemy(enemy);
 					
 					if(enemy.dead(spell.getDmg())){
 						removeEnemy(enemy);
@@ -77,7 +76,7 @@ public class GameWorld {
 		
 		for(Spell spell: _spells){
 			if(spell.collided(_hero.getShield())){
-				spell.bounceOffShield(_hero.getShield());
+				
 			}
 		}
 		
