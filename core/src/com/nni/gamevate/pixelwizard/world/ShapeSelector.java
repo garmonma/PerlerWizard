@@ -2,6 +2,10 @@ package com.nni.gamevate.pixelwizard.world;
 
 import com.nni.gamevate.pixelwizard.object.spells.shape.SpellShape;
 
+/**
+ * @author Marcus Garmon
+ * @date Dec 29, 2016
+ */
 public class ShapeSelector {
 	
 	private SpellShape[] _spellShapes;

@@ -5,6 +5,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.nni.gamevate.pixelwizard.world.GameWorld;
 
+/**
+ * 
+ * @author Marcus Garmon 12/29/2016
+ *
+ */
 public class InputHandler implements InputProcessor {
 
 	private boolean _dragging;

@@ -3,6 +3,11 @@ package com.nni.gamevate.pixelwizard.object.character;
 import com.nni.gamevate.pixelwizard.object.Collidable;
 import com.nni.gamevate.pixelwizard.object.GameObject;
 
+/**
+ * 
+ * @author Marcus Garmon 11/27/2016
+ *
+ */
 public class Shield extends GameObject {
 
 	public Shield(int width, int height, float x, float y) {

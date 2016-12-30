@@ -6,7 +6,7 @@ import com.nni.gamevate.pixelwizard.PixelWizard;
 
 /**
  * 
- * @author Marcus Garmon
+ * @author Marcus Garmon 12/29/2016
  *
  */
 public abstract class AbstractScreen implements Screen {

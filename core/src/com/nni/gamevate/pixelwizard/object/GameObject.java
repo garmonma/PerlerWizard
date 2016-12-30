@@ -2,6 +2,11 @@ package com.nni.gamevate.pixelwizard.object;
 
 import com.badlogic.gdx.math.Vector2;
 
+
+/**
+ * @author Marcus Garmon
+ * @date Dec 29, 2016
+ */
 public abstract class GameObject implements Collidable {
 
 	protected int _width;

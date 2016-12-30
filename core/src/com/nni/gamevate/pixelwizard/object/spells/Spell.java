@@ -6,6 +6,11 @@ import com.nni.gamevate.pixelwizard.object.GameObject;
 import com.nni.gamevate.pixelwizard.object.spells.color.SpellColor;
 import com.nni.gamevate.pixelwizard.object.spells.shape.SpellShape;
 
+
+/**
+ * @author Marcus Garmon
+ * @date Dec 29, 2016
+ */
 public final class Spell extends GameObject implements Castable {
 	private static final float BASE_SPEED = 200;
 	private static final int DEFAULT_BOUNCE_COUNT = 3;

@@ -6,6 +6,11 @@ import com.nni.gamevate.pixelwizard.object.enemies.Enemy;
 import com.nni.gamevate.pixelwizard.object.spells.Spell;
 import com.nni.gamevate.pixelwizard.object.walls.Wall;
 
+/**
+ * 
+ * @author Marcus Garmon 12/29/2016
+ *
+ */
 public class RectangleSpell extends SpellShape {
 
 

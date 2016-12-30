@@ -2,6 +2,11 @@ package com.nni.gamevate.pixelwizard.levelloader;
 
 import java.util.List;
 
+
+/**
+ * @author Marcus Garmon
+ * @date Dec 29, 2016
+ */
 public class Wave {
 
 	private List<Row> rows;

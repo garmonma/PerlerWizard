@@ -3,6 +3,11 @@ package com.nni.gamevate.pixelwizard.levelloader;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * @author Marcus Garmon
+ * @date Dec 29, 2016
+ */
 public class Level {
 	
 	private List<Wave> waves = new ArrayList<Wave>();

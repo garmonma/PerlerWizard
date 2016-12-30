@@ -10,6 +10,11 @@ import com.nni.gamevate.pixelwizard.object.enemies.Enemy;
 import com.nni.gamevate.pixelwizard.object.spells.Spell;
 import com.nni.gamevate.pixelwizard.world.GameWorld;
 
+
+/**
+ * @author Marcus Garmon
+ * @date Dec 29, 2016
+ */
 public class GameRenderer {
 
 	private GameWorld _world;

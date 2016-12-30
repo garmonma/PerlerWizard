@@ -9,7 +9,7 @@ import com.nni.gamevate.pixelwizard.object.walls.Wall;
 
 /**
  * 
- * @author Marcus Garmon
+ * @author Marcus Garmon 12/29/2016
  *
  *         The Spell shape determines the damage of the spell and the spin of
  *         the spell. When a spell bounces, the spin(positive to the right,

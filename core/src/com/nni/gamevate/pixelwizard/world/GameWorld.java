@@ -20,6 +20,10 @@ import com.nni.gamevate.pixelwizard.object.spells.shape.CircleSpell;
 import com.nni.gamevate.pixelwizard.object.spells.shape.RectangleSpell;
 import com.nni.gamevate.pixelwizard.object.walls.Wall;
 
+/**
+ * @author Marcus Garmon
+ * @date Dec 29, 2016
+ */
 public class GameWorld {
 
 	private Hero _hero;

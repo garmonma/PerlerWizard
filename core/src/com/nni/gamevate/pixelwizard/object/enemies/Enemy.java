@@ -4,8 +4,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.nni.gamevate.pixelwizard.object.Collidable;
 import com.nni.gamevate.pixelwizard.object.GameObject;
 
+
+/**
+ * @author Marcus Garmon
+ * @date Dec 29, 2016
+ */
 public class Enemy extends GameObject{
-	
 	
 	public enum EnemyType{
 		GoblinInitiate(3, 1.0),

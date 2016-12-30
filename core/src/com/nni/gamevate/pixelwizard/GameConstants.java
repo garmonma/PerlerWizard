@@ -1,5 +1,10 @@
 package com.nni.gamevate.pixelwizard;
 
+
+/**
+ * @author Marcus Garmon
+ * @date Dec 29, 2016
+ */
 public class GameConstants {
 
 	public static final int LEFT_WALL = 150;

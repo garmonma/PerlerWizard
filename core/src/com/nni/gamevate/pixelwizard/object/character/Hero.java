@@ -6,6 +6,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.nni.gamevate.pixelwizard.object.Collidable;
 import com.nni.gamevate.pixelwizard.object.GameObject;
 
+/**
+ * 
+ * @author Marcus Garmon 11/27/2016
+ *
+ */
 public class Hero extends GameObject {
 	
 	private Shield _shield;

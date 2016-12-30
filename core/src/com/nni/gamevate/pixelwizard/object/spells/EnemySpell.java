@@ -3,6 +3,11 @@ package com.nni.gamevate.pixelwizard.object.spells;
 import com.nni.gamevate.pixelwizard.object.Collidable;
 import com.nni.gamevate.pixelwizard.object.GameObject;
 
+
+/**
+ * @author Marcus Garmon
+ * @date Dec 29, 2016
+ */
 public class EnemySpell extends GameObject implements Castable {
 
 	public EnemySpell(int width, int height, float x, float y) {

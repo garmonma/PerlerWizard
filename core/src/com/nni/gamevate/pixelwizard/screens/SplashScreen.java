@@ -4,6 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.nni.gamevate.pixelwizard.PixelWizard;
 
+/** 
+ * 
+ * @author Marcus Garmon 12/29/2016
+ *
+ */
 public class SplashScreen extends AbstractScreen {
 
 	public SplashScreen(final PixelWizard pixelWizard) {

@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 /**
  * 
- * @author Marcus Garmon
+ * @author Marcus Garmon 11/27/2016
  * 
  *         The most basic spell color. It travels at a normal speed and has a
  *         cooldown of 3 seconds.

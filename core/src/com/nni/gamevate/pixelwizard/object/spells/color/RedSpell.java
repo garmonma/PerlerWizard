@@ -17,6 +17,7 @@ public class RedSpell extends SpellColor {
 	public static long lastSpell;
 
 	public RedSpell() {
+		super();
 		_color = Color.RED;
 		lastSpell = TimeUtils.nanoTime();
 	}
@@ -26,12 +27,12 @@ public class RedSpell extends SpellColor {
 		setSpeedMultiplier(1.3f);
 		setCooldown(3000000000l);
 	}
-	
-	private static boolean onCooldown(long cooldown){
-		if(TimeUtils.timeSinceNanos(RedSpell.lastSpell) > cooldown){
+
+	private static boolean onCooldown(long cooldown) {
+		if (TimeUtils.timeSinceNanos(RedSpell.lastSpell) > cooldown) {
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -47,8 +48,6 @@ public class RedSpell extends SpellColor {
 
 	@Override
 	public void reset() {
-		RedSpell.lastSpell = TimeUtils.nanoTime();	
+		RedSpell.lastSpell = TimeUtils.nanoTime();
 	}
-	
-	
 }

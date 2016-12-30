@@ -6,6 +6,10 @@ import com.nni.gamevate.pixelwizard.object.enemies.Enemy;
 import com.nni.gamevate.pixelwizard.object.spells.Spell;
 import com.nni.gamevate.pixelwizard.object.walls.Wall;
 
+/**
+ * @author Marcus Garmon
+ * @date Dec 29, 2016
+ */
 public class TriangleSpell extends SpellShape {
 
 	@Override

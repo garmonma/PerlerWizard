@@ -2,6 +2,10 @@ package com.nni.gamevate.pixelwizard.world;
 
 import com.nni.gamevate.pixelwizard.object.spells.color.SpellColor;
 
+/**
+ * @author Marcus Garmon
+ * @date Dec 29, 2016
+ */
 public class ColorSelector {
 
 	private SpellColor[] _spellColors;
