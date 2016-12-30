@@ -1,54 +1,73 @@
 package com.nni.gamevate.pixelwizard.object.spells.shape;
 
+import com.badlogic.gdx.Gdx;
 import com.nni.gamevate.pixelwizard.object.character.Hero;
 import com.nni.gamevate.pixelwizard.object.character.Shield;
 import com.nni.gamevate.pixelwizard.object.enemies.Enemy;
 import com.nni.gamevate.pixelwizard.object.spells.Spell;
 import com.nni.gamevate.pixelwizard.object.walls.Wall;
 
-public class CircleSpell extends SpellShape{
-	
-	
-	
-	public CircleSpell(){
-		
+public class CircleSpell extends SpellShape {
+
+	public CircleSpell() {
+
 	}
-		
+
 	@Override
 	public String toString() {
 		return "circle";
 	}
 
 	protected void bounceOffShield(Spell spell, Shield shield) {
-		if (spell.getX() <= shield.getX() + ((shield.getWidth() / 3) * 1)) {
-			// bounceRight(); angle = 45 degrees;
-			_bounceAngle = 45;
-		} else if (spell.getX() <= shield.getX() + ((shield.getWidth() / 3) * 2)) {
-			// bounceStraight angle 90 degrees;
-			_bounceAngle = 90;
-		} else if (spell.getX() <= shield.getX() + ((shield.getWidth() / 3) * 3)) {
-			// bounceLeft() angle = 135 degrees;
-			_bounceAngle = 135;
-		}// TODO Auto-generated method stub
-		
-		
+		float shieldMaxX = shield.getX() + shield.getWidth();
+		float difference = shieldMaxX - spell.getX();
+		float pct = (100 * difference) / shield.getWidth();
+		Gdx.app.log("Bounce Difference", difference + "");
+		Gdx.app.log("BouncePct", pct + "");
+
+		_bounceAngle = ((pct * 1.4f) + 20f);// * -1f;
+
 	}
 
 	@Override
 	protected void bounceOffEnemy(Spell spell, Enemy enemy) {
-		// TODO Auto-generated method stub
-		
+		_bounceAngle = 270;
 	}
 
 	@Override
 	protected void bounceOffWall(Spell spell, Wall wall) {
-		// TODO Auto-generated method stub
+		if (wall.getSide().equalsIgnoreCase("left")) {
+			if(_bounceAngle > 180){
+				_bounceAngle = 315;
+			} else {
+				_bounceAngle = 45;
+			}
 		
+		}
+
+		if (wall.getSide().equalsIgnoreCase("right")) {
+			if(_bounceAngle > 180){
+				_bounceAngle = 225;
+			} else {
+				_bounceAngle = 135;
+			}
+		}
+
+		if (wall.getSide().equalsIgnoreCase("upper")) {
+			if(_bounceAngle == 45){
+				_bounceAngle = 315;
+			} else {
+				_bounceAngle = 225;
+			}
+				
+
+		}
+
 	}
 
 	@Override
 	protected void bounceOffHero(Spell spell, Hero hero) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

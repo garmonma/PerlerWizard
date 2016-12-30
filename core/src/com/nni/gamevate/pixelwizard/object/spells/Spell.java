@@ -49,9 +49,6 @@ public final class Spell extends GameObject implements Castable {
 				&& getY() >= ((GameObject) object).getY()
 				&& getY() <= ((GameObject) object).getY() + ((GameObject) object).getHeight()) {
 			
-			_shape.bounce(this, object);
-			
-
 			return true;
 		}
 
@@ -79,6 +76,10 @@ public final class Spell extends GameObject implements Castable {
 
 	public boolean isEvaporated() {
 		return _isEvaporated;
+	}
+	
+	public void bounce(Collidable object){
+		_shape.bounce(this, object);
 	}
 
 	@Override

@@ -79,9 +79,27 @@ public class GameRenderer {
 		_shapeRenderer.begin(ShapeType.Filled);
 		_shapeRenderer.setColor(Color.SLATE);
 		
-		_shapeRenderer.rectLine(150 - 4, 1, 150 - 4, 480, 5);
-		_shapeRenderer.rectLine(655, 1, 655, 480, 4);
-		_shapeRenderer.rectLine(150 - 4, 480-4, 655, 480-4, 5);
+		_shapeRenderer.rectLine(
+				_world.getLeftWall().getX(),
+				_world.getLeftWall().getY(),
+				_world.getLeftWall().getX(),
+				_world.getLeftWall().getY() + _world.getLeftWall().getHeight(), 
+				_world.getLeftWall().getWidth());
+			
+		_shapeRenderer.rectLine(
+				_world.getRightWall().getX(),
+				_world.getRightWall().getY(),
+				_world.getRightWall().getX(),
+				_world.getRightWall().getY() + _world.getRightWall().getHeight(), 
+				_world.getRightWall().getWidth());
+		
+		_shapeRenderer.rectLine(
+				_world.getUpperWall().getX(),
+				_world.getUpperWall().getY(),
+				_world.getUpperWall().getX() + _world.getUpperWall().getWidth(),
+				_world.getUpperWall().getY(), 
+				_world.getUpperWall().getHeight());
+		
 		
 		_shapeRenderer.end();
 	}

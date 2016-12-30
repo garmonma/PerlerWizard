@@ -60,10 +60,6 @@ public class Enemy extends GameObject{
 		
 	}
 	
-	public void despawn(){
-		
-	};
-	
 	public void spawn(){
 		
 	};

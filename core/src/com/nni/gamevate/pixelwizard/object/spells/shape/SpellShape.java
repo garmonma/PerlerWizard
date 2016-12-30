@@ -28,6 +28,7 @@ public abstract class SpellShape {
 	public SpellShape() {
 		_dmgMultiplier = 1.0;
 		_spinMultiplier = 1.0;
+		_bounceAngle = DEFAULT_ANGLE;
 
 	}
 
