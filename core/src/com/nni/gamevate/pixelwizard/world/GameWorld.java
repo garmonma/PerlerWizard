@@ -15,9 +15,11 @@ import com.nni.gamevate.pixelwizard.object.enemies.Enemy.EnemyType;
 import com.nni.gamevate.pixelwizard.object.spells.EnemySpell;
 import com.nni.gamevate.pixelwizard.object.spells.Spell;
 import com.nni.gamevate.pixelwizard.object.spells.color.RedSpell;
+import com.nni.gamevate.pixelwizard.object.spells.color.SpellColor;
 import com.nni.gamevate.pixelwizard.object.spells.color.WhiteSpell;
 import com.nni.gamevate.pixelwizard.object.spells.shape.CircleSpell;
 import com.nni.gamevate.pixelwizard.object.spells.shape.RectangleSpell;
+import com.nni.gamevate.pixelwizard.object.spells.shape.SpellShape;
 import com.nni.gamevate.pixelwizard.object.walls.Wall;
 
 /**
@@ -45,6 +47,9 @@ public class GameWorld {
 	
 	private boolean _playerWon;
 	private boolean _gameOver;
+	
+	private SpellColor _sc;
+	private SpellShape _ss;
 
 	public GameWorld() {
 		_level = LevelLoader.load(Gdx.files.internal("levels/level_0.json"));
@@ -130,9 +135,21 @@ public class GameWorld {
 		if (TimeUtils.timeSinceNanos(_lastSpell) > 1500000000) {
 
 			if (!_colorSelector.getSpellColor().isOnCooldown(_colorSelector.getSpellColor().getCooldown())) {
+				
+				if(_colorSelector.getSpellColor().toString().equalsIgnoreCase("red")){
+					_sc = new RedSpell();
+				} else if(_colorSelector.getSpellColor().toString().equalsIgnoreCase("white")){
+					_sc = new WhiteSpell();
+				}
+				
+				if(_shapeSelector.getSpellShape().toString().equalsIgnoreCase("circle")){
+					_ss = new CircleSpell();
+				} else if(_shapeSelector.getSpellShape().toString().equalsIgnoreCase("rectangle")){
+					_ss = new RectangleSpell();
+				}
+				
 				Spell spell = new Spell(16, 16, _hero.getShield().getX() + _hero.getShield().getWidth() / 2,
-						_hero.getShield().getY() + _hero.getShield().getHeight() + 10, _colorSelector.getSpellColor(),
-						_shapeSelector.getSpellShape());
+						_hero.getShield().getY() + _hero.getShield().getHeight() + 10, _sc, _ss);
 
 				_colorSelector.rotateDown();
 				_shapeSelector.rotateLeft();
