@@ -1,6 +1,7 @@
 package com.nni.gamevate.pixelwizard.utils;
 
-import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.nni.gamevate.pixelwizard.world.GameWorld;
@@ -10,128 +11,173 @@ import com.nni.gamevate.pixelwizard.world.GameWorld;
  * @author Marcus Garmon 12/29/2016
  *
  */
-public class InputHandler implements InputProcessor {
+public class InputHandler {
 
-	private boolean _dragging;
 	private GameWorld _world;
 	private Vector3 _touchCords;
 	private OrthographicCamera _camera;
 
+	private InputAdapter _skillBarProcessor;
+	private InputAdapter _analogProcessor;
 
-	public InputHandler(GameWorld world, OrthographicCamera camera){
+	public InputHandler(GameWorld world, OrthographicCamera camera) {
 		_world = world;
-		_dragging = false;
 		_touchCords = new Vector3();
 		_camera = camera;
+
+		initSkillBarProcessor();
+		initAnalogProcessor();
 	}
 
-	@Override
-	public boolean keyDown(int keycode) {
-		return false;
+	public InputAdapter getSkillBarProcessor() {
+		return _skillBarProcessor;
 	}
 
-	@Override
-	public boolean keyUp(int keycode) {
-		return false;
+	public InputAdapter getAnalogProcessor() {
+		return _analogProcessor;
 	}
 
-	@Override
-	public boolean keyTyped(char character) {
-		return false;
+	private void initSkillBarProcessor() {
+		_skillBarProcessor = new InputAdapter() {
+			@Override
+			public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
+				_touchCords.set(screenX, screenY, 0);
+				_camera.unproject(_touchCords);
+
+				if (_touchCords.x >= _world.getSpellBox().getX()
+						&& _touchCords.x <= _world.getSpellBox().getX() + _world.getSpellBox().getWidth()
+						&& _touchCords.y >= _world.getSpellBox().getY()
+						&& _touchCords.y <= _world.getSpellBox().getY() + _world.getSpellBox().getHeight()) {
+
+					_world.castSpell();
+					return true;
+				}
+
+				if(_touchCords.x >= _world.getTopArrow().getX() - _world.getTopArrow().getWidth()
+						&& _touchCords.x <= _world.getTopArrow().getX() + _world.getTopArrow().getWidth()
+						&& _touchCords.y <= _world.getTopArrow().getY()
+						&& _touchCords.y >= _world.getTopArrow().getY() - _world.getTopArrow().getHeight()){
+					
+					_world.getColorSelector().rotateUp();
+					return true;
+				}
+				
+				if(_touchCords.x >= _world.getBottomArrow().getX() - _world.getTopArrow().getWidth()
+						&& _touchCords.x <= _world.getBottomArrow().getX() + _world.getTopArrow().getWidth()
+						&& _touchCords.y >= _world.getBottomArrow().getY()
+						&& _touchCords.y <= _world.getBottomArrow().getY() + _world.getTopArrow().getHeight()){
+					
+					_world.getColorSelector().rotateDown();
+					return true;
+				}
+				
+				
+				if(_touchCords.x >= _world.getLeftArrow().getX()
+						&& _touchCords.x <= _world.getLeftArrow().getX() + _world.getLeftArrow().getWidth()
+						&& _touchCords.y <= _world.getLeftArrow().getY() + _world.getLeftArrow().getHeight()
+						&& _touchCords.y >= _world.getLeftArrow().getY() - _world.getLeftArrow().getHeight()){
+					
+					_world.getShapeSelector().rotateLeft();
+					return true;
+				}
+				
+				if(_touchCords.x <= _world.getRightArrow().getX()
+						&& _touchCords.x >= _world.getRightArrow().getX() - _world.getRightArrow().getWidth()
+						&& _touchCords.y >= _world.getRightArrow().getY() - _world.getRightArrow().getHeight()
+						&& _touchCords.y <= _world.getRightArrow().getY() + _world.getRightArrow().getHeight()){
+					
+					_world.getShapeSelector().rotateRight();
+					return true;
+				}
+
+				return false;
+			}
+		};
 	}
 
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
-		_touchCords.set(screenX, screenY, 0);
-		_camera.unproject(_touchCords);
-
-		if(_touchCords.x > 54 && _touchCords.x < 88
-				&& _touchCords.y > 20 && _touchCords.y < 70){
-			//if( _world.getSpells().size <= 8)
-				_world.castSpell();
-	
-			return true;
-		}
-
-		// TODO dragging shapes
-		if((_touchCords.x > 20 && _touchCords.x < 54
-				&& _touchCords.y > 20 && _touchCords.y < 70)
-			|| (_touchCords.x > 88 && _touchCords.x < 120 
-					&& _touchCords.y > 20 && _touchCords.y < 70)){
-			_dragging = true;
-			return true;
-		}
-
-		// TODO dragging colors
-		if(_touchCords.y > 54 && _touchCords.y < 150 
-				&& _touchCords.x > 54 && _touchCords.x < 88){
-			_dragging = true;
-			return true;
-		}
-
-		// TODO dragging analog
-//		if(true){
-//			_dragging = true;
-//			return true;
-//		}
-
-		return false;
+	private void initAnalogProcessor() {
+		_analogProcessor = new InputAdapter() {
+			@Override
+			public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+				
+				_touchCords.set(screenX, screenY, 0);
+				_camera.unproject(_touchCords);
+				
+				if(_touchCords.x >= _world.getAnalogLeft().getX() - _world.getAnalogLeft().getWidth() / 2
+						&& _touchCords.x <= _world.getAnalogLeft().getX() + _world.getAnalogLeft().getWidth() / 2
+						&& _touchCords.y >= _world.getAnalogLeft().getY() - _world.getAnalogLeft().getHeight() / 2
+						&& _touchCords.y <= _world.getAnalogLeft().getY() + _world.getAnalogLeft().getHeight() / 2){
+						
+					_world.getHero().setMoving(true);
+					_world.getHero().setDirection("left");
+					return true;
+				}
+				
+				if(_touchCords.x >= _world.getAnalogRight().getX() - _world.getAnalogRight().getWidth() / 2
+						&& _touchCords.x <= _world.getAnalogRight().getX() + _world.getAnalogRight().getWidth() / 2
+						&& _touchCords.y >= _world.getAnalogRight().getY() - _world.getAnalogRight().getHeight() / 2
+						&& _touchCords.y <= _world.getAnalogRight().getY() + _world.getAnalogRight().getHeight() / 2){
+						
+					_world.getHero().setMoving(true);
+					_world.getHero().setDirection("right");
+					return true;
+				}
+				return false;
+			}
+			
+			@Override
+			public boolean keyDown(int keycode) {
+				if(keycode == Input.Keys.LEFT){
+					_world.getHero().setMoving(true);
+					_world.getHero().setDirection("left");
+					return true;
+				} else if(keycode == Input.Keys.RIGHT){
+					_world.getHero().setMoving(true);
+					_world.getHero().setDirection("right");
+					return true;
+				}
+				
+				return false;
+			}
+			
+			@Override
+			public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+				_touchCords.set(screenX, screenY, 0);
+				_camera.unproject(_touchCords);
+				
+				if(_touchCords.x >= _world.getAnalogLeft().getX() - _world.getAnalogLeft().getWidth() / 2
+						&& _touchCords.x <= _world.getAnalogLeft().getX() + _world.getAnalogLeft().getWidth() / 2
+						&& _touchCords.y >= _world.getAnalogLeft().getY() - _world.getAnalogLeft().getHeight() / 2
+						&& _touchCords.y <= _world.getAnalogLeft().getY() + _world.getAnalogLeft().getHeight() / 2){
+						
+					_world.getHero().setMoving(false);
+					return true;
+				}
+				
+				if(_touchCords.x >= _world.getAnalogRight().getX() - _world.getAnalogRight().getWidth() / 2
+						&& _touchCords.x <= _world.getAnalogRight().getX() + _world.getAnalogRight().getWidth() / 2
+						&& _touchCords.y >= _world.getAnalogRight().getY() - _world.getAnalogRight().getHeight() / 2
+						&& _touchCords.y <= _world.getAnalogRight().getY() + _world.getAnalogRight().getHeight() / 2){
+						
+					_world.getHero().setMoving(false);
+					return true;
+				}
+				
+				return false;
+			}
+			
+			@Override
+			public boolean keyUp(int keycode) {
+				if(keycode == Input.Keys.LEFT){
+					_world.getHero().setMoving(false);
+					return true;
+				} else if(keycode == Input.Keys.RIGHT){
+					_world.getHero().setMoving(false);
+					return true;
+				}
+				return false;
+			}
+		};
 	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		_dragging = false;
-		return true;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		
-		_touchCords.set(screenX, screenY, 0);
-		_camera.unproject(_touchCords);
-		
-		if(!_dragging)
-			return false;
-
-		// TODO dragging color
-		if(_touchCords.x > 54 && _touchCords.x < 88
-				&& _touchCords.y < 120){
-			_world.getColorSelector().rotateDown();
-			_dragging = false;
-			return true;
-		} else if(_touchCords.x > 54 && _touchCords.x < 88
-				&& _touchCords.y > 120) {
-			_world.getColorSelector().rotateUp();
-			_dragging = false;
-			return true;
-		}
-
-		// TODO dragging shape
-		if(true){
-			return true;
-		} else if(true) {
-			return true;
-		}
-
-		// TODO dragging analog
-		if(true){
-			return true;
-		} else if(true) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		return false;
-	}
-
 }

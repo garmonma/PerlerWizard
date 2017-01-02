@@ -1,8 +1,6 @@
 package com.nni.gamevate.pixelwizard.object.character;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.math.Vector2;
 import com.nni.gamevate.pixelwizard.object.Collidable;
 import com.nni.gamevate.pixelwizard.object.GameObject;
 
@@ -14,9 +12,14 @@ import com.nni.gamevate.pixelwizard.object.GameObject;
 public class Hero extends GameObject {
 	
 	private Shield _shield;
+	private boolean _moving;
+	private String _movingDirection;
 
 	public Hero(int width, int height, float x, float y) {
 		super(width, height, x, y);
+		
+		_moving = false;
+		_movingDirection = "";
 
 	}
 	
@@ -31,7 +34,9 @@ public class Hero extends GameObject {
 	@Override
 	public void update(float delta) {
 		
-		onKeyPress();
+		if(_moving)
+			move();
+		
 		if (getX() < 150){
 			_position.x = 150;
 		}
@@ -50,27 +55,30 @@ public class Hero extends GameObject {
 		return false;
 	}
 
-	public void onKeyPress() {
-		if (Gdx.input.isKeyPressed(Keys.LEFT))
+	private void move() {
+		if (_movingDirection.equalsIgnoreCase("left"))	
 			_position.x -= 200 * Gdx.graphics.getDeltaTime();
-		if (Gdx.input.isKeyPressed(Keys.RIGHT))
-			_position.x += 200 * Gdx.graphics.getDeltaTime();
 		
-		if(Gdx.input.getX() == 700 && Gdx.input.getY() == 40){
-			_position.x -= 200 * Gdx.graphics.getDeltaTime();
-		}
-		
-		if(Gdx.input.getX() == 800 && Gdx.input.getY() == 40){
+		if (_movingDirection.equalsIgnoreCase("right"))
 			_position.x += 200 * Gdx.graphics.getDeltaTime();
-		}
-	}
-	
-	public void onClick(){
 		
 	}
 
 	public boolean isCasting() {
 		return true;
+	}
+	
+	public boolean isMoving(){
+		return _moving;
+	}
+	
+	public void setMoving(boolean moving ){
+		_moving = moving;
+		
+	}
+	
+	public void setDirection(String direction){
+		_movingDirection = direction;
 	}
 
 	
