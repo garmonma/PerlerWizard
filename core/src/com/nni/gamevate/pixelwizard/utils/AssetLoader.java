@@ -1,5 +1,10 @@
 package com.nni.gamevate.pixelwizard.utils;
 
+/**
+ * 
+ * @author Marcus Garmon 12/29/2016
+ *
+ */
 public class AssetLoader {
 
 	

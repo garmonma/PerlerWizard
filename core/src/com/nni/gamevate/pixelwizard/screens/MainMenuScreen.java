@@ -7,17 +7,19 @@ import com.nni.gamevate.pixelwizard.PixelWizard;
 
 /**
  * 
- * @author Marcus Garmon
+ * @author Marcus Garmon 12/29/2016
  *
  */
 public class MainMenuScreen extends AbstractScreen {
 
 	private OrthographicCamera _camera;
+	private PixelWizard _pixelWizard;
+	
 	public MainMenuScreen(final PixelWizard pixelWizard) {
-		super(pixelWizard);
 		System.out.println("On Main Menu Screen");
+		_pixelWizard = pixelWizard;
 		_camera = new OrthographicCamera();
-		_camera.setToOrtho(false, 800, 480);
+		//_camera.setToOrtho(false, 800, 480);
 	}
 
 	@Override
@@ -26,15 +28,15 @@ public class MainMenuScreen extends AbstractScreen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		_camera.update();
-		_pixelWizard.batch.setProjectionMatrix(_camera.combined);
+		_pixelWizard.getSpriteBatch().setProjectionMatrix(_camera.combined);
 
-		_pixelWizard.batch.begin();
-		_pixelWizard.font.draw(_pixelWizard.batch, "Welcome to Pixel Wizard", 100, 150);
-		_pixelWizard.font.draw(_pixelWizard.batch, "Tap anyhere to begin!", 100, 100);
-		_pixelWizard.batch.end();
+		_pixelWizard.getSpriteBatch().begin();
+		_pixelWizard.getFont().draw(_pixelWizard.getSpriteBatch(), "Welcome to Pixel Wizard", 1, 3);
+		_pixelWizard.getFont().draw(_pixelWizard.getSpriteBatch(), "Tap anyhere to begin!", 1, 3.5f);
+		_pixelWizard.getSpriteBatch().end();
 
 		if (Gdx.input.justTouched())
-			getGame().setScreen(new GameScreen(getGame()));
+			_pixelWizard.setScreen(new GameScreen(_pixelWizard));
 
 	}
 
@@ -48,6 +50,11 @@ public class MainMenuScreen extends AbstractScreen {
 	public void hide() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	@Override
+	public void resize(int width, int height) {
+		super.resize(width, height);
 	}
 
 }

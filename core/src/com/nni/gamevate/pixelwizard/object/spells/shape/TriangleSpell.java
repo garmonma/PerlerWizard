@@ -7,17 +7,10 @@ import com.nni.gamevate.pixelwizard.object.spells.Spell;
 import com.nni.gamevate.pixelwizard.object.walls.Wall;
 
 /**
- * 
- * @author Marcus Garmon 12/29/2016
- *
+ * @author Marcus Garmon
+ * @date Dec 29, 2016
  */
-public class RectangleSpell extends SpellShape {
-
-
-	@Override
-	public String toString() {
-		return "rectangle";
-	}
+public class TriangleSpell extends SpellShape {
 
 	@Override
 	protected void bounceOffShield(Spell spell, Shield shield) {
@@ -42,4 +35,5 @@ public class RectangleSpell extends SpellShape {
 		// TODO Auto-generated method stub
 		
 	}
+
 }

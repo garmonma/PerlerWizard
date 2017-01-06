@@ -1,23 +1,18 @@
 package com.nni.gamevate.pixelwizard.screens;
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.nni.gamevate.pixelwizard.PixelWizard;
 
 /**
  * 
- * @author Marcus Garmon
+ * @author Marcus Garmon 12/29/2016
  *
  */
 public abstract class AbstractScreen implements Screen {
 
-	final PixelWizard _pixelWizard;
+	//final PixelWizard _pixelWizard;
 
-	
-
-	public AbstractScreen(final PixelWizard pixelWizard) {
-		_pixelWizard = pixelWizard;
-		
+	public AbstractScreen() {
 	}
 
 	@Override
@@ -37,10 +32,6 @@ public abstract class AbstractScreen implements Screen {
 	@Override
 	public void dispose() {
 
-	}
-
-	public PixelWizard getGame() {
-		return _pixelWizard;
 	}
 
 }
