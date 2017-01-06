@@ -11,7 +11,7 @@ public class Wall extends GameObject implements Collidable {
 
 	private String _side;
 	
-	public Wall(int width, int height, float x, float y, String side) {
+	public Wall(float width, float height, float x, float y, String side) {
 		super(width, height, x, y);
 		_side = side;
 	}

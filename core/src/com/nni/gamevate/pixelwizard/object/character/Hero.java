@@ -37,16 +37,16 @@ public class Hero extends GameObject {
 		if(_moving)
 			move();
 		
-		if (getX() < 150){
-			_position.x = 150;
+		if (getX() < 4){
+			_position.x = 4;
 		}
 
-		if (getX() > 650 - 32){
-			_position.x = 650 - _width;
+		if (getX() > 15){
+			_position.x = 15;
 			
 		}
 		
-		_shield.setX(_position.x - 5);
+		_shield.setX(_position.x - .10f);
 	}
 	
 	@Override
@@ -57,10 +57,10 @@ public class Hero extends GameObject {
 
 	private void move() {
 		if (_movingDirection.equalsIgnoreCase("left"))	
-			_position.x -= 200 * Gdx.graphics.getDeltaTime();
+			_position.x -= 4 * Gdx.graphics.getDeltaTime();
 		
 		if (_movingDirection.equalsIgnoreCase("right"))
-			_position.x += 200 * Gdx.graphics.getDeltaTime();
+			_position.x += 4 * Gdx.graphics.getDeltaTime();
 		
 	}
 

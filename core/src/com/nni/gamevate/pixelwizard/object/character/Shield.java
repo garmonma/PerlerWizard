@@ -10,9 +10,8 @@ import com.nni.gamevate.pixelwizard.object.GameObject;
  */
 public class Shield extends GameObject {
 
-	public Shield(int width, int height, float x, float y) {
+	public Shield(float width, float height, float x, float y) {
 		super(width, height, x, y);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

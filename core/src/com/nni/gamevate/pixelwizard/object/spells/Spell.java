@@ -12,7 +12,7 @@ import com.nni.gamevate.pixelwizard.object.spells.shape.SpellShape;
  * @date Dec 29, 2016
  */
 public final class Spell extends GameObject implements Castable {
-	private static final float BASE_SPEED = 200;
+	private static final float BASE_SPEED = 5f;
 	private static final int DEFAULT_BOUNCE_COUNT = 3;
 	private static final int DEFAULT_DAMAGE = 1;
 	private static final int DEFAULT_SPIN = 0;
@@ -30,7 +30,7 @@ public final class Spell extends GameObject implements Castable {
 	private boolean _isEvaporated;
 
 
-	public Spell(int width, int height, float x, float y, SpellColor color, SpellShape shape) {
+	public Spell(float width, float height, float x, float y, SpellColor color, SpellShape shape) {
 		super(width, height, x, y);
 		_color = color;
 		_shape = shape;

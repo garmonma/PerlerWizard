@@ -6,12 +6,12 @@ package com.nni.gamevate.pixelwizard.ui;
  */
 public class UIControl {
 
-	private int _x;
-	private int _y;
-	private int _width;
-	private int _height;
+	private float _x;
+	private float _y;
+	private float _width;
+	private float _height;
 
-	public UIControl(int x, int y, int width, int height) {
+	public UIControl(float x, float y, float width, float height) {
 		_x = x;
 		_y = y;
 		_width = width;
@@ -19,19 +19,19 @@ public class UIControl {
 	}
 	
 	
-	public int getX() {
+	public float getX() {
 		return _x;
 	}
 
-	public int getY() {
+	public float getY() {
 		return _y;
 	}
 
-	public int getWidth() {
+	public float getWidth() {
 		return _width;
 	}
 
-	public int getHeight() {
+	public float getHeight() {
 		return _height;
 	}
 }

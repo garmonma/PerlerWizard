@@ -5,6 +5,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.nni.gamevate.pixelwizard.GameConstants;
 import com.nni.gamevate.pixelwizard.levelloader.Level;
 import com.nni.gamevate.pixelwizard.levelloader.LevelLoader;
 import com.nni.gamevate.pixelwizard.levelloader.Wave;
@@ -65,22 +66,27 @@ public class GameWorld {
 	public GameWorld() {
 		_level = LevelLoader.load(Gdx.files.internal("levels/level_0.json"));
 
-		_upperWall = new Wall(509, 5, 146, 476, "upper");
-		_rightWall = new Wall(5, 480, 655, 1, "right");
-		_leftWall = new Wall(5, 480, 146, 1, "left");
-
-		_bottomArrow = new UIControl(70, 32, 16, 16);
-		_topArrow = new UIControl(70, 100, 16, 16);
-		_leftArrow = new UIControl(36, 66, 16, 16);
-		_rightArrow = new UIControl(104, 66, 16, 16);
+		_upperWall = new Wall(GameConstants.RIGHT_WALL - GameConstants.LEFT_WALL, 
+				.10f, GameConstants.LEFT_WALL, GameConstants.WORLD_HEIGHT, "upper");
 		
-		_analogLeft = new UIControl(700, 30, 16, 16);
-		_analogRight = new UIControl(764, 30, 16, 16);
+		_rightWall = new Wall(.10f, GameConstants.WORLD_HEIGHT, 
+				GameConstants.RIGHT_WALL, 0, "right");
 		
-		_spellBox = new UIControl(54, 50, 32, 32);
+		_leftWall = new Wall(.10f, GameConstants.WORLD_HEIGHT, 
+				GameConstants.LEFT_WALL, 0, "left");
 
-		_hero = new Hero(32, 32, 800 / 2 - 64 / 2, 20);
-		_shield = new Shield(_hero.getWidth() + 10, 8, _hero.getX() - 5, _hero.getY() + _hero.getWidth() + 3);
+		_bottomArrow = new UIControl(2f, 1f, .5f, .5f);
+		_topArrow = new UIControl(2f, 3f, .5f, .5f);
+		_leftArrow = new UIControl(1f, 2f, .5f, .5f);
+		_rightArrow = new UIControl(3f, 2f, .5f, .5f);
+		
+		_spellBox = new UIControl(1.75f, 1.75f, .5f, .5f);
+		
+		_analogLeft = new UIControl(17, 2, 1, 1);
+		_analogRight = new UIControl(19, 2, 1, 1);
+		
+		_hero = new Hero(1, 1, GameConstants.WORLD_WIDTH/ 2, 0);
+		_shield = new Shield(1.20f, .15f, _hero.getX() - .10f, _hero.getY() + _hero.getHeight() + .10f);
 
 		_hero.setShield(_shield);
 
@@ -169,8 +175,8 @@ public class GameWorld {
 					_ss = new RectangleSpell();
 				}
 
-				Spell spell = new Spell(16, 16, _hero.getShield().getX() + _hero.getShield().getWidth() / 2,
-						_hero.getShield().getY() + _hero.getShield().getHeight() + 10, _sc, _ss);
+				Spell spell = new Spell(.5f, .5f, _hero.getShield().getX() + _hero.getShield().getWidth() / 2,
+						_hero.getShield().getY() + _hero.getShield().getHeight() + .05f, _sc, _ss);
 
 				_colorSelector.rotateDown();
 				_shapeSelector.rotateLeft();
@@ -259,17 +265,17 @@ public class GameWorld {
 	}
 
 	private void loadEnemies() {
-		Enemy enemy1 = new Enemy(32, 32, 285, 300, EnemyType.GoblinInitiate);
-		Enemy enemy2 = new Enemy(32, 32, 285, 360, EnemyType.GoblinInitiate);
-		Enemy enemy3 = new Enemy(32, 32, 285, 420, EnemyType.GoblinInitiate);
+		Enemy enemy1 = new Enemy(1, 1, 6, 7, EnemyType.GoblinInitiate);
+		Enemy enemy2 = new Enemy(1, 1, 7.5f, 7, EnemyType.GoblinInitiate);
+		Enemy enemy3 = new Enemy(1, 1, 9, 7, EnemyType.GoblinInitiate);
 
-		Enemy enemy1a = new Enemy(32, 32, 419, 300, EnemyType.GoblinInitiate);
-		Enemy enemy2a = new Enemy(32, 32, 419, 360, EnemyType.GoblinInitiate);
-		Enemy enemy3a = new Enemy(32, 32, 419, 420, EnemyType.GoblinInitiate);
+		Enemy enemy1a = new Enemy(1, 1, 6, 8.5f, EnemyType.GoblinInitiate);
+		Enemy enemy2a = new Enemy(1, 1, 7.5f, 8.5f, EnemyType.GoblinInitiate);
+		Enemy enemy3a = new Enemy(1, 1, 9, 8.5f, EnemyType.GoblinInitiate);
 
-		Enemy enemy1b = new Enemy(32, 32, 553, 300, EnemyType.GoblinInitiate);
-		Enemy enemy2b = new Enemy(32, 32, 553, 360, EnemyType.GoblinInitiate);
-		Enemy enemy3b = new Enemy(32, 32, 553, 420, EnemyType.GoblinInitiate);
+		Enemy enemy1b = new Enemy(1, 1, 6, 10, EnemyType.GoblinInitiate);
+		Enemy enemy2b = new Enemy(1, 1, 7.5f, 10, EnemyType.GoblinInitiate);
+		Enemy enemy3b = new Enemy(1, 1, 9, 10, EnemyType.GoblinInitiate);
 
 		_enemies.add(enemy1);
 		_enemies.add(enemy2);

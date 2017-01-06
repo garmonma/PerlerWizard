@@ -10,10 +10,9 @@ import com.nni.gamevate.pixelwizard.PixelWizard;
  */
 public abstract class AbstractScreen implements Screen {
 
-	final PixelWizard _pixelWizard;
+	//final PixelWizard _pixelWizard;
 
-	public AbstractScreen(final PixelWizard pixelWizard) {
-		_pixelWizard = pixelWizard;
+	public AbstractScreen() {
 	}
 
 	@Override
@@ -33,10 +32,6 @@ public abstract class AbstractScreen implements Screen {
 	@Override
 	public void dispose() {
 
-	}
-
-	public PixelWizard getGame() {
-		return _pixelWizard;
 	}
 
 }

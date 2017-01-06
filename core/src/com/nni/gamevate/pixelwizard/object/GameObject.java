@@ -9,14 +9,14 @@ import com.badlogic.gdx.math.Vector2;
  */
 public abstract class GameObject implements Collidable {
 
-	protected int _width;
-	protected int _height;
+	protected float _width;
+	protected float _height;
 	protected Vector2 _position;
 	protected Vector2 _direction;
 	protected Vector2 _velocity;
 	protected Vector2 _movement;
 	
-	public GameObject(int width, int height, float x, float y){
+	public GameObject(float width, float height, float x, float y){
 		_width = width;
 		_height = height;
 		_position = new Vector2(x, y);
@@ -40,11 +40,11 @@ public abstract class GameObject implements Collidable {
 		return _position.y;
 	}
 
-	public int getHeight() {
+	public float getHeight() {
 		return _height;
 	}
 
-	public int getWidth() {
+	public float getWidth() {
 		return _width;
 	}
 }
