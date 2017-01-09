@@ -18,7 +18,7 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "com.nni.gamevate.pixelwizard"
+        applicationId "com.nni.gamevate.perlerwizard"
         minSdkVersion 8
         targetSdkVersion 23
     }
@@ -71,7 +71,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.nni.gamevate.pixelwizard/com.nni.gamevate.pixelwizard.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.nni.gamevate.perlerwizard/com.nni.gamevate.perlerwizard.AndroidLauncher'
 }
 
 // sets up the Android Eclipse project, using the old Ant based build.

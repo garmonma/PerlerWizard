@@ -4,7 +4,7 @@ sourceCompatibility = '1.7'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 ext {
-	mainClassName = "com.nni.gamevate.pixelwizard.IOSLauncher"
+	mainClassName = "com.nni.gamevate.perlerwizard.IOSLauncher"
 }
 
 launchIPhoneSimulator.dependsOn build
