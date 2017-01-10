@@ -1,5 +1,6 @@
 package com.nni.gamevate.perlerwizard.world;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -46,13 +47,16 @@ public class GameWorld {
 
 	private UIControl _analogLeft;
 	private UIControl _analogRight;
-	
-	private UIControl _heroMaxHealthBar;
-	private UIControl _heroMaxMagicBar;
-	
-	private UIControl _heroCurrentHealthBar;
-	private UIControl _heroCurrentMagicBar;
-		
+	private List<UIControl> _heroHealthNodes;
+
+	private UIControl _triangleRefresher;
+	private UIControl _squareRefresher;
+	private UIControl _rectangleRefresher;
+	private UIControl _circleRefresher;
+	private UIControl _trapazoidRefresher;
+
+	private UIControl _sigilButton;
+
 	private Array<Spell> _spells;
 	private Array<Enemy> _enemies;
 	private Array<EnemySpell> _enemySpells;
@@ -69,36 +73,50 @@ public class GameWorld {
 	private SpellShape _ss;
 
 	public GameWorld() {
-		_level = LevelLoader.load(Gdx.files.internal("levels/level_0.json"));
+		// _level = LevelLoader.load(Gdx.files.internal("levels/level_0.json"));
 
-		_upperWall = new Wall(GameConstants.RIGHT_WALL - GameConstants.LEFT_WALL, 
-				.10f, GameConstants.LEFT_WALL, GameConstants.WORLD_HEIGHT, "upper");
-		
-		_rightWall = new Wall(.10f, GameConstants.WORLD_HEIGHT, 
-				GameConstants.RIGHT_WALL, 0, "right");
-		
-		_leftWall = new Wall(.10f, GameConstants.WORLD_HEIGHT, 
-				GameConstants.LEFT_WALL, 0, "left");
+		_upperWall = new Wall(GameConstants.RIGHT_WALL - GameConstants.LEFT_WALL, .10f, GameConstants.LEFT_WALL,
+				GameConstants.WORLD_HEIGHT, "upper");
+
+		_rightWall = new Wall(.10f, GameConstants.WORLD_HEIGHT, GameConstants.RIGHT_WALL, 0, "right");
+
+		_leftWall = new Wall(.10f, GameConstants.WORLD_HEIGHT, GameConstants.LEFT_WALL, 0, "left");
+
+		_circleRefresher = new UIControl(.5f, 8f, 1, 1);
+		_triangleRefresher = new UIControl(2.5f, 8f, 1, 1);
+		_squareRefresher = new UIControl(.5f, 6.75f, 1, 1);
+		_rectangleRefresher = new UIControl(2.5f, 6.75f, 1, 1);
+		_trapazoidRefresher = new UIControl(.5f, 5.5f, 1, 1);
+
+		_sigilButton = new UIControl(17f, 9f, 2, 2);
 
 		_bottomArrow = new UIControl(2f, 1f, .5f, .5f);
 		_topArrow = new UIControl(2f, 3f, .5f, .5f);
 		_leftArrow = new UIControl(1f, 2f, .5f, .5f);
 		_rightArrow = new UIControl(3f, 2f, .5f, .5f);
-		
+
 		_spellBox = new UIControl(1.75f, 1.75f, .5f, .5f);
-		
+
 		_analogLeft = new UIControl(17, 2, 1, 1);
 		_analogRight = new UIControl(19, 2, 1, 1);
-		
-		_heroMaxHealthBar = new UIControl(1, GameConstants.WORLD_HEIGHT - 1, 2, .5f);
-		_heroMaxMagicBar = new UIControl(1, GameConstants.WORLD_HEIGHT - 1.75f, 2, .5f);
-		
-		_heroCurrentHealthBar = new UIControl(1, GameConstants.WORLD_HEIGHT - 1, 1.5f, .5f);
-		_heroCurrentMagicBar = new UIControl(1, GameConstants.WORLD_HEIGHT - 1.75f, 2, .5f);
-		
-		_hero = new Hero(1, 1, GameConstants.WORLD_WIDTH/ 2, 0);
-		_shield = new Shield(1.20f, .15f, _hero.getX() - .10f, _hero.getY() + _hero.getHeight() + .10f);
 
+		_heroHealthNodes = new ArrayList<UIControl>();
+		for (int i = 0; i < 18; i++) {
+			UIControl healthNode;
+			float xi = (i % 6) + .5f;
+			if (i < 6) {
+				healthNode = new UIControl(.25f + (xi * .50f), GameConstants.WORLD_HEIGHT - 1, .25f, .25f);
+			} else if (i < 12) {
+				healthNode = new UIControl(.25f + (xi * .50f), GameConstants.WORLD_HEIGHT - 1.5f, .25f, .25f);
+			} else {
+				healthNode = new UIControl(.25f + (xi * .50f), GameConstants.WORLD_HEIGHT - 2f, .25f, .25f);
+			}
+
+			_heroHealthNodes.add(healthNode);
+		}
+
+		_hero = new Hero(1, 1, GameConstants.WORLD_WIDTH / 2, 0);
+		_shield = new Shield(1.20f, .15f, _hero.getX() - .10f, _hero.getY() + _hero.getHeight() + .10f);
 		_hero.setShield(_shield);
 
 		_spells = new Array<Spell>();
@@ -250,33 +268,45 @@ public class GameWorld {
 	public UIControl getBottomArrow() {
 		return _bottomArrow;
 	}
-	
-	public UIControl getAnalogLeft(){
+
+	public UIControl getAnalogLeft() {
 		return _analogLeft;
 	}
-	
-	public UIControl getAnalogRight(){
+
+	public UIControl getAnalogRight() {
 		return _analogRight;
 	}
-	
-	public UIControl getSpellBox(){
+
+	public UIControl getSpellBox() {
 		return _spellBox;
 	}
 
-	public UIControl getHeroMaxHealthBar() {
-		return _heroMaxHealthBar;
+	public UIControl getCircleRefresher() {
+		return _circleRefresher;
 	}
 
-	public UIControl getHeroMaxMagicBar() {
-		return _heroMaxMagicBar;
+	public UIControl getSquareRefresher() {
+		return _squareRefresher;
 	}
 
-	public UIControl getHeroCurrentHealthBar() {
-		return _heroCurrentHealthBar;
+	public UIControl getRectangleRefresher() {
+		return _rectangleRefresher;
 	}
 
-	public UIControl getHeroCurrentMagicBar() {
-		return _heroCurrentMagicBar;
+	public UIControl getTrapazoidRefresher() {
+		return _trapazoidRefresher;
+	}
+
+	public UIControl getTriangleRefresher() {
+		return _triangleRefresher;
+	}
+
+	public UIControl getSigilButton() {
+		return _sigilButton;
+	}
+
+	public List<UIControl> getHealthNodes() {
+		return _heroHealthNodes;
 	}
 
 	private void loadSelectors() {

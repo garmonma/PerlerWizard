@@ -30,7 +30,7 @@ public class SplashScreen extends AbstractScreen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		if (Gdx.input.justTouched())
-			_perlerWizard.setScreen(new MainMenuScreen(_perlerWizard));
+			_perlerWizard.setScreen(new MainWorldScreen(_perlerWizard));
 	}
 
 	@Override

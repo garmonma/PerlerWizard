@@ -15,15 +15,9 @@ import com.nni.gamevate.perlerwizard.utils.AssetLoader;
  * @date Dec 29, 2016
  */
 public class PerlerWizard extends Game {
-	
-	public SpriteBatch _batch;
-	public BitmapFont _font;
 
 	@Override
 	public void create() {
-		_batch = new SpriteBatch();
-		_font = new BitmapFont();
-		
 		AssetLoader.load();
 		this.setScreen(new SplashScreen(this));
 
@@ -39,16 +33,6 @@ public class PerlerWizard extends Game {
 	}
 
 	public void dispose() {
-		_batch.dispose();
-		_font.dispose();
-	}
-	
-	
-	public SpriteBatch getSpriteBatch(){
-		return _batch;
-	}
-	
-	public BitmapFont getFont(){
-		return _font;
+
 	}
 }

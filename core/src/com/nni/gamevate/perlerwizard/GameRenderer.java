@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.spells.Spell;
+import com.nni.gamevate.perlerwizard.ui.UIControl;
 import com.nni.gamevate.perlerwizard.utils.InputHandler;
 import com.nni.gamevate.perlerwizard.world.GameWorld;
 
@@ -58,25 +59,28 @@ public class GameRenderer {
 		_batch = new SpriteBatch();
 		//_batch.setProjectionMatrix(_camera.combined);
 
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/blocky_font.TTF"));
-		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		int scale = generator.scaleToFitSquare(40, 40, 10);
-		Gdx.app.log("Font Scale", "" + scale);
+		//FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/blocky_font.TTF"));
+		//FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		//int scale = generator.scaleToFitSquare(40, 40, 10);
+		//Gdx.app.log("Font Scale", "" + scale);
 		
-		_font = generator.generateFont(parameter);
+		//_font = generator.generateFont(parameter);
 
-		generator.dispose();
+		//generator.dispose();
 
 	}
 
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		_shapeRenderer.setProjectionMatrix(_camera.combined);
 		//drawInputData();
 		ViewportUtils.drawGrid(_viewport, _shapeRenderer);
 		drawGameBounds();
+		drawShapeRefreshers();
+		drawSigilButton();
 		drawHeroUIComponents();
+
 		drawSkillBar();
 		drawAnalogControl();
 		drawHero();
@@ -103,42 +107,72 @@ public class GameRenderer {
 
 		_batch.end();
 	}
+
+	private void drawShapeRefreshers(){
+		_shapeRenderer.begin(ShapeType.Filled);
+		_shapeRenderer.setColor(Color.WHITE);
+
+		_shapeRenderer.rect(
+				_world.getCircleRefresher().getX(),
+				_world.getCircleRefresher().getY(),
+				_world.getCircleRefresher().getWidth(),
+				_world.getCircleRefresher().getHeight()
+		);
+
+		_shapeRenderer.rect(
+				_world.getSquareRefresher().getX(),
+				_world.getSquareRefresher().getY(),
+				_world.getSquareRefresher().getWidth(),
+				_world.getSquareRefresher().getHeight()
+		);
+		_shapeRenderer.rect(
+				_world.getRectangleRefresher().getX(),
+				_world.getRectangleRefresher().getY(),
+				_world.getRectangleRefresher().getWidth(),
+				_world.getRectangleRefresher().getHeight()
+		);
+		_shapeRenderer.rect(
+				_world.getTriangleRefresher().getX(),
+				_world.getTriangleRefresher().getY(),
+				_world.getTriangleRefresher().getWidth(),
+				_world.getTriangleRefresher().getHeight()
+		);
+		_shapeRenderer.rect(
+				_world.getTrapazoidRefresher().getX(),
+				_world.getTrapazoidRefresher().getY(),
+				_world.getTrapazoidRefresher().getWidth(),
+				_world.getTrapazoidRefresher().getHeight()
+		);
+
+		_shapeRenderer.end();
+	}
+
+	private void drawSigilButton() {
+		_shapeRenderer.begin(ShapeType.Filled);
+		_shapeRenderer.setColor(Color.CHARTREUSE);
+
+		_shapeRenderer.rect(
+				_world.getSigilButton().getX(),
+				_world.getSigilButton().getY(),
+				_world.getSigilButton().getWidth(),
+				_world.getSigilButton().getHeight()
+		);
+
+		_shapeRenderer.end();
+	}
 	
 	private void drawHeroUIComponents() {
 		_shapeRenderer.begin(ShapeType.Line);
 		_shapeRenderer.setColor(Color.GREEN);
 		
-		_shapeRenderer.rect(
-				_world.getHeroMaxHealthBar().getX(), 
-				_world.getHeroMaxHealthBar().getY(), 
-				_world.getHeroMaxHealthBar().getWidth(), 
-				_world.getHeroMaxHealthBar().getHeight());
-		
-		_shapeRenderer.setColor(Color.GOLD);
-		_shapeRenderer.rect(
-				_world.getHeroMaxMagicBar().getX(), 
-				_world.getHeroMaxMagicBar().getY(), 
-				_world.getHeroMaxMagicBar().getWidth(), 
-				_world.getHeroMaxMagicBar().getHeight());
-		
+		for(UIControl node: _world.getHealthNodes()){
+			_shapeRenderer.ellipse(node.getX(), node.getY(), node.getWidth(), node.getHeight());
+		}
 		
 		_shapeRenderer.end();
 		
 		_shapeRenderer.begin(ShapeType.Filled);
 		_shapeRenderer.setColor(Color.GREEN);
-		
-		_shapeRenderer.rect(
-				_world.getHeroCurrentHealthBar().getX(), 
-				_world.getHeroCurrentHealthBar().getY(), 
-				_world.getHeroCurrentHealthBar().getWidth(), 
-				_world.getHeroCurrentHealthBar().getHeight());
-		
-		_shapeRenderer.setColor(Color.GOLD);
-		_shapeRenderer.rect(
-				_world.getHeroCurrentMagicBar().getX(), 
-				_world.getHeroCurrentMagicBar().getY(), 
-				_world.getHeroCurrentMagicBar().getWidth(), 
-				_world.getHeroCurrentMagicBar().getHeight());
 		
 		
 		_shapeRenderer.end();
@@ -194,11 +228,17 @@ public class GameRenderer {
 		_shapeRenderer.begin(ShapeType.Filled);
 		_shapeRenderer.setColor(Color.WHITE);
 
-		_shapeRenderer.circle(_world.getAnalogLeft().getX(), _world.getAnalogLeft().getY(),
-				_world.getAnalogLeft().getWidth() / 2);
+		_shapeRenderer.ellipse(
+				_world.getAnalogLeft().getX(), 
+				_world.getAnalogLeft().getY(),
+				_world.getAnalogLeft().getWidth(),
+				_world.getAnalogLeft().getWidth());
 
-		_shapeRenderer.circle(_world.getAnalogRight().getX(), _world.getAnalogRight().getY(),
-				_world.getAnalogRight().getWidth() / 2);
+		_shapeRenderer.ellipse(
+				_world.getAnalogRight().getX(), 
+				_world.getAnalogRight().getY(),
+				_world.getAnalogRight().getWidth(),
+				_world.getAnalogRight().getHeight());
 
 		_shapeRenderer.end();
 	}
@@ -214,7 +254,10 @@ public class GameRenderer {
 			}
 
 			if (spell.getSpellShape().equalsIgnoreCase("circle")) {
-				_shapeRenderer.circle(spell.getX(), spell.getY(), spell.getHeight() / 2);
+				_shapeRenderer.ellipse(spell.getX(), 
+						spell.getY(), 
+						spell.getWidth(),
+						spell.getHeight());
 			} else if (spell.getSpellShape().equalsIgnoreCase("rectangle")) {
 				_shapeRenderer.rect(spell.getX(), spell.getY(), spell.getWidth(), spell.getHeight());
 			}
@@ -232,9 +275,10 @@ public class GameRenderer {
 		_shapePosition = _world.getShapeSelector().getSelectedPosition();
 
 		if (_world.getShapeSelector().getSpellShape(_shapePosition).toString().equalsIgnoreCase("circle"))
-			_shapeRenderer.circle(_world.getSpellBox().getX(), 
+			_shapeRenderer.ellipse(_world.getSpellBox().getX(), 
 					_world.getSpellBox().getY(), 
-					_world.getSpellBox().getWidth() / 2);
+					_world.getSpellBox().getWidth(), 
+					_world.getSpellBox().getHeight());
 		
 		
 		

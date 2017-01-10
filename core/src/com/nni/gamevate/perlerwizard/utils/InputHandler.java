@@ -45,10 +45,10 @@ public class InputHandler {
 				_touchCords.set(screenX, screenY, 0);
 				_camera.unproject(_touchCords);
 
-				if (_touchCords.x >= _world.getSpellBox().getX()
-						&& _touchCords.x <= _world.getSpellBox().getX() + _world.getSpellBox().getWidth()
-						&& _touchCords.y >= _world.getSpellBox().getY()
-						&& _touchCords.y <= _world.getSpellBox().getY() + _world.getSpellBox().getHeight()) {
+				if (_touchCords.x >= _world.getLeftWall().getX()
+						&& _touchCords.x <= _world.getRightWall().getX()
+						&& _touchCords.y >= 0
+						&& _touchCords.y <= _world.getUpperWall().getY()) {
 
 					_world.castSpell();
 					return true;
