@@ -97,8 +97,8 @@ public class GameWorld {
 
 		_spellBox = new UIControl(1.75f, 1.75f, .5f, .5f);
 
-		_analogLeft = new UIControl(17, 2, 1, 1);
-		_analogRight = new UIControl(19, 2, 1, 1);
+		_analogLeft = new UIControl(16.5f, 1.5f, 1, 1);
+		_analogRight = new UIControl(18.5f, 1.5f, 1, 1);
 
 		_heroHealthNodes = new ArrayList<UIControl>();
 		for (int i = 0; i < 18; i++) {

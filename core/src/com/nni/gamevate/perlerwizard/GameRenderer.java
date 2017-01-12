@@ -74,8 +74,8 @@ public class GameRenderer {
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		_shapeRenderer.setProjectionMatrix(_camera.combined);
-		//drawInputData();
-		ViewportUtils.drawGrid(_viewport, _shapeRenderer);
+		
+		//ViewportUtils.drawGrid(_viewport, _shapeRenderer);
 		drawGameBounds();
 		drawShapeRefreshers();
 		drawSigilButton();
@@ -94,18 +94,6 @@ public class GameRenderer {
 		_viewport.update(width, height, true);
 		// hudViewport.update(width, height, true);
 		// ViewportUtils.debugPixelPerUnit(viewport);
-	}
-
-	private void drawInputData() {
-		_batch.setProjectionMatrix(_camera.combined);
-		_batch.begin();
-		int mouseX = Gdx.input.getX();
-		int mouseY = Gdx.input.getY();
-
-		_font.draw(_batch, "Mouse X : " + mouseX, 1.5f, 6);
-		_font.draw(_batch, "Mouse Y : " + mouseY, 1.5f, 7);
-
-		_batch.end();
 	}
 
 	private void drawShapeRefreshers(){

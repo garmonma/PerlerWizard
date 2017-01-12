@@ -1,11 +1,22 @@
 package com.nni.gamevate.perlerwizard.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nni.gamevate.perlerwizard.GameConstants;
@@ -17,13 +28,15 @@ import com.nni.gamevate.perlerwizard.PerlerWizard;
  *
  */
 public class MainWorldScreen extends AbstractScreen {
-
-	private OrthographicCamera _camera;
+	
+	private static final String UI_SKIN = "ui/uiskin.json";
 	private PerlerWizard _perlerWizard;
 	private Viewport _viewport;
-	private ShapeRenderer _shapeRenderer;
-	private SpriteBatch _batch;
-	private BitmapFont _font;
+
+	private AssetManager am;
+	private Stage stage;
+	private Actor actor;
+	private Skin skin;
 	
 	public MainWorldScreen(final PerlerWizard perlerWizard) {
 		System.out.println("On Main Menu Screen");
@@ -34,14 +47,9 @@ public class MainWorldScreen extends AbstractScreen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		_camera.update();
-		_batch.setProjectionMatrix(_camera.combined);
-
-		_batch.begin();
-		_font.draw(_batch, "Welcome to Perler Wizard", 1, 30);
-		_font.draw(_batch, "Tap anyhere to begin!", 1, -30);
-		_batch.end();
+		
+		stage.act(delta);
+		stage.draw();
 
 		if (Gdx.input.justTouched())
 			_perlerWizard.setScreen(new GameScreen(_perlerWizard));
@@ -50,14 +58,50 @@ public class MainWorldScreen extends AbstractScreen {
 
 	@Override
 	public void show() {
-		_camera = new OrthographicCamera();
-		_viewport = new FitViewport(800, 480, _camera);
-		_shapeRenderer = new ShapeRenderer();
-		_batch = new SpriteBatch();
-		_font = new BitmapFont();
+		_viewport = new FitViewport(800, 480);
+		stage = new Stage(_viewport);
+		
+		am = new AssetManager();
+		am.getLogger().setLevel(Logger.DEBUG);
+		
+		am.load(UI_SKIN, Skin.class);
+		am.finishLoading();
+		skin = am.get(UI_SKIN);
+		
+		initUI();
+		
+		Gdx.input.setInputProcessor(stage);
 		
 
 	}
+	
+	private void initUI(){
+		Table table= new Table();
+		
+		table.defaults().pad(20);
+		
+		for(int i = 0; i < 4; i++){
+			TextButton textButton = new TextButton("Button " + i, skin);
+			
+			textButton.addListener(new ChangeListener(){
+
+				@Override
+				public void changed(ChangeEvent event, Actor actor) {
+					Gdx.app.log("Button Change", "event = " + event + " Actor = " + actor);
+					
+				}
+				
+			});
+			table.add(textButton);
+			
+		}
+		
+		table.row();
+		
+		stage.addActor(table);
+	}
+	
+	
 
 	@Override
 	public void hide() {
@@ -67,7 +111,12 @@ public class MainWorldScreen extends AbstractScreen {
 	
 	@Override
 	public void resize(int width, int height) {
-		_viewport.update(width, height);
+		_viewport.update(width, height, true);
+	}
+	
+	@Override
+	public void dispose() {
+		stage.dispose();
 	}
 
 }

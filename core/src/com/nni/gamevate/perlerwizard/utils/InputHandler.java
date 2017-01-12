@@ -104,20 +104,20 @@ public class InputHandler {
 				_touchCords.set(screenX, screenY, 0);
 				_camera.unproject(_touchCords);
 				
-				if(_touchCords.x >= _world.getAnalogLeft().getX() - _world.getAnalogLeft().getWidth() / 2
-						&& _touchCords.x <= _world.getAnalogLeft().getX() + _world.getAnalogLeft().getWidth() / 2
-						&& _touchCords.y >= _world.getAnalogLeft().getY() - _world.getAnalogLeft().getHeight() / 2
-						&& _touchCords.y <= _world.getAnalogLeft().getY() + _world.getAnalogLeft().getHeight() / 2){
+				if(_touchCords.x >= _world.getAnalogLeft().getX() 
+						&& _touchCords.x <= _world.getAnalogLeft().getX() + _world.getAnalogLeft().getWidth()
+						&& _touchCords.y >= _world.getAnalogLeft().getY() 
+						&& _touchCords.y <= _world.getAnalogLeft().getY() + _world.getAnalogLeft().getHeight()){
 						
 					_world.getHero().setMoving(true);
 					_world.getHero().setDirection("left");
 					return true;
 				}
 				
-				if(_touchCords.x >= _world.getAnalogRight().getX() - _world.getAnalogRight().getWidth() / 2
-						&& _touchCords.x <= _world.getAnalogRight().getX() + _world.getAnalogRight().getWidth() / 2
-						&& _touchCords.y >= _world.getAnalogRight().getY() - _world.getAnalogRight().getHeight() / 2
-						&& _touchCords.y <= _world.getAnalogRight().getY() + _world.getAnalogRight().getHeight() / 2){
+				if(_touchCords.x >= _world.getAnalogRight().getX() 
+						&& _touchCords.x <= _world.getAnalogRight().getX() + _world.getAnalogRight().getWidth()
+						&& _touchCords.y >= _world.getAnalogRight().getY() 
+						&& _touchCords.y <= _world.getAnalogRight().getY() + _world.getAnalogRight().getHeight()){
 						
 					_world.getHero().setMoving(true);
 					_world.getHero().setDirection("right");
@@ -146,19 +146,19 @@ public class InputHandler {
 				_touchCords.set(screenX, screenY, 0);
 				_camera.unproject(_touchCords);
 				
-				if(_touchCords.x >= _world.getAnalogLeft().getX() - _world.getAnalogLeft().getWidth() / 2
-						&& _touchCords.x <= _world.getAnalogLeft().getX() + _world.getAnalogLeft().getWidth() / 2
-						&& _touchCords.y >= _world.getAnalogLeft().getY() - _world.getAnalogLeft().getHeight() / 2
-						&& _touchCords.y <= _world.getAnalogLeft().getY() + _world.getAnalogLeft().getHeight() / 2){
+				if(_touchCords.x >= _world.getAnalogLeft().getX()
+						&& _touchCords.x <= _world.getAnalogLeft().getX() + _world.getAnalogLeft().getWidth()
+						&& _touchCords.y >= _world.getAnalogLeft().getY() 
+						&& _touchCords.y <= _world.getAnalogLeft().getY() + _world.getAnalogLeft().getHeight()){
 						
 					_world.getHero().setMoving(false);
 					return true;
 				}
 				
-				if(_touchCords.x >= _world.getAnalogRight().getX() - _world.getAnalogRight().getWidth() / 2
-						&& _touchCords.x <= _world.getAnalogRight().getX() + _world.getAnalogRight().getWidth() / 2
-						&& _touchCords.y >= _world.getAnalogRight().getY() - _world.getAnalogRight().getHeight() / 2
-						&& _touchCords.y <= _world.getAnalogRight().getY() + _world.getAnalogRight().getHeight() / 2){
+				if(_touchCords.x >= _world.getAnalogRight().getX() 
+						&& _touchCords.x <= _world.getAnalogRight().getX() + _world.getAnalogRight().getWidth()
+						&& _touchCords.y >= _world.getAnalogRight().getY() 
+						&& _touchCords.y <= _world.getAnalogRight().getY() + _world.getAnalogRight().getHeight()){
 						
 					_world.getHero().setMoving(false);
 					return true;
