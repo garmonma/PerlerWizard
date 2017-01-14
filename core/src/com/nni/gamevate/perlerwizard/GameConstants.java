@@ -11,6 +11,9 @@ public class GameConstants {
 	public static final float WORLD_WIDTH = 20f; // world units
 	public static final float WORLD_HEIGHT = 12f; // world units
 	
+	public static final float UI_SCREEN_WIDTH = 800;
+	public static final float UI_SCREEN_HEIGHT = 480;
+	
 	public static final float SCREEN_WIDTH = 800f; // Pixels
 	public static final float SCREEN_HEIGHT = 480f; //Pixels
 	

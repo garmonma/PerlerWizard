@@ -1,4 +1,4 @@
-package com.nni.gamevate.perlerwizard;
+package com.nni.gamevate.perlerwizard.utils;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
