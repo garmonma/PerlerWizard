@@ -8,9 +8,9 @@ import com.nni.gamevate.perlerwizard.PerlerWizard;
  * @author Marcus Garmon 12/29/2016
  *
  */
-public abstract class AbstractScreen implements Screen {
+public abstract class ScreenAdapter implements Screen {
 
-	public AbstractScreen() {
+	public ScreenAdapter() {
 	}
 
 	@Override

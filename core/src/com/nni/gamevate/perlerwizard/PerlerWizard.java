@@ -1,38 +1,38 @@
 package com.nni.gamevate.perlerwizard;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.nni.gamevate.perlerwizard.screens.SplashScreen;
-import com.nni.gamevate.perlerwizard.utils.AssetLoader;
-
+import com.nni.gamevate.perlerwizard.screens.loading.SplashScreen;
 
 /**
  * @author Marcus Garmon
  * @date Dec 29, 2016
  */
 public class PerlerWizard extends Game {
+	
+	private SpriteBatch _spriteBatch;
+	private AssetManager _assetManager;
 
 	@Override
 	public void create() {
-		AssetLoader.load();
+		_spriteBatch = new SpriteBatch();
+		_assetManager = new AssetManager();
+		
 		this.setScreen(new SplashScreen(this));
-
 	}
 
-	public void render() {
-		super.render();
+	@Override
+	public void dispose() {
+		_spriteBatch.dispose();
+		_assetManager.dispose();
 	}
 	
-	@Override
-	public void resize(int width, int height) {
-		
+	public SpriteBatch getSpriteBatch(){
+		return _spriteBatch;
 	}
-
-	public void dispose() {
-
+	
+	public AssetManager getAssetManager(){
+		return _assetManager;
 	}
 }
