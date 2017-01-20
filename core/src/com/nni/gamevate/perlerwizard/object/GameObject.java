@@ -47,4 +47,12 @@ public abstract class GameObject implements Collidable {
 	public float getWidth() {
 		return _width;
 	}
+	
+	public Vector2 getVelocity(){
+		return _velocity;
+	}
+	
+	public Vector2 getPosition(){
+		return _position;
+	}
 }

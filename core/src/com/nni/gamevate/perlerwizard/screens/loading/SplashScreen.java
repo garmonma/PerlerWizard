@@ -70,7 +70,7 @@ public class SplashScreen extends ScreenAdaptar {
 
 	@Override
 	public void hide() {
-
+		dispose();
 	}
 	
 	@Override

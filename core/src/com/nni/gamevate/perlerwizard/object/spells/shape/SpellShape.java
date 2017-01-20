@@ -1,5 +1,6 @@
 package com.nni.gamevate.perlerwizard.object.spells.shape;
 
+import com.badlogic.gdx.math.Vector2;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.character.Hero;
 import com.nni.gamevate.perlerwizard.object.character.Shield;
@@ -28,17 +29,17 @@ public abstract class SpellShape {
 	public SpellShape() {
 		_dmgMultiplier = 1.0;
 		_spinMultiplier = 1.0;
-		_bounceAngle = DEFAULT_ANGLE;
+		_bounceAngle = DEFAULT_ANGLE;//new Vector2().setAngle(DEFAULT_ANGLE);
 
 	}
 
-	public void bounce(Spell spell, Collidable collidable){
+	public Vector2 bounce(Spell spell, Collidable collidable){
 		if(collidable instanceof Shield){
-			bounceOffShield(spell, (Shield)collidable);
+			return bounceOffShield(spell, (Shield)collidable);
 		}
 		
 		if(collidable instanceof Enemy){
-			bounceOffEnemy(spell, (Enemy)collidable);
+			return bounceOffEnemy(spell, (Enemy)collidable);
 		}
 		
 		if(collidable instanceof Hero){
@@ -46,15 +47,17 @@ public abstract class SpellShape {
 		}
 		
 		if(collidable instanceof Wall){
-			bounceOffWall(spell, (Wall)collidable);
+			return bounceOffWall(spell, (Wall)collidable);
 		}
+		
+		return null;
 	}
 	
-	protected abstract void bounceOffShield(Spell spell, Shield shield);
+	protected abstract Vector2 bounceOffShield(Spell spell, Shield shield);
 	
-	protected abstract void bounceOffEnemy(Spell spell, Enemy enemy);
+	protected abstract Vector2 bounceOffEnemy(Spell spell, Enemy enemy);
 	
-	protected abstract void bounceOffWall(Spell spell, Wall wall);
+	protected abstract Vector2 bounceOffWall(Spell spell, Wall wall);
 	
 	protected abstract void bounceOffHero(Spell spell, Hero hero);
 

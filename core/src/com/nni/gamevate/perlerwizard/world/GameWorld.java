@@ -77,6 +77,9 @@ public class GameWorld {
 
 		_upperWall = new Wall(GameConstants.RIGHT_WALL - GameConstants.LEFT_WALL, .10f, GameConstants.LEFT_WALL,
 				GameConstants.WORLD_HEIGHT, "upper");
+		_upperWall.setDirection(90);
+		
+		
 
 		_rightWall = new Wall(.10f, GameConstants.WORLD_HEIGHT, GameConstants.RIGHT_WALL, 0, "right");
 

@@ -26,15 +26,19 @@ public class MainWorldScreen extends UIScreen {
 
 	
 	Button textButton;
+	private final PerlerWizard _perlerWizard;
 
 	public MainWorldScreen(PerlerWizard perlerWizard) {
 		super(perlerWizard);
 		System.out.println("On Main Menu Screen");
+		_perlerWizard = perlerWizard;
 	}
 
 	@Override
 	public void render(float delta) {
-		super.render(delta);
+		//super.render(delta);
+		
+		_perlerWizard.setScreen(new GameScreen(_perlerWizard));
 
 	}
 

@@ -1,5 +1,7 @@
 package com.nni.gamevate.perlerwizard.object.spells;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.nni.gamevate.perlerwizard.GameConstants;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.GameObject;
@@ -28,6 +30,8 @@ public final class Spell extends GameObject implements Castable {
 	private int _bounceCounter;
 	private long _spellTimer;
 	private boolean _isEvaporated;
+	
+	private Vector2 _bounceChange;
 
 
 	public Spell(float width, float height, float x, float y, SpellColor color, SpellShape shape) {
@@ -40,11 +44,16 @@ public final class Spell extends GameObject implements Castable {
 		_spin = DEFAULT_SPIN;
 		_bounceCount = DEFAULT_BOUNCE_COUNT;
 		_bounceCounter = _bounceCount;
+		//_position.setAngle(90);
 
 		_spellTimer = _color.getCooldown();
 
 		_isEvaporated = false;
 
+		_bounceChange = new Vector2();
+		
+		_direction.set(_position).setAngle(_shape.getBounceAngle()).nor();
+		_velocity.set(_direction).scl(_speed);
 	}
 
 	@Override
@@ -63,10 +72,17 @@ public final class Spell extends GameObject implements Castable {
 	@Override
 	public void update(float delta) {
 
-		_direction.set(_position).setAngle(_shape.getBounceAngle()).nor();
-		_velocity.set(_direction).scl(_speed);
+		
 		_movement.set(_velocity).scl(delta);
 		_position.add(_movement);
+		
+//		if((int)delta % 10 == 0){
+//			Gdx.app.log("Angle", _direction.angle() + "");
+//			Gdx.app.log("Radians", _direction.angleRad() + "");
+//			Gdx.app.log("P Angle", _position.angle() + "");
+//			Gdx.app.log("P Radians", _position.angleRad() + "");
+//		}
+		
 
 		if (_position.y < GameConstants.LOWER_VOID) {
 			evaporate();
@@ -84,7 +100,26 @@ public final class Spell extends GameObject implements Castable {
 	}
 	
 	public void bounce(Collidable object){
-		_shape.bounce(this, object);
+		Vector2 change = _shape.bounce(this, object);
+		
+		Gdx.app.log("Change", change + "");
+		
+		
+		if(change != null){
+			Gdx.app.log("Change Angle", change.angle() + "");
+			
+			
+			Gdx.app.log("before velocity", _velocity + "");
+			Gdx.app.log("before position", _position + "");
+			Gdx.app.log("Before Angle", _position.angle() + "");
+			//_velocity.set(change).scl(_speed)
+			change.scl(_speed);
+			_velocity = change;
+			
+			Gdx.app.log("velocity", _velocity + "");
+			Gdx.app.log("position", _position + "");
+			Gdx.app.log("After Angle", _position.angle() + "");
+		}
 	}
 
 	@Override
