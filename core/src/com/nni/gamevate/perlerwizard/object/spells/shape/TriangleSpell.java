@@ -1,11 +1,11 @@
 package com.nni.gamevate.perlerwizard.object.spells.shape;
 
 import com.badlogic.gdx.math.Vector2;
+import com.nni.gamevate.perlerwizard.object.Wall;
 import com.nni.gamevate.perlerwizard.object.character.Hero;
 import com.nni.gamevate.perlerwizard.object.character.Shield;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.spells.Spell;
-import com.nni.gamevate.perlerwizard.object.walls.Wall;
 
 /**
  * @author Marcus Garmon

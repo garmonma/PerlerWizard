@@ -1,4 +1,4 @@
-package com.nni.gamevate.perlerwizard.ui;
+package com.nni.gamevate.perlerwizard.object;
 /**
  * 
  * @author Marcus Garmon

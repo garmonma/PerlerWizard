@@ -1,7 +1,4 @@
-package com.nni.gamevate.perlerwizard.object.walls;
-
-import com.nni.gamevate.perlerwizard.object.Collidable;
-import com.nni.gamevate.perlerwizard.object.GameObject;
+package com.nni.gamevate.perlerwizard.object;
 
 /**
  * @author Marcus Garmon

@@ -1,10 +1,12 @@
 package com.nni.gamevate.perlerwizard.screens.game;
 
 
-import com.nni.gamevate.perlerwizard.GameRenderer;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.nni.gamevate.perlerwizard.GamePlayRenderer;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
+import com.nni.gamevate.perlerwizard.controllers.GamePlayController;
 import com.nni.gamevate.perlerwizard.screens.ScreenAdaptar;
-import com.nni.gamevate.perlerwizard.world.GameWorld;
 
 /**
  * @author Marcus Garmon 12/29/2016
@@ -12,12 +14,16 @@ import com.nni.gamevate.perlerwizard.world.GameWorld;
 public class GameScreen extends ScreenAdaptar {
 	
 	private PerlerWizard _perlerWizard;
-	private GameWorld _world;
-	private GameRenderer _renderer;
+	private GamePlayController _world;
+	private GamePlayRenderer _renderer;
 	
+	private SpriteBatch _batch;
+	private AssetManager _assetManager;
 	
-	public GameScreen(final PerlerWizard perlerWizard) {
+	public GameScreen(PerlerWizard perlerWizard) {
 		_perlerWizard = perlerWizard;
+		_batch = _perlerWizard.getSpriteBatch();
+		_assetManager = _perlerWizard.getAssetManager();
 	}
 	
 	@Override
@@ -28,9 +34,8 @@ public class GameScreen extends ScreenAdaptar {
 		
 	@Override
 	public void show() {
-		System.out.println("On Game Screen");
-		_world = new GameWorld();
-		_renderer = new GameRenderer(_world);
+		_world = new GamePlayController();
+		_renderer = new GamePlayRenderer(_world, _batch, _assetManager);
 
 	}
 

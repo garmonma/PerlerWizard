@@ -1,4 +1,4 @@
-package com.nni.gamevate.perlerwizard.world;
+package com.nni.gamevate.perlerwizard.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,8 @@ import com.nni.gamevate.perlerwizard.GameConstants;
 import com.nni.gamevate.perlerwizard.levelloader.Level;
 import com.nni.gamevate.perlerwizard.levelloader.LevelLoader;
 import com.nni.gamevate.perlerwizard.levelloader.Wave;
+import com.nni.gamevate.perlerwizard.object.UIControl;
+import com.nni.gamevate.perlerwizard.object.Wall;
 import com.nni.gamevate.perlerwizard.object.character.Hero;
 import com.nni.gamevate.perlerwizard.object.character.Shield;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
@@ -22,14 +24,12 @@ import com.nni.gamevate.perlerwizard.object.spells.color.WhiteSpell;
 import com.nni.gamevate.perlerwizard.object.spells.shape.CircleSpell;
 import com.nni.gamevate.perlerwizard.object.spells.shape.RectangleSpell;
 import com.nni.gamevate.perlerwizard.object.spells.shape.SpellShape;
-import com.nni.gamevate.perlerwizard.object.walls.Wall;
-import com.nni.gamevate.perlerwizard.ui.UIControl;
 
 /**
  * @author Marcus Garmon
  * @date Dec 29, 2016
  */
-public class GameWorld {
+public class GamePlayController {
 
 	private Hero _hero;
 	private Shield _shield;
@@ -72,7 +72,7 @@ public class GameWorld {
 	private SpellColor _sc;
 	private SpellShape _ss;
 
-	public GameWorld() {
+	public GamePlayController() {
 		// _level = LevelLoader.load(Gdx.files.internal("levels/level_0.json"));
 
 		_upperWall = new Wall(GameConstants.RIGHT_WALL - GameConstants.LEFT_WALL, .10f, GameConstants.LEFT_WALL,

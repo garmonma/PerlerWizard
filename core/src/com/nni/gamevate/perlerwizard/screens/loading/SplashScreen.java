@@ -1,6 +1,7 @@
 package com.nni.gamevate.perlerwizard.screens.loading;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,7 +17,6 @@ import com.nni.gamevate.perlerwizard.screens.ScreenAdaptar;
 import com.nni.gamevate.perlerwizard.screens.game.MainWorldScreen;
 
 /**
- * 
  * @author Marcus Garmon 12/29/2016
  *
  */
@@ -38,7 +38,6 @@ public class SplashScreen extends ScreenAdaptar {
 		_perlerWizard = perlerWizard;
 		_batch = _perlerWizard.getSpriteBatch();
 		_assetManager = perlerWizard.getAssetManager();
-
 	}
 
 	@Override
@@ -51,7 +50,7 @@ public class SplashScreen extends ScreenAdaptar {
 		_batch.end();
 		
 		if(TimeUtils.millis() - _startTime > 3000){
-			_perlerWizard.setScreen(new MainWorldScreen(_perlerWizard));	
+			_perlerWizard.setScreen(new LoadingScreen(_perlerWizard));	
 		}		
 	}
 
@@ -61,7 +60,6 @@ public class SplashScreen extends ScreenAdaptar {
 		_viewport = new FitViewport(GameConstants.SCREEN_WIDTH, GameConstants.SCREEN_HEIGHT, _camera);
 		_startTime = TimeUtils.millis();
 		
-		_assetManager.load(AssetDescriptors.UI_SKIN);
 		_assetManager.load(AssetDescriptors.SPLASH_BACKGROUND);
 		_assetManager.finishLoading();
 		
@@ -82,5 +80,4 @@ public class SplashScreen extends ScreenAdaptar {
 	public void dispose() {
 		
 	}
-
 }

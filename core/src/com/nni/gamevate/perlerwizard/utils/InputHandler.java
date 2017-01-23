@@ -4,7 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
-import com.nni.gamevate.perlerwizard.world.GameWorld;
+import com.nni.gamevate.perlerwizard.controllers.GamePlayController;
 
 /**
  * 
@@ -13,14 +13,14 @@ import com.nni.gamevate.perlerwizard.world.GameWorld;
  */
 public class InputHandler {
 
-	private GameWorld _world;
+	private GamePlayController _world;
 	private Vector3 _touchCords;
 	private OrthographicCamera _camera;
 
 	private InputAdapter _skillBarProcessor;
 	private InputAdapter _analogProcessor;
 
-	public InputHandler(GameWorld world, OrthographicCamera camera) {
+	public InputHandler(GamePlayController world, OrthographicCamera camera) {
 		_world = world;
 		_touchCords = new Vector3();
 		_camera = camera;

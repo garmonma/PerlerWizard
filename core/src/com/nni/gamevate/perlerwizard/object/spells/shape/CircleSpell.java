@@ -3,11 +3,11 @@ package com.nni.gamevate.perlerwizard.object.spells.shape;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.nni.gamevate.perlerwizard.object.Wall;
 import com.nni.gamevate.perlerwizard.object.character.Hero;
 import com.nni.gamevate.perlerwizard.object.character.Shield;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.spells.Spell;
-import com.nni.gamevate.perlerwizard.object.walls.Wall;
 
 /**
  * 
@@ -37,7 +37,6 @@ public class CircleSpell extends SpellShape {
 		Vector2 reflectionAngle = spell.getVelocity().cpy();
 		Vector2 wallVector = shield.getPosition().cpy().rotate90(0);
 		
-
 		float dot = reflectionAngle.dot(wallVector);
 		dot *= -2.0f;
 		wallVector.scl(dot);
@@ -50,11 +49,9 @@ public class CircleSpell extends SpellShape {
 
 	@Override
 	protected Vector2 bounceOffEnemy(Spell spell, Enemy enemy) {
-		
 		Vector2 reflectionAngle = spell.getVelocity().cpy();
 		Vector2 wallVector = enemy.getPosition().cpy().rotate90(0);
 		
-
 		float dot = reflectionAngle.dot(wallVector);
 		dot *= -2.0f;
 		wallVector.scl(dot);
@@ -62,34 +59,7 @@ public class CircleSpell extends SpellShape {
 
 		reflectionAngle.set(wallVector).nor();
 		
-		//_bounceAngle = reflectionAngle.angle();
-		
 		return reflectionAngle;
-		
-		
-
-		//return reflectionAngle;
-
-//		Gdx.app.log("BounceOffEnemy", "Bouncing");
-//		// front
-//		if (spell.getY() >= enemy.getY()) {
-//			float enemyFrontWidth = enemy.getX() + enemy.getWidth();
-//			float spellHitDifferenceFront = enemyFrontWidth - spell.getX();
-//			float hitPct = (100 * spellHitDifferenceFront) / enemy.getWidth();
-//			_bounceAngle = ((hitPct * 1.4f) + 200f);
-//			Gdx.app.log("Bounce Difference", spellHitDifferenceFront + "");
-//			Gdx.app.log("BouncePct", hitPct + "");
-//			return;
-//		}
-//
-//		// back
-//		if (spell.getY() <= enemy.getY() + enemy.getHeight()) {
-//			float enemyFrontWidth = enemy.getX() + enemy.getWidth();
-//			float spellHitDifferenceFront = enemyFrontWidth - spell.getX();
-//			float hitPct = (100 * spellHitDifferenceFront) / enemy.getWidth();
-//			_bounceAngle = ((hitPct * 1.4f) + 20f);
-//			return;
-//		}
 
 	}
 
@@ -108,10 +78,7 @@ public class CircleSpell extends SpellShape {
 		
 		//_bounceAngle = reflectionAngle.angle();
 		
-		
-
 		return reflectionAngle;
-
 	}
 
 	@Override

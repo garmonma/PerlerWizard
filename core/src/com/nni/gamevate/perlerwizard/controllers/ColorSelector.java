@@ -1,4 +1,4 @@
-package com.nni.gamevate.perlerwizard.world;
+package com.nni.gamevate.perlerwizard.controllers;
 
 import com.nni.gamevate.perlerwizard.object.spells.color.SpellColor;
 

@@ -1,58 +1,50 @@
 package com.nni.gamevate.perlerwizard.screens.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.badlogic.gdx.utils.Logger;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.nni.gamevate.perlerwizard.GameConstants;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.nni.gamevate.perlerwizard.GameWorldRenderer;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
-import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
-import com.nni.gamevate.perlerwizard.screens.UIScreen;
+import com.nni.gamevate.perlerwizard.controllers.GameWorldController;
 
 /**
  * 
  * @author Marcus Garmon 12/29/2016
  *
  */
-public class MainWorldScreen extends UIScreen {
-
-
+public class MainWorldScreen extends ScreenAdapter {
+	private PerlerWizard _perlerWizard;
+	private GameWorldController _controller;
+	private GameWorldRenderer _renderer;
 	
-	Button textButton;
-	private final PerlerWizard _perlerWizard;
-
+	private SpriteBatch _batch;
+	private AssetManager _assetManager;
+	
 	public MainWorldScreen(PerlerWizard perlerWizard) {
-		super(perlerWizard);
-		System.out.println("On Main Menu Screen");
 		_perlerWizard = perlerWizard;
+		_batch = _perlerWizard.getSpriteBatch();
+		_assetManager = _perlerWizard.getAssetManager();
 	}
 
 	@Override
 	public void render(float delta) {
-		//super.render(delta);
+		if(Gdx.input.isTouched()){
+			_perlerWizard.setScreen(new GameScreen(_perlerWizard));
+		}
 		
-		_perlerWizard.setScreen(new GameScreen(_perlerWizard));
-
+		_controller.update(delta);
+		_renderer.render(delta);
 	}
-
-	@Override
-	protected Actor createUi() {
-		Skin skin = _assetManager.get(AssetDescriptors.UI_SKIN);
 	
-		Touchpad tp = new Touchpad(1f, skin);
-		tp.setBounds(150, 150, 200, 50);
-
-	    textButton = new Button(skin);
-		textButton.setSize(64, 32);
-		textButton.setPosition(800/2, 480/2);
-
-		return tp;
+	@Override
+	public void show() {
+		_controller = new GameWorldController();
+		_renderer = new GameWorldRenderer(_controller, _batch, _assetManager);
+	}
+	
+	@Override
+	public void resize(int width, int height) {
+		_renderer.resize(width, height);
 	}
 }
