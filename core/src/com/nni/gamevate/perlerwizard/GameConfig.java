@@ -4,9 +4,9 @@ package com.nni.gamevate.perlerwizard;
  * @author Marcus Garmon
  * @date Dec 29, 2016
  */
-public class GameConstants {
+public class GameConfig {
 	
-	private GameConstants(){}
+	private GameConfig(){}
 	
 	public static final float WORLD_WIDTH = 20f; // world units
 	public static final float WORLD_HEIGHT = 12f; // world units

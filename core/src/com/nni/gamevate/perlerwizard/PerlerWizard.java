@@ -3,6 +3,7 @@ package com.nni.gamevate.perlerwizard;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.nni.gamevate.perlerwizard.network.ClientConnection;
 import com.nni.gamevate.perlerwizard.screens.loading.SplashScreen;
 
 /**
@@ -13,11 +14,13 @@ public class PerlerWizard extends Game {
 	
 	private SpriteBatch _spriteBatch;
 	private AssetManager _assetManager;
+	private ClientConnection connection;
 
 	@Override
 	public void create() {
 		_spriteBatch = new SpriteBatch();
 		_assetManager = new AssetManager();
+		connection = new ClientConnection();
 		
 		this.setScreen(new SplashScreen(this));
 	}

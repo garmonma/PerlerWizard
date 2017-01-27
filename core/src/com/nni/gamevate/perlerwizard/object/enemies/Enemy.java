@@ -11,28 +11,6 @@ import com.nni.gamevate.perlerwizard.object.GameObject;
  */
 public class Enemy extends GameObject{
 	
-	public enum EnemyType{
-		GoblinInitiate(3, 1.0),
-		MountedLance(12, 1.5),
-		Dragon(25, 2.5);
-		
-		private final double health;
-		private final double attackSpeed;
-		
-		EnemyType(double health, double attackSpeed){
-			this.health = health;
-			this.attackSpeed = attackSpeed;
-		}
-		
-		public double getHealth(){
-			return health;
-		}
-		
-		public double getAttackSpeed(){
-			return attackSpeed;
-		}
-	}
-	
 	private Rectangle _collisionBounds;
 	private EnemyType _type;
 	private double _health;

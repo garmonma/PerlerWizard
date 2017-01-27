@@ -58,7 +58,7 @@ public class GamePlayRenderer {
 		_inputMultiplexer.addProcessor(_inputHandler.getAnalogProcessor());
 		Gdx.input.setInputProcessor(_inputMultiplexer);
 
-		_viewport = new FitViewport(GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT, _camera);
+		_viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, _camera);
 
 		_shapeRenderer = new ShapeRenderer();
 		

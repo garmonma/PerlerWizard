@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.nni.gamevate.perlerwizard.GameConstants;
+import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.screens.ScreenAdaptar;
@@ -57,7 +57,7 @@ public class SplashScreen extends ScreenAdaptar {
 	@Override
 	public void show() {
 		_camera = new OrthographicCamera();
-		_viewport = new FitViewport(GameConstants.SCREEN_WIDTH, GameConstants.SCREEN_HEIGHT, _camera);
+		_viewport = new FitViewport(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT, _camera);
 		_startTime = TimeUtils.millis();
 		
 		_assetManager.load(AssetDescriptors.SPLASH_BACKGROUND);

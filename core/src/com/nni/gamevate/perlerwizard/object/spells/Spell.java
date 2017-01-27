@@ -2,7 +2,7 @@ package com.nni.gamevate.perlerwizard.object.spells;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.nni.gamevate.perlerwizard.GameConstants;
+import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.spells.color.SpellColor;
@@ -84,7 +84,7 @@ public final class Spell extends GameObject implements Castable {
 //		}
 		
 
-		if (_position.y < GameConstants.LOWER_VOID) {
+		if (_position.y < GameConfig.LOWER_VOID) {
 			evaporate();
 		}
 	}

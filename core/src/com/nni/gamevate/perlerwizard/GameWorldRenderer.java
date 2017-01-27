@@ -41,11 +41,11 @@ public class GameWorldRenderer implements Disposable{
 		_camera = new OrthographicCamera();
 		_hudCamera = new OrthographicCamera();
 		
-		_viewport = new FitViewport(GameConstants.SCREEN_WIDTH, 
-				GameConstants.SCREEN_HEIGHT, _camera);
+		_viewport = new FitViewport(GameConfig.SCREEN_WIDTH, 
+				GameConfig.SCREEN_HEIGHT, _camera);
 		
-		_hudViewport = new FitViewport(GameConstants.UI_SCREEN_WIDTH, 
-				GameConstants.UI_SCREEN_HEIGHT, _hudCamera);
+		_hudViewport = new FitViewport(GameConfig.UI_SCREEN_WIDTH, 
+				GameConfig.UI_SCREEN_HEIGHT, _hudCamera);
 		
 		_shapeRenderer = new ShapeRenderer();
 		_castleBackground = _assetManager.get(AssetDescriptors.CASTLE_BACKGROUND);

@@ -10,14 +10,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.nni.gamevate.perlerwizard.GameConstants;
+import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.screens.game.MainWorldScreen;
 
 public class LoadingScreen extends ScreenAdapter {
 	
-	private static final float PROGRESS_BAR_WIDTH = GameConstants.UI_SCREEN_WIDTH / 2f; // world units
+	private static final float PROGRESS_BAR_WIDTH = GameConfig.UI_SCREEN_WIDTH / 2f; // world units
     private static final float PROGRESS_BAR_HEIGHT = 60; // world units
     
 	private PerlerWizard _perlerWizard;
@@ -59,7 +59,7 @@ public class LoadingScreen extends ScreenAdapter {
 	@Override
 	public void show() {
 		_camera = new OrthographicCamera();
-		_viewport = new FitViewport(GameConstants.SCREEN_WIDTH, GameConstants.SCREEN_HEIGHT, _camera);
+		_viewport = new FitViewport(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT, _camera);
 		_renderer = new ShapeRenderer();
 		
 		_assetManager.load(AssetDescriptors.UI_SKIN);
@@ -98,8 +98,8 @@ public class LoadingScreen extends ScreenAdapter {
 	}
 	
 	private void draw(){
-		float progressBarX = (GameConstants.UI_SCREEN_WIDTH - PROGRESS_BAR_WIDTH) / 2f;
-        float progressBarY = (GameConstants.UI_SCREEN_HEIGHT - PROGRESS_BAR_HEIGHT) / 2f;
+		float progressBarX = (GameConfig.UI_SCREEN_WIDTH - PROGRESS_BAR_WIDTH) / 2f;
+        float progressBarY = (GameConfig.UI_SCREEN_HEIGHT - PROGRESS_BAR_HEIGHT) / 2f;
 
         _renderer.rect(progressBarX, progressBarY,
                 _progress * PROGRESS_BAR_WIDTH, PROGRESS_BAR_HEIGHT

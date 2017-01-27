@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.nni.gamevate.perlerwizard.GameConstants;
+import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 
 public abstract class UIScreen extends ScreenAdaptar {
@@ -25,7 +25,7 @@ public abstract class UIScreen extends ScreenAdaptar {
 
     @Override
     public void show() {
-        _viewport = new FitViewport(GameConstants.UI_SCREEN_WIDTH, GameConstants.UI_SCREEN_HEIGHT);
+        _viewport = new FitViewport(GameConfig.UI_SCREEN_WIDTH, GameConfig.UI_SCREEN_HEIGHT);
         _stage = new Stage(_viewport, _perlerWizard.getSpriteBatch());
 
         Gdx.input.setInputProcessor(_stage);

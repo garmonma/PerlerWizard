@@ -6,7 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.nni.gamevate.perlerwizard.GameConstants;
+import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.levelloader.Level;
 import com.nni.gamevate.perlerwizard.levelloader.LevelLoader;
 import com.nni.gamevate.perlerwizard.levelloader.Wave;
@@ -15,7 +15,7 @@ import com.nni.gamevate.perlerwizard.object.Wall;
 import com.nni.gamevate.perlerwizard.object.character.Hero;
 import com.nni.gamevate.perlerwizard.object.character.Shield;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
-import com.nni.gamevate.perlerwizard.object.enemies.Enemy.EnemyType;
+import com.nni.gamevate.perlerwizard.object.enemies.EnemyType;
 import com.nni.gamevate.perlerwizard.object.spells.EnemySpell;
 import com.nni.gamevate.perlerwizard.object.spells.Spell;
 import com.nni.gamevate.perlerwizard.object.spells.color.RedSpell;
@@ -75,15 +75,15 @@ public class GamePlayController {
 	public GamePlayController() {
 		// _level = LevelLoader.load(Gdx.files.internal("levels/level_0.json"));
 
-		_upperWall = new Wall(GameConstants.RIGHT_WALL - GameConstants.LEFT_WALL, .10f, GameConstants.LEFT_WALL,
-				GameConstants.WORLD_HEIGHT, "upper");
+		_upperWall = new Wall(GameConfig.RIGHT_WALL - GameConfig.LEFT_WALL, .10f, GameConfig.LEFT_WALL,
+				GameConfig.WORLD_HEIGHT, "upper");
 		_upperWall.setDirection(90);
 		
 		
 
-		_rightWall = new Wall(.10f, GameConstants.WORLD_HEIGHT, GameConstants.RIGHT_WALL, 0, "right");
+		_rightWall = new Wall(.10f, GameConfig.WORLD_HEIGHT, GameConfig.RIGHT_WALL, 0, "right");
 
-		_leftWall = new Wall(.10f, GameConstants.WORLD_HEIGHT, GameConstants.LEFT_WALL, 0, "left");
+		_leftWall = new Wall(.10f, GameConfig.WORLD_HEIGHT, GameConfig.LEFT_WALL, 0, "left");
 
 		_circleRefresher = new UIControl(.5f, 8f, 1, 1);
 		_triangleRefresher = new UIControl(2.5f, 8f, 1, 1);
@@ -108,17 +108,17 @@ public class GamePlayController {
 			UIControl healthNode;
 			float xi = (i % 6) + .5f;
 			if (i < 6) {
-				healthNode = new UIControl(.25f + (xi * .50f), GameConstants.WORLD_HEIGHT - 1, .25f, .25f);
+				healthNode = new UIControl(.25f + (xi * .50f), GameConfig.WORLD_HEIGHT - 1, .25f, .25f);
 			} else if (i < 12) {
-				healthNode = new UIControl(.25f + (xi * .50f), GameConstants.WORLD_HEIGHT - 1.5f, .25f, .25f);
+				healthNode = new UIControl(.25f + (xi * .50f), GameConfig.WORLD_HEIGHT - 1.5f, .25f, .25f);
 			} else {
-				healthNode = new UIControl(.25f + (xi * .50f), GameConstants.WORLD_HEIGHT - 2f, .25f, .25f);
+				healthNode = new UIControl(.25f + (xi * .50f), GameConfig.WORLD_HEIGHT - 2f, .25f, .25f);
 			}
 
 			_heroHealthNodes.add(healthNode);
 		}
 
-		_hero = new Hero(1, 1, GameConstants.WORLD_WIDTH / 2, 0);
+		_hero = new Hero(1, 1, GameConfig.WORLD_WIDTH / 2, 0);
 		_shield = new Shield(1.20f, .15f, _hero.getX() - .10f, _hero.getY() + _hero.getHeight() + .10f);
 		_hero.setShield(_shield);
 

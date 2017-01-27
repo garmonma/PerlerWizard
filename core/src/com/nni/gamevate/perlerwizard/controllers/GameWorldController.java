@@ -1,6 +1,6 @@
 package com.nni.gamevate.perlerwizard.controllers;
 
-import com.nni.gamevate.perlerwizard.GameConstants;
+import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.object.Background;
 
 public class GameWorldController {
@@ -21,8 +21,8 @@ public class GameWorldController {
 		_castleBackground = new Background();
 		_castleBackground.setPosition(0, 0);
 		_castleBackground.setDimensions(
-				(int)GameConstants.SCREEN_WIDTH, 
-				(int)GameConstants.SCREEN_WIDTH);
+				(int)GameConfig.SCREEN_WIDTH, 
+				(int)GameConfig.SCREEN_WIDTH);
 	}
 	
 

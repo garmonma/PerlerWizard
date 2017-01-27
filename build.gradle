@@ -8,6 +8,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.0'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.2.0'
+        
     }
 }
 
@@ -44,6 +45,9 @@ project(":desktop") {
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+		compile group: 'com.esotericsoftware.kryo', name: 'kryo', version: '2.10'
+		compile group: 'com.esotericsoftware', name: 'kryonet', version: '2.22.0-RC1'
+        
     }
 }
 
@@ -101,6 +105,9 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+		compile group: 'com.esotericsoftware.kryo', name: 'kryo', version: '2.10'
+		compile group: 'com.esotericsoftware', name: 'kryonet', version: '2.22.0-RC1'
+        
     }
 }
 
