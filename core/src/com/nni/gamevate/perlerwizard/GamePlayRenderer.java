@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nni.gamevate.perlerwizard.controllers.GamePlayController;
-import com.nni.gamevate.perlerwizard.object.UIControl;
+import com.nni.gamevate.perlerwizard.object.UIElement;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.spells.Spell;
 import com.nni.gamevate.perlerwizard.utils.InputHandler;
@@ -160,7 +160,7 @@ public class GamePlayRenderer {
 		_shapeRenderer.begin(ShapeType.Line);
 		_shapeRenderer.setColor(Color.GREEN);
 		
-		for(UIControl node: _controller.getHealthNodes()){
+		for(UIElement node: _controller.getHealthNodes()){
 			_shapeRenderer.ellipse(node.getX(), node.getY(), node.getWidth(), node.getHeight());
 		}
 		

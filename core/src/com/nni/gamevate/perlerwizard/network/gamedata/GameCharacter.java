@@ -1,4 +1,4 @@
-package com.nni.gamevate.perlerwizard.network.GameData;
+package com.nni.gamevate.perlerwizard.network.gamedata;
 
 public class GameCharacter {
 

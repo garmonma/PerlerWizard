@@ -7,10 +7,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.GameConfig;
-import com.nni.gamevate.perlerwizard.levelloader.Level;
-import com.nni.gamevate.perlerwizard.levelloader.LevelLoader;
-import com.nni.gamevate.perlerwizard.levelloader.Wave;
-import com.nni.gamevate.perlerwizard.object.UIControl;
+import com.nni.gamevate.perlerwizard.network.gamedata.Spawn;
+import com.nni.gamevate.perlerwizard.network.gamedata.Wave;
+import com.nni.gamevate.perlerwizard.object.UIElement;
 import com.nni.gamevate.perlerwizard.object.Wall;
 import com.nni.gamevate.perlerwizard.object.character.Hero;
 import com.nni.gamevate.perlerwizard.object.character.Shield;
@@ -24,6 +23,7 @@ import com.nni.gamevate.perlerwizard.object.spells.color.WhiteSpell;
 import com.nni.gamevate.perlerwizard.object.spells.shape.CircleSpell;
 import com.nni.gamevate.perlerwizard.object.spells.shape.RectangleSpell;
 import com.nni.gamevate.perlerwizard.object.spells.shape.SpellShape;
+import com.nni.gamevate.perlerwizard.spawnloader.SpawnLoader;
 
 /**
  * @author Marcus Garmon
@@ -39,23 +39,23 @@ public class GamePlayController {
 	private Wall _rightWall;
 	private Wall _leftWall;
 
-	private UIControl _leftArrow;
-	private UIControl _rightArrow;
-	private UIControl _topArrow;
-	private UIControl _bottomArrow;
-	private UIControl _spellBox;
+	private UIElement _leftArrow;
+	private UIElement _rightArrow;
+	private UIElement _topArrow;
+	private UIElement _bottomArrow;
+	private UIElement _spellBox;
 
-	private UIControl _analogLeft;
-	private UIControl _analogRight;
-	private List<UIControl> _heroHealthNodes;
+	private UIElement _analogLeft;
+	private UIElement _analogRight;
+	private List<UIElement> _heroHealthNodes;
 
-	private UIControl _triangleRefresher;
-	private UIControl _squareRefresher;
-	private UIControl _rectangleRefresher;
-	private UIControl _circleRefresher;
-	private UIControl _trapazoidRefresher;
+	private UIElement _triangleRefresher;
+	private UIElement _squareRefresher;
+	private UIElement _rectangleRefresher;
+	private UIElement _circleRefresher;
+	private UIElement _trapazoidRefresher;
 
-	private UIControl _sigilButton;
+	private UIElement _sigilButton;
 
 	private Array<Spell> _spells;
 	private Array<Enemy> _enemies;
@@ -64,7 +64,7 @@ public class GamePlayController {
 	private ShapeSelector _shapeSelector;
 	private ColorSelector _colorSelector;
 	private long _lastSpell;
-	private Level _level;
+	private Spawn _level;
 
 	private boolean _playerWon;
 	private boolean _gameOver;
@@ -85,34 +85,34 @@ public class GamePlayController {
 
 		_leftWall = new Wall(.10f, GameConfig.WORLD_HEIGHT, GameConfig.LEFT_WALL, 0, "left");
 
-		_circleRefresher = new UIControl(.5f, 8f, 1, 1);
-		_triangleRefresher = new UIControl(2.5f, 8f, 1, 1);
-		_squareRefresher = new UIControl(.5f, 6.75f, 1, 1);
-		_rectangleRefresher = new UIControl(2.5f, 6.75f, 1, 1);
-		_trapazoidRefresher = new UIControl(.5f, 5.5f, 1, 1);
+		_circleRefresher = new UIElement(.5f, 8f, 1, 1);
+		_triangleRefresher = new UIElement(2.5f, 8f, 1, 1);
+		_squareRefresher = new UIElement(.5f, 6.75f, 1, 1);
+		_rectangleRefresher = new UIElement(2.5f, 6.75f, 1, 1);
+		_trapazoidRefresher = new UIElement(.5f, 5.5f, 1, 1);
 
-		_sigilButton = new UIControl(17f, 9f, 2, 2);
+		_sigilButton = new UIElement(17f, 9f, 2, 2);
 
-		_bottomArrow = new UIControl(2f, 1f, .5f, .5f);
-		_topArrow = new UIControl(2f, 3f, .5f, .5f);
-		_leftArrow = new UIControl(1f, 2f, .5f, .5f);
-		_rightArrow = new UIControl(3f, 2f, .5f, .5f);
+		_bottomArrow = new UIElement(2f, 1f, .5f, .5f);
+		_topArrow = new UIElement(2f, 3f, .5f, .5f);
+		_leftArrow = new UIElement(1f, 2f, .5f, .5f);
+		_rightArrow = new UIElement(3f, 2f, .5f, .5f);
 
-		_spellBox = new UIControl(1.75f, 1.75f, .5f, .5f);
+		_spellBox = new UIElement(1.75f, 1.75f, .5f, .5f);
 
-		_analogLeft = new UIControl(16.5f, 1.5f, 1, 1);
-		_analogRight = new UIControl(18.5f, 1.5f, 1, 1);
+		_analogLeft = new UIElement(16.5f, 1.5f, 1, 1);
+		_analogRight = new UIElement(18.5f, 1.5f, 1, 1);
 
-		_heroHealthNodes = new ArrayList<UIControl>();
+		_heroHealthNodes = new ArrayList<UIElement>();
 		for (int i = 0; i < 18; i++) {
-			UIControl healthNode;
+			UIElement healthNode;
 			float xi = (i % 6) + .5f;
 			if (i < 6) {
-				healthNode = new UIControl(.25f + (xi * .50f), GameConfig.WORLD_HEIGHT - 1, .25f, .25f);
+				healthNode = new UIElement(.25f + (xi * .50f), GameConfig.WORLD_HEIGHT - 1, .25f, .25f);
 			} else if (i < 12) {
-				healthNode = new UIControl(.25f + (xi * .50f), GameConfig.WORLD_HEIGHT - 1.5f, .25f, .25f);
+				healthNode = new UIElement(.25f + (xi * .50f), GameConfig.WORLD_HEIGHT - 1.5f, .25f, .25f);
 			} else {
-				healthNode = new UIControl(.25f + (xi * .50f), GameConfig.WORLD_HEIGHT - 2f, .25f, .25f);
+				healthNode = new UIElement(.25f + (xi * .50f), GameConfig.WORLD_HEIGHT - 2f, .25f, .25f);
 			}
 
 			_heroHealthNodes.add(healthNode);
@@ -256,59 +256,59 @@ public class GamePlayController {
 		return _leftWall;
 	}
 
-	public UIControl getLeftArrow() {
+	public UIElement getLeftArrow() {
 		return _leftArrow;
 	}
 
-	public UIControl getRightArrow() {
+	public UIElement getRightArrow() {
 		return _rightArrow;
 	}
 
-	public UIControl getTopArrow() {
+	public UIElement getTopArrow() {
 		return _topArrow;
 	}
 
-	public UIControl getBottomArrow() {
+	public UIElement getBottomArrow() {
 		return _bottomArrow;
 	}
 
-	public UIControl getAnalogLeft() {
+	public UIElement getAnalogLeft() {
 		return _analogLeft;
 	}
 
-	public UIControl getAnalogRight() {
+	public UIElement getAnalogRight() {
 		return _analogRight;
 	}
 
-	public UIControl getSpellBox() {
+	public UIElement getSpellBox() {
 		return _spellBox;
 	}
 
-	public UIControl getCircleRefresher() {
+	public UIElement getCircleRefresher() {
 		return _circleRefresher;
 	}
 
-	public UIControl getSquareRefresher() {
+	public UIElement getSquareRefresher() {
 		return _squareRefresher;
 	}
 
-	public UIControl getRectangleRefresher() {
+	public UIElement getRectangleRefresher() {
 		return _rectangleRefresher;
 	}
 
-	public UIControl getTrapazoidRefresher() {
+	public UIElement getTrapazoidRefresher() {
 		return _trapazoidRefresher;
 	}
 
-	public UIControl getTriangleRefresher() {
+	public UIElement getTriangleRefresher() {
 		return _triangleRefresher;
 	}
 
-	public UIControl getSigilButton() {
+	public UIElement getSigilButton() {
 		return _sigilButton;
 	}
 
-	public List<UIControl> getHealthNodes() {
+	public List<UIElement> getHealthNodes() {
 		return _heroHealthNodes;
 	}
 

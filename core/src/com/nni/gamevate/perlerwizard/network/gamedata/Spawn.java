@@ -1,4 +1,4 @@
-package com.nni.gamevate.perlerwizard.levelloader;
+package com.nni.gamevate.perlerwizard.network.gamedata;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,12 +8,12 @@ import java.util.List;
  * @author Marcus Garmon
  * @date Dec 29, 2016
  */
-public class Level {
+public class Spawn {
 	
 	private List<Wave> waves = new ArrayList<Wave>();
 	private int timeLimit;
 	
-	public Level(){
+	public Spawn(){
 		
 	}
 	

@@ -1,18 +1,15 @@
 package com.nni.gamevate.perlerwizard.network;
 
 import com.esotericsoftware.kryonet.Client;
-import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Listener;
-import com.nni.gamevate.perlerwizard.network.GameData.GameCharacter;
 
 import java.io.IOException;
 
 public class ClientConnection {
 
-	GameCharacter character;
+	private Client client;
 
 	public ClientConnection() {
-		Client client = new Client();
+		client = new Client();
 		client.setName("Test Client 01");
 		client.start();
 		try {
@@ -22,20 +19,10 @@ public class ClientConnection {
 		}
 		
 		ObjectRegistration.register(client);
-
-		character = new GameCharacter();
-		character.setCharacterID(1);
-		client.sendTCP(character);
-
-		client.addListener(new Listener() {
-			@Override
-			public void received(Connection conn, Object object) {
-
-				if (object instanceof GameCharacter) {
-					character = (GameCharacter) object;
-					System.out.println("Character Recieved: " + character);
-				}
-			}
-		});
+	}
+	
+	
+	public Client getClient(){
+		return client;
 	}
 }

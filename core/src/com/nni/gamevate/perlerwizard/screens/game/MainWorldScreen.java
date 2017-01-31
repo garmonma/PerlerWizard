@@ -7,19 +7,19 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nni.gamevate.perlerwizard.GameWorldRenderer;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.controllers.GameWorldController;
+import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 
 /**
- * 
  * @author Marcus Garmon 12/29/2016
- *
  */
 public class MainWorldScreen extends ScreenAdapter {
 	private PerlerWizard _perlerWizard;
-	private GameWorldController _controller;
+	private GameWorldController _worldController;
 	private GameWorldRenderer _renderer;
 	
 	private SpriteBatch _batch;
 	private AssetManager _assetManager;
+	private NetworkController _networkController;
 	
 	public MainWorldScreen(PerlerWizard perlerWizard) {
 		_perlerWizard = perlerWizard;
@@ -33,14 +33,14 @@ public class MainWorldScreen extends ScreenAdapter {
 			_perlerWizard.setScreen(new GameScreen(_perlerWizard));
 		}
 		
-		_controller.update(delta);
+		_worldController.update(delta);
 		_renderer.render(delta);
 	}
 	
 	@Override
 	public void show() {
-		_controller = new GameWorldController();
-		_renderer = new GameWorldRenderer(_controller, _batch, _assetManager);
+		_worldController = new GameWorldController();
+		_renderer = new GameWorldRenderer(_worldController, _networkController, _batch, _assetManager);
 	}
 	
 	@Override

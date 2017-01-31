@@ -12,11 +12,12 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.controllers.GameWorldController;
+import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 import com.nni.gamevate.perlerwizard.object.Background;
 
 public class GameWorldRenderer implements Disposable{
-
 	private GameWorldController _controller;
+	private NetworkController _networkController;
 	private OrthographicCamera _camera;
 	private OrthographicCamera _hudCamera;
 	private Viewport _viewport;
@@ -29,8 +30,10 @@ public class GameWorldRenderer implements Disposable{
 	private Texture _castleBackground;
 	
 	
-	public GameWorldRenderer(GameWorldController controller, SpriteBatch batch, AssetManager assetManager){
+	public GameWorldRenderer(GameWorldController controller, NetworkController networkController, 
+			SpriteBatch batch, AssetManager assetManager){
 		_controller = controller;
+		_networkController = networkController;
 		_batch = batch;
 		_assetManager = assetManager;
 		

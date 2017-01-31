@@ -1,4 +1,4 @@
-package com.nni.gamevate.perlerwizard.levelloader;
+package com.nni.gamevate.perlerwizard.network.gamedata;
 
 import java.util.Arrays;
 
