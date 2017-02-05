@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nni.gamevate.perlerwizard.controllers.GamePlayController;
+import com.nni.gamevate.perlerwizard.controllers.NetworkController;
+import com.nni.gamevate.perlerwizard.network.gamedata.MatchResult;
 import com.nni.gamevate.perlerwizard.object.UIElement;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.spells.Spell;
@@ -25,6 +27,7 @@ import com.nni.gamevate.perlerwizard.utils.InputHandler;
 public class GamePlayRenderer {
 
 	private GamePlayController _controller;
+	private NetworkController _networkController;
 	private OrthographicCamera _camera;
 	private OrthographicCamera _hudCamera;
 	private Viewport _viewport;
@@ -40,9 +43,15 @@ public class GamePlayRenderer {
 	private int _shapePosition;
 	
 	private AssetManager _assetManager;
+	
+	//Network Instances;
+	private MatchResult _matchResult;
+	
+	private boolean _matchRendering;
 
-	public GamePlayRenderer(GamePlayController controller, SpriteBatch batch, AssetManager assetManager) {
+	public GamePlayRenderer(GamePlayController controller, NetworkController networkController, SpriteBatch batch, AssetManager assetManager) {
 		_controller = controller;
+		_networkController = networkController;
 		_batch = batch;
 		_assetManager = assetManager;
 		
@@ -74,6 +83,11 @@ public class GamePlayRenderer {
 		//_font = generator.generateFont(parameter);
 
 		//generator.dispose();
+		
+		_matchResult = new MatchResult();
+		_matchResult.character_id = _networkController.getCharacterID();
+		
+		_matchRendering = true;
 
 	}
 
@@ -81,18 +95,35 @@ public class GamePlayRenderer {
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		_shapeRenderer.setProjectionMatrix(_camera.combined);
+		if(_controller.getEnemies().size == 0){
+			//Game Over - You won 
+			
+			_matchResult.experience = 15;
+			_matchResult.gold = 25;
+			_matchResult.health = 3;
+			_matchResult.node = 1;
+			_matchResult.storyMode = false;
+			_networkController.sendMatchResult(_matchResult);
+			//Gdx.app.log("Match Result", "Sent");
+			
+			//How do I transition back to the World Map Screen;
+			
+			_matchRendering = false;
+		}  else {
 		
-		//ViewportUtils.drawGrid(_viewport, _shapeRenderer);
-		drawGameBounds();
-		drawShapeRefreshers();
-		drawSigilButton();
-		drawHeroUIComponents();
-
-		drawSkillBar();
-		drawAnalogControl();
-		drawHero();
-		drawEnemies();
-		drawSpells();
+			//ViewportUtils.drawGrid(_viewport, _shapeRenderer);
+			drawGameBounds();
+			drawShapeRefreshers();
+			drawSigilButton();
+			drawHeroUIComponents();
+	
+			drawSkillBar();
+			drawAnalogControl();
+			drawHero();
+			drawEnemies();
+			drawSpells();
+		
+		}
 	}
 
 	
@@ -314,5 +345,9 @@ public class GamePlayRenderer {
 
 		_shapeRenderer.end();
 
+	}
+	
+	public boolean isMatchRendering(){
+		return _matchRendering;
 	}
 }

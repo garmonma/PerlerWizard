@@ -101,24 +101,11 @@ public final class Spell extends GameObject implements Castable {
 	
 	public void bounce(Collidable object){
 		Vector2 change = _shape.bounce(this, object);
-		
-		Gdx.app.log("Change", change + "");
-		
-		
+			
 		if(change != null){
-			Gdx.app.log("Change Angle", change.angle() + "");
-			
-			
-			Gdx.app.log("before velocity", _velocity + "");
-			Gdx.app.log("before position", _position + "");
-			Gdx.app.log("Before Angle", _position.angle() + "");
 			//_velocity.set(change).scl(_speed)
 			change.scl(_speed);
 			_velocity = change;
-			
-			Gdx.app.log("velocity", _velocity + "");
-			Gdx.app.log("position", _position + "");
-			Gdx.app.log("After Angle", _position.angle() + "");
 		}
 	}
 

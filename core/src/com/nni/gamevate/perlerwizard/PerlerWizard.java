@@ -22,6 +22,7 @@ public class PerlerWizard extends Game {
 	public void create() {
 		_spriteBatch = new SpriteBatch();
 		_assetManager = new AssetManager();
+		//TODO Check for internet connection. If no connection close app.
 		connection = new ClientConnection();
 		networkController = new NetworkController(connection.getClient());
 		this.setScreen(new SplashScreen(this));

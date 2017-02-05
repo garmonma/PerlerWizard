@@ -13,7 +13,7 @@ public class ClientConnection {
 		client.setName("Test Client 01");
 		client.start();
 		try {
-			client.connect(5000, "192.168.0.3", 54555, 54777);
+			client.connect(5000, "192.168.0.68", 54555, 54777);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

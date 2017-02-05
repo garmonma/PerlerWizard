@@ -9,5 +9,13 @@ public class MatchResult {
 	public boolean storyMode;
 	public int node;
 	
+	@Override
+	public String toString() {
+		return String.format("MatchResult [character_id=%s, gold=%s, experience=%s, health=%s, storyMode=%s, node=%s]",
+				character_id, gold, experience, health, storyMode, node);
+	}
+	
+	
+	
 
 }

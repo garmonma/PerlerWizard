@@ -40,6 +40,7 @@ public class MainWorldScreen extends ScreenAdapter {
 	@Override
 	public void show() {
 		_worldController = new GameWorldController();
+		_networkController = _perlerWizard.getNetworkController();
 		_renderer = new GameWorldRenderer(_worldController, _networkController, _batch, _assetManager);
 	}
 	

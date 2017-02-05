@@ -1,11 +1,13 @@
 package com.nni.gamevate.perlerwizard.screens.game;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nni.gamevate.perlerwizard.GamePlayRenderer;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.controllers.GamePlayController;
+import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 import com.nni.gamevate.perlerwizard.screens.ScreenAdaptar;
 
 /**
@@ -19,6 +21,7 @@ public class GameScreen extends ScreenAdaptar {
 	
 	private SpriteBatch _batch;
 	private AssetManager _assetManager;
+	private NetworkController _networkController;
 	
 	public GameScreen(PerlerWizard perlerWizard) {
 		_perlerWizard = perlerWizard;
@@ -28,14 +31,24 @@ public class GameScreen extends ScreenAdaptar {
 	
 	@Override
 	public void render(float delta) {
-		_world.update(delta);
-		_renderer.render(delta);	
+			
+		
+		if(!_renderer.isMatchRendering()){
+			//return to gameworld;
+
+				_perlerWizard.setScreen(new MainWorldScreen(_perlerWizard));
+			
+		} else {
+			_world.update(delta);
+			_renderer.render(delta);
+		}
 	}
 		
 	@Override
 	public void show() {
 		_world = new GamePlayController();
-		_renderer = new GamePlayRenderer(_world, _batch, _assetManager);
+		_networkController = _perlerWizard.getNetworkController();
+		_renderer = new GamePlayRenderer(_world, _networkController, _batch, _assetManager);
 
 	}
 
