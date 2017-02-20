@@ -11,10 +11,11 @@ import com.nni.gamevate.perlerwizard.network.gamedata.Spawn;
 import com.nni.gamevate.perlerwizard.network.gamedata.Wave;
 import com.nni.gamevate.perlerwizard.object.UIElement;
 import com.nni.gamevate.perlerwizard.object.Wall;
-import com.nni.gamevate.perlerwizard.object.character.Hero;
-import com.nni.gamevate.perlerwizard.object.character.Shield;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.enemies.EnemyType;
+import com.nni.gamevate.perlerwizard.object.hero.Hero;
+import com.nni.gamevate.perlerwizard.object.hero.Shield;
+import com.nni.gamevate.perlerwizard.object.hero.Wizard;
 import com.nni.gamevate.perlerwizard.object.spells.EnemySpell;
 import com.nni.gamevate.perlerwizard.object.spells.Spell;
 import com.nni.gamevate.perlerwizard.object.spells.color.RedSpell;
@@ -45,8 +46,6 @@ public class GamePlayController {
 	private UIElement _bottomArrow;
 	private UIElement _spellBox;
 
-	private UIElement _analogLeft;
-	private UIElement _analogRight;
 	private List<UIElement> _heroHealthNodes;
 
 	private UIElement _triangleRefresher;
@@ -100,9 +99,6 @@ public class GamePlayController {
 
 		_spellBox = new UIElement(1.75f, 1.75f, .5f, .5f);
 
-		_analogLeft = new UIElement(16.5f, 1.5f, 1, 1);
-		_analogRight = new UIElement(18.5f, 1.5f, 1, 1);
-
 		_heroHealthNodes = new ArrayList<UIElement>();
 		for (int i = 0; i < 18; i++) {
 			UIElement healthNode;
@@ -118,9 +114,7 @@ public class GamePlayController {
 			_heroHealthNodes.add(healthNode);
 		}
 
-		_hero = new Hero(1, 1, GameConfig.WORLD_WIDTH / 2, 0);
-		_shield = new Shield(1.20f, .15f, _hero.getX() - .10f, _hero.getY() + _hero.getHeight() + .10f);
-		_hero.setShield(_shield);
+		_hero = new Wizard(1, 1, GameConfig.WORLD_WIDTH / 2, 0, 1);
 
 		_spells = new Array<Spell>();
 		_enemies = new Array<Enemy>();
@@ -157,8 +151,8 @@ public class GamePlayController {
 				enemy.update(delta);
 			}
 
-			if (spell.collided(_hero.getShield())) {
-				spell.bounce(_hero.getShield());
+			if (spell.collided(_hero)) {
+				spell.bounce(_hero);
 			}
 
 			if (spell.collided(_upperWall)) {
@@ -207,8 +201,8 @@ public class GamePlayController {
 					_ss = new RectangleSpell();
 				}
 
-				Spell spell = new Spell(.5f, .5f, _hero.getShield().getX() + _hero.getShield().getWidth() / 2,
-						_hero.getShield().getY() + _hero.getShield().getHeight() + .05f, _sc, _ss);
+				Spell spell = new Spell(.5f, .5f, _hero.getX() + _hero.getWidth() / 2,
+						_hero.getY() + _hero.getHeight() + .05f, _sc, _ss);
 
 				_colorSelector.rotateDown();
 				_shapeSelector.rotateLeft();
@@ -270,14 +264,6 @@ public class GamePlayController {
 
 	public UIElement getBottomArrow() {
 		return _bottomArrow;
-	}
-
-	public UIElement getAnalogLeft() {
-		return _analogLeft;
-	}
-
-	public UIElement getAnalogRight() {
-		return _analogRight;
 	}
 
 	public UIElement getSpellBox() {

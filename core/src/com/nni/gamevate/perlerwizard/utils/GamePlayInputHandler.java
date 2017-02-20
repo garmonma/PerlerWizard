@@ -11,7 +11,7 @@ import com.nni.gamevate.perlerwizard.controllers.GamePlayController;
  * @author Marcus Garmon 12/29/2016
  *
  */
-public class InputHandler {
+public class GamePlayInputHandler {
 
 	private GamePlayController _world;
 	private Vector3 _touchCords;
@@ -20,7 +20,7 @@ public class InputHandler {
 	private InputAdapter _skillBarProcessor;
 	private InputAdapter _analogProcessor;
 
-	public InputHandler(GamePlayController world, OrthographicCamera camera) {
+	public GamePlayInputHandler(GamePlayController world, OrthographicCamera camera) {
 		_world = world;
 		_touchCords = new Vector3();
 		_camera = camera;
@@ -98,86 +98,9 @@ public class InputHandler {
 
 	private void initAnalogProcessor() {
 		_analogProcessor = new InputAdapter() {
-			@Override
-			public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-				
-				_touchCords.set(screenX, screenY, 0);
-				_camera.unproject(_touchCords);
-				
-				if(_touchCords.x >= _world.getAnalogLeft().getX() 
-						&& _touchCords.x <= _world.getAnalogLeft().getX() + _world.getAnalogLeft().getWidth()
-						&& _touchCords.y >= _world.getAnalogLeft().getY() 
-						&& _touchCords.y <= _world.getAnalogLeft().getY() + _world.getAnalogLeft().getHeight()){
-						
-					_world.getHero().setMoving(true);
-					_world.getHero().setDirection("left");
-					return true;
-				}
-				
-				if(_touchCords.x >= _world.getAnalogRight().getX() 
-						&& _touchCords.x <= _world.getAnalogRight().getX() + _world.getAnalogRight().getWidth()
-						&& _touchCords.y >= _world.getAnalogRight().getY() 
-						&& _touchCords.y <= _world.getAnalogRight().getY() + _world.getAnalogRight().getHeight()){
-						
-					_world.getHero().setMoving(true);
-					_world.getHero().setDirection("right");
-					return true;
-				}
-				return false;
-			}
 			
-			@Override
-			public boolean keyDown(int keycode) {
-				if(keycode == Input.Keys.LEFT){
-					_world.getHero().setMoving(true);
-					_world.getHero().setDirection("left");
-					return true;
-				} else if(keycode == Input.Keys.RIGHT){
-					_world.getHero().setMoving(true);
-					_world.getHero().setDirection("right");
-					return true;
-				}
-				
-				return false;
-			}
 			
-			@Override
-			public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-				_touchCords.set(screenX, screenY, 0);
-				_camera.unproject(_touchCords);
-				
-				if(_touchCords.x >= _world.getAnalogLeft().getX()
-						&& _touchCords.x <= _world.getAnalogLeft().getX() + _world.getAnalogLeft().getWidth()
-						&& _touchCords.y >= _world.getAnalogLeft().getY() 
-						&& _touchCords.y <= _world.getAnalogLeft().getY() + _world.getAnalogLeft().getHeight()){
-						
-					_world.getHero().setMoving(false);
-					return true;
-				}
-				
-				if(_touchCords.x >= _world.getAnalogRight().getX() 
-						&& _touchCords.x <= _world.getAnalogRight().getX() + _world.getAnalogRight().getWidth()
-						&& _touchCords.y >= _world.getAnalogRight().getY() 
-						&& _touchCords.y <= _world.getAnalogRight().getY() + _world.getAnalogRight().getHeight()){
-						
-					_world.getHero().setMoving(false);
-					return true;
-				}
-				
-				return false;
-			}
 			
-			@Override
-			public boolean keyUp(int keycode) {
-				if(keycode == Input.Keys.LEFT){
-					_world.getHero().setMoving(false);
-					return true;
-				} else if(keycode == Input.Keys.RIGHT){
-					_world.getHero().setMoving(false);
-					return true;
-				}
-				return false;
-			}
 		};
 	}
 }

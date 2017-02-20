@@ -29,7 +29,7 @@ public class MainWorldScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
-		if(Gdx.input.isTouched()){
+		if(_worldController.navigate()){
 			_perlerWizard.setScreen(new GameScreen(_perlerWizard));
 		}
 		

@@ -28,4 +28,12 @@ public class Background {
 	public int getY(){
 		return _y;
 	}
+	
+	public int getWidth(){
+		return _width;
+	}
+	
+	public int getHeight(){
+		return _height;
+	}
 }

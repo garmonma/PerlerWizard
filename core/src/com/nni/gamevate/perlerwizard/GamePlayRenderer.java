@@ -18,7 +18,8 @@ import com.nni.gamevate.perlerwizard.network.gamedata.MatchResult;
 import com.nni.gamevate.perlerwizard.object.UIElement;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.spells.Spell;
-import com.nni.gamevate.perlerwizard.utils.InputHandler;
+import com.nni.gamevate.perlerwizard.utils.GamePlayInputHandler;
+import com.nni.gamevate.perlerwizard.utils.ViewportUtils;
 
 /**
  * @author Marcus Garmon
@@ -37,7 +38,7 @@ public class GamePlayRenderer {
 	private SpriteBatch _batch;
 	
 	private BitmapFont _font;
-	private InputHandler _inputHandler;
+	private GamePlayInputHandler _inputHandler;
 	private InputMultiplexer _inputMultiplexer;
 	
 	private int _shapePosition;
@@ -61,7 +62,7 @@ public class GamePlayRenderer {
 	private void init(){
 		_camera = new OrthographicCamera();
 
-		_inputHandler = new InputHandler(_controller, _camera);
+		_inputHandler = new GamePlayInputHandler(_controller, _camera);
 		_inputMultiplexer = new InputMultiplexer();
 		_inputMultiplexer.addProcessor(_inputHandler.getSkillBarProcessor());
 		_inputMultiplexer.addProcessor(_inputHandler.getAnalogProcessor());
@@ -111,14 +112,13 @@ public class GamePlayRenderer {
 			_matchRendering = false;
 		}  else {
 		
-			//ViewportUtils.drawGrid(_viewport, _shapeRenderer);
+			ViewportUtils.drawGrid(_viewport, _shapeRenderer);
 			drawGameBounds();
 			drawShapeRefreshers();
 			drawSigilButton();
 			drawHeroUIComponents();
 	
 			drawSkillBar();
-			drawAnalogControl();
 			drawHero();
 			drawEnemies();
 			drawSpells();
@@ -213,9 +213,6 @@ public class GamePlayRenderer {
 		_shapeRenderer.rect(_controller.getHero().getX(), _controller.getHero().getY(), _controller.getHero().getWidth(),
 				_controller.getHero().getHeight());
 
-		_shapeRenderer.rect(_controller.getHero().getShield().getX(), _controller.getHero().getShield().getY(),
-				_controller.getHero().getShield().getWidth(), _controller.getHero().getShield().getHeight());
-
 		_shapeRenderer.end();
 	}
 
@@ -246,25 +243,6 @@ public class GamePlayRenderer {
 		_shapeRenderer.rectLine(_controller.getUpperWall().getX(), _controller.getUpperWall().getY(),
 				_controller.getUpperWall().getX() + _controller.getUpperWall().getWidth(), _controller.getUpperWall().getY(),
 				_controller.getUpperWall().getHeight());
-
-		_shapeRenderer.end();
-	}
-
-	private void drawAnalogControl() {
-		_shapeRenderer.begin(ShapeType.Filled);
-		_shapeRenderer.setColor(Color.WHITE);
-
-		_shapeRenderer.ellipse(
-				_controller.getAnalogLeft().getX(), 
-				_controller.getAnalogLeft().getY(),
-				_controller.getAnalogLeft().getWidth(),
-				_controller.getAnalogLeft().getWidth());
-
-		_shapeRenderer.ellipse(
-				_controller.getAnalogRight().getX(), 
-				_controller.getAnalogRight().getY(),
-				_controller.getAnalogRight().getWidth(),
-				_controller.getAnalogRight().getHeight());
 
 		_shapeRenderer.end();
 	}

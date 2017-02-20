@@ -1,4 +1,4 @@
-package com.nni.gamevate.perlerwizard.object.character;
+package com.nni.gamevate.perlerwizard.object.hero;
 
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.GameObject;

@@ -4,9 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.nni.gamevate.perlerwizard.object.Wall;
-import com.nni.gamevate.perlerwizard.object.character.Hero;
-import com.nni.gamevate.perlerwizard.object.character.Shield;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
+import com.nni.gamevate.perlerwizard.object.hero.Hero;
+import com.nni.gamevate.perlerwizard.object.hero.Shield;
 import com.nni.gamevate.perlerwizard.object.spells.Spell;
 
 /**

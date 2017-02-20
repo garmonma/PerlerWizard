@@ -16,9 +16,10 @@ public class GameWorldController {
 	private UIElement _healthBar;
 	private UIElement _goldCoin;
 	
+	private MapNode _selectedNode;
+	
+	
 	public GameWorldController(){
-		
-		
 		init();
 	}
 	
@@ -30,8 +31,8 @@ public class GameWorldController {
 		_castleBackground = new Background();
 		_castleBackground.setPosition(0, 0);
 		_castleBackground.setDimensions(
-				(int)GameConfig.SCREEN_WIDTH, 
-				(int)GameConfig.SCREEN_WIDTH);
+				(int)GameConfig.WORLD_WIDTH, 
+				(int)GameConfig.WORLD_HEIGHT);
 		
 		initMapNodes();
 	}
@@ -48,18 +49,23 @@ public class GameWorldController {
 	
 	
 	private void initMapNodes(){
-		MapNode mapNode1 = new MapNode(1, 0, 0);
-		MapNode mapNode2 = new MapNode(2, 0, 0);
-		MapNode mapNode3 = new MapNode(3, 0, 0);
-		MapNode mapNode4 = new MapNode(4, 0, 0);
-		MapNode mapNode5 = new MapNode(5, 0, 0);
-		MapNode mapNode6 = new MapNode(6, 0, 0);
-		MapNode mapNode7 = new MapNode(7, 0, 0);
-		MapNode mapNode8 = new MapNode(8, 0, 0);
-		MapNode mapNode9 = new MapNode(9, 0, 0);
-		MapNode mapNode10 = new MapNode(11, 0, 0);
-		MapNode mapNode11 = new MapNode(11, 0, 0);
-		MapNode mapNode12 = new MapNode(12, 0, 0);
+		//Side outer nodes
+		MapNode mapNode1 = new MapNode(1, 1.75f, 1.75f);
+		MapNode mapNode2 = new MapNode(2, 1.75f, 5.75f);
+		MapNode mapNode3 = new MapNode(3, 1.75f, 9.75f);
+		MapNode mapNode4 = new MapNode(4, 17.75f, 1.75f);
+		MapNode mapNode5 = new MapNode(5, 17.75f, 5.75f);
+		MapNode mapNode6 = new MapNode(6, 17.75f, 9.75f);
+		
+		//Top Outer Nodes
+		MapNode mapNode7 = new MapNode(7, 3.75f, .75f);
+		MapNode mapNode8 = new MapNode(8, 9.75f, .75f);
+		MapNode mapNode9 = new MapNode(9, 15.75f, .75f);
+		MapNode mapNode10 = new MapNode(11, 3.75f, 10.75f);
+		MapNode mapNode11 = new MapNode(11, 9.75f, 10.75f);
+		MapNode mapNode12 = new MapNode(12, 15.75f, 10.75f);
+		
+		
 		MapNode mapNode13 = new MapNode(13, 0, 0);
 		MapNode mapNode14 = new MapNode(14, 0, 0);
 		MapNode mapNode15 = new MapNode(15, 0, 0);
@@ -68,10 +74,15 @@ public class GameWorldController {
 		MapNode mapNode18 = new MapNode(18, 0, 0);
 		MapNode mapNode19 = new MapNode(19, 0, 0);
 		MapNode mapNode20 = new MapNode(20, 0, 0);
-		MapNode mapNode21 = new MapNode(21, 0, 0);
-		MapNode mapNode22 = new MapNode(22, 0, 0);
-		MapNode mapNode23 = new MapNode(23, 0, 0);
-		MapNode mapNode24 = new MapNode(24, 0, 0);
+		
+		//Four Center Nodes
+		MapNode mapNode21 = new MapNode(21, 9.25f, 5.25f);
+		MapNode mapNode22 = new MapNode(22, 9.25f, 6.25f);
+		MapNode mapNode23 = new MapNode(23, 10.25f, 5.25f);
+		MapNode mapNode24 = new MapNode(24, 10.25f, 6.25f);
+		
+		// King Chamber Node (Throne Room)
+		MapNode mapNode25 = new MapNode(25, 9.75f, 5.75f);
 		
 		_mapNodes.add(mapNode1);
 		_mapNodes.add(mapNode2);
@@ -97,5 +108,14 @@ public class GameWorldController {
 		_mapNodes.add(mapNode22);
 		_mapNodes.add(mapNode23);
 		_mapNodes.add(mapNode24);
+		_mapNodes.add(mapNode25);
+	}
+	
+	public void selectNode(MapNode mapNode){
+		_selectedNode = mapNode;
+	}
+	
+	public boolean navigate(){
+		return true;
 	}
 }

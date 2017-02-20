@@ -1,12 +1,16 @@
 package com.nni.gamevate.perlerwizard;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -14,6 +18,8 @@ import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.controllers.GameWorldController;
 import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 import com.nni.gamevate.perlerwizard.object.Background;
+import com.nni.gamevate.perlerwizard.object.MapNode;
+import com.nni.gamevate.perlerwizard.utils.ViewportUtils;
 
 public class GameWorldRenderer implements Disposable{
 	private GameWorldController _controller;
@@ -28,6 +34,8 @@ public class GameWorldRenderer implements Disposable{
 	private AssetManager _assetManager;
 	
 	private Texture _castleBackground;
+	
+	private boolean showDebug = false;
 	
 	
 	public GameWorldRenderer(GameWorldController controller, NetworkController networkController, 
@@ -44,8 +52,8 @@ public class GameWorldRenderer implements Disposable{
 		_camera = new OrthographicCamera();
 		_hudCamera = new OrthographicCamera();
 		
-		_viewport = new FitViewport(GameConfig.SCREEN_WIDTH, 
-				GameConfig.SCREEN_HEIGHT, _camera);
+		_viewport = new FitViewport(GameConfig.WORLD_WIDTH, 
+				GameConfig.WORLD_HEIGHT, _camera);
 		
 		_hudViewport = new FitViewport(GameConfig.UI_SCREEN_WIDTH, 
 				GameConfig.UI_SCREEN_HEIGHT, _hudCamera);
@@ -83,10 +91,34 @@ public class GameWorldRenderer implements Disposable{
 		_batch.begin();
 		
 		Background background = _controller.getCastleBackground();
-		_batch.draw(_castleBackground, background.getX(), background.getY());
-		
+		_batch.draw(_castleBackground, 
+				background.getX(), background.getY(), 
+				background.getWidth(), background.getHeight());		
 		
 		_batch.end();
+		
+		if(Gdx.input.isKeyPressed(Keys.G)){
+			showDebug = !showDebug;
+		}
+		
+		if(showDebug){
+			ViewportUtils.drawGrid(_viewport, _shapeRenderer);
+		}
+		
+		_shapeRenderer.setProjectionMatrix(_camera.combined);
+		_shapeRenderer.begin(ShapeType.Filled);
+		_shapeRenderer.setColor(Color.YELLOW);
+		
+		for(MapNode mapNode: _controller.getMapNodes()){
+			_shapeRenderer.ellipse(
+					mapNode.getX(), 
+					mapNode.getY(), 
+					mapNode.getWidth(), 
+					mapNode.getHeight());
+		}
+		
+		
+		_shapeRenderer.end();
 	}
 	
 	private void renderUI(){
