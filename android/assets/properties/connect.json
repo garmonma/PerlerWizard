@@ -1,0 +1,19 @@
+{
+  "server": {
+    "port": 9999,
+    "context-path": "client"
+  },
+  "security": {
+    "oauth2": {
+      "client": {
+        "client-id": "acme",
+        "client-secret": "acmesecret",
+        "access-token-uri": "http://192.168.0.3:8080/oath/token",
+        "user-authorization-uri": "http://192.168.0.3:8080/oauth/authorize"
+      },
+      "resource": {
+        "user-info-uri": "http://192.168.0.3:8080/me"
+      }
+    }
+  }
+}

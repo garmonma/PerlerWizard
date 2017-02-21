@@ -1,10 +1,11 @@
 package com.nni.gamevate.perlerwizard.object.spells.shape;
 
-import com.nni.gamevate.perlerwizard.object.character.Hero;
-import com.nni.gamevate.perlerwizard.object.character.Shield;
+import com.badlogic.gdx.math.Vector2;
+import com.nni.gamevate.perlerwizard.object.Wall;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
+import com.nni.gamevate.perlerwizard.object.hero.Hero;
+import com.nni.gamevate.perlerwizard.object.hero.Shield;
 import com.nni.gamevate.perlerwizard.object.spells.Spell;
-import com.nni.gamevate.perlerwizard.object.walls.Wall;
 
 /**
  * 
@@ -20,20 +21,20 @@ public class RectangleSpell extends SpellShape {
 	}
 
 	@Override
-	protected void bounceOffShield(Spell spell, Shield shield) {
+	protected Vector2 bounceOffShield(Spell spell, Shield shield) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	protected void bounceOffEnemy(Spell spell, Enemy enemy) {
+	protected Vector2 bounceOffEnemy(Spell spell, Enemy enemy) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	protected void bounceOffWall(Spell spell, Wall wall) {
-		// TODO Auto-generated method stub
+	protected Vector2 bounceOffWall(Spell spell, Wall wall) {
+		return new Vector2();
 		
 	}
 
