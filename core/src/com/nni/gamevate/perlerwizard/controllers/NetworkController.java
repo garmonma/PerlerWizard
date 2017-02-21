@@ -14,7 +14,7 @@ public class NetworkController {
 		_client = client;
 		
 		_gc = new GameCharacter();
-		_gc.setCharacterID(1);
+		_gc.characterID = 1;
 		sendCharacter(_gc);
 
 		_client.addListener(new Listener() {
@@ -40,11 +40,15 @@ public class NetworkController {
 		
 	}
 	
+	public GameCharacter getCharacter(){
+		return _gc;
+	}
+	
 	public void getSpawns(){
 		
 	}
 	
 	public Integer getCharacterID(){
-		return _gc.getCharacterID();
+		return _gc.characterID;
 	}
 }

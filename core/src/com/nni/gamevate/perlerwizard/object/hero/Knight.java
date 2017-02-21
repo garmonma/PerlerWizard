@@ -7,7 +7,8 @@ public class Knight extends Hero {
 		super(width, height, x, y, level);
 		
 		_speed = 6;
-		_hitPoints = _level * 32;
+		_hitPoints = (int) Math.ceil(_level * 32 * _currentHealthPct);
+		
 	}
 
 	@Override
@@ -24,6 +25,24 @@ public class Knight extends Hero {
 
 	@Override
 	void castDefense() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void setEquipmentSlotOne(Equipment item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void setEquipmentSlotTwo(Equipment item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void setEquipmentSlotThree(Equipment item) {
 		// TODO Auto-generated method stub
 		
 	}

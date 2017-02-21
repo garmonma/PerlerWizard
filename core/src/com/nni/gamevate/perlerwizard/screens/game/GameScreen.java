@@ -16,7 +16,7 @@ import com.nni.gamevate.perlerwizard.screens.ScreenAdaptar;
 public class GameScreen extends ScreenAdaptar {
 	
 	private PerlerWizard _perlerWizard;
-	private GamePlayController _world;
+	private GamePlayController _gamePlayController;
 	private GamePlayRenderer _renderer;
 	
 	private SpriteBatch _batch;
@@ -39,16 +39,16 @@ public class GameScreen extends ScreenAdaptar {
 				_perlerWizard.setScreen(new MainWorldScreen(_perlerWizard));
 			
 		} else {
-			_world.update(delta);
+			_gamePlayController.update(delta);
 			_renderer.render(delta);
 		}
 	}
 		
 	@Override
 	public void show() {
-		_world = new GamePlayController();
 		_networkController = _perlerWizard.getNetworkController();
-		_renderer = new GamePlayRenderer(_world, _networkController, _batch, _assetManager);
+		_gamePlayController = new GamePlayController(_networkController);
+		_renderer = new GamePlayRenderer(_gamePlayController, _networkController, _batch, _assetManager);
 
 	}
 

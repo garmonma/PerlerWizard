@@ -7,13 +7,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.GameConfig;
+import com.nni.gamevate.perlerwizard.network.gamedata.GameCharacter;
 import com.nni.gamevate.perlerwizard.network.gamedata.Spawn;
 import com.nni.gamevate.perlerwizard.network.gamedata.Wave;
 import com.nni.gamevate.perlerwizard.object.UIElement;
 import com.nni.gamevate.perlerwizard.object.Wall;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.enemies.EnemyType;
+import com.nni.gamevate.perlerwizard.object.hero.BattleMage;
 import com.nni.gamevate.perlerwizard.object.hero.Hero;
+import com.nni.gamevate.perlerwizard.object.hero.HeroTypes;
+import com.nni.gamevate.perlerwizard.object.hero.Knight;
 import com.nni.gamevate.perlerwizard.object.hero.Shield;
 import com.nni.gamevate.perlerwizard.object.hero.Wizard;
 import com.nni.gamevate.perlerwizard.object.spells.EnemySpell;
@@ -33,7 +37,6 @@ import com.nni.gamevate.perlerwizard.spawnloader.SpawnLoader;
 public class GamePlayController {
 
 	private Hero _hero;
-	private Shield _shield;
 
 	private Wall _upperWall;
 	private Wall _lowerWall;
@@ -46,13 +49,13 @@ public class GamePlayController {
 	private UIElement _bottomArrow;
 	private UIElement _spellBox;
 
-	private List<UIElement> _heroHealthNodes;
+	private UIElement _heroHealthNode;
 
-	private UIElement _triangleRefresher;
-	private UIElement _squareRefresher;
-	private UIElement _rectangleRefresher;
-	private UIElement _circleRefresher;
-	private UIElement _trapazoidRefresher;
+	private UIElement _skillSlotTwo;
+	private UIElement _skillSlotThree;
+	private UIElement _skillSlotFour;
+	private UIElement _skillSlotOne;
+	private UIElement _skillSlotFive;
 
 	private UIElement _sigilButton;
 
@@ -70,25 +73,48 @@ public class GamePlayController {
 
 	private SpellColor _sc;
 	private SpellShape _ss;
+	
+	private NetworkController _networkController;
+	private GameCharacter _gameCharacter;
+	private int _heroLevel;
 
-	public GamePlayController() {
+	public GamePlayController(NetworkController networkController) {
 		// _level = LevelLoader.load(Gdx.files.internal("levels/level_0.json"));
-
+		_networkController = networkController;
+		_gameCharacter = _networkController.getCharacter();
+		
+		if(_gameCharacter.attack == 0){
+			_gameCharacter.attack = 10;
+			_gameCharacter.defense = 10;
+			_gameCharacter.dodge = 10;
+			_gameCharacter.experience = 120;
+			_gameCharacter.healthPct = 50;
+			_gameCharacter.job = 1;
+			_gameCharacter.level = 10;
+			_gameCharacter.speed = 7;
+			_gameCharacter.gold = 13000;
+		}
+		
+		System.out.println(_gameCharacter);
+		_heroLevel = _gameCharacter.level;
+		
+		init();	
+	}
+	
+	public void init(){
 		_upperWall = new Wall(GameConfig.RIGHT_WALL - GameConfig.LEFT_WALL, .10f, GameConfig.LEFT_WALL,
 				GameConfig.WORLD_HEIGHT, "upper");
 		_upperWall.setDirection(90);
 		
-		
-
 		_rightWall = new Wall(.10f, GameConfig.WORLD_HEIGHT, GameConfig.RIGHT_WALL, 0, "right");
 
 		_leftWall = new Wall(.10f, GameConfig.WORLD_HEIGHT, GameConfig.LEFT_WALL, 0, "left");
 
-		_circleRefresher = new UIElement(.5f, 8f, 1, 1);
-		_triangleRefresher = new UIElement(2.5f, 8f, 1, 1);
-		_squareRefresher = new UIElement(.5f, 6.75f, 1, 1);
-		_rectangleRefresher = new UIElement(2.5f, 6.75f, 1, 1);
-		_trapazoidRefresher = new UIElement(.5f, 5.5f, 1, 1);
+		_skillSlotOne = new UIElement(.5f, 6.5f, 1, 1);
+		_skillSlotTwo = new UIElement(.5f, 5.25f, 1, 1);
+		_skillSlotThree = new UIElement(.5f, 4f, 1, 1);
+		_skillSlotFour = new UIElement(.5f, 2.75f, 1, 1);
+		_skillSlotFive = new UIElement(.5f, 1.5f, 1, 1);
 
 		_sigilButton = new UIElement(17f, 9f, 2, 2);
 
@@ -99,22 +125,21 @@ public class GamePlayController {
 
 		_spellBox = new UIElement(1.75f, 1.75f, .5f, .5f);
 
-		_heroHealthNodes = new ArrayList<UIElement>();
-		for (int i = 0; i < 18; i++) {
-			UIElement healthNode;
-			float xi = (i % 6) + .5f;
-			if (i < 6) {
-				healthNode = new UIElement(.25f + (xi * .50f), GameConfig.WORLD_HEIGHT - 1, .25f, .25f);
-			} else if (i < 12) {
-				healthNode = new UIElement(.25f + (xi * .50f), GameConfig.WORLD_HEIGHT - 1.5f, .25f, .25f);
-			} else {
-				healthNode = new UIElement(.25f + (xi * .50f), GameConfig.WORLD_HEIGHT - 2f, .25f, .25f);
-			}
-
-			_heroHealthNodes.add(healthNode);
+		_heroHealthNode = new UIElement(0.5f, 11f, 3f, .5f);
+		
+		
+		if(_gameCharacter.job == HeroTypes.WIZARD){
+			_hero = new Wizard(1, 1, GameConfig.WORLD_WIDTH / 2, 0, _heroLevel);
+		} else if(_gameCharacter.job == HeroTypes.KNIGHT) {
+			_hero = new Knight(1, 1, GameConfig.WORLD_WIDTH / 2, 0, _heroLevel);
+		} else if(_gameCharacter.job == HeroTypes.BATTLEMAGE){
+			_hero = new BattleMage(1, 1, GameConfig.WORLD_WIDTH / 2,  0, _heroLevel);
 		}
-
-		_hero = new Wizard(1, 1, GameConfig.WORLD_WIDTH / 2, 0, 1);
+		
+		System.out.println(_hero);
+		
+		_hero.setCurrentHealthPct(_gameCharacter.healthPct);
+		
 
 		_spells = new Array<Spell>();
 		_enemies = new Array<Enemy>();
@@ -124,7 +149,7 @@ public class GamePlayController {
 
 		_shapeSelector = new ShapeSelector();
 		_colorSelector = new ColorSelector();
-		loadSelectors();
+		//loadSelectors();
 
 		_playerWon = false;
 		_gameOver = false;
@@ -270,44 +295,32 @@ public class GamePlayController {
 		return _spellBox;
 	}
 
-	public UIElement getCircleRefresher() {
-		return _circleRefresher;
+	public UIElement getSkillSlotOne() {
+		return _skillSlotOne;
 	}
 
-	public UIElement getSquareRefresher() {
-		return _squareRefresher;
+	public UIElement getSkillSlotThree() {
+		return _skillSlotThree;
 	}
 
-	public UIElement getRectangleRefresher() {
-		return _rectangleRefresher;
+	public UIElement getSkillSlotFour() {
+		return _skillSlotFour;
 	}
 
-	public UIElement getTrapazoidRefresher() {
-		return _trapazoidRefresher;
+	public UIElement getSkillSlotFive() {
+		return _skillSlotFive;
 	}
 
-	public UIElement getTriangleRefresher() {
-		return _triangleRefresher;
+	public UIElement getSkillSlotTwo() {
+		return _skillSlotTwo;
 	}
 
 	public UIElement getSigilButton() {
 		return _sigilButton;
 	}
 
-	public List<UIElement> getHealthNodes() {
-		return _heroHealthNodes;
-	}
-
-	private void loadSelectors() {
-		_shapeSelector.insert(new CircleSpell(), 0);
-		_shapeSelector.insert(new RectangleSpell(), 1);
-		_shapeSelector.insert(new CircleSpell(), 2);
-		_shapeSelector.insert(new RectangleSpell(), 3);
-
-		_colorSelector.insert(new WhiteSpell(), 0);
-		_colorSelector.insert(new RedSpell(), 1);
-		_colorSelector.insert(new WhiteSpell(), 2);
-		_colorSelector.insert(new RedSpell(), 3);
+	public UIElement getHealthNode() {
+		return _heroHealthNode;
 	}
 
 	private void loadEnemies() {
