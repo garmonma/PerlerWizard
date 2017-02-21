@@ -110,15 +110,14 @@ public class GamePlayRenderer {
 			//How do I transition back to the World Map Screen;
 			
 			_matchRendering = false;
-		}  else {
-		
-			ViewportUtils.drawGrid(_viewport, _shapeRenderer);
+		}  else {	
+			//ViewportUtils.drawGrid(_viewport, _shapeRenderer);
 			drawGameBounds();
 			drawShapeRefreshers();
 			drawSigilButton();
 			drawHeroUIComponents();
 	
-			drawSkillBar();
+			//drawSkillBar();
 			drawHero();
 			drawEnemies();
 			drawSpells();
@@ -139,35 +138,35 @@ public class GamePlayRenderer {
 		_shapeRenderer.setColor(Color.WHITE);
 
 		_shapeRenderer.rect(
-				_controller.getCircleRefresher().getX(),
-				_controller.getCircleRefresher().getY(),
-				_controller.getCircleRefresher().getWidth(),
-				_controller.getCircleRefresher().getHeight()
+				_controller.getSkillSlotFive().getX(),
+				_controller.getSkillSlotFive().getY(),
+				_controller.getSkillSlotFive().getWidth(),
+				_controller.getSkillSlotFive().getHeight()
 		);
 
 		_shapeRenderer.rect(
-				_controller.getSquareRefresher().getX(),
-				_controller.getSquareRefresher().getY(),
-				_controller.getSquareRefresher().getWidth(),
-				_controller.getSquareRefresher().getHeight()
+				_controller.getSkillSlotFour().getX(),
+				_controller.getSkillSlotFour().getY(),
+				_controller.getSkillSlotFour().getWidth(),
+				_controller.getSkillSlotFour().getHeight()
 		);
 		_shapeRenderer.rect(
-				_controller.getRectangleRefresher().getX(),
-				_controller.getRectangleRefresher().getY(),
-				_controller.getRectangleRefresher().getWidth(),
-				_controller.getRectangleRefresher().getHeight()
+				_controller.getSkillSlotThree().getX(),
+				_controller.getSkillSlotThree().getY(),
+				_controller.getSkillSlotThree().getWidth(),
+				_controller.getSkillSlotThree().getHeight()
 		);
 		_shapeRenderer.rect(
-				_controller.getTriangleRefresher().getX(),
-				_controller.getTriangleRefresher().getY(),
-				_controller.getTriangleRefresher().getWidth(),
-				_controller.getTriangleRefresher().getHeight()
+				_controller.getSkillSlotTwo().getX(),
+				_controller.getSkillSlotTwo().getY(),
+				_controller.getSkillSlotTwo().getWidth(),
+				_controller.getSkillSlotTwo().getHeight()
 		);
 		_shapeRenderer.rect(
-				_controller.getTrapazoidRefresher().getX(),
-				_controller.getTrapazoidRefresher().getY(),
-				_controller.getTrapazoidRefresher().getWidth(),
-				_controller.getTrapazoidRefresher().getHeight()
+				_controller.getSkillSlotOne().getX(),
+				_controller.getSkillSlotOne().getY(),
+				_controller.getSkillSlotOne().getWidth(),
+				_controller.getSkillSlotOne().getHeight()
 		);
 
 		_shapeRenderer.end();
@@ -188,21 +187,19 @@ public class GamePlayRenderer {
 	}
 	
 	private void drawHeroUIComponents() {
+		
+		UIElement node = _controller.getHealthNode();
+		float healthBarWidth = _controller.getHero().getCurrentHealthPct() * node.getWidth() / 100;
+		
 		_shapeRenderer.begin(ShapeType.Line);
 		_shapeRenderer.setColor(Color.GREEN);
-		
-		for(UIElement node: _controller.getHealthNodes()){
-			_shapeRenderer.ellipse(node.getX(), node.getY(), node.getWidth(), node.getHeight());
-		}
-		
+		_shapeRenderer.rect(node.getX(), node.getY(), node.getWidth(), node.getHeight());
 		_shapeRenderer.end();
 		
 		_shapeRenderer.begin(ShapeType.Filled);
 		_shapeRenderer.setColor(Color.GREEN);
-		
-		
+		_shapeRenderer.rect(node.getX(), node.getY(), healthBarWidth, node.getHeight());
 		_shapeRenderer.end();
-		
 	}
 
 	private void drawHero() {

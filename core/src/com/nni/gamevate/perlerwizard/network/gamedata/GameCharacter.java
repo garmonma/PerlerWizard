@@ -2,60 +2,20 @@ package com.nni.gamevate.perlerwizard.network.gamedata;
 
 public class GameCharacter {
 
-	private int characterID;
-	private int health;
-	private int gold;
-	private int experience;
-	
-	
-	public GameCharacter(){
-		
-	}
-
-
-	public int getCharacterID() {
-		return characterID;
-	}
-
-
-	public int getHealth() {
-		return health;
-	}
-
-
-	public int getGold() {
-		return gold;
-	}
-
-
-	public int getExperience() {
-		return experience;
-	}
-
-
-	public void setCharacterID(int characterID) {
-		this.characterID = characterID;
-	}
-
-
-	public void setHealth(int health) {
-		this.health = health;
-	}
-
-
-	public void setGold(int gold) {
-		this.gold = gold;
-	}
-
-
-	public void setExperience(int experience) {
-		this.experience = experience;
-	}
-
-
+	public int characterID;
+	public float healthPct;
+	public int gold;
+	public int experience;
+	public int defense, attack;
+	public float dodge, speed;
+	public int job;
+	public int level;
 	@Override
 	public String toString() {
-		return String.format("GameCharacter [characterID=%s, health=%s, gold=%s, experience=%s]", characterID, health,
-				gold, experience);
+		return String.format(
+				"GameCharacter [characterID=%s, healthPct=%s, gold=%s, experience=%s, defense=%s, attack=%s, dodge=%s, speed=%s, job=%s, level=%s]",
+				characterID, healthPct, gold, experience, defense, attack, dodge, speed, job, level);
 	}
+
+	
 }
