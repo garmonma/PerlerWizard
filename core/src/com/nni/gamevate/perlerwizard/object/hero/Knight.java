@@ -1,6 +1,8 @@
 
 package com.nni.gamevate.perlerwizard.object.hero;
 
+import com.nni.gamevate.perlerwizard.object.skills.Skill;
+
 public class Knight extends Hero {
 
 	public Knight(int width, int height, float x, float y, int level) {
@@ -12,19 +14,19 @@ public class Knight extends Hero {
 	}
 
 	@Override
-	void attack() {
+	public Skill attack(int selectedSkill) {
+		return null;
+		
+	}
+
+	@Override
+	public void castSpecial() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	void castSpecial() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	void castDefense() {
+	public void castDefense() {
 		// TODO Auto-generated method stub
 		
 	}

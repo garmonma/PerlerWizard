@@ -1,7 +1,6 @@
 package com.nni.gamevate.perlerwizard;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -17,7 +16,7 @@ import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 import com.nni.gamevate.perlerwizard.network.gamedata.MatchResult;
 import com.nni.gamevate.perlerwizard.object.UIElement;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
-import com.nni.gamevate.perlerwizard.object.spells.Spell;
+import com.nni.gamevate.perlerwizard.object.skills.Skill;
 import com.nni.gamevate.perlerwizard.utils.GamePlayInputHandler;
 import com.nni.gamevate.perlerwizard.utils.ViewportUtils;
 
@@ -39,9 +38,6 @@ public class GamePlayRenderer {
 	
 	private BitmapFont _font;
 	private GamePlayInputHandler _inputHandler;
-	private InputMultiplexer _inputMultiplexer;
-	
-	private int _shapePosition;
 	
 	private AssetManager _assetManager;
 	
@@ -63,10 +59,7 @@ public class GamePlayRenderer {
 		_camera = new OrthographicCamera();
 
 		_inputHandler = new GamePlayInputHandler(_controller, _camera);
-		_inputMultiplexer = new InputMultiplexer();
-		_inputMultiplexer.addProcessor(_inputHandler.getSkillBarProcessor());
-		_inputMultiplexer.addProcessor(_inputHandler.getAnalogProcessor());
-		Gdx.input.setInputProcessor(_inputMultiplexer);
+		Gdx.input.setInputProcessor(_inputHandler.getSkillBarProcessor());
 
 		_viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, _camera);
 
@@ -247,79 +240,17 @@ public class GamePlayRenderer {
 	private void drawSpells() {
 		_shapeRenderer.begin(ShapeType.Line);
 
-		for (Spell spell : _controller.getSpells()) {
-			if (spell.getSpellColor().equalsIgnoreCase("red")) {
-				_shapeRenderer.setColor(Color.RED);
-			} else if (spell.getSpellColor().equalsIgnoreCase("white")) {
-				_shapeRenderer.setColor(Color.WHITE);
-			}
+		for (Skill skill : _controller.getSkills()) {
+			_shapeRenderer.setColor(Color.WHITE);
+			
 
-			if (spell.getSpellShape().equalsIgnoreCase("circle")) {
-				_shapeRenderer.ellipse(spell.getX(), 
-						spell.getY(), 
-						spell.getWidth(),
-						spell.getHeight());
-			} else if (spell.getSpellShape().equalsIgnoreCase("rectangle")) {
-				_shapeRenderer.rect(spell.getX(), spell.getY(), spell.getWidth(), spell.getHeight());
-			}
+			_shapeRenderer.ellipse(skill.getX(), 
+						skill.getY(), 
+						skill.getWidth(),
+						skill.getHeight());
 		}
 
 		_shapeRenderer.end();
-	}
-
-	private void drawSkillBar() {
-		_shapeRenderer.begin(ShapeType.Line);
-		_shapeRenderer.end();
-
-		_shapeRenderer.begin(ShapeType.Line);
-		_shapeRenderer.setColor(_controller.getColorSelector().getSpellColor().getColor());
-		_shapePosition = _controller.getShapeSelector().getSelectedPosition();
-
-		if (_controller.getShapeSelector().getSpellShape(_shapePosition).toString().equalsIgnoreCase("circle"))
-			_shapeRenderer.ellipse(_controller.getSpellBox().getX(), 
-					_controller.getSpellBox().getY(), 
-					_controller.getSpellBox().getWidth(), 
-					_controller.getSpellBox().getHeight());
-		
-		
-		
-		if (_controller.getShapeSelector().getSpellShape(_shapePosition).toString().equalsIgnoreCase("rectangle"))
-			_shapeRenderer.rect(_controller.getSpellBox().getX(), 
-					_controller.getSpellBox().getY(), 
-					_controller.getSpellBox().getWidth(),
-					_controller.getSpellBox().getHeight());
-
-		_shapeRenderer.end();
-
-		_shapeRenderer.begin(ShapeType.Filled);
-		_shapeRenderer.setColor(Color.WHITE);
-
-		_shapeRenderer.triangle(_controller.getBottomArrow().getX() - _controller.getBottomArrow().getWidth(),
-				_controller.getBottomArrow().getY() + _controller.getBottomArrow().getHeight(),
-				_controller.getBottomArrow().getX() + _controller.getBottomArrow().getWidth(),
-				_controller.getBottomArrow().getY() + _controller.getBottomArrow().getHeight(), _controller.getBottomArrow().getX(),
-				_controller.getBottomArrow().getY());
-
-		_shapeRenderer.triangle(_controller.getTopArrow().getX() - _controller.getTopArrow().getWidth(),
-				_controller.getTopArrow().getY() - _controller.getTopArrow().getHeight(),
-				_controller.getTopArrow().getX() + _controller.getTopArrow().getWidth(),
-				_controller.getTopArrow().getY() - _controller.getTopArrow().getHeight(), _controller.getTopArrow().getX(),
-				_controller.getTopArrow().getY());
-
-		_shapeRenderer.triangle(_controller.getLeftArrow().getX() + _controller.getLeftArrow().getWidth(),
-				_controller.getLeftArrow().getY() - _controller.getLeftArrow().getHeight(),
-				_controller.getLeftArrow().getX() + _controller.getLeftArrow().getWidth(),
-				_controller.getLeftArrow().getY() + _controller.getLeftArrow().getHeight(), _controller.getLeftArrow().getX(),
-				_controller.getLeftArrow().getY());
-
-		_shapeRenderer.triangle(_controller.getRightArrow().getX() - _controller.getRightArrow().getWidth(),
-				_controller.getRightArrow().getY() - _controller.getRightArrow().getHeight(),
-				_controller.getRightArrow().getX() - _controller.getRightArrow().getWidth(),
-				_controller.getRightArrow().getY() + _controller.getRightArrow().getHeight(), _controller.getRightArrow().getX(),
-				_controller.getRightArrow().getY());
-
-		_shapeRenderer.end();
-
 	}
 	
 	public boolean isMatchRendering(){

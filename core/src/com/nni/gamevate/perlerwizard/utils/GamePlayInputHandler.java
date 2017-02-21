@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.nni.gamevate.perlerwizard.controllers.GamePlayController;
+import com.nni.gamevate.perlerwizard.object.UIElement;
 
 /**
  * 
@@ -13,28 +14,22 @@ import com.nni.gamevate.perlerwizard.controllers.GamePlayController;
  */
 public class GamePlayInputHandler {
 
-	private GamePlayController _world;
+	private GamePlayController _controller;
 	private Vector3 _touchCords;
 	private OrthographicCamera _camera;
 
 	private InputAdapter _skillBarProcessor;
-	private InputAdapter _analogProcessor;
 
-	public GamePlayInputHandler(GamePlayController world, OrthographicCamera camera) {
-		_world = world;
+	public GamePlayInputHandler(GamePlayController controller, OrthographicCamera camera) {
+		_controller = controller;
 		_touchCords = new Vector3();
 		_camera = camera;
 
 		initSkillBarProcessor();
-		initAnalogProcessor();
 	}
 
 	public InputAdapter getSkillBarProcessor() {
 		return _skillBarProcessor;
-	}
-
-	public InputAdapter getAnalogProcessor() {
-		return _analogProcessor;
 	}
 
 	private void initSkillBarProcessor() {
@@ -45,62 +40,64 @@ public class GamePlayInputHandler {
 				_touchCords.set(screenX, screenY, 0);
 				_camera.unproject(_touchCords);
 
-				if (_touchCords.x >= _world.getLeftWall().getX()
-						&& _touchCords.x <= _world.getRightWall().getX()
+				if (_touchCords.x >= _controller.getLeftWall().getX()
+						&& _touchCords.x <= _controller.getRightWall().getX()
 						&& _touchCords.y >= 0
-						&& _touchCords.y <= _world.getUpperWall().getY()) {
+						&& _touchCords.y <= _controller.getUpperWall().getY()) {
 
-					_world.castSpell();
-					return true;
-				}
-
-				if(_touchCords.x >= _world.getTopArrow().getX() - _world.getTopArrow().getWidth()
-						&& _touchCords.x <= _world.getTopArrow().getX() + _world.getTopArrow().getWidth()
-						&& _touchCords.y <= _world.getTopArrow().getY()
-						&& _touchCords.y >= _world.getTopArrow().getY() - _world.getTopArrow().getHeight()){
-					
-					_world.getColorSelector().rotateUp();
+					_controller.attack();
 					return true;
 				}
 				
-				if(_touchCords.x >= _world.getBottomArrow().getX() - _world.getTopArrow().getWidth()
-						&& _touchCords.x <= _world.getBottomArrow().getX() + _world.getTopArrow().getWidth()
-						&& _touchCords.y >= _world.getBottomArrow().getY()
-						&& _touchCords.y <= _world.getBottomArrow().getY() + _world.getTopArrow().getHeight()){
+				if(_touchCords.x >= _controller.getSkillSlotOne().getX()
+						&& _touchCords.x <= _controller.getSkillSlotOne().getX() + _controller.getSkillSlotOne().getWidth()
+						&& _touchCords.y >= _controller.getSkillSlotOne().getY()
+						&& _touchCords.y <= _controller.getSkillSlotOne().getY() + _controller.getSkillSlotOne().getHeight()){
 					
-					_world.getColorSelector().rotateDown();
+					_controller.setSelectedSkill(1);
+					return true;
+				 
+				}
+				
+				if(_touchCords.x >= _controller.getSkillSlotTwo().getX()
+						&& _touchCords.x <= _controller.getSkillSlotTwo().getX() + _controller.getSkillSlotTwo().getWidth()
+						&& _touchCords.y >= _controller.getSkillSlotTwo().getY()
+						&& _touchCords.y <= _controller.getSkillSlotTwo().getY() + _controller.getSkillSlotTwo().getHeight()){
+				 
+					_controller.setSelectedSkill(2);
 					return true;
 				}
 				
-				
-				if(_touchCords.x >= _world.getLeftArrow().getX()
-						&& _touchCords.x <= _world.getLeftArrow().getX() + _world.getLeftArrow().getWidth()
-						&& _touchCords.y <= _world.getLeftArrow().getY() + _world.getLeftArrow().getHeight()
-						&& _touchCords.y >= _world.getLeftArrow().getY() - _world.getLeftArrow().getHeight()){
+				if(_touchCords.x >= _controller.getSkillSlotThree().getX()
+						&& _touchCords.x <= _controller.getSkillSlotThree().getX() + _controller.getSkillSlotThree().getWidth()
+						&& _touchCords.y >= _controller.getSkillSlotThree().getY()
+						&& _touchCords.y <= _controller.getSkillSlotThree().getY() + _controller.getSkillSlotThree().getHeight()){
 					
-					_world.getShapeSelector().rotateLeft();
+					_controller.setSelectedSkill(3);
 					return true;
+				 
+				}
+				if(_touchCords.x >= _controller.getSkillSlotFour().getX()
+						&& _touchCords.x <= _controller.getSkillSlotFour().getX() + _controller.getSkillSlotFour().getWidth()
+						&& _touchCords.y >= _controller.getSkillSlotFour().getY()
+						&& _touchCords.y <= _controller.getSkillSlotFour().getY() + _controller.getSkillSlotFour().getHeight()){
+					
+					_controller.setSelectedSkill(4);
+					return true;
+				 
+				}
+				if(_touchCords.x >= _controller.getSkillSlotFive().getX()
+						&& _touchCords.x <= _controller.getSkillSlotFive().getX() + _controller.getSkillSlotFive().getWidth()
+						&& _touchCords.y >= _controller.getSkillSlotFive().getY()
+						&& _touchCords.y <= _controller.getSkillSlotFive().getY() + _controller.getSkillSlotFive().getHeight()){
+					
+					_controller.setSelectedSkill(5);
+					return true;
+				 
 				}
 				
-				if(_touchCords.x <= _world.getRightArrow().getX()
-						&& _touchCords.x >= _world.getRightArrow().getX() - _world.getRightArrow().getWidth()
-						&& _touchCords.y >= _world.getRightArrow().getY() - _world.getRightArrow().getHeight()
-						&& _touchCords.y <= _world.getRightArrow().getY() + _world.getRightArrow().getHeight()){
-					
-					_world.getShapeSelector().rotateRight();
-					return true;
-				}
-
 				return false;
 			}
-		};
-	}
-
-	private void initAnalogProcessor() {
-		_analogProcessor = new InputAdapter() {
-			
-			
-			
 		};
 	}
 }

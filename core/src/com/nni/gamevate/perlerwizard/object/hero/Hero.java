@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.GameObject;
+import com.nni.gamevate.perlerwizard.object.skills.Skill;
 
 /**
  * 
@@ -36,11 +37,11 @@ public abstract class Hero extends GameObject {
 		_level = level;
 	}
 
-	abstract void attack();
+	public abstract Skill attack(int selectedSkill);
 
-	abstract void castSpecial();
+	public abstract void castSpecial();
 
-	abstract void castDefense();
+	public abstract void castDefense();
 	
 	abstract void setEquipmentSlotOne(Equipment item);
 	

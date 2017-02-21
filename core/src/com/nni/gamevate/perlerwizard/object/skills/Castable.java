@@ -1,4 +1,4 @@
-package com.nni.gamevate.perlerwizard.object.spells;
+package com.nni.gamevate.perlerwizard.object.skills;
 
 
 /**

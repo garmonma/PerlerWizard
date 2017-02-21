@@ -1,4 +1,4 @@
-package com.nni.gamevate.perlerwizard.object.spells;
+package com.nni.gamevate.perlerwizard.object.skills;
 
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.GameObject;

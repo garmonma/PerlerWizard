@@ -16,6 +16,13 @@ public abstract class GameObject implements Collidable {
 	protected Vector2 _velocity;
 	protected Vector2 _movement;
 	
+	public GameObject(float x, float y){
+		_position = new Vector2(x, y);
+		_direction = new Vector2();
+		_velocity = new Vector2();
+		_movement = new Vector2();
+	}
+	
 	public GameObject(float width, float height, float x, float y){
 		_width = width;
 		_height = height;
