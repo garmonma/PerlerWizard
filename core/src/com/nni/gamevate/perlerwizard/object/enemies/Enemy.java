@@ -1,79 +1,41 @@
 package com.nni.gamevate.perlerwizard.object.enemies;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.GameObject;
-
+import com.nni.gamevate.perlerwizard.object.skills.Skill;
 
 /**
  * @author Marcus Garmon
  * @date Dec 29, 2016
  */
-public class Enemy extends GameObject{
+public abstract class Enemy extends GameObject{
 	
-	private Rectangle _collisionBounds;
-	private EnemyType _type;
-	private double _health;
-	private double _attackSpeed;
+	protected double _health;
 	
-	public Enemy(int width, int height, float x, float y, EnemyType type) {
+	public Enemy(int width, int height, float x, float y) {
 		super(width, height, x, y);
-		_collisionBounds = new Rectangle();
-		_type = type;
-		_health = type.getHealth();
-		_attackSpeed = type.getAttackSpeed();
-	}
-
-	public void attack(){
-		switch(_type){
-		case GoblinInitiate:
-			break;
-		case MountedLance:
-			forwardCharge();
-			break;
-		case Dragon:
-			break;
-		}
-	
-
-	};
-	
-	private void forwardCharge(){
 		
 	}
+
+	public abstract Skill attack();
 	
-	public void spawn(){
-		
-	};
+	public abstract Skill castSpecial();
+	
+	public abstract Skill castDefense();
+	
+	public abstract boolean isDead(double damage);
+	
+	public abstract void move();
 	
 	public double getHealth(){
 		return _health;
 	}
-	
-	public boolean dead(double damage){
-		_health = _health - damage;
-		
-		if(_health <= 0){
-			return true;
-		}
-		
-		return false;
-	}
-	
-	public double getAttackSpeed(){
-		return _attackSpeed;
-	}
 
 	@Override
 	public void update(float delta) {
-		_collisionBounds.set(getX(), getY(), getWidth(), getHeight());
 		
 	}
 	
-	public Rectangle getCollisionBounds(){
-		return _collisionBounds;
-	}
-
 	@Override
 	public boolean collided(Collidable object) {
 		// TODO Auto-generated method stub

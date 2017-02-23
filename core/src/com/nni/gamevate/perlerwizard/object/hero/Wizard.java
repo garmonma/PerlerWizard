@@ -1,13 +1,15 @@
 package com.nni.gamevate.perlerwizard.object.hero;
 
 import com.badlogic.gdx.Gdx;
-import com.nni.gamevate.perlerwizard.object.skills.BlackSpell;
-import com.nni.gamevate.perlerwizard.object.skills.BlueSpell;
-import com.nni.gamevate.perlerwizard.object.skills.GreenSpell;
-import com.nni.gamevate.perlerwizard.object.skills.RedSpell;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
-import com.nni.gamevate.perlerwizard.object.skills.WhiteSpell;
-import com.nni.gamevate.perlerwizard.object.skills.YellowSpell;
+import com.nni.gamevate.perlerwizard.object.skills.defense.EnergyShield;
+import com.nni.gamevate.perlerwizard.object.skills.spells.BlackSpell;
+import com.nni.gamevate.perlerwizard.object.skills.spells.BlueSpell;
+import com.nni.gamevate.perlerwizard.object.skills.spells.GreenSpell;
+import com.nni.gamevate.perlerwizard.object.skills.spells.RedSpell;
+import com.nni.gamevate.perlerwizard.object.skills.spells.WhiteSpell;
+import com.nni.gamevate.perlerwizard.object.skills.spells.YellowSpell;
 
 public class Wizard extends Hero {
 
@@ -22,36 +24,80 @@ public class Wizard extends Hero {
 		
 		switch(selectedSkill){
 		case 1:
-			Gdx.app.log("Casting", "Red Spell");
-			return new RedSpell(getX() + getWidth() / 2, getY() + getHeight());
+			if(RedSpell.getLastCast() == null 
+					|| TimeUtils.millis() - RedSpell.RED_SPELL_LAST_CAST 
+					> RedSpell.RED_SPELL_REFRESH_TIMER ){
+				Gdx.app.log("Casting", "Red Spell");
+				return new RedSpell(getX() + getWidth() / 2, getY() + getHeight());
+			}
+				
+			break;
 		case 2:
-			Gdx.app.log("Casting", "Blue Spell");
-			return new BlueSpell(getX() + getWidth() / 2, getY() + getHeight());
+			if(BlueSpell.getLastCast() == null 
+					|| TimeUtils.millis() - BlueSpell.BLUE_SPELL_LAST_CAST 
+					> BlueSpell.BLUE_SPELL_REFRESH_TIMER ){
+				Gdx.app.log("Casting", "Blue Spell");
+				return new BlueSpell(getX() + getWidth() / 2, getY() + getHeight());
+			}
+				
+			break;
 		case 3:
-			Gdx.app.log("Casting", "Yellow Spell");
-			return new YellowSpell(getX() + getWidth() / 2, getY() + getHeight());
+			if(YellowSpell.getLastCast() == null 
+					|| TimeUtils.millis() - YellowSpell.YELLOW_SPELL_LAST_CAST 
+					> YellowSpell.YELLOW_SPELL_REFRESH_TIMER ){
+				Gdx.app.log("Casting", "Yellow Spell");
+				return new YellowSpell(getX() + getWidth() / 2, getY() + getHeight());
+			}
+			
+			break;
 		case 4:
-			Gdx.app.log("Casting", "Green Spell");
-			return new GreenSpell(getX() + getWidth() / 2, getY() + getHeight());
+			if(GreenSpell.getLastCast() == null 
+					|| TimeUtils.millis() - GreenSpell.GREEN_SPELL_LAST_CAST 
+					> GreenSpell.GREEN_SPELL_REFRESH_TIMER ){
+				Gdx.app.log("Casting", "Green Spell");
+				return new GreenSpell(getX() + getWidth() / 2, getY() + getHeight());	
+			}
+			
+			break;
 		case 5:
-			Gdx.app.log("Casting", "Black Spell");
-			return new BlackSpell(getX() + getWidth() / 2, getY() + getHeight());
-		default:
+			if(BlackSpell.getLastCast() == null 
+					|| TimeUtils.millis() - BlackSpell.BLACK_SPELL_LAST_CAST 
+					> BlackSpell.BLACK_SPELL_REFRESH_TIMER ){
+				Gdx.app.log("Casting", "Black Spell");
+				return new BlackSpell(getX() + getWidth() / 2, getY() + getHeight());
+			}
+				
+			break;
+		}
+		
+		if(WhiteSpell.getLastCast() == null 
+				|| TimeUtils.millis() - WhiteSpell.WHITE_SPELL_LAST_CAST 
+				> WhiteSpell.WHITE_SPELL_REFRESH_TIMER ){
 			Gdx.app.log("Casting", "White Spell");
 			return new WhiteSpell(getX() + getWidth() / 2, getY() + getHeight());
 		}
+			
+		return null;
 	}
 
 	@Override
-	public void castSpecial() {
-		// TODO Auto-generated method stub
-		
+	public Skill castSpecial() {
+		return null;
 	}
 
 	@Override
-	public void castDefense() {
-		// TODO Auto-generated method stub
-		
+	public Skill castDefense() {
+		if(EnergyShield.getLastCast() == null 
+				|| TimeUtils.millis() - EnergyShield.ENERGY_SHIELD_LAST_CAST 
+				> EnergyShield.ENERGY_SHIELD_REFRESH_TIMER){
+			
+			Gdx.app.log("Casting", "Energy Shield");
+			return new EnergyShield(getX() - .10f, 
+					getY() + getHeight() + .15f,
+					this);
+		} 
+			
+		return null;
 	}
 
 	@Override

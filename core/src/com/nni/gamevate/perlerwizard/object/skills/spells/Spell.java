@@ -1,4 +1,4 @@
-package com.nni.gamevate.perlerwizard.object.skills;
+package com.nni.gamevate.perlerwizard.object.skills.spells;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -9,6 +9,9 @@ import com.nni.gamevate.perlerwizard.object.Wall;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.hero.Hero;
 import com.nni.gamevate.perlerwizard.object.hero.Shield;
+import com.nni.gamevate.perlerwizard.object.skills.Castable;
+import com.nni.gamevate.perlerwizard.object.skills.Skill;
+import com.nni.gamevate.perlerwizard.object.skills.defense.EnergyShield;
 
 
 /**
@@ -76,7 +79,7 @@ public abstract class Spell extends Skill implements Castable {
 	@Override
 	public void transfiguration(Castable spell) {
 
-		}
+	}
 	
 	public void bounce(Collidable object){
 		Vector2 change = bounce(this, object);
@@ -90,34 +93,40 @@ public abstract class Spell extends Skill implements Castable {
 	
 	private Vector2 bounce(Spell spell, Collidable collidable){
 		if(collidable instanceof Shield){
-			return bounceOffShield(spell, (Shield)collidable);
+			return bounceOffShield((Shield)collidable);
 		}
 		
 		if(collidable instanceof Enemy){
-			return bounceOffEnemy(spell, (Enemy)collidable);
+			return bounceOffEnemy((Enemy)collidable);
 		}
 		
-		if(collidable instanceof Hero){
-			bounceOffHero(spell, (Hero)collidable);
-		}
+//		if(collidable instanceof Hero){
+//			return bounceOffHero((Hero)collidable);
+//		}
 		
 		if(collidable instanceof Wall){
 			return bounceOffWall(spell, (Wall)collidable);
 		}
 		
+		if(collidable instanceof EnergyShield){
+			
+		}
+		
+		//if(collidable instanceof Reflect)
+		
 		return null;
 	}
 	
-	protected Vector2 bounceOffShield(Spell spell, Shield shield) {
+	protected Vector2 bounceOffShield(Shield shield) {
 		float shieldMaxX = shield.getX() + shield.getWidth();
-		float difference = shieldMaxX - spell.getX();
+		float difference = shieldMaxX - getX();
 		float pct = (100 * difference) / shield.getWidth();
 		// Gdx.app.log("Bounce Difference", difference + "");
 		// Gdx.app.log("BouncePct", pct + "");
 
 		_bounceAngle = ((pct * 1.4f) + 20f);// * -1f;
 		
-		Vector2 reflectionAngle = spell.getVelocity().cpy();
+		Vector2 reflectionAngle = getVelocity().cpy();
 		Vector2 wallVector = shield.getPosition().cpy().rotate90(0);
 		
 		float dot = reflectionAngle.dot(wallVector);
@@ -131,23 +140,22 @@ public abstract class Spell extends Skill implements Castable {
 	}
 
 	
-	protected Vector2 bounceOffEnemy(Spell spell, Enemy enemy) {
-		Vector2 reflectionAngle = spell.getVelocity().cpy();
-		Vector2 wallVector = enemy.getPosition().cpy().rotate90(0);
+	protected Vector2 bounceOffEnemy(Enemy enemy) {
+		Vector2 reflectionAngle = getVelocity().cpy();
+		Vector2 enemyVector = enemy.getPosition().cpy().rotate90(0);
 		
-		float dot = reflectionAngle.dot(wallVector);
+		float dot = reflectionAngle.dot(enemyVector);
 		dot *= -2.0f;
-		wallVector.scl(dot);
-		wallVector.add(reflectionAngle);
+		enemyVector.scl(dot);
+		enemyVector.add(reflectionAngle);
 
-		reflectionAngle.set(wallVector).nor();
+		reflectionAngle.set(enemyVector).nor();
 		
 		return reflectionAngle;
-
 	}
 
 	protected Vector2 bounceOffWall(Spell spell, Wall wall) {
-		Vector2 reflectionAngle = spell.getVelocity().cpy();
+		Vector2 reflectionAngle = getVelocity().cpy();
 		Vector2 wallVector = wall.getPosition().cpy();
 			
 		wallVector.nor();
@@ -164,8 +172,26 @@ public abstract class Spell extends Skill implements Castable {
 	}
 
 	
-	protected void bounceOffHero(Spell spell, Hero hero) {
-		// TODO Auto-generated method stub
+	protected Vector2 bounceOffHero(Hero hero) {
+		float heroMaxX = hero.getX() + hero.getWidth();
+		float difference = heroMaxX - getX();
+		float pct = (100 * difference) / hero.getWidth();
+		// Gdx.app.log("Bounce Difference", difference + "");
+		// Gdx.app.log("BouncePct", pct + "");
+
+		_bounceAngle = ((pct * 1.4f) + 20f);// * -1f;
+		
+		Vector2 reflectionAngle = hero.getVelocity().cpy();
+		Vector2 wallVector = hero.getPosition().cpy().rotate90(0);
+		
+		float dot = reflectionAngle.dot(wallVector);
+		dot *= -2.0f;
+		wallVector.scl(dot);
+		wallVector.add(reflectionAngle);
+
+		reflectionAngle.set(wallVector).nor().setAngle(_bounceAngle);
+
+		return reflectionAngle;
 
 	}
 

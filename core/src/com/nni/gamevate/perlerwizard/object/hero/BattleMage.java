@@ -1,6 +1,15 @@
 package com.nni.gamevate.perlerwizard.object.hero;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
+import com.nni.gamevate.perlerwizard.object.skills.defense.Reflect;
+import com.nni.gamevate.perlerwizard.object.skills.spells.BlackSpell;
+import com.nni.gamevate.perlerwizard.object.skills.spells.BlueSpell;
+import com.nni.gamevate.perlerwizard.object.skills.spells.GreenSpell;
+import com.nni.gamevate.perlerwizard.object.skills.spells.RedSpell;
+import com.nni.gamevate.perlerwizard.object.skills.spells.WhiteSpell;
+import com.nni.gamevate.perlerwizard.object.skills.spells.YellowSpell;
 
 public class BattleMage extends Hero {
 
@@ -12,20 +21,82 @@ public class BattleMage extends Hero {
 
 	@Override
 	public Skill attack(int selectedSkill) {
+		switch(selectedSkill){
+		case 1:
+			if(RedSpell.getLastCast() == null 
+					|| TimeUtils.millis() - RedSpell.RED_SPELL_LAST_CAST 
+					> RedSpell.RED_SPELL_REFRESH_TIMER ){
+				Gdx.app.log("Casting", "Red Spell");
+				return new RedSpell(getX() + getWidth() / 2, getY() + getHeight());
+			}
+				
+			break;
+		case 2:
+			if(BlueSpell.getLastCast() == null 
+					|| TimeUtils.millis() - BlueSpell.BLUE_SPELL_LAST_CAST 
+					> BlueSpell.BLUE_SPELL_REFRESH_TIMER ){
+				Gdx.app.log("Casting", "Blue Spell");
+				return new BlueSpell(getX() + getWidth() / 2, getY() + getHeight());
+			}
+				
+			break;
+		case 3:
+			if(YellowSpell.getLastCast() == null 
+					|| TimeUtils.millis() - YellowSpell.YELLOW_SPELL_LAST_CAST 
+					> YellowSpell.YELLOW_SPELL_REFRESH_TIMER ){
+				Gdx.app.log("Casting", "Yellow Spell");
+				return new YellowSpell(getX() + getWidth() / 2, getY() + getHeight());
+			}
+			
+			break;
+		case 4:
+			if(GreenSpell.getLastCast() == null 
+					|| TimeUtils.millis() - GreenSpell.GREEN_SPELL_LAST_CAST 
+					> GreenSpell.GREEN_SPELL_REFRESH_TIMER ){
+				Gdx.app.log("Casting", "Green Spell");
+				return new GreenSpell(getX() + getWidth() / 2, getY() + getHeight());	
+			}
+			
+			break;
+		case 5:
+			if(BlackSpell.getLastCast() == null 
+					|| TimeUtils.millis() - BlackSpell.BLACK_SPELL_LAST_CAST 
+					> BlackSpell.BLACK_SPELL_REFRESH_TIMER ){
+				Gdx.app.log("Casting", "Black Spell");
+				return new BlackSpell(getX() + getWidth() / 2, getY() + getHeight());
+			}
+				
+			break;
+		}
+		
+		if(WhiteSpell.getLastCast() == null 
+				|| TimeUtils.millis() - WhiteSpell.WHITE_SPELL_LAST_CAST 
+				> WhiteSpell.WHITE_SPELL_REFRESH_TIMER ){
+			Gdx.app.log("Casting", "White Spell");
+			return new WhiteSpell(getX() + getWidth() / 2, getY() + getHeight());
+		}
+			
 		return null;
-		
 	}
 
 	@Override
-	public void castSpecial() {
-		// TODO Auto-generated method stub
-		
+	public Skill castSpecial() {
+		return null;
 	}
 
 	@Override
-	public void castDefense() {
-		// TODO Auto-generated method stub
+	public Skill castDefense() {
+		if(Reflect.getLastCast() == null 
+				|| TimeUtils.millis() - Reflect.REFLECT_LAST_CAST 
+				> Reflect.REFLECT_REFRESH_TIMER){
+			
+			Gdx.app.log("Casting", "Reflect");
+			return new Reflect(getX() - .10f, 
+					getY() + getHeight() + .15f,
+					this);
+		} 
 		
+		return null;
 	}
 
 	@Override

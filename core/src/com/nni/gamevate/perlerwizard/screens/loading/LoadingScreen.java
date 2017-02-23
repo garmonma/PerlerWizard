@@ -2,6 +2,7 @@ package com.nni.gamevate.perlerwizard.screens.loading;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -64,6 +65,8 @@ public class LoadingScreen extends ScreenAdapter {
 		
 		_assetManager.load(AssetDescriptors.UI_SKIN);
 		_assetManager.load(AssetDescriptors.CASTLE_BACKGROUND);
+		_assetManager.load(AssetDescriptors.ENERGY_SHIELD_BOX);
+		_assetManager.load(AssetDescriptors.REFLECT_SKILL_BOX);
 		
 	}
 	

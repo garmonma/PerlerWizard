@@ -1,6 +1,5 @@
-package com.nni.gamevate.perlerwizard.object.skills;
+package com.nni.gamevate.perlerwizard.object.skills.spells;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
@@ -12,8 +11,19 @@ import com.badlogic.gdx.utils.TimeUtils;
  */
 public class GreenSpell extends Spell {
 	
+	public long _timeCounter;
+
+	public static Long GREEN_SPELL_LAST_CAST;
+	public static long GREEN_SPELL_REFRESH_TIMER = 60000;
+	
+	public static Long getLastCast(){
+		return GREEN_SPELL_LAST_CAST;
+	}
+	
 	public GreenSpell(float x, float y){
 		super(x, y);
+		GREEN_SPELL_LAST_CAST = TimeUtils.millis();
+		_timeCounter = TimeUtils.millis();
 		
 		_speed = 4.0f;
 		_velocity.set(_direction).scl(_speed);

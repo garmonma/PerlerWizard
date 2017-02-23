@@ -39,9 +39,9 @@ public abstract class Hero extends GameObject {
 
 	public abstract Skill attack(int selectedSkill);
 
-	public abstract void castSpecial();
+	public abstract Skill castSpecial();
 
-	public abstract void castDefense();
+	public abstract Skill castDefense();
 	
 	abstract void setEquipmentSlotOne(Equipment item);
 	

@@ -15,5 +15,11 @@ public class AssetDescriptors {
 	public static final AssetDescriptor<Skin> UI_SKIN =
             new AssetDescriptor<Skin>(AssetPaths.UI_SKIN, Skin.class);
 	
+	public static final AssetDescriptor<Texture> ENERGY_SHIELD_BOX =
+            new AssetDescriptor<Texture>(AssetPaths.ENERGY_SHIELD_BOX, Texture.class);
+	
+	public static final AssetDescriptor<Texture> REFLECT_SKILL_BOX =
+            new AssetDescriptor<Texture>(AssetPaths.REFLECT_SKILL_BOX, Texture.class);
+	
 	private AssetDescriptors(){}
 }

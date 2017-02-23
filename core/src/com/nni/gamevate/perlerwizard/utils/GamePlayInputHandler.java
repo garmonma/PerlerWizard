@@ -86,12 +86,23 @@ public class GamePlayInputHandler {
 					return true;
 				 
 				}
+				
 				if(_touchCords.x >= _controller.getSkillSlotFive().getX()
 						&& _touchCords.x <= _controller.getSkillSlotFive().getX() + _controller.getSkillSlotFive().getWidth()
 						&& _touchCords.y >= _controller.getSkillSlotFive().getY()
 						&& _touchCords.y <= _controller.getSkillSlotFive().getY() + _controller.getSkillSlotFive().getHeight()){
 					
 					_controller.setSelectedSkill(5);
+					return true;
+				 
+				}
+				
+				if(_touchCords.x >= _controller.getDefenseCastBox().getX()
+						&& _touchCords.x <= _controller.getDefenseCastBox().getX() + _controller.getDefenseCastBox().getWidth()
+						&& _touchCords.y >= _controller.getDefenseCastBox().getY()
+						&& _touchCords.y <= _controller.getDefenseCastBox().getY() + _controller.getDefenseCastBox().getHeight()){
+					
+					_controller.castDefense();
 					return true;
 				 
 				}

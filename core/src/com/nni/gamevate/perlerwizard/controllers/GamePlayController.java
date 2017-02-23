@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.network.gamedata.GameCharacter;
 import com.nni.gamevate.perlerwizard.network.gamedata.Spawn;
@@ -13,16 +12,15 @@ import com.nni.gamevate.perlerwizard.network.gamedata.Wave;
 import com.nni.gamevate.perlerwizard.object.UIElement;
 import com.nni.gamevate.perlerwizard.object.Wall;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
-import com.nni.gamevate.perlerwizard.object.enemies.EnemyType;
+import com.nni.gamevate.perlerwizard.object.enemies.Goblin;
 import com.nni.gamevate.perlerwizard.object.hero.BattleMage;
 import com.nni.gamevate.perlerwizard.object.hero.Hero;
 import com.nni.gamevate.perlerwizard.object.hero.HeroTypes;
 import com.nni.gamevate.perlerwizard.object.hero.Knight;
 import com.nni.gamevate.perlerwizard.object.hero.Wizard;
-import com.nni.gamevate.perlerwizard.object.skills.EnemySpell;
+import com.nni.gamevate.perlerwizard.object.skills.JavelinThrow;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
-import com.nni.gamevate.perlerwizard.object.skills.Spell;
-import com.nni.gamevate.perlerwizard.spawnloader.SpawnLoader;
+import com.nni.gamevate.perlerwizard.object.skills.spells.Spell;
 
 /**
  * @author Marcus Garmon
@@ -45,12 +43,13 @@ public class GamePlayController {
 	private UIElement _skillSlotFour;
 	private UIElement _skillSlotOne;
 	private UIElement _skillSlotFive;
+	
+	private UIElement _defenseCastBox;
 
 	private UIElement _sigilButton;
 
 	private Array<Skill> _skills;
 	private Array<Enemy> _enemies;
-	private Array<EnemySpell> _enemySpells;
 
 	private Spawn _level;
 
@@ -74,7 +73,7 @@ public class GamePlayController {
 			_gameCharacter.dodge = 10;
 			_gameCharacter.experience = 120;
 			_gameCharacter.healthPct = 50;
-			_gameCharacter.job = 1;
+			_gameCharacter.job = 2;
 			_gameCharacter.level = 10;
 			_gameCharacter.speed = 7;
 			_gameCharacter.gold = 13000;
@@ -101,6 +100,8 @@ public class GamePlayController {
 		_skillSlots.add(_skillSlotThree = new UIElement(.5f, 4f, 1, 1));
 		_skillSlots.add(_skillSlotFour = new UIElement(.5f, 2.75f, 1, 1));
 		_skillSlots.add(_skillSlotFive = new UIElement(.5f, 1.5f, 1, 1));
+		
+		_defenseCastBox = new UIElement(17f, 1.5f, 2.5f, .75f);
 
 		_sigilButton = new UIElement(17f, 9f, 2, 2);
 
@@ -123,8 +124,6 @@ public class GamePlayController {
 		_enemies = new Array<Enemy>();
 		loadEnemies();
 
-		_enemySpells = new Array<EnemySpell>();
-
 		_playerWon = false;
 		_gameOver = false;
 	}
@@ -143,8 +142,12 @@ public class GamePlayController {
 					if(skill instanceof Spell){
 						((Spell) skill).bounce(enemy);
 					}
+					
+					if(skill instanceof JavelinThrow){
+						skill.evaporate();
+					}
 						
-					if (enemy.dead(skill.getDamage())) {
+					if (enemy.isDead(skill.getDamage())) {
 						removeEnemy(enemy);
 					}
 				}
@@ -152,8 +155,13 @@ public class GamePlayController {
 				enemy.update(delta);
 			}
 
+			//TODO - Create a bounceable interface
 			if(skill instanceof Spell){
-				if (skill.collided(_hero)) {
+				if (skill.collided(_hero) && skill.enemySkill()) {
+					// Damage hero
+				}
+				
+				if(skill.collided(_hero) && !skill.enemySkill()){
 					((Spell)skill).bounce(_hero);
 				}
 	
@@ -172,6 +180,8 @@ public class GamePlayController {
 
 			skill.update(delta);
 		}
+		
+		processEnemyAttack();
 
 		_hero.update(delta);
 
@@ -186,7 +196,11 @@ public class GamePlayController {
 	}
 	
 	public void attack(){
-		_skills.add(_hero.attack(_selectedSkill));
+		Skill attack = _hero.attack(_selectedSkill);
+		
+		if(attack != null){
+			_skills.add(attack);
+		}	
 	}
 	
 	public void castSpecial(){
@@ -194,7 +208,11 @@ public class GamePlayController {
 	}
 
 	public void castDefense(){
-		_hero.castDefense();
+		Skill defense = _hero.castDefense();
+		
+		if(defense != null){
+			_skills.add(defense);
+		};
 	}
 	
 	public Hero getHero() {
@@ -245,6 +263,10 @@ public class GamePlayController {
 		return _skillSlotTwo;
 	}
 	
+	public UIElement getDefenseCastBox(){
+		return _defenseCastBox;
+	}
+	
 	public List<UIElement> getSkillSlots(){
 		return _skillSlots;
 	}
@@ -258,17 +280,17 @@ public class GamePlayController {
 	}
 
 	private void loadEnemies() {
-		Enemy enemy1 = new Enemy(1, 1, 6, 7, EnemyType.GoblinInitiate);
-		Enemy enemy2 = new Enemy(1, 1, 7.5f, 7, EnemyType.GoblinInitiate);
-		Enemy enemy3 = new Enemy(1, 1, 9, 7, EnemyType.GoblinInitiate);
+		Enemy enemy1 = new Goblin(1, 1, 6, 7);
+		Enemy enemy2 = new Goblin(1, 1, 7.5f, 7);
+		Enemy enemy3 = new Goblin(1, 1, 9, 7);
 
-		Enemy enemy1a = new Enemy(1, 1, 6, 8.5f, EnemyType.GoblinInitiate);
-		Enemy enemy2a = new Enemy(1, 1, 7.5f, 8.5f, EnemyType.GoblinInitiate);
-		Enemy enemy3a = new Enemy(1, 1, 9, 8.5f, EnemyType.GoblinInitiate);
+		Enemy enemy1a = new Goblin(1, 1, 6, 8.5f);
+		Enemy enemy2a = new Goblin(1, 1, 7.5f, 8.5f);
+		Enemy enemy3a = new Goblin(1, 1, 9, 8.5f);
 
-		Enemy enemy1b = new Enemy(1, 1, 6, 10, EnemyType.GoblinInitiate);
-		Enemy enemy2b = new Enemy(1, 1, 7.5f, 10, EnemyType.GoblinInitiate);
-		Enemy enemy3b = new Enemy(1, 1, 9, 10, EnemyType.GoblinInitiate);
+		Enemy enemy1b = new Goblin(1, 1, 6, 10);
+		Enemy enemy2b = new Goblin(1, 1, 7.5f, 10);
+		Enemy enemy3b = new Goblin(1, 1, 9, 10);
 
 		_enemies.add(enemy1);
 		_enemies.add(enemy2);
@@ -289,6 +311,18 @@ public class GamePlayController {
 		_skills.removeValue(skill, false);
 
 	}
+	
+	private void processEnemyAttack(){
+		for(Enemy enemy: _enemies){
+			
+			Skill attack = enemy.attack();
+			
+			if(attack != null){
+				_skills.add(attack);
+			}	
+			
+		}
+	}
 
 	private void processLevel() {
 		List<Wave> waves = _level.getWaves();
@@ -302,4 +336,9 @@ public class GamePlayController {
 		_selectedSkill = selectedSkill;
 		
 	}
+	
+	public int getSelectedSkill(){
+		return _selectedSkill;
+	}
+	
 }
