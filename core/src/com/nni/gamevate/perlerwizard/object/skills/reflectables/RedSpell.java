@@ -1,4 +1,4 @@
-package com.nni.gamevate.perlerwizard.object.skills.spells;
+package com.nni.gamevate.perlerwizard.object.skills.reflectables;
 
 import com.badlogic.gdx.utils.TimeUtils;
 
@@ -13,20 +13,8 @@ import com.badlogic.gdx.utils.TimeUtils;
  */
 public class RedSpell extends Spell {
 
-	public long _timeCounter;
-
-	public static Long RED_SPELL_LAST_CAST;
-	public static long RED_SPELL_REFRESH_TIMER = 5000;
-	
-	public static Long getLastCast(){
-		return RED_SPELL_LAST_CAST;
-	}
-
 	public RedSpell(float x, float y) {
 		super(x, y);
-		RED_SPELL_LAST_CAST = TimeUtils.millis();
-		_timeCounter = TimeUtils.millis();RED_SPELL_LAST_CAST = TimeUtils.millis();
-		_timeCounter = TimeUtils.millis();
 
 		_speed = 7.5f;
 		_velocity.set(_direction).scl(_speed);
@@ -34,9 +22,6 @@ public class RedSpell extends Spell {
 
 	public RedSpell(float width, float height, float x, float y) {
 		super(width, height, x, y);
-		
-		RED_SPELL_LAST_CAST = TimeUtils.millis();
-		_timeCounter = TimeUtils.millis();
 		
 		_speed = 7.5f;
 		_velocity.set(_direction).scl(_speed);

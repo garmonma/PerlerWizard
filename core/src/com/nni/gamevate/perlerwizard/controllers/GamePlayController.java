@@ -12,15 +12,16 @@ import com.nni.gamevate.perlerwizard.network.gamedata.Wave;
 import com.nni.gamevate.perlerwizard.object.UIElement;
 import com.nni.gamevate.perlerwizard.object.Wall;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
-import com.nni.gamevate.perlerwizard.object.enemies.Goblin;
+import com.nni.gamevate.perlerwizard.object.enemies.basic.Goblin;
+import com.nni.gamevate.perlerwizard.object.enemies.basic.Orc;
 import com.nni.gamevate.perlerwizard.object.hero.BattleMage;
 import com.nni.gamevate.perlerwizard.object.hero.Hero;
 import com.nni.gamevate.perlerwizard.object.hero.HeroTypes;
 import com.nni.gamevate.perlerwizard.object.hero.Knight;
 import com.nni.gamevate.perlerwizard.object.hero.Wizard;
-import com.nni.gamevate.perlerwizard.object.skills.JavelinThrow;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
-import com.nni.gamevate.perlerwizard.object.skills.spells.Spell;
+import com.nni.gamevate.perlerwizard.object.skills.reflectables.Spell;
+import com.nni.gamevate.perlerwizard.object.skills.throwables.JavelinThrow;
 
 /**
  * @author Marcus Garmon
@@ -73,7 +74,7 @@ public class GamePlayController {
 			_gameCharacter.dodge = 10;
 			_gameCharacter.experience = 120;
 			_gameCharacter.healthPct = 50;
-			_gameCharacter.job = 2;
+			_gameCharacter.job = 3;
 			_gameCharacter.level = 10;
 			_gameCharacter.speed = 7;
 			_gameCharacter.gold = 13000;
@@ -282,15 +283,15 @@ public class GamePlayController {
 	private void loadEnemies() {
 		Enemy enemy1 = new Goblin(1, 1, 6, 7);
 		Enemy enemy2 = new Goblin(1, 1, 7.5f, 7);
-		Enemy enemy3 = new Goblin(1, 1, 9, 7);
+		Enemy enemy3 = new Orc(1, 1, 9, 7);
 
 		Enemy enemy1a = new Goblin(1, 1, 6, 8.5f);
 		Enemy enemy2a = new Goblin(1, 1, 7.5f, 8.5f);
-		Enemy enemy3a = new Goblin(1, 1, 9, 8.5f);
+		Enemy enemy3a = new Orc(1, 1, 9, 8.5f);
 
 		Enemy enemy1b = new Goblin(1, 1, 6, 10);
 		Enemy enemy2b = new Goblin(1, 1, 7.5f, 10);
-		Enemy enemy3b = new Goblin(1, 1, 9, 10);
+		Enemy enemy3b = new Orc(1, 1, 9, 10);
 
 		_enemies.add(enemy1);
 		_enemies.add(enemy2);
@@ -314,12 +315,16 @@ public class GamePlayController {
 	
 	private void processEnemyAttack(){
 		for(Enemy enemy: _enemies){
-			
 			Skill attack = enemy.attack();
+			Skill special = enemy.castSpecial();
 			
 			if(attack != null){
 				_skills.add(attack);
-			}	
+			}
+			
+			if(special != null){
+				_skills.add(special);
+			}
 			
 		}
 	}

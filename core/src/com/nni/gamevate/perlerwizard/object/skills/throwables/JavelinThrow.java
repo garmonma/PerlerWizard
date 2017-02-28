@@ -1,8 +1,7 @@
-package com.nni.gamevate.perlerwizard.object.skills;
+package com.nni.gamevate.perlerwizard.object.skills.throwables;
 
-import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.GameConfig;
-import com.nni.gamevate.perlerwizard.object.Collidable;
+import com.nni.gamevate.perlerwizard.object.skills.Skill;
 
 public class JavelinThrow extends Skill {
 	
@@ -10,16 +9,8 @@ public class JavelinThrow extends Skill {
 	
 	public long _timeCounter;
 	
-	public static Long JAVELIN_THROW_LAST_CAST;
-	public static long JAVELIN_THROW_REFRESH_TIMER = 1500;
-	
-	public static Long getLastCast(){
-		return JAVELIN_THROW_LAST_CAST;
-	}
-
 	public JavelinThrow(float x, float y) {
 		super(x, y);
-		JAVELIN_THROW_LAST_CAST = TimeUtils.millis();
 		_width = .20f;
 		_height = 1.25f;
 		_speed = 6;

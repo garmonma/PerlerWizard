@@ -46,6 +46,10 @@ public abstract class GameObject implements Collidable {
 	public float getY() {
 		return _position.y;
 	}
+	
+	public void setY(float y){
+		_position.y = 9;
+	}
 
 	public float getHeight() {
 		return _height;
@@ -61,5 +65,9 @@ public abstract class GameObject implements Collidable {
 	
 	public Vector2 getPosition(){
 		return _position;
+	}
+	
+	public void setPosition(Vector2 newPosition){
+		_position = newPosition;
 	}
 }

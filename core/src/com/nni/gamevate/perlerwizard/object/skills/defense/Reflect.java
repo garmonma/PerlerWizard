@@ -8,18 +8,10 @@ import com.nni.gamevate.perlerwizard.object.skills.Skill;
 
 public class Reflect extends Skill {
 	
-	public long _timeCounter;
-	
-	public static Long REFLECT_LAST_CAST;
-	public static long REFLECT_REFRESH_TIMER = 500;
-	
-	public static Long getLastCast(){
-		return REFLECT_LAST_CAST;
-	}
+	private long _timeCounter;
 
 	public Reflect(float x, float y, Hero hero) {
 		super(x, y);
-		REFLECT_LAST_CAST = TimeUtils.millis();
 		_timeCounter = TimeUtils.millis();
 		
 		_width = 1.2f;
