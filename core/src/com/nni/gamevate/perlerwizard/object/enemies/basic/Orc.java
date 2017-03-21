@@ -30,9 +30,6 @@ public class Orc extends Enemy {
 
 	@Override
 	public Skill attack() {
-		if(true){
-			return null;
-		}
 		
 		if(_rockThrowLastAttack == 0 
 				|| TimeUtils.millis() - _rockThrowLastAttack > ROCK_THROW_COOLDOWN ){
@@ -56,11 +53,11 @@ public class Orc extends Enemy {
 		if(_spearRushLastAttack == 0 
 				|| TimeUtils.millis() - _spearRushLastAttack > SPEAR_RUSH_COOLDOWN ){	
 			_spearRushLastAttack = TimeUtils.millis();
-			Skill spearRsuh =  new SpearRush(getWidth(), getHeight(), getX(), getY(), this);
-			spearRsuh.isEnemySpell(true);
+			Skill spearRush =  new SpearRush(getWidth(), getHeight(), getX(), getY(), this);
+			spearRush.isEnemySpell(true);
 			
 			_castingSpecial = true;
-			return spearRsuh;
+			return spearRush;
 		}
 		return null;
 	}
@@ -70,19 +67,5 @@ public class Orc extends Enemy {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public boolean isDead(double damage) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void move() {
-		// TODO Auto-generated method stub
-
-	}
-	
-
 
 }

@@ -1,5 +1,7 @@
 package com.nni.gamevate.perlerwizard.object.enemies.basic;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
@@ -12,12 +14,18 @@ public class Goblin extends Enemy {
 	
 	private long rockThrowLastAttack;
 	private long axeThrowLastAttack;
+	
+	
+	
 
 	public Goblin(int width, int height, float x, float y) {
 		super(width, height, x, y);
 		rockThrowLastAttack = 0;
 		axeThrowLastAttack = 0;
 		_health = 1;
+		_speed = 3;
+		
+		
 	}
 
 	@Override
@@ -36,25 +44,12 @@ public class Goblin extends Enemy {
 
 	@Override
 	public Skill castSpecial() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Skill castDefense() {
 		return null;
-
-	}
-
-	@Override
-	public boolean isDead(double damage) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void move() {
-		// TODO Auto-generated method stub
 
 	}
 

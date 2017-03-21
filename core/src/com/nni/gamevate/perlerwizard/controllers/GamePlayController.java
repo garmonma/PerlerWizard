@@ -139,7 +139,7 @@ public class GamePlayController {
 			}
 
 			for (Enemy enemy : _enemies) {
-				if (skill.collided(enemy)) {
+				if (!skill.enemySkill() && skill.collided(enemy)) {
 					if(skill instanceof Spell){
 						((Spell) skill).bounce(enemy);
 					}
@@ -152,8 +152,7 @@ public class GamePlayController {
 						removeEnemy(enemy);
 					}
 				}
-
-				enemy.update(delta);
+				
 			}
 
 			//TODO - Create a bounceable interface
@@ -181,6 +180,13 @@ public class GamePlayController {
 
 			skill.update(delta);
 		}
+		
+		for (Enemy enemy : _enemies) {
+			
+			enemy.update(delta);
+		}
+		
+		
 		
 		processEnemyAttack();
 
@@ -315,12 +321,12 @@ public class GamePlayController {
 	
 	private void processEnemyAttack(){
 		for(Enemy enemy: _enemies){
-			Skill attack = enemy.attack();
+			//Skill attack = enemy.attack();
 			Skill special = enemy.castSpecial();
 			
-			if(attack != null){
-				_skills.add(attack);
-			}
+//			if(attack != null){
+//				_skills.add(attack);
+//			}
 			
 			if(special != null){
 				_skills.add(special);

@@ -68,6 +68,15 @@ public abstract class GameObject implements Collidable {
 	}
 	
 	public void setPosition(Vector2 newPosition){
-		_position = newPosition;
+		_position.set(newPosition);
 	}
+
+	@Override
+	public String toString() {
+		return String.format(
+				"GameObject [_width=%s, _height=%s, _position=%s, _direction=%s, _velocity=%s, _movement=%s]", _width,
+				_height, _position, _direction, _velocity, _movement);
+	}
+	
+	
 }

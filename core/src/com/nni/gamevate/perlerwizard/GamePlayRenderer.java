@@ -304,8 +304,8 @@ public class GamePlayRenderer {
 		_shapeRenderer.begin(ShapeType.Line);
 		_shapeRenderer.setColor(Color.BLUE);
 
-		_shapeRenderer.rect(_controller.getHero().getX(), _controller.getHero().getY(), _controller.getHero().getWidth(),
-				_controller.getHero().getHeight());
+		_shapeRenderer.rect(_controller.getHero().getX(), _controller.getHero().getY(), 
+				_controller.getHero().getWidth(), _controller.getHero().getHeight());
 
 		_shapeRenderer.end();
 	}
@@ -313,6 +313,7 @@ public class GamePlayRenderer {
 	private void drawEnemies() {
 		_shapeRenderer.begin(ShapeType.Line);
 		_shapeRenderer.setColor(Color.RED);
+		
 		for (Enemy enemy : _controller.getEnemies()) {
 			_shapeRenderer.rect(enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight());
 

@@ -30,13 +30,7 @@ public class Imps extends Enemy{
 	}
 
 	@Override
-	public boolean isDead(double damage) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void move() {
+	public void move(float delta) {
 		// TODO Auto-generated method stub
 		
 	}

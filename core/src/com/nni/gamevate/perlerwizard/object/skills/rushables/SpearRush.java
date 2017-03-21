@@ -1,5 +1,6 @@
 package com.nni.gamevate.perlerwizard.object.skills.rushables;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.object.Attacker;
@@ -13,7 +14,7 @@ public class SpearRush extends Skill {
 	private GameObject _caster;
 	private float _angle;
 	
-	private Vector2 _originalPosition;
+	private Vector2 _originalPosition;  
 	
 	public SpearRush(float x, float y, GameObject caster) {
 		super(x, y);
@@ -27,18 +28,20 @@ public class SpearRush extends Skill {
 			_speed = ((Enemy)caster).getSpeed() + 1;
 		}	
 		
-		_originalPosition = _caster.getPosition();
+		_originalPosition = new Vector2(_caster.getPosition());
 	}
 
 	public SpearRush(float width, float height, float x, float y, GameObject caster) {
 		super(width, height, x, y);
 		
 		_caster = caster;
-		if(caster instanceof Attacker){
+		if(caster instanceof Hero){
 			_speed = ((Hero)caster).getSpeed() + 1;
 		} else {
 			_speed = ((Enemy)caster).getSpeed() + 1;
 		}	
+		
+		_originalPosition = new Vector2(_caster.getPosition());
 	}
 		
 
@@ -63,7 +66,6 @@ public class SpearRush extends Skill {
 			_caster.setPosition(_originalPosition);
 			((Attacker)_caster).castingSpecial(false);
 			evaporate();
-			
 		}
 	
 	}

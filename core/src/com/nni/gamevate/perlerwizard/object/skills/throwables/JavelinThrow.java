@@ -14,6 +14,7 @@ public class JavelinThrow extends Skill {
 		_width = .20f;
 		_height = 1.25f;
 		_speed = 6;
+		_damage = 1;
 		
 		_angle = 90;
 		_direction.set(_position).setAngle(_angle).nor();
@@ -23,6 +24,7 @@ public class JavelinThrow extends Skill {
 	public JavelinThrow(float width, float height, float x, float y) {
 		super(width, height, x, y);
 		_speed = 6;
+		_damage = 1;
 		
 		_angle = 90;
 		_direction.set(_position).setAngle(_angle).nor();

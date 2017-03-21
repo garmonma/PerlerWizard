@@ -30,6 +30,7 @@ public abstract class Spell extends Skill implements Castable {
 		
 		_width = 0.5f;
 		_height = 0.5f;
+		_damage = 1;
 		
 		_bounceCount = DEFAULT_BOUNCE_COUNT;
 		_bounceCounter = _bounceCount;
@@ -42,6 +43,9 @@ public abstract class Spell extends Skill implements Castable {
 
 	public Spell(float width, float height, float x, float y) {
 		super(width, height, x, y);
+		
+		_damage = 1;
+		
 		_bounceCount = DEFAULT_BOUNCE_COUNT;
 		_bounceCounter = _bounceCount;
 		_bounceAngle = 90;
