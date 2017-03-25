@@ -17,8 +17,8 @@ public class EnergyShield extends Skill {
 		
 		_timeCounter = TimeUtils.millis();
 		
-		_width = 1.2f;
-		_height = .25f;
+		_width = .2f;
+		_height = 1.25f;
 		
 		if(caster instanceof Hero){
 			_speed = ((Hero)caster).getSpeed();
