@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.object.hero.equipment.Equipment;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
+import com.nni.gamevate.perlerwizard.object.skills.Skills;
 import com.nni.gamevate.perlerwizard.object.skills.defense.Reflect;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.BlackSpell;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.BlueSpell;
@@ -128,6 +129,12 @@ public class BattleMage extends Hero {
 	public void setEquipmentSlotThree(Equipment item) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Skill attack(Skills skill) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

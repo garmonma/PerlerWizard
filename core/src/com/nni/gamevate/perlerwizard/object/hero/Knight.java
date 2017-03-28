@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.object.hero.equipment.Equipment;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
+import com.nni.gamevate.perlerwizard.object.skills.Skills;
 import com.nni.gamevate.perlerwizard.object.skills.defense.EnergyShield;
 import com.nni.gamevate.perlerwizard.object.skills.defense.Reflect;
 import com.nni.gamevate.perlerwizard.object.skills.throwables.JavelinThrow;
@@ -75,6 +76,12 @@ public class Knight extends Hero {
 
 	@Override
 	public Skill attack() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Skill attack(Skills skill) {
 		// TODO Auto-generated method stub
 		return null;
 	}

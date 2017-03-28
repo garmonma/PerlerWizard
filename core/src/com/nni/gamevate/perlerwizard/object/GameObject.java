@@ -32,8 +32,21 @@ public abstract class GameObject implements Collidable {
 		_movement = new Vector2();
 	}
 	
+	//doing this here assumes everything is a box
+	@Override
+	public boolean collided(Collidable object) {
+		if (getX() >= ((GameObject) object).getX()
+				&& getX() <= ((GameObject) object).getX() + ((GameObject) object).getWidth()
+				&& getY() >= ((GameObject) object).getY()
+				&& getY() <= ((GameObject) object).getY() + ((GameObject) object).getHeight()) {
+			
+			return true;
+		}
+		return false;
+	}
 	
 	public abstract void update(float delta);
+	
 	
 	public float getX() {
 		return _position.x;

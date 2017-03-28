@@ -26,4 +26,5 @@ public class YellowSpell extends Spell {
 		_velocity.set(_direction).scl(_speed);
 	}
 
+
 }

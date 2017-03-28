@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.nni.gamevate.perlerwizard.GameConfig;
+import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.network.gamedata.GameCharacter;
 import com.nni.gamevate.perlerwizard.network.gamedata.Spawn;
 import com.nni.gamevate.perlerwizard.network.gamedata.Wave;
@@ -65,8 +66,13 @@ public class GamePlayController {
 
 	public GamePlayController(NetworkController networkController) {
 		// _level = LevelLoader.load(Gdx.files.internal("levels/level_0.json"));
-		_networkController = networkController;
-		_gameCharacter = _networkController.getCharacter();
+		
+		if(PerlerWizard.DEBUG == false){			
+			_networkController = networkController;		
+			_gameCharacter = _networkController.getCharacter();
+		}else{
+			_gameCharacter = new GameCharacter();
+		}
 		
 		if(_gameCharacter.attack == 0){
 			_gameCharacter.attack = 10;

@@ -2,11 +2,14 @@ package com.nni.gamevate.perlerwizard.object.hero;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector2;
 import com.nni.gamevate.perlerwizard.object.Attacker;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.Equiper;
 import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
+import com.nni.gamevate.perlerwizard.object.skills.SkillManager;
+import com.nni.gamevate.perlerwizard.object.skills.Skills;
 
 /**
  * 
@@ -33,9 +36,12 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 	protected boolean _castingSpecial;
 	protected boolean _castingAttack;
 	
+	
+	protected SkillManager skillManager;
+	
 	public Hero(int width, int height, float x, float y, int level) {
 		super(width, height, x, y);
-
+		skillManager = new SkillManager();
 		_healthMultiplier = 1.0f;
 		_speedMultiplier = 1.0f;
 
@@ -44,15 +50,16 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 
 	@Override
 	public void update(float delta) {
-		move();
+			
+	}
 
-		if (getX() < 4) {
-			_position.x = 4;
-		}
+	public void update(float delta,Vector2 dir) {
+		update(delta);
 
-		if (getX() > 15) {
-			_position.x = 15;
-		}
+		
+		_position.x += _speed  * delta * dir.x;
+		_position.y += _speed  * delta * dir.y;
+
 	}
 
 	@Override
@@ -60,7 +67,12 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 		return false;
 	}
 	
+	@Deprecated
 	public abstract Skill attack(int selectedSkill);
+	
+	public  Skill attack(Skills skill){
+		return skillManager.useSkill(skill, _position.x + _width/2, _position.y + _height /2);
+	}
 
 	private void move() {
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.getAccelerometerY() < 0) {

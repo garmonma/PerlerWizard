@@ -15,6 +15,7 @@ import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.screens.game.MainWorldScreen;
+import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
 
 public class LoadingScreen extends ScreenAdapter {
 	
@@ -53,7 +54,8 @@ public class LoadingScreen extends ScreenAdapter {
         _renderer.end();
         
         if(_changeScreen){
-        	_perlerWizard.setScreen(new MainWorldScreen(_perlerWizard));
+        	_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard));
+        	//_perlerWizard.setScreen(new MainWorldScreen(_perlerWizard));
         }
 	}
 	
