@@ -58,8 +58,7 @@ public class WaveInputHandler extends InputAdapter {
 		if(fire){			
 			Skill s = _hero.attack(_hero.getSkillManager().getSelectedSkill());
 			_world.addSkill(s);
-		}
-					
+		}			
 	}
 	
 	
