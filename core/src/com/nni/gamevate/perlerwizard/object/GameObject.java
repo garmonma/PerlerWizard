@@ -1,5 +1,6 @@
 package com.nni.gamevate.perlerwizard.object;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -10,13 +11,15 @@ import com.badlogic.gdx.math.Vector2;
  * @date Dec 29, 2016
  */
 public abstract class GameObject implements Collidable, Drawable {
-
+	public static final String tag = GameObject.class.getSimpleName();
 	protected float _width;
 	protected float _height;
 	protected Vector2 _position;
 	protected Vector2 _direction;
 	protected Vector2 _velocity;
 	protected Vector2 _movement;
+	
+	protected boolean alive = true;
 	
 	// Temp var untill we get sprites
 	protected Color color = Color.PURPLE;
@@ -41,13 +44,16 @@ public abstract class GameObject implements Collidable, Drawable {
 	//doing this here assumes everything is a box
 	@Override
 	public boolean collided(Collidable object) {
-		if (getX() >= ((GameObject) object).getX()
-				&& getX() <= ((GameObject) object).getX() + ((GameObject) object).getWidth()
-				&& getY() >= ((GameObject) object).getY()
-				&& getY() <= ((GameObject) object).getY() + ((GameObject) object).getHeight()) {
-			
-			return true;
+		
+		GameObject other = (GameObject) object;
+		if(getX() < other.getX() + other.getWidth() &&
+				getX() + getWidth() > other.getX() &&
+				getY() < other.getY() + other.getHeight() &&
+				getY() + getHeight()  > other.getY()){
+		
+			return true;			
 		}
+		
 		return false;
 	}
 	
@@ -97,6 +103,14 @@ public abstract class GameObject implements Collidable, Drawable {
 	@Override
 	public Color getColor() {
 		return color;
+	}
+
+	public boolean isAlive() {
+		return alive;
+	}
+
+	public void setAlive(boolean alive) {
+		this.alive = alive;
 	}
 
 	@Override

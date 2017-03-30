@@ -13,7 +13,7 @@ import com.nni.gamevate.perlerwizard.object.skills.Skill;
  */
 public abstract class Enemy extends GameObject implements Attacker{
 	
-	protected int _health;
+	protected int _health = 1;
 	protected float _speed;
 	
 	protected boolean _castingSpecial;
@@ -33,6 +33,7 @@ public abstract class Enemy extends GameObject implements Attacker{
 		_health = _health - damage;
 		
 		if(_health <= 0){
+			alive = false;
 			return true;
 		} 
 		
@@ -97,7 +98,7 @@ public abstract class Enemy extends GameObject implements Attacker{
 	
 	@Override
 	public boolean collided(Collidable object) {
-		// TODO Auto-generated method stub
-		return false;
+		return super.collided(object);
+		
 	}
 }

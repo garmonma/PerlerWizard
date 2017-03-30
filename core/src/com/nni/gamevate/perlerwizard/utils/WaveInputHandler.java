@@ -75,7 +75,7 @@ public class WaveInputHandler extends InputAdapter {
 	
 	@Override
 	public boolean keyDown(int keyCode){
-		Gdx.app.log(tag, "KeyDown: " + keyCode);
+		//Gdx.app.log(tag, "KeyDown: " + keyCode);
 				return true;
 	}
 }
