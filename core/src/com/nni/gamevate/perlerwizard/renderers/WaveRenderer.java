@@ -25,6 +25,7 @@ import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 import com.nni.gamevate.perlerwizard.network.gamedata.MatchResult;
 import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.World;
+import com.nni.gamevate.perlerwizard.utils.Logger;
 
 public class WaveRenderer {
 	
@@ -77,7 +78,8 @@ public class WaveRenderer {
 
 		//_viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, _camera);
 		_camera = new OrthographicCamera(1600, 900);
-		Gdx.app.log(tag, "init");
+		Logger.log("init");
+		//Gdx.app.log(tag, "init");
 		_viewport = new FitViewport(x, y, _camera);
 		_viewport.apply(false);
 		_shapeRenderer = new ShapeRenderer();
