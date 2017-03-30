@@ -4,30 +4,27 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.VertexAttribute;
+import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.controllers.GamePlayController;
 import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 import com.nni.gamevate.perlerwizard.network.gamedata.MatchResult;
 import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.World;
-import com.nni.gamevate.perlerwizard.object.hero.Hero;
-import com.nni.gamevate.perlerwizard.object.skills.reflectables.WhiteSpell;
-import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
-import com.nni.gamevate.perlerwizard.utils.GamePlayInputHandler;
 
 public class WaveRenderer {
 	
@@ -61,6 +58,9 @@ public class WaveRenderer {
 	//TODO change to global config
 	private int x = 16;
 	private int y = 9;
+	
+	private Mesh mesh;
+	private ShaderProgram shader;
 
 	public WaveRenderer(GamePlayController controller, NetworkController networkController, SpriteBatch batch, AssetManager assetManager, OrthographicCamera camera,World world) {
 		_controller = controller;
@@ -87,8 +87,15 @@ public class WaveRenderer {
 		
 		_batch = new SpriteBatch();
 		
+		mesh = new Mesh(true, 3, 3, new VertexAttribute(Usage.Position, 3, "a_position"));
+		mesh.setVertices(new float[]{
+				-0.5f, -0.5f, 0,
+                0.5f, -0.5f, 0,
+                0, 0.5f, 0});
+		mesh.setIndices(new short[]{0,1,2});
 		
-		
+		shader = new ShaderProgram(DefaultShader.getDefaultVertexShader()
+				,DefaultShader.getDefaultFragmentShader());
 
 	}
 
@@ -101,29 +108,46 @@ public class WaveRenderer {
 		_shapeRenderer.setProjectionMatrix(_camera.combined);
 		//
 		
-		_shapeRenderer.begin(ShapeType.Filled);
+	
 
+		drawBackGround();
+		
+		drawGameObjects();
+		drawUI();
+	}
+	public void drawBackGround(){
+		_shapeRenderer.begin(ShapeType.Filled);
 		_shapeRenderer.setColor(Color.GRAY);
 		_shapeRenderer.rect(0,0, _viewport.getWorldWidth(), _viewport.getWorldHeight());
-//		_shapeRenderer.rect(.5f,.5f,1,1);
-//		
-//		_shapeRenderer.setColor(Color.RED);
-//		_shapeRenderer.rect(-0.5f,-0.5f,1,1);
+		_shapeRenderer.end();
+	}
 
-		ArrayList<GameObject> list = _world.getGameObjects();
-		for(GameObject g :list){
-			if(g instanceof Hero)
-				_shapeRenderer.setColor(Color.BLUE);
-			else if (g instanceof WhiteSpell)
-				_shapeRenderer.setColor(Color.WHITE);
-			else
-				_shapeRenderer.setColor(Color.PINK);
-			_shapeRenderer.rect(g.getX(), g.getY(), g.getWidth(), g.getHeight());			
-		}
+	
+	public void drawUI(){
+		_shapeRenderer.begin(ShapeType.Filled);
+		
+		_shapeRenderer.setColor(_world.getHero().getSkillManager().getSelectedSkillColor());
+		_shapeRenderer.rect(x-1.1f,0.1f , 1,1);
 		
 		_shapeRenderer.end();
-		
+	}
 	
+	
+	
+	public void drawGameObjects(){
+		_shapeRenderer.begin(ShapeType.Filled);
+		ArrayList<GameObject> list = _world.getGameObjects();
+		for(GameObject g :list){
+			_shapeRenderer.setColor(g.getColor());
+//			if(g instanceof Hero)
+//				_shapeRenderer.setColor(Color.BLUE);
+//			else if (g instanceof WhiteSpell)
+//				_shapeRenderer.setColor(Color.WHITE);
+//			else
+//				_shapeRenderer.setColor(Color.PINK);
+			_shapeRenderer.rect(g.getX(), g.getY(), g.getWidth(), g.getHeight());			
+		}
+		_shapeRenderer.end();
 	}
 
 	public void resize(int width, int height) {

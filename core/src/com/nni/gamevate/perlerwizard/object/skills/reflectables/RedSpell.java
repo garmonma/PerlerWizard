@@ -1,5 +1,6 @@
 package com.nni.gamevate.perlerwizard.object.skills.reflectables;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
@@ -15,7 +16,7 @@ public class RedSpell extends Spell {
 
 	public RedSpell(float x, float y) {
 		super(x, y);
-
+		color = Color.RED;
 		_speed = 7.5f;
 		_velocity.set(_direction).scl(_speed);
 	}

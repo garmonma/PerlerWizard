@@ -3,6 +3,7 @@ package com.nni.gamevate.perlerwizard.object.skills;
 import java.lang.reflect.Constructor;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.utils.WaveInputHandler;
 
@@ -33,6 +34,17 @@ public class Wand {
 		return false;
 		
 	}
+	public Color getSkillColor(){
+		try{			
+			Constructor<Skill> con = _skill.getConstructor(float.class,float.class);
+			Skill s = con.newInstance(-10,-10);	
+			return s.getColor();
+		}catch(Exception e){
+			Gdx.app.log(tag, "Error Getting Color" + e);
+		}
+		return Color.CLEAR;
+	}
+			
 	
 	public Skill fire(float x,float y){
 		

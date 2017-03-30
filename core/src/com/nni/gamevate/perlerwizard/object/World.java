@@ -17,42 +17,29 @@ public class World {
 
 	private Hero _hero;
 		
-	private WaveInputHandler _inputHandler;
 	
-	public World(WaveInputHandler inputHandler) {
-		_hero = new Wizard(1, 1, 0, 0, 1);
-		_inputHandler = inputHandler;
-		// TODO Auto-generated constructor stub
-		
+	public World() {
+		_hero = new Wizard(1, 1, 0, 0, 1);		
 	}
 	
-	public void tick(float delta){
-		
+	public void tick(float delta){		
 		updateHero(delta);
 		updateSkills(delta);
 	}
 	
-	public void updateHero(float delta){
-		Vector2 dir = new Vector2();
-		if(_inputHandler.up)
-			dir.y++;
-		if(_inputHandler.down)
-			dir.y--;
-		if(_inputHandler.left)
-			dir.x--;
-		if(_inputHandler.right)
-			dir.x++;
+	public Hero getHero(){
+		return _hero;
+	}
+	public void updateHero(float delta){	
 		
-		
-		if(_inputHandler.fire){
-			Skill s = _hero.attack(Skills.WHITE_SPELL);
-			if(s != null)
-				skills.add(s);
-		}
-		
-		_hero.update(delta,dir);
+		_hero.update(delta);
 	}
 	
+	public void addSkill(Skill s){
+		if(s != null){
+			skills.add(s);
+		}
+	}
 	public void updateSkills(float delta){
 		for(Skill s: skills){
 			s.update(delta);

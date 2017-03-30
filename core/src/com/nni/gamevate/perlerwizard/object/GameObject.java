@@ -1,5 +1,7 @@
 package com.nni.gamevate.perlerwizard.object;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
 
@@ -7,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
  * @author Marcus Garmon
  * @date Dec 29, 2016
  */
-public abstract class GameObject implements Collidable {
+public abstract class GameObject implements Collidable, Drawable {
 
 	protected float _width;
 	protected float _height;
@@ -15,6 +17,10 @@ public abstract class GameObject implements Collidable {
 	protected Vector2 _direction;
 	protected Vector2 _velocity;
 	protected Vector2 _movement;
+	
+	// Temp var untill we get sprites
+	protected Color color = Color.PURPLE;
+	 
 	
 	public GameObject(float x, float y){
 		_position = new Vector2(x, y);
@@ -82,6 +88,15 @@ public abstract class GameObject implements Collidable {
 	
 	public void setPosition(Vector2 newPosition){
 		_position.set(newPosition);
+	}
+	
+	@Override
+	public void draw(Batch batch) {
+		// TODO Auto-generated method stub				
+	}
+	@Override
+	public Color getColor() {
+		return color;
 	}
 
 	@Override

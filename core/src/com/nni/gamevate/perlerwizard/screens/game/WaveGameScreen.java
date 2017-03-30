@@ -40,8 +40,8 @@ public class WaveGameScreen extends ScreenAdaptar {
 		_networkController = _perlerWizard.getNetworkController();
 		_gamePlayController = new GamePlayController(_networkController);
 		_camera = new OrthographicCamera();
-		_inputHandler = new WaveInputHandler(_camera);		
-		_world = new World(_inputHandler);
+		_world = new World();
+		_inputHandler = new WaveInputHandler(_camera,_world);		
 		
 		_waveRenderer = new WaveRenderer(_gamePlayController, _networkController, _batch, _assetManager,_camera,_world);
 		Gdx.input.setInputProcessor(_inputHandler);

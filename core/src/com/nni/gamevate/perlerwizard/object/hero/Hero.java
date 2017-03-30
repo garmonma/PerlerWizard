@@ -1,12 +1,16 @@
 package com.nni.gamevate.perlerwizard.object.hero;
 
+import java.util.Set;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.nni.gamevate.perlerwizard.object.Attacker;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.Equiper;
 import com.nni.gamevate.perlerwizard.object.GameObject;
+import com.nni.gamevate.perlerwizard.object.World;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 import com.nni.gamevate.perlerwizard.object.skills.SkillManager;
 import com.nni.gamevate.perlerwizard.object.skills.Skills;
@@ -39,6 +43,9 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 	
 	protected SkillManager skillManager;
 	
+	
+	
+	
 	public Hero(int width, int height, float x, float y, int level) {
 		super(width, height, x, y);
 		skillManager = new SkillManager();
@@ -46,20 +53,13 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 		_speedMultiplier = 1.0f;
 
 		_level = level;
+		color = Color.BROWN;
 	}
 
 	@Override
 	public void update(float delta) {
-			
-	}
-
-	public void update(float delta,Vector2 dir) {
-		update(delta);
-
-		
-		_position.x += _speed  * delta * dir.x;
-		_position.y += _speed  * delta * dir.y;
-
+		_position.x += _speed  * delta * _direction.x;
+		_position.y += _speed  * delta * _direction.y;
 	}
 
 	@Override
@@ -121,6 +121,9 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 			_speed = MAX_SPEED;
 		}
 	}
+	public void setDirection(Vector2 direction){
+		_direction = direction;
+	}
 	
 	public void setAttack(int attack){
 		_attack = attack;
@@ -176,6 +179,16 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 		// TODO Auto-generated method stub
 		return _castingAttack;
 	}
+	public void SelectSkill(int ammount){
+		Set<Skills> skills = skillManager.getSkills();
+		Skills[] array = new Skills[skills.size()];
+		array = skills.toArray(array);
+	}
+	
+
+	public SkillManager getSkillManager() {
+		return skillManager;
+	}
 
 	@Override
 	public String toString() {
@@ -184,7 +197,7 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 				MAX_SPEED_MULTIPLIER, MAX_SPEED, _speed, _hitPoints, _defense, _attack, _dodge, _currentHealthPct,
 				_healthMultiplier, _speedMultiplier, _level);
 	}
-	
+
 	
 
 }
