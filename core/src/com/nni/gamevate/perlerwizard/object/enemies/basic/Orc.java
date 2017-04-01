@@ -25,7 +25,7 @@ public class Orc extends Enemy {
 		_axeThrowLastAttack = 0;
 		_spearRushLastAttack = 0;
 		_health = 2;
-		_speed = 5;
+		//_speed = 5;
 	}
 
 	@Override

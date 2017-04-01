@@ -23,7 +23,7 @@ public class Goblin extends Enemy {
 		rockThrowLastAttack = 0;
 		axeThrowLastAttack = 0;
 		_health = 1;
-		_speed = 3;
+		//_speed = 3;
 		
 		
 	}

@@ -145,6 +145,9 @@ public abstract class Enemy extends GameObject implements Attacker{
 	public boolean isChasing() {
 		return chasing;
 	}
+	public float getSpeed(){
+		return _chaseSpeed;
+	}
 
 	public void setChasing(boolean chasing) {
 		this.chasing = chasing;
