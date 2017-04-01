@@ -2,10 +2,14 @@ package com.nni.gamevate.perlerwizard.object.hero;
 
 import java.util.Set;
 
+import javax.swing.text.Position;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.object.Attacker;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.Equiper;
@@ -60,6 +64,10 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 	public void update(float delta) {
 		_position.x += _speed  * delta * _direction.x;
 		_position.y += _speed  * delta * _direction.y;
+		
+		_position.y = MathUtils.clamp(_position.y, 0, GameConfig.WORLD_HEIGHT - _height);
+		_position.x = MathUtils.clamp(_position.x, -1, Integer.MAX_VALUE);
+		
 	}
 
 	@Override

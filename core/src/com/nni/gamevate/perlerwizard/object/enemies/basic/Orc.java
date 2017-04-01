@@ -18,8 +18,8 @@ public class Orc extends Enemy {
 	
 
 	
-	public Orc(int width, int height, float x, float y) {
-		super(width, height, x, y);
+	public Orc(int width, int height, float x, float y,int waveNumber) {
+		super(width, height, x, y,waveNumber);
 		
 		_rockThrowLastAttack = 0;
 		_axeThrowLastAttack = 0;

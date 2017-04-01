@@ -293,27 +293,27 @@ public class GamePlayController {
 	}
 
 	private void loadEnemies() {
-		Enemy enemy1 = new Goblin(1, 1, 6, 7);
-		Enemy enemy2 = new Goblin(1, 1, 7.5f, 7);
-		Enemy enemy3 = new Orc(1, 1, 9, 7);
-
-		Enemy enemy1a = new Goblin(1, 1, 6, 8.5f);
-		Enemy enemy2a = new Goblin(1, 1, 7.5f, 8.5f);
-		Enemy enemy3a = new Orc(1, 1, 9, 8.5f);
-
-		Enemy enemy1b = new Goblin(1, 1, 6, 10);
-		Enemy enemy2b = new Goblin(1, 1, 7.5f, 10);
-		Enemy enemy3b = new Orc(1, 1, 9, 10);
-
-		_enemies.add(enemy1);
-		_enemies.add(enemy2);
-		_enemies.add(enemy3);
-		_enemies.add(enemy1a);
-		_enemies.add(enemy2a);
-		_enemies.add(enemy3a);
-		_enemies.add(enemy1b);
-		_enemies.add(enemy2b);
-		_enemies.add(enemy3b);
+//		Enemy enemy1 = new Goblin(1, 1, 6, 7);
+//		Enemy enemy2 = new Goblin(1, 1, 7.5f, 7);
+//		Enemy enemy3 = new Orc(1, 1, 9, 7);
+//
+//		Enemy enemy1a = new Goblin(1, 1, 6, 8.5f);
+//		Enemy enemy2a = new Goblin(1, 1, 7.5f, 8.5f);
+//		Enemy enemy3a = new Orc(1, 1, 9, 8.5f);
+//
+//		Enemy enemy1b = new Goblin(1, 1, 6, 10);
+//		Enemy enemy2b = new Goblin(1, 1, 7.5f, 10);
+//		Enemy enemy3b = new Orc(1, 1, 9, 10);
+//
+//		_enemies.add(enemy1);
+//		_enemies.add(enemy2);
+//		_enemies.add(enemy3);
+//		_enemies.add(enemy1a);
+//		_enemies.add(enemy2a);
+//		_enemies.add(enemy3a);
+//		_enemies.add(enemy1b);
+//		_enemies.add(enemy2b);
+//		_enemies.add(enemy3b);
 	}
 
 	private void removeEnemy(Enemy e) {

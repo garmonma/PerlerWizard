@@ -5,8 +5,8 @@ import com.nni.gamevate.perlerwizard.object.skills.Skill;
 
 public class Minitaurus extends Enemy {
 
-	public Minitaurus(int width, int height, float x, float y) {
-		super(width, height, x, y);
+	public Minitaurus(int width, int height, float x, float y,int waveNumber) {
+		super(width, height, x, y,waveNumber);
 		// TODO Auto-generated constructor stub
 	}
 

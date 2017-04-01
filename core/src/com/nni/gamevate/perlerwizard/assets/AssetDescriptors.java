@@ -21,5 +21,8 @@ public class AssetDescriptors {
 	public static final AssetDescriptor<Texture> REFLECT_SKILL_BOX =
             new AssetDescriptor<Texture>(AssetPaths.REFLECT_SKILL_BOX, Texture.class);
 	
+	public static final AssetDescriptor<Texture> FLOOR_BACKGROUND =
+            new AssetDescriptor<Texture>(AssetPaths.FLOOR_BACKGROUND, Texture.class);
+	
 	private AssetDescriptors(){}
 }

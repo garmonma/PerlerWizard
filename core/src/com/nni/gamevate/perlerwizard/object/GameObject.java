@@ -20,6 +20,7 @@ public abstract class GameObject implements Collidable, Drawable {
 	protected Vector2 _movement;
 	
 	protected boolean alive = true;
+	protected Vector2 _originalPosition;
 	
 	// Temp var untill we get sprites
 	protected Color color = Color.PURPLE;
@@ -30,6 +31,7 @@ public abstract class GameObject implements Collidable, Drawable {
 		_direction = new Vector2();
 		_velocity = new Vector2();
 		_movement = new Vector2();
+		_originalPosition = new Vector2(_position);
 	}
 	
 	public GameObject(float width, float height, float x, float y){

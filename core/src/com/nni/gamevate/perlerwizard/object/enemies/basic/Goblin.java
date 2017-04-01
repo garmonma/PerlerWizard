@@ -18,8 +18,8 @@ public class Goblin extends Enemy {
 	
 	
 
-	public Goblin(int width, int height, float x, float y) {
-		super(width, height, x, y);
+	public Goblin(int width, int height, float x, float y,int waveNumber) {
+		super(width, height, x, y,waveNumber);
 		rockThrowLastAttack = 0;
 		axeThrowLastAttack = 0;
 		_health = 1;

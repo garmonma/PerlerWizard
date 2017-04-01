@@ -1,11 +1,14 @@
 package com.nni.gamevate.perlerwizard.object.enemies;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.nni.gamevate.perlerwizard.events.Event;
+import com.nni.gamevate.perlerwizard.events.Event.EventType;
+import com.nni.gamevate.perlerwizard.events.EventManager;
 import com.nni.gamevate.perlerwizard.object.Attacker;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.GameObject;
-import com.nni.gamevate.perlerwizard.object.skills.Skill;
+import com.nni.gamevate.perlerwizard.utils.Logger;
+import com.nni.gamevate.perlerwizard.waves.Level;
 
 /**
  * @author Marcus Garmon
@@ -14,22 +17,32 @@ import com.nni.gamevate.perlerwizard.object.skills.Skill;
 public abstract class Enemy extends GameObject implements Attacker{
 	
 	protected int _health = 1;
-	protected float _speed;
+	protected float _chaseSpeed = 1;
+	protected float _retreatSpeed = 3;
+	
 	
 	protected boolean _castingSpecial;
 	protected boolean _castingAttack;
 	
 	protected boolean cycleCompleted = false;
-	private Vector2 _originalPosition;
 	
-	public Enemy(int width, int height, float x, float y) {
+	
+	protected boolean sleeping = true;
+	protected boolean running = false;
+	protected boolean chasing = false;
+	
+	protected int _waveNumber = 0;
+	
+	public Enemy(float width, float height, float x, float y,int waveNumber) {
 		super(width, height, x, y);
+		_waveNumber = waveNumber;
 		
-		_originalPosition = new Vector2(_position);
 		
 	}
 
 	public  boolean isDead(int damage){
+		Event e = new Event(EventType.ENEMY_ATTACKED,_waveNumber + "");		
+		EventManager.publish(EventType.ENEMY_ATTACKED, e);
 		_health = _health - damage;
 		
 		if(_health <= 0){
@@ -41,31 +54,32 @@ public abstract class Enemy extends GameObject implements Attacker{
 	};
 	
 	public void move(float delta){
-		Gdx.app.log("_position.x", _position.x + "");
-		Gdx.app.log("_position.y", _position.y + "");
-	
-		if(_position.x < _originalPosition.x + 2 && !cycleCompleted){
-			_position.x += _speed * delta; // move right by 2 units;
-			
-			if(_position.x >= _originalPosition.x + 2){
-				cycleCompleted = true;
+		
+			float speed =0;
+			if(chasing == true){
+				speed = _chaseSpeed;				
+			}else if( running == true){
+				speed = _retreatSpeed;
 			}
-		} else {
-			_position.x -= _speed * delta; // move left by 2 units;
-			
-			if(_position.x <= _originalPosition.x){
-				cycleCompleted = false;
-			}
+		
+		_position.x += speed  * delta * _direction.x;
+		_position.y += speed  * delta * _direction.y;
+		
+		if(_waveNumber == 1 && _position.x > Level.wave2Start - 3){
+			Event e = new Event(EventType.JOINED_GROUP,1+"");			
+			EventManager.publish(e._type,e );
+		}else if(_waveNumber == 2 && _position.x > Level.wave3Start - 3){
+			Event e = new Event(EventType.JOINED_GROUP,2+"");			
+			EventManager.publish(e._type,e );
 		}
 	}
 	
+ 
 	public int getHealth(){
 		return _health;
 	}
 	
-	public float getSpeed(){
-		return _speed;
-	}
+	
 	
 	@Override
 	public void castingSpecial(boolean casting) {
@@ -92,13 +106,49 @@ public abstract class Enemy extends GameObject implements Attacker{
 	
 	@Override
 	public void update(float delta) {
+		if(sleeping == true)
+			return;
+		//Logger.log("Update");
+		if(chasing == true){
+			_direction.set(new Vector2(-1,0));
+		}else if(running == true){
+			_direction.set(new Vector2(1, 0));
+			//Logger.log("Runing");
+		}
+		
 		move(delta);
 		
 	}
 	
 	@Override
-	public boolean collided(Collidable object) {
+	public boolean collided(Collidable object) {		
 		return super.collided(object);
 		
 	}
+
+	public boolean isSleeping() {
+		return sleeping;
+	}
+
+	public void setSleeping(boolean sleeping) {
+		this.sleeping = sleeping;
+	}
+
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void setRunning(boolean running) {
+		this.running = running;
+	}
+
+	public boolean isChasing() {
+		return chasing;
+	}
+
+	public void setChasing(boolean chasing) {
+		this.chasing = chasing;
+	}
+	
+	
 }

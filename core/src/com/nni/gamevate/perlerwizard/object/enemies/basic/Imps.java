@@ -6,8 +6,8 @@ import com.nni.gamevate.perlerwizard.object.skills.Skill;
 public class Imps extends Enemy{
 
 
-	public Imps(int width, int height, float x, float y) {
-		super(width, height, x, y);
+	public Imps( float x, float y,int waveNumber) {
+		super(0.7f,0.7f, x, y,waveNumber);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -31,6 +31,7 @@ public class Imps extends Enemy{
 
 	@Override
 	public void move(float delta) {
+		super.move(delta);
 		// TODO Auto-generated method stub
 		
 	}

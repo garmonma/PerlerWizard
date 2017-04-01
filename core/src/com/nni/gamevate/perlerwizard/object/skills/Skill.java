@@ -57,4 +57,8 @@ public abstract class Skill extends GameObject {
 		return _damage;
 	}
 
+	public float getStartX() {
+		return _originalPosition.x;		
+	}
+
 }

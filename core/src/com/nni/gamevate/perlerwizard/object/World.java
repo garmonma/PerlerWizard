@@ -3,14 +3,14 @@ package com.nni.gamevate.perlerwizard.object;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.badlogic.gdx.math.Vector2;
+import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.enemies.basic.Imps;
 import com.nni.gamevate.perlerwizard.object.hero.Hero;
 import com.nni.gamevate.perlerwizard.object.hero.Wizard;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
-import com.nni.gamevate.perlerwizard.object.skills.Skills;
-import com.nni.gamevate.perlerwizard.utils.WaveInputHandler;
+import com.nni.gamevate.perlerwizard.waves.Level;
+import com.nni.gamevate.perlerwizard.waves.Level_01;
 
 public class World {
 	
@@ -22,7 +22,7 @@ public class World {
 	
 	public World() {
 		_hero = new Wizard(1, 1, 0, 0, 1);		
-		createWave(0);
+		createWave(new Level_01());
 	}
 	
 	public void tick(float delta){		
@@ -68,6 +68,10 @@ public class World {
 		Iterator<Skill> sItor = skills.iterator();
 		while(sItor.hasNext()){
 			Skill s = sItor.next();
+			
+			if(s.getX() - s.getStartX() > GameConfig.WORLD_WIDTH /2 )
+				s.alive = false;
+			
 			if(s.alive == false){
 				sItor.remove();
 			}else{
@@ -82,10 +86,12 @@ public class World {
 	 */
 	public void updateEnemies(float delta){
 		Iterator<Enemy> eItor = enemies.iterator();
-		while(eItor.hasNext()){
-			Enemy e = eItor.next();
+		while(eItor.hasNext()){			
+			Enemy e = eItor.next();			
 			if(e.alive == false){
 				eItor.remove();
+			}else{
+				e.update(delta);
 			}
 		}		
 	}
@@ -97,12 +103,20 @@ public class World {
 		return list;
 	}
 	
-	public void createWave(int waveNum){
-		Imps imp = new Imps(1, 1, 9, 3);
-		Imps imp2 = new Imps(1, 1, 9, 5);
-		Imps imp3 = new Imps(1, 1, 9, 7);
-		enemies.add(imp);
-		enemies.add(imp2);
-		enemies.add(imp3);
+	public void createWave(Level level){
+		
+		for(Enemy e :level.wave1){
+			enemies.add(e);
+		}
+		
+		for(Enemy e :level.wave2){
+			enemies.add(e);
+		}
+		
+		for(Enemy e :level.wave3){
+			enemies.add(e);
+		}
+		
+		
 	}
 }
