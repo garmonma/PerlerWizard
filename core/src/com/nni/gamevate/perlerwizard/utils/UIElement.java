@@ -1,10 +1,10 @@
-package com.nni.gamevate.perlerwizard.object;
+package com.nni.gamevate.perlerwizard.utils;
 /**
  * 
  * @author Marcus Garmon
  * @date Jan 1, 2017
  */
-public class UIElement {
+public class UIElement implements Pressable {
 
 	private float _x;
 	private float _y;
@@ -33,5 +33,11 @@ public class UIElement {
 
 	public float getHeight() {
 		return _height;
+	}
+
+
+	@Override
+	public boolean pressable(boolean b) {
+		return b;
 	}
 }

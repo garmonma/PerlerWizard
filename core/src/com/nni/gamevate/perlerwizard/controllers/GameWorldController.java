@@ -3,18 +3,30 @@ package com.nni.gamevate.perlerwizard.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.object.Background;
 import com.nni.gamevate.perlerwizard.object.MapNode;
-import com.nni.gamevate.perlerwizard.object.UIElement;
+import com.nni.gamevate.perlerwizard.utils.UIElement;
 
 public class GameWorldController {
 	
 	private Background _castleBackground;
 	private List<MapNode> _mapNodes = new ArrayList<MapNode>();
 	
+	private String _heroLevel;
+	private String _heroGold;
+	
 	private UIElement _healthBar;
 	private UIElement _goldCoin;
+	private UIElement _menuButton;
+	private UIElement _equipmentButton;
+	private UIElement _eventsButton;
+	private UIElement _potionIcon;
+	private UIElement _levelIndicator;
+	private UIElement _expBar;
+	
+	private List<UIElement> _filledElements = new ArrayList<UIElement>();
 	
 	private MapNode _selectedNode;
 	
@@ -27,14 +39,47 @@ public class GameWorldController {
 		
 	}
 	
+
+	
 	private void init(){
+		_heroLevel = "12";
+		_heroGold  = "100121";
+		
+		
 		_castleBackground = new Background();
-		_castleBackground.setPosition(0, 0);
+		_castleBackground.setPosition(4, 0);
 		_castleBackground.setDimensions(
-				(int)GameConfig.WORLD_WIDTH, 
+				(int)GameConfig.WORLD_WIDTH - 5, 
 				(int)GameConfig.WORLD_HEIGHT);
 		
 		initMapNodes();
+		
+		//_expBar = new UIElement(38,  GameConfig.UI_SCREEN_HEIGHT-20, 64, 16);
+		//_filledElements.add(_expBar);
+		
+		//_levelIndicator = new UIElement(20,  GameConfig.UI_SCREEN_HEIGHT, 16, 16);
+		//_filledElements.add(_levelIndicator);
+		
+		//_healthBar = new UIElement(20,  GameConfig.UI_SCREEN_HEIGHT - 68, 128, 32);
+		//_filledElements.add(_healthBar);
+		
+		//_goldCoin = new UIElement(20,  GameConfig.UI_SCREEN_HEIGHT - 126, 32, 32);
+		//_filledElements.add(_goldCoin);
+		
+		//_potionIcon = new UIElement(20,  GameConfig.UI_SCREEN_HEIGHT - 188, 32, 32);
+		//_filledElements.add(_potionIcon);
+		
+		_equipmentButton = new UIElement(20,  GameConfig.UI_SCREEN_HEIGHT - 120, 64, 64);
+		_equipmentButton.pressable(true);
+		_filledElements.add(_equipmentButton);
+		
+		_eventsButton = new UIElement(20,  GameConfig.UI_SCREEN_HEIGHT - 194, 64, 64);
+		_eventsButton.pressable(true);
+		_filledElements.add(_eventsButton);
+		
+		_menuButton = new UIElement(20,  GameConfig.UI_SCREEN_HEIGHT - 268, 64, 64);
+		_menuButton.pressable(true);
+		_filledElements.add(_menuButton);
 	}
 	
 
@@ -115,7 +160,51 @@ public class GameWorldController {
 		_selectedNode = mapNode;
 	}
 	
+	public String getHeroLevel(){
+		return _heroLevel;
+	}
+	
+	public String getHeroGold(){
+		return _heroGold;
+	}
+	
+	public UIElement getHealthBar(){
+		return _healthBar;
+	}
+	
+	public UIElement getGoldCoin(){
+		return _goldCoin;
+	}
+	
+	public UIElement getMenuButton(){
+		return _menuButton;
+	}
+	
+	public UIElement getEquipmentButton(){
+		return _equipmentButton;
+	}
+	
+	public UIElement getEventsButton(){
+		return _eventsButton;
+	}
+	
+	public UIElement getPotionIcon(){
+		return _potionIcon;
+	}
+	
+	public UIElement getLevelIndicator(){
+		return _levelIndicator;
+	}
+	
+	public UIElement getExpBar(){
+		return _expBar;
+	}
+	
+	public List<UIElement> getFilledUIElements(){
+		return _filledElements;
+	}
+	
 	public boolean navigate(){
-		return true;
+		return false;
 	}
 }

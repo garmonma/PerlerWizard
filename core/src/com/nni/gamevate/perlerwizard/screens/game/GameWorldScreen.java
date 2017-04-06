@@ -12,7 +12,7 @@ import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 /**
  * @author Marcus Garmon 12/29/2016
  */
-public class MainWorldScreen extends ScreenAdapter {
+public class GameWorldScreen extends ScreenAdapter {
 	private PerlerWizard _perlerWizard;
 	private GameWorldController _worldController;
 	private GameWorldRenderer _renderer;
@@ -21,7 +21,7 @@ public class MainWorldScreen extends ScreenAdapter {
 	private AssetManager _assetManager;
 	private NetworkController _networkController;
 	
-	public MainWorldScreen(PerlerWizard perlerWizard) {
+	public GameWorldScreen(PerlerWizard perlerWizard) {
 		_perlerWizard = perlerWizard;
 		_batch = _perlerWizard.getSpriteBatch();
 		_assetManager = _perlerWizard.getAssetManager();
@@ -29,7 +29,7 @@ public class MainWorldScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
-		if(_worldController.navigate()){
+		if(_worldController.navigate() || Gdx.input.isTouched()){
 			_perlerWizard.setScreen(new GameScreen(_perlerWizard));
 		}
 		

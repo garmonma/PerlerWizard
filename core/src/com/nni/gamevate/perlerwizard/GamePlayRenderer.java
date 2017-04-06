@@ -17,7 +17,6 @@ import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.controllers.GamePlayController;
 import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 import com.nni.gamevate.perlerwizard.network.gamedata.MatchResult;
-import com.nni.gamevate.perlerwizard.object.UIElement;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.hero.BattleMage;
 import com.nni.gamevate.perlerwizard.object.hero.Hero;
@@ -26,6 +25,7 @@ import com.nni.gamevate.perlerwizard.object.hero.Wizard;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 import com.nni.gamevate.perlerwizard.object.skills.defense.EnergyShield;
 import com.nni.gamevate.perlerwizard.utils.GamePlayInputHandler;
+import com.nni.gamevate.perlerwizard.utils.UIElement;
 import com.nni.gamevate.perlerwizard.utils.ViewportUtils;
 
 /**
@@ -121,7 +121,7 @@ public class GamePlayRenderer {
 			
 			_matchRendering = false;
 		}  else {	
-			//ViewportUtils.drawGrid(_viewport, _shapeRenderer);
+			ViewportUtils.drawGrid(_viewport, _shapeRenderer);
 			drawGameBounds();
 			drawSkillSlots();
 			drawDefenseCastBox();

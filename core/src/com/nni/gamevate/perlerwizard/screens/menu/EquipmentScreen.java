@@ -1,12 +1,13 @@
-package com.nni.gamevate.perlerwizard.screens.loading;
+package com.nni.gamevate.perlerwizard.screens.menu;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.screens.UIScreen;
+import com.nni.gamevate.perlerwizard.screens.game.GameWorldScreen;
 
-public class LoginScreen extends UIScreen {
+public class EquipmentScreen extends UIScreen {
 
-	public LoginScreen(PerlerWizard game) {
+	public EquipmentScreen(PerlerWizard game) {
 		super(game);
 		// TODO Auto-generated constructor stub
 	}
@@ -16,11 +17,12 @@ public class LoginScreen extends UIScreen {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	protected void back() {
-		// TODO Auto-generated method stub
+        _perlerWizard.setScreen(new GameWorldScreen(_perlerWizard));
 		
 	}
+
 
 }

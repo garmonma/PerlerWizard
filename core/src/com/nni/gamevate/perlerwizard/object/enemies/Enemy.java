@@ -40,8 +40,8 @@ public abstract class Enemy extends GameObject implements Attacker{
 	};
 	
 	public void move(float delta){
-		Gdx.app.log("_position.x", _position.x + "");
-		Gdx.app.log("_position.y", _position.y + "");
+		//Gdx.app.log("_position.x", _position.x + "");
+		//Gdx.app.log("_position.y", _position.y + "");
 	
 		if(_position.x < _originalPosition.x + 2 && !cycleCompleted){
 			_position.x += _speed * delta; // move right by 2 units;

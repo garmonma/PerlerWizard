@@ -9,7 +9,6 @@ import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.network.gamedata.GameCharacter;
 import com.nni.gamevate.perlerwizard.network.gamedata.Spawn;
 import com.nni.gamevate.perlerwizard.network.gamedata.Wave;
-import com.nni.gamevate.perlerwizard.object.UIElement;
 import com.nni.gamevate.perlerwizard.object.Wall;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.enemies.basic.Goblin;
@@ -22,6 +21,7 @@ import com.nni.gamevate.perlerwizard.object.hero.Wizard;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.Spell;
 import com.nni.gamevate.perlerwizard.object.skills.throwables.JavelinThrow;
+import com.nni.gamevate.perlerwizard.utils.UIElement;
 
 /**
  * @author Marcus Garmon
@@ -74,7 +74,7 @@ public class GamePlayController {
 			_gameCharacter.dodge = 10;
 			_gameCharacter.experience = 120;
 			_gameCharacter.healthPct = 50;
-			_gameCharacter.job = 3;
+			_gameCharacter.job = 1;
 			_gameCharacter.level = 10;
 			_gameCharacter.speed = 7;
 			_gameCharacter.gold = 13000;
