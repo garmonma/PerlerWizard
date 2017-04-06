@@ -1,24 +1,31 @@
 package com.nni.gamevate.perlerwizard;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.controllers.GamePlayController;
 import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 import com.nni.gamevate.perlerwizard.network.gamedata.MatchResult;
-import com.nni.gamevate.perlerwizard.object.UIElement;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
-import com.nni.gamevate.perlerwizard.object.spells.Spell;
+import com.nni.gamevate.perlerwizard.object.hero.BattleMage;
+import com.nni.gamevate.perlerwizard.object.hero.Hero;
+import com.nni.gamevate.perlerwizard.object.hero.Knight;
+import com.nni.gamevate.perlerwizard.object.hero.Wizard;
+import com.nni.gamevate.perlerwizard.object.skills.Skill;
+import com.nni.gamevate.perlerwizard.object.skills.defense.EnergyShield;
 import com.nni.gamevate.perlerwizard.utils.GamePlayInputHandler;
+import com.nni.gamevate.perlerwizard.utils.UIElement;
 import com.nni.gamevate.perlerwizard.utils.ViewportUtils;
 
 /**
@@ -39,11 +46,13 @@ public class GamePlayRenderer {
 	
 	private BitmapFont _font;
 	private GamePlayInputHandler _inputHandler;
-	private InputMultiplexer _inputMultiplexer;
 	
-	private int _shapePosition;
+	private Hero _hero;
 	
 	private AssetManager _assetManager;
+	
+	private Texture _energyShieldBox;
+	private Texture _reflectBox;
 	
 	//Network Instances;
 	private MatchResult _matchResult;
@@ -63,15 +72,14 @@ public class GamePlayRenderer {
 		_camera = new OrthographicCamera();
 
 		_inputHandler = new GamePlayInputHandler(_controller, _camera);
-		_inputMultiplexer = new InputMultiplexer();
-		_inputMultiplexer.addProcessor(_inputHandler.getSkillBarProcessor());
-		_inputMultiplexer.addProcessor(_inputHandler.getAnalogProcessor());
-		Gdx.input.setInputProcessor(_inputMultiplexer);
+		Gdx.input.setInputProcessor(_inputHandler.getSkillBarProcessor());
 
 		_viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, _camera);
 
 		_shapeRenderer = new ShapeRenderer();
 		
+		_energyShieldBox = _assetManager.get(AssetDescriptors.ENERGY_SHIELD_BOX);
+		_reflectBox = _assetManager.get(AssetDescriptors.REFLECT_SKILL_BOX);
 		
 		_batch = new SpriteBatch();
 		//_batch.setProjectionMatrix(_camera.combined);
@@ -89,6 +97,8 @@ public class GamePlayRenderer {
 		_matchResult.character_id = _networkController.getCharacterID();
 		
 		_matchRendering = true;
+		
+		_hero = _controller.getHero();
 
 	}
 
@@ -111,21 +121,20 @@ public class GamePlayRenderer {
 			
 			_matchRendering = false;
 		}  else {	
-			//ViewportUtils.drawGrid(_viewport, _shapeRenderer);
+			ViewportUtils.drawGrid(_viewport, _shapeRenderer);
 			drawGameBounds();
-			drawShapeRefreshers();
+			drawSkillSlots();
+			drawDefenseCastBox();
 			drawSigilButton();
 			drawHeroUIComponents();
 	
-			//drawSkillBar();
 			drawHero();
 			drawEnemies();
 			drawSpells();
+			
 		
 		}
 	}
-
-	
 
 	public void resize(int width, int height) {
 		_viewport.update(width, height, true);
@@ -133,9 +142,9 @@ public class GamePlayRenderer {
 		// ViewportUtils.debugPixelPerUnit(viewport);
 	}
 
-	private void drawShapeRefreshers(){
+	private void drawSkillSlots(){
 		_shapeRenderer.begin(ShapeType.Filled);
-		_shapeRenderer.setColor(Color.WHITE);
+		_shapeRenderer.setColor(Color.GRAY);
 
 		_shapeRenderer.rect(
 				_controller.getSkillSlotFive().getX(),
@@ -144,24 +153,28 @@ public class GamePlayRenderer {
 				_controller.getSkillSlotFive().getHeight()
 		);
 
+		_shapeRenderer.setColor(Color.GREEN);
 		_shapeRenderer.rect(
 				_controller.getSkillSlotFour().getX(),
 				_controller.getSkillSlotFour().getY(),
 				_controller.getSkillSlotFour().getWidth(),
 				_controller.getSkillSlotFour().getHeight()
 		);
+		_shapeRenderer.setColor(Color.YELLOW);
 		_shapeRenderer.rect(
 				_controller.getSkillSlotThree().getX(),
 				_controller.getSkillSlotThree().getY(),
 				_controller.getSkillSlotThree().getWidth(),
 				_controller.getSkillSlotThree().getHeight()
 		);
+		_shapeRenderer.setColor(Color.BLUE);
 		_shapeRenderer.rect(
 				_controller.getSkillSlotTwo().getX(),
 				_controller.getSkillSlotTwo().getY(),
 				_controller.getSkillSlotTwo().getWidth(),
 				_controller.getSkillSlotTwo().getHeight()
 		);
+		_shapeRenderer.setColor(Color.RED);
 		_shapeRenderer.rect(
 				_controller.getSkillSlotOne().getX(),
 				_controller.getSkillSlotOne().getY(),
@@ -169,6 +182,54 @@ public class GamePlayRenderer {
 				_controller.getSkillSlotOne().getHeight()
 		);
 
+		_shapeRenderer.end();
+		/////////////////////////////////////////////////////////////////
+		_shapeRenderer.begin(ShapeType.Line);
+		_shapeRenderer.setColor(Color.WHITE);
+		switch(_controller.getSelectedSkill()){	
+		case 5:
+			_shapeRenderer.rect(
+					_controller.getSkillSlotFive().getX(),
+					_controller.getSkillSlotFive().getY(),
+					_controller.getSkillSlotFive().getWidth(),
+					_controller.getSkillSlotFive().getHeight()
+			);
+			break;
+		case 4:
+			_shapeRenderer.rect(
+					_controller.getSkillSlotFour().getX(),
+					_controller.getSkillSlotFour().getY(),
+					_controller.getSkillSlotFour().getWidth(),
+					_controller.getSkillSlotFour().getHeight()
+			);
+			break;
+		case 3:
+			_shapeRenderer.rect(
+					_controller.getSkillSlotThree().getX(),
+					_controller.getSkillSlotThree().getY(),
+					_controller.getSkillSlotThree().getWidth(),
+					_controller.getSkillSlotThree().getHeight()
+			);
+			break;
+		case 2:
+			_shapeRenderer.rect(
+					_controller.getSkillSlotTwo().getX(),
+					_controller.getSkillSlotTwo().getY(),
+					_controller.getSkillSlotTwo().getWidth(),
+					_controller.getSkillSlotTwo().getHeight()
+			);
+			break;
+		case 1:
+			_shapeRenderer.rect(
+					_controller.getSkillSlotOne().getX(),
+					_controller.getSkillSlotOne().getY(),
+					_controller.getSkillSlotOne().getWidth(),
+					_controller.getSkillSlotOne().getHeight()
+			);
+			break;
+			
+		}
+		
 		_shapeRenderer.end();
 	}
 
@@ -186,8 +247,44 @@ public class GamePlayRenderer {
 		_shapeRenderer.end();
 	}
 	
-	private void drawHeroUIComponents() {
+	private void drawDefenseCastBox(){
+		_shapeRenderer.begin(ShapeType.Filled);
+		_shapeRenderer.setColor(Color.GRAY);
+
+		_shapeRenderer.rect(
+				_controller.getDefenseCastBox().getX(),
+				_controller.getDefenseCastBox().getY(),
+				_controller.getDefenseCastBox().getWidth(),
+				_controller.getDefenseCastBox().getHeight()
+		);
+
+		_shapeRenderer.end();
 		
+		_batch.setProjectionMatrix(_camera.combined);
+		_batch.begin();
+		
+		if(_hero instanceof Wizard)
+			_batch.draw(_energyShieldBox, 
+					_controller.getDefenseCastBox().getX(),
+					_controller.getDefenseCastBox().getY(),
+					_controller.getDefenseCastBox().getWidth(),
+					_controller.getDefenseCastBox().getHeight()
+			);
+		
+		if(_hero instanceof BattleMage || _hero instanceof Knight){
+			_batch.draw(_reflectBox, 
+					_controller.getDefenseCastBox().getX(),
+					_controller.getDefenseCastBox().getY(),
+					_controller.getDefenseCastBox().getWidth(),
+					_controller.getDefenseCastBox().getHeight()
+			);
+		}
+		
+		
+		_batch.end();
+	}
+	
+	private void drawHeroUIComponents() {	
 		UIElement node = _controller.getHealthNode();
 		float healthBarWidth = _controller.getHero().getCurrentHealthPct() * node.getWidth() / 100;
 		
@@ -207,8 +304,8 @@ public class GamePlayRenderer {
 		_shapeRenderer.begin(ShapeType.Line);
 		_shapeRenderer.setColor(Color.BLUE);
 
-		_shapeRenderer.rect(_controller.getHero().getX(), _controller.getHero().getY(), _controller.getHero().getWidth(),
-				_controller.getHero().getHeight());
+		_shapeRenderer.rect(_controller.getHero().getX(), _controller.getHero().getY(), 
+				_controller.getHero().getWidth(), _controller.getHero().getHeight());
 
 		_shapeRenderer.end();
 	}
@@ -216,11 +313,10 @@ public class GamePlayRenderer {
 	private void drawEnemies() {
 		_shapeRenderer.begin(ShapeType.Line);
 		_shapeRenderer.setColor(Color.RED);
+		
 		for (Enemy enemy : _controller.getEnemies()) {
 			_shapeRenderer.rect(enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight());
 
-			_shapeRenderer.rect(enemy.getCollisionBounds().x, enemy.getCollisionBounds().y,
-					enemy.getCollisionBounds().width, enemy.getCollisionBounds().height);
 		}
 
 		_shapeRenderer.end();
@@ -247,79 +343,36 @@ public class GamePlayRenderer {
 	private void drawSpells() {
 		_shapeRenderer.begin(ShapeType.Line);
 
-		for (Spell spell : _controller.getSpells()) {
-			if (spell.getSpellColor().equalsIgnoreCase("red")) {
-				_shapeRenderer.setColor(Color.RED);
-			} else if (spell.getSpellColor().equalsIgnoreCase("white")) {
-				_shapeRenderer.setColor(Color.WHITE);
-			}
-
-			if (spell.getSpellShape().equalsIgnoreCase("circle")) {
-				_shapeRenderer.ellipse(spell.getX(), 
-						spell.getY(), 
-						spell.getWidth(),
-						spell.getHeight());
-			} else if (spell.getSpellShape().equalsIgnoreCase("rectangle")) {
-				_shapeRenderer.rect(spell.getX(), spell.getY(), spell.getWidth(), spell.getHeight());
+		for (Skill skill : _controller.getSkills()) {
+			_shapeRenderer.setColor(Color.WHITE);
+			
+			if( skill instanceof EnergyShield){
+				_shapeRenderer.rect(skill.getX(), 
+						skill.getY(), 
+						skill.getWidth(),
+						skill.getHeight());
+			} else {
+				_shapeRenderer.ellipse(skill.getX(), 
+							skill.getY(), 
+							skill.getWidth(),
+							skill.getHeight());
 			}
 		}
 
 		_shapeRenderer.end();
 	}
-
-	private void drawSkillBar() {
-		_shapeRenderer.begin(ShapeType.Line);
-		_shapeRenderer.end();
-
-		_shapeRenderer.begin(ShapeType.Line);
-		_shapeRenderer.setColor(_controller.getColorSelector().getSpellColor().getColor());
-		_shapePosition = _controller.getShapeSelector().getSelectedPosition();
-
-		if (_controller.getShapeSelector().getSpellShape(_shapePosition).toString().equalsIgnoreCase("circle"))
-			_shapeRenderer.ellipse(_controller.getSpellBox().getX(), 
-					_controller.getSpellBox().getY(), 
-					_controller.getSpellBox().getWidth(), 
-					_controller.getSpellBox().getHeight());
+	
+	
+	private void drawWizardUI(){
 		
+	}
+	
+	private void drawBattleMageUI(){
+			
+	}
+	
+	private void drawKnightUI(){
 		
-		
-		if (_controller.getShapeSelector().getSpellShape(_shapePosition).toString().equalsIgnoreCase("rectangle"))
-			_shapeRenderer.rect(_controller.getSpellBox().getX(), 
-					_controller.getSpellBox().getY(), 
-					_controller.getSpellBox().getWidth(),
-					_controller.getSpellBox().getHeight());
-
-		_shapeRenderer.end();
-
-		_shapeRenderer.begin(ShapeType.Filled);
-		_shapeRenderer.setColor(Color.WHITE);
-
-		_shapeRenderer.triangle(_controller.getBottomArrow().getX() - _controller.getBottomArrow().getWidth(),
-				_controller.getBottomArrow().getY() + _controller.getBottomArrow().getHeight(),
-				_controller.getBottomArrow().getX() + _controller.getBottomArrow().getWidth(),
-				_controller.getBottomArrow().getY() + _controller.getBottomArrow().getHeight(), _controller.getBottomArrow().getX(),
-				_controller.getBottomArrow().getY());
-
-		_shapeRenderer.triangle(_controller.getTopArrow().getX() - _controller.getTopArrow().getWidth(),
-				_controller.getTopArrow().getY() - _controller.getTopArrow().getHeight(),
-				_controller.getTopArrow().getX() + _controller.getTopArrow().getWidth(),
-				_controller.getTopArrow().getY() - _controller.getTopArrow().getHeight(), _controller.getTopArrow().getX(),
-				_controller.getTopArrow().getY());
-
-		_shapeRenderer.triangle(_controller.getLeftArrow().getX() + _controller.getLeftArrow().getWidth(),
-				_controller.getLeftArrow().getY() - _controller.getLeftArrow().getHeight(),
-				_controller.getLeftArrow().getX() + _controller.getLeftArrow().getWidth(),
-				_controller.getLeftArrow().getY() + _controller.getLeftArrow().getHeight(), _controller.getLeftArrow().getX(),
-				_controller.getLeftArrow().getY());
-
-		_shapeRenderer.triangle(_controller.getRightArrow().getX() - _controller.getRightArrow().getWidth(),
-				_controller.getRightArrow().getY() - _controller.getRightArrow().getHeight(),
-				_controller.getRightArrow().getX() - _controller.getRightArrow().getWidth(),
-				_controller.getRightArrow().getY() + _controller.getRightArrow().getHeight(), _controller.getRightArrow().getX(),
-				_controller.getRightArrow().getY());
-
-		_shapeRenderer.end();
-
 	}
 	
 	public boolean isMatchRendering(){

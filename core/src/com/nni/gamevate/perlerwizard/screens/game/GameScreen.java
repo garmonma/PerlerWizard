@@ -36,7 +36,7 @@ public class GameScreen extends ScreenAdaptar {
 		if(!_renderer.isMatchRendering()){
 			//return to gameworld;
 
-				_perlerWizard.setScreen(new MainWorldScreen(_perlerWizard));
+				_perlerWizard.setScreen(new MatchResultsScreen(_perlerWizard));
 			
 		} else {
 			_gamePlayController.update(delta);

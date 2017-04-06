@@ -5,30 +5,23 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.network.gamedata.GameCharacter;
 import com.nni.gamevate.perlerwizard.network.gamedata.Spawn;
 import com.nni.gamevate.perlerwizard.network.gamedata.Wave;
-import com.nni.gamevate.perlerwizard.object.UIElement;
 import com.nni.gamevate.perlerwizard.object.Wall;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
-import com.nni.gamevate.perlerwizard.object.enemies.EnemyType;
+import com.nni.gamevate.perlerwizard.object.enemies.basic.Goblin;
+import com.nni.gamevate.perlerwizard.object.enemies.basic.Orc;
 import com.nni.gamevate.perlerwizard.object.hero.BattleMage;
 import com.nni.gamevate.perlerwizard.object.hero.Hero;
 import com.nni.gamevate.perlerwizard.object.hero.HeroTypes;
 import com.nni.gamevate.perlerwizard.object.hero.Knight;
-import com.nni.gamevate.perlerwizard.object.hero.Shield;
 import com.nni.gamevate.perlerwizard.object.hero.Wizard;
-import com.nni.gamevate.perlerwizard.object.spells.EnemySpell;
-import com.nni.gamevate.perlerwizard.object.spells.Spell;
-import com.nni.gamevate.perlerwizard.object.spells.color.RedSpell;
-import com.nni.gamevate.perlerwizard.object.spells.color.SpellColor;
-import com.nni.gamevate.perlerwizard.object.spells.color.WhiteSpell;
-import com.nni.gamevate.perlerwizard.object.spells.shape.CircleSpell;
-import com.nni.gamevate.perlerwizard.object.spells.shape.RectangleSpell;
-import com.nni.gamevate.perlerwizard.object.spells.shape.SpellShape;
-import com.nni.gamevate.perlerwizard.spawnloader.SpawnLoader;
+import com.nni.gamevate.perlerwizard.object.skills.Skill;
+import com.nni.gamevate.perlerwizard.object.skills.reflectables.Spell;
+import com.nni.gamevate.perlerwizard.object.skills.throwables.JavelinThrow;
+import com.nni.gamevate.perlerwizard.utils.UIElement;
 
 /**
  * @author Marcus Garmon
@@ -43,40 +36,32 @@ public class GamePlayController {
 	private Wall _rightWall;
 	private Wall _leftWall;
 
-	private UIElement _leftArrow;
-	private UIElement _rightArrow;
-	private UIElement _topArrow;
-	private UIElement _bottomArrow;
-	private UIElement _spellBox;
-
 	private UIElement _heroHealthNode;
 
+	private List<UIElement> _skillSlots;
 	private UIElement _skillSlotTwo;
 	private UIElement _skillSlotThree;
 	private UIElement _skillSlotFour;
 	private UIElement _skillSlotOne;
 	private UIElement _skillSlotFive;
+	
+	private UIElement _defenseCastBox;
 
 	private UIElement _sigilButton;
 
-	private Array<Spell> _spells;
+	private Array<Skill> _skills;
 	private Array<Enemy> _enemies;
-	private Array<EnemySpell> _enemySpells;
 
-	private ShapeSelector _shapeSelector;
-	private ColorSelector _colorSelector;
-	private long _lastSpell;
 	private Spawn _level;
 
 	private boolean _playerWon;
 	private boolean _gameOver;
-
-	private SpellColor _sc;
-	private SpellShape _ss;
 	
 	private NetworkController _networkController;
 	private GameCharacter _gameCharacter;
 	private int _heroLevel;
+	
+	private int _selectedSkill;
 
 	public GamePlayController(NetworkController networkController) {
 		// _level = LevelLoader.load(Gdx.files.internal("levels/level_0.json"));
@@ -110,24 +95,19 @@ public class GamePlayController {
 
 		_leftWall = new Wall(.10f, GameConfig.WORLD_HEIGHT, GameConfig.LEFT_WALL, 0, "left");
 
-		_skillSlotOne = new UIElement(.5f, 6.5f, 1, 1);
-		_skillSlotTwo = new UIElement(.5f, 5.25f, 1, 1);
-		_skillSlotThree = new UIElement(.5f, 4f, 1, 1);
-		_skillSlotFour = new UIElement(.5f, 2.75f, 1, 1);
-		_skillSlotFive = new UIElement(.5f, 1.5f, 1, 1);
+		_skillSlots = new ArrayList<UIElement>();
+		_skillSlots.add(_skillSlotOne = new UIElement(.5f, 6.5f, 1, 1));
+		_skillSlots.add(_skillSlotTwo = new UIElement(.5f, 5.25f, 1, 1));
+		_skillSlots.add(_skillSlotThree = new UIElement(.5f, 4f, 1, 1));
+		_skillSlots.add(_skillSlotFour = new UIElement(.5f, 2.75f, 1, 1));
+		_skillSlots.add(_skillSlotFive = new UIElement(.5f, 1.5f, 1, 1));
+		
+		_defenseCastBox = new UIElement(17f, 1.5f, 2.5f, .75f);
 
 		_sigilButton = new UIElement(17f, 9f, 2, 2);
 
-		_bottomArrow = new UIElement(2f, 1f, .5f, .5f);
-		_topArrow = new UIElement(2f, 3f, .5f, .5f);
-		_leftArrow = new UIElement(1f, 2f, .5f, .5f);
-		_rightArrow = new UIElement(3f, 2f, .5f, .5f);
-
-		_spellBox = new UIElement(1.75f, 1.75f, .5f, .5f);
-
 		_heroHealthNode = new UIElement(0.5f, 11f, 3f, .5f);
-		
-		
+			
 		if(_gameCharacter.job == HeroTypes.WIZARD){
 			_hero = new Wizard(1, 1, GameConfig.WORLD_WIDTH / 2, 0, _heroLevel);
 		} else if(_gameCharacter.job == HeroTypes.KNIGHT) {
@@ -141,15 +121,9 @@ public class GamePlayController {
 		_hero.setCurrentHealthPct(_gameCharacter.healthPct);
 		
 
-		_spells = new Array<Spell>();
+		_skills = new Array<Skill>();
 		_enemies = new Array<Enemy>();
 		loadEnemies();
-
-		_enemySpells = new Array<EnemySpell>();
-
-		_shapeSelector = new ShapeSelector();
-		_colorSelector = new ColorSelector();
-		//loadSelectors();
 
 		_playerWon = false;
 		_gameOver = false;
@@ -157,43 +131,64 @@ public class GamePlayController {
 
 	public void update(float delta) {
 
-		for (Spell spell : _spells) {
+		for (Skill skill : _skills) {
 
-			if (spell.isEvaporated()) {
+			if (skill.isEvaporated()) {
 				Gdx.app.log("Spell Evaporate", "Spell Evaporated!");
-				removeSpell(spell);
+				removeSpell(skill);
 			}
 
 			for (Enemy enemy : _enemies) {
-				if (spell.collided(enemy)) {
-					spell.bounce(enemy);
-
-					if (enemy.dead(spell.getDmg())) {
+				if (!skill.enemySkill() && skill.collided(enemy)) {
+					if(skill instanceof Spell){
+						((Spell) skill).bounce(enemy);
+					}
+					
+					if(skill instanceof JavelinThrow){
+						skill.evaporate();
+					}
+						
+					if (enemy.isDead(skill.getDamage())) {
 						removeEnemy(enemy);
 					}
 				}
-
-				enemy.update(delta);
+				
 			}
 
-			if (spell.collided(_hero)) {
-				spell.bounce(_hero);
+			//TODO - Create a bounceable interface
+			if(skill instanceof Spell){
+				if (skill.collided(_hero) && skill.enemySkill()) {
+					// Damage hero
+				}
+				
+				if(skill.collided(_hero) && !skill.enemySkill()){
+					((Spell)skill).bounce(_hero);
+				}
+	
+				if (skill.collided(_upperWall)) {
+					((Spell)skill).bounce(_upperWall);
+				}
+	
+				if (skill.collided(_leftWall)) {
+					((Spell)skill).bounce(_leftWall);
+				}
+	
+				if (skill.collided(_rightWall)) {
+					((Spell)skill).bounce(_rightWall);
+				}
 			}
 
-			if (spell.collided(_upperWall)) {
-				spell.bounce(_upperWall);
-			}
-
-			if (spell.collided(_leftWall)) {
-				spell.bounce(_leftWall);
-			}
-
-			if (spell.collided(_rightWall)) {
-				spell.bounce(_rightWall);
-			}
-
-			spell.update(delta);
+			skill.update(delta);
 		}
+		
+		for (Enemy enemy : _enemies) {
+			
+			enemy.update(delta);
+		}
+		
+		
+		
+		processEnemyAttack();
 
 		_hero.update(delta);
 
@@ -206,39 +201,27 @@ public class GamePlayController {
 
 		}
 	}
-
-	public void castSpell() {
-		// 1.5 second global cooldown;
-
-		if (TimeUtils.timeSinceNanos(_lastSpell) > 1500000000) {
-
-			if (!_colorSelector.getSpellColor().isOnCooldown(_colorSelector.getSpellColor().getCooldown())) {
-
-				if (_colorSelector.getSpellColor().toString().equalsIgnoreCase("red")) {
-					_sc = new RedSpell();
-				} else if (_colorSelector.getSpellColor().toString().equalsIgnoreCase("white")) {
-					_sc = new WhiteSpell();
-				}
-
-				if (_shapeSelector.getSpellShape().toString().equalsIgnoreCase("circle")) {
-					_ss = new CircleSpell();
-				} else if (_shapeSelector.getSpellShape().toString().equalsIgnoreCase("rectangle")) {
-					_ss = new RectangleSpell();
-				}
-
-				Spell spell = new Spell(.5f, .5f, _hero.getX() + _hero.getWidth() / 2,
-						_hero.getY() + _hero.getHeight() + .05f, _sc, _ss);
-
-				_colorSelector.rotateDown();
-				_shapeSelector.rotateLeft();
-
-				_spells.add(spell);
-				_colorSelector.getSpellColor().reset();
-				_lastSpell = TimeUtils.nanoTime();
-			}
-		}
+	
+	public void attack(){
+		Skill attack = _hero.attack(_selectedSkill);
+		
+		if(attack != null){
+			_skills.add(attack);
+		}	
+	}
+	
+	public void castSpecial(){
+		_hero.castSpecial();
 	}
 
+	public void castDefense(){
+		Skill defense = _hero.castDefense();
+		
+		if(defense != null){
+			_skills.add(defense);
+		};
+	}
+	
 	public Hero getHero() {
 		return _hero;
 	}
@@ -247,16 +230,8 @@ public class GamePlayController {
 		return _enemies;
 	}
 
-	public Array<Spell> getSpells() {
-		return _spells;
-	}
-
-	public ShapeSelector getShapeSelector() {
-		return _shapeSelector;
-	}
-
-	public ColorSelector getColorSelector() {
-		return _colorSelector;
+	public Array<Skill> getSkills() {
+		return _skills;
 	}
 
 	public Wall getUpperWall() {
@@ -273,26 +248,6 @@ public class GamePlayController {
 
 	public Wall getLeftWall() {
 		return _leftWall;
-	}
-
-	public UIElement getLeftArrow() {
-		return _leftArrow;
-	}
-
-	public UIElement getRightArrow() {
-		return _rightArrow;
-	}
-
-	public UIElement getTopArrow() {
-		return _topArrow;
-	}
-
-	public UIElement getBottomArrow() {
-		return _bottomArrow;
-	}
-
-	public UIElement getSpellBox() {
-		return _spellBox;
 	}
 
 	public UIElement getSkillSlotOne() {
@@ -314,6 +269,14 @@ public class GamePlayController {
 	public UIElement getSkillSlotTwo() {
 		return _skillSlotTwo;
 	}
+	
+	public UIElement getDefenseCastBox(){
+		return _defenseCastBox;
+	}
+	
+	public List<UIElement> getSkillSlots(){
+		return _skillSlots;
+	}
 
 	public UIElement getSigilButton() {
 		return _sigilButton;
@@ -324,17 +287,17 @@ public class GamePlayController {
 	}
 
 	private void loadEnemies() {
-		Enemy enemy1 = new Enemy(1, 1, 6, 7, EnemyType.GoblinInitiate);
-		Enemy enemy2 = new Enemy(1, 1, 7.5f, 7, EnemyType.GoblinInitiate);
-		Enemy enemy3 = new Enemy(1, 1, 9, 7, EnemyType.GoblinInitiate);
+		Enemy enemy1 = new Goblin(1, 1, 6, 7);
+		Enemy enemy2 = new Goblin(1, 1, 7.5f, 7);
+		Enemy enemy3 = new Orc(1, 1, 9, 7);
 
-		Enemy enemy1a = new Enemy(1, 1, 6, 8.5f, EnemyType.GoblinInitiate);
-		Enemy enemy2a = new Enemy(1, 1, 7.5f, 8.5f, EnemyType.GoblinInitiate);
-		Enemy enemy3a = new Enemy(1, 1, 9, 8.5f, EnemyType.GoblinInitiate);
+		Enemy enemy1a = new Goblin(1, 1, 6, 8.5f);
+		Enemy enemy2a = new Goblin(1, 1, 7.5f, 8.5f);
+		Enemy enemy3a = new Orc(1, 1, 9, 8.5f);
 
-		Enemy enemy1b = new Enemy(1, 1, 6, 10, EnemyType.GoblinInitiate);
-		Enemy enemy2b = new Enemy(1, 1, 7.5f, 10, EnemyType.GoblinInitiate);
-		Enemy enemy3b = new Enemy(1, 1, 9, 10, EnemyType.GoblinInitiate);
+		Enemy enemy1b = new Goblin(1, 1, 6, 10);
+		Enemy enemy2b = new Goblin(1, 1, 7.5f, 10);
+		Enemy enemy3b = new Orc(1, 1, 9, 10);
 
 		_enemies.add(enemy1);
 		_enemies.add(enemy2);
@@ -351,9 +314,25 @@ public class GamePlayController {
 		_enemies.removeValue(e, false);
 	}
 
-	private void removeSpell(Spell spell) {
-		_spells.removeValue(spell, false);
+	private void removeSpell(Skill skill) {
+		_skills.removeValue(skill, false);
 
+	}
+	
+	private void processEnemyAttack(){
+		for(Enemy enemy: _enemies){
+			//Skill attack = enemy.attack();
+			Skill special = enemy.castSpecial();
+			
+//			if(attack != null){
+//				_skills.add(attack);
+//			}
+			
+			if(special != null){
+				_skills.add(special);
+			}
+			
+		}
 	}
 
 	private void processLevel() {
@@ -363,4 +342,14 @@ public class GamePlayController {
 		}
 
 	}
+
+	public void setSelectedSkill(int selectedSkill) {
+		_selectedSkill = selectedSkill;
+		
+	}
+	
+	public int getSelectedSkill(){
+		return _selectedSkill;
+	}
+	
 }

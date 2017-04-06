@@ -34,6 +34,10 @@ public abstract class UIScreen extends ScreenAdaptar {
     }
 
     protected abstract Actor createUi();
+    
+    protected void back(){
+    	
+    }
 
     @Override
     public void resize(int width, int height) {

@@ -16,6 +16,13 @@ public abstract class GameObject implements Collidable {
 	protected Vector2 _velocity;
 	protected Vector2 _movement;
 	
+	public GameObject(float x, float y){
+		_position = new Vector2(x, y);
+		_direction = new Vector2();
+		_velocity = new Vector2();
+		_movement = new Vector2();
+	}
+	
 	public GameObject(float width, float height, float x, float y){
 		_width = width;
 		_height = height;
@@ -39,6 +46,10 @@ public abstract class GameObject implements Collidable {
 	public float getY() {
 		return _position.y;
 	}
+	
+	public void setY(float y){
+		_position.y = 9;
+	}
 
 	public float getHeight() {
 		return _height;
@@ -55,4 +66,17 @@ public abstract class GameObject implements Collidable {
 	public Vector2 getPosition(){
 		return _position;
 	}
+	
+	public void setPosition(Vector2 newPosition){
+		_position.set(newPosition);
+	}
+
+	@Override
+	public String toString() {
+		return String.format(
+				"GameObject [_width=%s, _height=%s, _position=%s, _direction=%s, _velocity=%s, _movement=%s]", _width,
+				_height, _position, _direction, _velocity, _movement);
+	}
+	
+	
 }

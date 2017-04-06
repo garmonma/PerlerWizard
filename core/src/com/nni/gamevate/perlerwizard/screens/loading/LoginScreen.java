@@ -17,4 +17,10 @@ public class LoginScreen extends UIScreen {
 		return null;
 	}
 
+	@Override
+	protected void back() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

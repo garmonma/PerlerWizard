@@ -2,15 +2,18 @@ package com.nni.gamevate.perlerwizard.object.hero;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.nni.gamevate.perlerwizard.object.Attacker;
 import com.nni.gamevate.perlerwizard.object.Collidable;
+import com.nni.gamevate.perlerwizard.object.Equiper;
 import com.nni.gamevate.perlerwizard.object.GameObject;
+import com.nni.gamevate.perlerwizard.object.skills.Skill;
 
 /**
  * 
  * @author Marcus Garmon 11/27/2016
  *
  */
-public abstract class Hero extends GameObject {
+public abstract class Hero extends GameObject implements Attacker, Equiper{
 	protected final float MAX_SPEED_MULTIPLIER = 1.25f;
 	protected final float MAX_SPEED = 10.0f;
 
@@ -27,6 +30,9 @@ public abstract class Hero extends GameObject {
 
 	protected int _level;
 	
+	protected boolean _castingSpecial;
+	protected boolean _castingAttack;
+	
 	public Hero(int width, int height, float x, float y, int level) {
 		super(width, height, x, y);
 
@@ -35,18 +41,6 @@ public abstract class Hero extends GameObject {
 
 		_level = level;
 	}
-
-	abstract void attack();
-
-	abstract void castSpecial();
-
-	abstract void castDefense();
-	
-	abstract void setEquipmentSlotOne(Equipment item);
-	
-	abstract void setEquipmentSlotTwo(Equipment item);
-	
-	abstract void setEquipmentSlotThree(Equipment item);
 
 	@Override
 	public void update(float delta) {
@@ -65,6 +59,8 @@ public abstract class Hero extends GameObject {
 	public boolean collided(Collidable object) {
 		return false;
 	}
+	
+	public abstract Skill attack(int selectedSkill);
 
 	private void move() {
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.getAccelerometerY() < 0) {
@@ -126,6 +122,14 @@ public abstract class Hero extends GameObject {
 		_currentHealthPct = healthPct;
 	}
 	
+	public void castingSpecial(boolean casting){
+		_castingSpecial = false;
+	}
+	
+	public void castingAttack(boolean casting){
+		_castingAttack = false;
+	}
+	
 	public int getHitPoints(){
 		return _hitPoints;
 	}
@@ -148,6 +152,17 @@ public abstract class Hero extends GameObject {
 	
 	public float getDodge(){
 		return _dodge;
+	}
+
+	@Override
+	public boolean isCastingSpecial() {
+		return _castingSpecial;
+	}
+
+	@Override
+	public boolean isCastingAttack() {
+		// TODO Auto-generated method stub
+		return _castingAttack;
 	}
 
 	@Override
