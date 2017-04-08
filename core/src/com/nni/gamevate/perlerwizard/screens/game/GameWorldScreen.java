@@ -8,6 +8,9 @@ import com.nni.gamevate.perlerwizard.GameWorldRenderer;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.controllers.GameWorldController;
 import com.nni.gamevate.perlerwizard.controllers.NetworkController;
+import com.nni.gamevate.perlerwizard.screens.menu.EquipmentScreen;
+import com.nni.gamevate.perlerwizard.screens.menu.EventScreen;
+import com.nni.gamevate.perlerwizard.screens.menu.MainMenuScreen;
 
 /**
  * @author Marcus Garmon 12/29/2016
@@ -29,7 +32,20 @@ public class GameWorldScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
-		if(_worldController.navigate() || Gdx.input.isTouched()){
+		
+		if(_worldController.navigateEquipmentScreen()){
+			_perlerWizard.setScreen(new EquipmentScreen(_perlerWizard));
+		}
+		
+		if(_worldController.navaigateEventScreen()){
+			_perlerWizard.setScreen(new EventScreen(_perlerWizard));
+		}
+		
+		if(_worldController.navigateMenuScreen()){
+			_perlerWizard.setScreen(new MainMenuScreen(_perlerWizard));
+		}
+		
+		if(_worldController.navigateGameScreen()){
 			_perlerWizard.setScreen(new GameScreen(_perlerWizard));
 		}
 		

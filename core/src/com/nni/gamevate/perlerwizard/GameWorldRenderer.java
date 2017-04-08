@@ -1,6 +1,7 @@
 package com.nni.gamevate.perlerwizard;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
@@ -19,9 +20,11 @@ import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.controllers.GameWorldController;
 import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 import com.nni.gamevate.perlerwizard.object.Background;
-import com.nni.gamevate.perlerwizard.object.MapNode;
+import com.nni.gamevate.perlerwizard.utils.MapNode;
+import com.nni.gamevate.perlerwizard.utils.NodeType;
 import com.nni.gamevate.perlerwizard.utils.UIElement;
 import com.nni.gamevate.perlerwizard.utils.ViewportUtils;
+import com.nni.gamevate.perlerwizard.utils.WorldInputHandler;
 
 public class GameWorldRenderer implements Disposable{
 	private GameWorldController _controller;
@@ -40,9 +43,13 @@ public class GameWorldRenderer implements Disposable{
 	private Texture _equipmentButton, _equipmentButtonPressed;
 	private Texture _menuButton, _menuButtonPressed;
 	
+	private Texture _gameNodeBasic;
+	
 	private boolean showDebug = false;
 	private final GlyphLayout _layout = new GlyphLayout();
 	private BitmapFont _font;
+	
+	private WorldInputHandler _inputHandler;
 	
 	public GameWorldRenderer(GameWorldController controller, NetworkController networkController, 
 			SpriteBatch batch, AssetManager assetManager){
@@ -73,8 +80,16 @@ public class GameWorldRenderer implements Disposable{
 		_equipmentButtonPressed = _assetManager.get(AssetDescriptors.EQUIPMENT_BUTTON_PRESSED);
 		_menuButton = _assetManager.get(AssetDescriptors.MENU_BUTTON);
 		_menuButtonPressed = _assetManager.get(AssetDescriptors.MENU_BUTTON_PRESSED);
+		_gameNodeBasic = _assetManager.get(AssetDescriptors.GAME_NODE_BASIC);
 
 		_font = _assetManager.get(AssetDescriptors.FONT); 
+		
+		_inputHandler = new WorldInputHandler(_controller, _camera, _hudCamera);
+		
+		InputMultiplexer im = new InputMultiplexer();
+		im.addProcessor(_inputHandler.getWorldAdapter());
+		im.addProcessor(_inputHandler.getHudAdapter());
+		Gdx.input.setInputProcessor(im);
 	}
 	
 	public void render(float detla){
@@ -106,6 +121,33 @@ public class GameWorldRenderer implements Disposable{
 				background.getX(), background.getY(), 
 				background.getWidth(), background.getHeight());		
 		
+		for(MapNode mapNode: _controller.getMapNodes()){
+			if(mapNode.getType() == NodeType.BASIC){
+				_batch.draw(_gameNodeBasic,
+						mapNode.getX(), 
+						mapNode.getY(), 
+						mapNode.getWidth(), 
+						mapNode.getHeight());
+			}
+			
+			if(mapNode.getType() == NodeType.BARN){
+				
+			}
+			
+			if(mapNode.getType() == NodeType.BLACKSMITH){
+				
+			}
+			
+			if(mapNode.getType() == NodeType.POTIONSHOP){
+				
+			}
+			
+			if(mapNode.getType() == NodeType.THRONEROOM){
+				
+			}
+			
+		}
+		
 		_batch.end();
 		
 		if(Gdx.input.isKeyPressed(Keys.G)){
@@ -120,13 +162,13 @@ public class GameWorldRenderer implements Disposable{
 		_shapeRenderer.begin(ShapeType.Filled);
 		_shapeRenderer.setColor(Color.YELLOW);
 		
-//		for(MapNode mapNode: _controller.getMapNodes()){
-//			_shapeRenderer.ellipse(
-//					mapNode.getX(), 
-//					mapNode.getY(), 
-//					mapNode.getWidth(), 
-//					mapNode.getHeight());
-//		}
+		for(MapNode mapNode: _controller.getMapNodes()){
+			_shapeRenderer.ellipse(
+					mapNode.getX(), 
+					mapNode.getY(), 
+					mapNode.getWidth(), 
+					mapNode.getHeight());
+		}
 		
 		_shapeRenderer.end();
 	}

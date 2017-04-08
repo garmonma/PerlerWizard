@@ -6,7 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.object.Background;
-import com.nni.gamevate.perlerwizard.object.MapNode;
+import com.nni.gamevate.perlerwizard.utils.MapNode;
 import com.nni.gamevate.perlerwizard.utils.UIElement;
 
 public class GameWorldController {
@@ -26,9 +26,14 @@ public class GameWorldController {
 	private UIElement _levelIndicator;
 	private UIElement _expBar;
 	
+	private UIElement _heroSprite;
+	
 	private List<UIElement> _filledElements = new ArrayList<UIElement>();
 	
 	private MapNode _selectedNode;
+	
+	private boolean _navigateEquipmentScreen, _navigateEventScreen, _navigateMenuScreen,
+				_navigateGameScreen;
 	
 	
 	public GameWorldController(){
@@ -80,6 +85,10 @@ public class GameWorldController {
 		_menuButton = new UIElement(20,  GameConfig.UI_SCREEN_HEIGHT - 268, 64, 64);
 		_menuButton.pressable(true);
 		_filledElements.add(_menuButton);
+		
+		_navigateEquipmentScreen = false;
+		_navigateEventScreen = false;
+		_navigateMenuScreen = false;
 	}
 	
 
@@ -204,7 +213,35 @@ public class GameWorldController {
 		return _filledElements;
 	}
 	
-	public boolean navigate(){
-		return false;
+	public void initializedMatch(boolean b){
+		_navigateGameScreen = b;
+	}
+	
+	public boolean navigateGameScreen(){
+		return _navigateGameScreen;
+	}
+	
+	public void pressedEquipmentButton(boolean b){
+		_navigateEquipmentScreen = b;
+	}
+	
+	public boolean navigateEquipmentScreen(){
+		return _navigateEquipmentScreen;
+	}
+	
+	public void pressedEventButton(boolean b){
+		_navigateEventScreen = b;
+	}
+	
+	public boolean navaigateEventScreen(){
+		return _navigateEventScreen;
+	}
+	
+	public void pressedMenuButton(boolean b){
+		_navigateMenuScreen = b;
+	}
+	
+	public boolean navigateMenuScreen(){
+		return _navigateMenuScreen;
 	}
 }

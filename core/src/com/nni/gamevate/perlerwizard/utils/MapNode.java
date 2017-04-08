@@ -1,4 +1,4 @@
-package com.nni.gamevate.perlerwizard.object;
+package com.nni.gamevate.perlerwizard.utils;
 
 public class MapNode {
 	
@@ -7,7 +7,7 @@ public class MapNode {
 	private float _y;
 	private float _width;
 	private float _height;
-	
+	private NodeType _type;
 	
 	public MapNode(int id, float x, float y){
 		_nodeId = id;
@@ -15,6 +15,17 @@ public class MapNode {
 		_y = y;
 		_width = 0.5f;
 		_height = 0.5f;
+		_type = NodeType.BASIC;
+		
+	}
+	
+	public MapNode(int id, float x, float y, NodeType type){
+		_nodeId = id;
+		_x = x;
+		_y = y;
+		_width = 0.5f;
+		_height = 0.5f;
+		_type = type;
 		
 	}
 	
@@ -43,15 +54,16 @@ public class MapNode {
 	}
 
 	public float getWidth() {
-		// TODO Auto-generated method stub
 		return _width;
 	}
 
 	public float getHeight() {
-		// TODO Auto-generated method stub
 		return _height;
 	}
 	
+	public NodeType getType(){
+		return _type;
+	}
 	
 
 }

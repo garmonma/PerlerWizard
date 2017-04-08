@@ -66,13 +66,15 @@ public class LoadingScreen extends ScreenAdapter {
 		_assetManager.load(AssetDescriptors.REFLECT_SKILL_BOX);
 		_assetManager.load(AssetDescriptors.FONT);
 		
+		
+		// Game World Screen Assets
 		_assetManager.load(AssetDescriptors.EVENTS_BUTTON);
 		_assetManager.load(AssetDescriptors.EVENTS_BUTTON_PRESSED);
 		_assetManager.load(AssetDescriptors.EQUIPMENT_BUTTON);
 		_assetManager.load(AssetDescriptors.EQUIPMENT_BUTTON_PRESSED);
 		_assetManager.load(AssetDescriptors.MENU_BUTTON);
 		_assetManager.load(AssetDescriptors.MENU_BUTTON_PRESSED);
-		
+		_assetManager.load(AssetDescriptors.GAME_NODE_BASIC);
 	}
 	
 	@Override

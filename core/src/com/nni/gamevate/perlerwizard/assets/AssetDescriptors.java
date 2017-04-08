@@ -43,5 +43,8 @@ public class AssetDescriptors {
 	public static final AssetDescriptor<Texture> MENU_BUTTON_PRESSED =
             new AssetDescriptor<Texture>(AssetPaths.MENU_BUTTON_PRESSED, Texture.class);
 	
+	public static final AssetDescriptor<Texture> GAME_NODE_BASIC = 
+			new AssetDescriptor<Texture>(AssetPaths.GAME_NODE_BASIC, Texture.class);
+	
 	private AssetDescriptors(){}
 }
