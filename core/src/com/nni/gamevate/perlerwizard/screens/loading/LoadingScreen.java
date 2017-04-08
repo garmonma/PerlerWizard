@@ -75,6 +75,8 @@ public class LoadingScreen extends ScreenAdapter {
 		_assetManager.load(AssetDescriptors.MENU_BUTTON);
 		_assetManager.load(AssetDescriptors.MENU_BUTTON_PRESSED);
 		_assetManager.load(AssetDescriptors.GAME_NODE_BASIC);
+		_assetManager.load(AssetDescriptors.DIRT_ROAD_HORIZONTAL);
+		_assetManager.load(AssetDescriptors.DIRT_ROAD_VERTICAL);
 	}
 	
 	@Override

@@ -17,6 +17,9 @@ public class AssetPaths {
 	public static final String MENU_BUTTON_PRESSED = "ui/menuButtonPressed.png";
 	
 	public static final String GAME_NODE_BASIC = "gameNode.png";
+	public static final String DIRT_ROAD_VERTICAL = "verticalRoad.png";
+	public static final String DIRT_ROAD_HORIZONTAL = "horizontalRoad.png";
+	
 	
 	private AssetPaths(){}
 }

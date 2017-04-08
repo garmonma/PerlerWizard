@@ -50,17 +50,23 @@ public class WorldInputHandler {
 				_touchCords.set(screenX, screenY, 0);
 				_camera.unproject(_touchCords);
 
-				_controller.getMapNodes();
-
-				for (MapNode mapNode : _controller.getMapNodes()) {
-					if (_touchCords.x >= mapNode.getX() 
-							&& _touchCords.x <= mapNode.getX() + mapNode.getWidth()
-							&& _touchCords.y >= mapNode.getY()
-							&& _touchCords.y <= mapNode.getY() + mapNode.getHeight()) {
-
-						_controller.selectNode(mapNode);
-						_controller.initializedMatch(true);
-						return true;
+				for (GameElement gameElement : _controller.getMapNodes()) {
+					MapNode mapNode;
+					
+					if(gameElement instanceof MapNode){
+						mapNode = (MapNode) gameElement;
+					
+					
+						if (_touchCords.x >= mapNode.getX() 
+								&& _touchCords.x <= mapNode.getX() + mapNode.getWidth()
+								&& _touchCords.y >= mapNode.getY()
+								&& _touchCords.y <= mapNode.getY() + mapNode.getHeight()) {
+	
+							_controller.selectNode(mapNode);
+							_controller.initializedMatch(true);
+							
+							return true;
+						}
 					}
 				}
 

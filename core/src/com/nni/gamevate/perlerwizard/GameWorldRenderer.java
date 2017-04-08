@@ -20,8 +20,8 @@ import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.controllers.GameWorldController;
 import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 import com.nni.gamevate.perlerwizard.object.Background;
-import com.nni.gamevate.perlerwizard.utils.MapNode;
-import com.nni.gamevate.perlerwizard.utils.NodeType;
+import com.nni.gamevate.perlerwizard.utils.ElementType;
+import com.nni.gamevate.perlerwizard.utils.GameElement;
 import com.nni.gamevate.perlerwizard.utils.UIElement;
 import com.nni.gamevate.perlerwizard.utils.ViewportUtils;
 import com.nni.gamevate.perlerwizard.utils.WorldInputHandler;
@@ -44,6 +44,9 @@ public class GameWorldRenderer implements Disposable{
 	private Texture _menuButton, _menuButtonPressed;
 	
 	private Texture _gameNodeBasic;
+	
+	private Texture _verticalDirtRoad;
+	private Texture _horizontalDirtRoad;
 	
 	private boolean showDebug = false;
 	private final GlyphLayout _layout = new GlyphLayout();
@@ -81,7 +84,10 @@ public class GameWorldRenderer implements Disposable{
 		_menuButton = _assetManager.get(AssetDescriptors.MENU_BUTTON);
 		_menuButtonPressed = _assetManager.get(AssetDescriptors.MENU_BUTTON_PRESSED);
 		_gameNodeBasic = _assetManager.get(AssetDescriptors.GAME_NODE_BASIC);
-
+		
+		_horizontalDirtRoad = _assetManager.get(AssetDescriptors.DIRT_ROAD_HORIZONTAL);
+		_verticalDirtRoad = _assetManager.get(AssetDescriptors.DIRT_ROAD_VERTICAL);
+		
 		_font = _assetManager.get(AssetDescriptors.FONT); 
 		
 		_inputHandler = new WorldInputHandler(_controller, _camera, _hudCamera);
@@ -117,35 +123,12 @@ public class GameWorldRenderer implements Disposable{
 		_batch.begin();
 		
 		Background background = _controller.getCastleBackground();
-		_batch.draw(_castleBackground, 
-				background.getX(), background.getY(), 
-				background.getWidth(), background.getHeight());		
+//		_batch.draw(_castleBackground, 
+//				background.getX(), background.getY(), 
+//				background.getWidth(), background.getHeight());		
 		
-		for(MapNode mapNode: _controller.getMapNodes()){
-			if(mapNode.getType() == NodeType.BASIC){
-				_batch.draw(_gameNodeBasic,
-						mapNode.getX(), 
-						mapNode.getY(), 
-						mapNode.getWidth(), 
-						mapNode.getHeight());
-			}
-			
-			if(mapNode.getType() == NodeType.BARN){
-				
-			}
-			
-			if(mapNode.getType() == NodeType.BLACKSMITH){
-				
-			}
-			
-			if(mapNode.getType() == NodeType.POTIONSHOP){
-				
-			}
-			
-			if(mapNode.getType() == NodeType.THRONEROOM){
-				
-			}
-			
+		for(GameElement mapNode: _controller.getMapNodes()){
+			drawNodes(mapNode);
 		}
 		
 		_batch.end();
@@ -157,20 +140,6 @@ public class GameWorldRenderer implements Disposable{
 		if(showDebug){
 			ViewportUtils.drawGrid(_viewport, _shapeRenderer);
 		}
-		
-		_shapeRenderer.setProjectionMatrix(_camera.combined);
-		_shapeRenderer.begin(ShapeType.Filled);
-		_shapeRenderer.setColor(Color.YELLOW);
-		
-		for(MapNode mapNode: _controller.getMapNodes()){
-			_shapeRenderer.ellipse(
-					mapNode.getX(), 
-					mapNode.getY(), 
-					mapNode.getWidth(), 
-					mapNode.getHeight());
-		}
-		
-		_shapeRenderer.end();
 	}
 	
 	private void renderUI(){
@@ -219,6 +188,40 @@ public class GameWorldRenderer implements Disposable{
         
         _batch.end();
 		
+	}
+	
+	private void drawNodes(GameElement mapNode){
+		switch(mapNode.getType()){
+
+		case ElementType.BASIC_NODE:
+			_batch.draw(_gameNodeBasic,
+					mapNode.getX(), 
+					mapNode.getY(), 
+					mapNode.getWidth(), 
+					mapNode.getHeight());
+			break;
+		case ElementType.HORIZONTAL_DIRT_ROAD:
+			_batch.draw(_verticalDirtRoad,
+					mapNode.getX(), 
+					mapNode.getY(), 
+					mapNode.getWidth(), 
+					mapNode.getHeight());
+			break;
+		case ElementType.VERTICAL_DIRT_ROAD:
+			_batch.draw(_horizontalDirtRoad,
+					mapNode.getX(), 
+					mapNode.getY(), 
+					mapNode.getWidth(), 
+					mapNode.getHeight());
+			break;
+		case ElementType.KING_CHAMBER_NODE:
+			_batch.draw(_gameNodeBasic,
+					mapNode.getX(), 
+					mapNode.getY(), 
+					mapNode.getWidth(), 
+					mapNode.getHeight());
+			break;
+		}
 	}
 	
 }

@@ -46,5 +46,11 @@ public class AssetDescriptors {
 	public static final AssetDescriptor<Texture> GAME_NODE_BASIC = 
 			new AssetDescriptor<Texture>(AssetPaths.GAME_NODE_BASIC, Texture.class);
 	
+	public static final AssetDescriptor<Texture> DIRT_ROAD_HORIZONTAL = 
+			new AssetDescriptor<Texture>(AssetPaths.DIRT_ROAD_HORIZONTAL, Texture.class);
+	
+	public static final AssetDescriptor<Texture> DIRT_ROAD_VERTICAL = 
+			new AssetDescriptor<Texture>(AssetPaths.DIRT_ROAD_VERTICAL, Texture.class);
+	
 	private AssetDescriptors(){}
 }
