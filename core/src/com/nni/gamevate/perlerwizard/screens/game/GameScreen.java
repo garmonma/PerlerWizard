@@ -13,6 +13,7 @@ import com.nni.gamevate.perlerwizard.screens.ScreenAdaptar;
 /**
  * @author Marcus Garmon 12/29/2016
  */
+@Deprecated
 public class GameScreen extends ScreenAdaptar {
 	
 	private PerlerWizard _perlerWizard;

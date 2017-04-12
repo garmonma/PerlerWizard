@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.nni.gamevate.perlerwizard.GameConfig;
+import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.network.gamedata.GameCharacter;
 import com.nni.gamevate.perlerwizard.network.gamedata.Spawn;
 import com.nni.gamevate.perlerwizard.network.gamedata.Wave;
@@ -65,8 +66,13 @@ public class GamePlayController {
 
 	public GamePlayController(NetworkController networkController) {
 		// _level = LevelLoader.load(Gdx.files.internal("levels/level_0.json"));
-		_networkController = networkController;
-		_gameCharacter = _networkController.getCharacter();
+		
+		if(PerlerWizard.DEBUG == false){			
+			_networkController = networkController;		
+			_gameCharacter = _networkController.getCharacter();
+		}else{
+			_gameCharacter = new GameCharacter();
+		}
 		
 		if(_gameCharacter.attack == 0){
 			_gameCharacter.attack = 10;
@@ -287,27 +293,27 @@ public class GamePlayController {
 	}
 
 	private void loadEnemies() {
-		Enemy enemy1 = new Goblin(1, 1, 6, 7);
-		Enemy enemy2 = new Goblin(1, 1, 7.5f, 7);
-		Enemy enemy3 = new Orc(1, 1, 9, 7);
-
-		Enemy enemy1a = new Goblin(1, 1, 6, 8.5f);
-		Enemy enemy2a = new Goblin(1, 1, 7.5f, 8.5f);
-		Enemy enemy3a = new Orc(1, 1, 9, 8.5f);
-
-		Enemy enemy1b = new Goblin(1, 1, 6, 10);
-		Enemy enemy2b = new Goblin(1, 1, 7.5f, 10);
-		Enemy enemy3b = new Orc(1, 1, 9, 10);
-
-		_enemies.add(enemy1);
-		_enemies.add(enemy2);
-		_enemies.add(enemy3);
-		_enemies.add(enemy1a);
-		_enemies.add(enemy2a);
-		_enemies.add(enemy3a);
-		_enemies.add(enemy1b);
-		_enemies.add(enemy2b);
-		_enemies.add(enemy3b);
+//		Enemy enemy1 = new Goblin(1, 1, 6, 7);
+//		Enemy enemy2 = new Goblin(1, 1, 7.5f, 7);
+//		Enemy enemy3 = new Orc(1, 1, 9, 7);
+//
+//		Enemy enemy1a = new Goblin(1, 1, 6, 8.5f);
+//		Enemy enemy2a = new Goblin(1, 1, 7.5f, 8.5f);
+//		Enemy enemy3a = new Orc(1, 1, 9, 8.5f);
+//
+//		Enemy enemy1b = new Goblin(1, 1, 6, 10);
+//		Enemy enemy2b = new Goblin(1, 1, 7.5f, 10);
+//		Enemy enemy3b = new Orc(1, 1, 9, 10);
+//
+//		_enemies.add(enemy1);
+//		_enemies.add(enemy2);
+//		_enemies.add(enemy3);
+//		_enemies.add(enemy1a);
+//		_enemies.add(enemy2a);
+//		_enemies.add(enemy3a);
+//		_enemies.add(enemy1b);
+//		_enemies.add(enemy2b);
+//		_enemies.add(enemy3b);
 	}
 
 	private void removeEnemy(Enemy e) {

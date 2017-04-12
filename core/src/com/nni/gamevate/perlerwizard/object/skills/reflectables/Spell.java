@@ -1,6 +1,7 @@
 package com.nni.gamevate.perlerwizard.object.skills.reflectables;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.GameObject;
@@ -17,27 +18,25 @@ import com.nni.gamevate.perlerwizard.object.skills.defense.EnergyShield;
  * @date Dec 29, 2016
  */
 public abstract class Spell extends Skill implements Castable {
+
+	
+	
 	private static final int DEFAULT_BOUNCE_COUNT = 3;
 
 	protected int _bounceCount;
 	protected int _bounceCounter;
-	private long _spellTimer;
+	protected long _spellRefreshTimer;
+	private long lastCast;
 	
 	protected float _bounceAngle;
 	
-	public Spell(float x, float y){
-		super(x, y);
-		
-		_width = 0.5f;
-		_height = 0.5f;
-		_damage = 1;
-		
-		_bounceCount = DEFAULT_BOUNCE_COUNT;
-		_bounceCounter = _bounceCount;
-		_bounceAngle = 90;
-		
-		_direction.set(_position).setAngle(_bounceAngle).nor();
-		_velocity.set(_direction).scl(_speed);
+	/**
+	 * Centers the projectile
+	 * @param x
+	 * @param y
+	 */
+	public Spell(float x, float y){	
+		this(0.5f,0.5f,x -.25f,y -.25f);		
 	}
 
 
@@ -48,7 +47,7 @@ public abstract class Spell extends Skill implements Castable {
 		
 		_bounceCount = DEFAULT_BOUNCE_COUNT;
 		_bounceCounter = _bounceCount;
-		_bounceAngle = 90;
+		_bounceAngle = 0;
 		
 		_direction.set(_position).setAngle(_bounceAngle).nor();
 		_velocity.set(_direction).scl(_speed);
@@ -70,6 +69,9 @@ public abstract class Spell extends Skill implements Castable {
 	@Override
 	public void update(float delta) {
 		
+		if(getX() - getStartX() > GameConfig.WORLD_WIDTH /2  )
+			alive = false;
+		
 		_movement.set(_velocity).scl(delta);
 		_position.add(_movement);		
 
@@ -82,6 +84,8 @@ public abstract class Spell extends Skill implements Castable {
 	public void transfiguration(Castable spell) {
 
 	}
+	
+
 	
 	public void bounce(Collidable object){
 		Vector2 change = bounce(this, object);
@@ -201,7 +205,5 @@ public abstract class Spell extends Skill implements Castable {
 		return _speed;
 	}
 
-	public double getSpellTimer() {
-		return _spellTimer;
-	}
+	
 }

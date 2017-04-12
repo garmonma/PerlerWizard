@@ -12,6 +12,7 @@ import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.screens.game.GameWorldScreen;
+import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
 
 public class LoadingScreen extends ScreenAdapter {
 	
@@ -50,7 +51,8 @@ public class LoadingScreen extends ScreenAdapter {
         _renderer.end();
         
         if(_changeScreen){
-        	_perlerWizard.setScreen(new GameWorldScreen(_perlerWizard));
+        	_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard));
+        	//_perlerWizard.setScreen(new MainWorldScreen(_perlerWizard));
         }
 	}
 	
@@ -64,6 +66,8 @@ public class LoadingScreen extends ScreenAdapter {
 		_assetManager.load(AssetDescriptors.CASTLE_BACKGROUND);
 		_assetManager.load(AssetDescriptors.ENERGY_SHIELD_BOX);
 		_assetManager.load(AssetDescriptors.REFLECT_SKILL_BOX);
+		//TODO remove for real background... lol
+		_assetManager.load(AssetDescriptors.FLOOR_BACKGROUND);
 		_assetManager.load(AssetDescriptors.FONT);
 		
 		

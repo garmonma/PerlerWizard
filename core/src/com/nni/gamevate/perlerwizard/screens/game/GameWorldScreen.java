@@ -29,6 +29,14 @@ public class GameWorldScreen extends ScreenAdapter {
 		_batch = _perlerWizard.getSpriteBatch();
 		_assetManager = _perlerWizard.getAssetManager();
 	}
+	
+	@Override
+	public void show() {
+		_worldController = new GameWorldController();
+		_networkController = _perlerWizard.getNetworkController();
+		_renderer = new GameWorldRenderer(_worldController, _networkController, _batch, _assetManager);
+	}
+	
 
 	@Override
 	public void render(float delta) {
@@ -46,19 +54,13 @@ public class GameWorldScreen extends ScreenAdapter {
 		}
 		
 		if(_worldController.navigateGameScreen()){
-			_perlerWizard.setScreen(new GameScreen(_perlerWizard));
+			_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard));
 		}
 		
 		_worldController.update(delta);
 		_renderer.render(delta);
 	}
 	
-	@Override
-	public void show() {
-		_worldController = new GameWorldController();
-		_networkController = _perlerWizard.getNetworkController();
-		_renderer = new GameWorldRenderer(_worldController, _networkController, _batch, _assetManager);
-	}
 	
 	@Override
 	public void resize(int width, int height) {

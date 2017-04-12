@@ -7,6 +7,7 @@ public class AssetPaths {
 	public static final String UI_SKIN = "ui/uiskin.json";
 	public static final String ENERGY_SHIELD_BOX = "ui/tempEnergyShield.png";
 	public static final String REFLECT_SKILL_BOX = "ui/tempReflect.png";
+	public static final String FLOOR_BACKGROUND = "backgrounds/floor.png";
 	public static final String UI_FONT = "fonts/ui_font_32.fnt";
 	
 	public static final String EVENTS_BUTTON = "ui/eventsButton.png";

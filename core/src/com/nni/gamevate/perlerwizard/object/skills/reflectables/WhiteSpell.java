@@ -1,5 +1,6 @@
 package com.nni.gamevate.perlerwizard.object.skills.reflectables;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
@@ -14,6 +15,7 @@ public class WhiteSpell extends Spell {
 	
 	public WhiteSpell(float x, float y){
 		super(x, y);
+		color = Color.WHITE;
 	}
 
 	public WhiteSpell(float width, float height, float x, float y) {
