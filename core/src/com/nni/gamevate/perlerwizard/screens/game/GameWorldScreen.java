@@ -8,11 +8,14 @@ import com.nni.gamevate.perlerwizard.GameWorldRenderer;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.controllers.GameWorldController;
 import com.nni.gamevate.perlerwizard.controllers.NetworkController;
+import com.nni.gamevate.perlerwizard.screens.menu.EquipmentScreen;
+import com.nni.gamevate.perlerwizard.screens.menu.EventScreen;
+import com.nni.gamevate.perlerwizard.screens.menu.MainMenuScreen;
 
 /**
  * @author Marcus Garmon 12/29/2016
  */
-public class MainWorldScreen extends ScreenAdapter {
+public class GameWorldScreen extends ScreenAdapter {
 	private PerlerWizard _perlerWizard;
 	private GameWorldController _worldController;
 	private GameWorldRenderer _renderer;
@@ -21,20 +24,10 @@ public class MainWorldScreen extends ScreenAdapter {
 	private AssetManager _assetManager;
 	private NetworkController _networkController;
 	
-	public MainWorldScreen(PerlerWizard perlerWizard) {
+	public GameWorldScreen(PerlerWizard perlerWizard) {
 		_perlerWizard = perlerWizard;
 		_batch = _perlerWizard.getSpriteBatch();
 		_assetManager = _perlerWizard.getAssetManager();
-	}
-
-	@Override
-	public void render(float delta) {
-		if(_worldController.navigate()){
-			_perlerWizard.setScreen(new GameScreen(_perlerWizard));
-		}
-		
-		_worldController.update(delta);
-		_renderer.render(delta);
 	}
 	
 	@Override
@@ -43,6 +36,31 @@ public class MainWorldScreen extends ScreenAdapter {
 		_networkController = _perlerWizard.getNetworkController();
 		_renderer = new GameWorldRenderer(_worldController, _networkController, _batch, _assetManager);
 	}
+	
+
+	@Override
+	public void render(float delta) {
+		
+		if(_worldController.navigateEquipmentScreen()){
+			_perlerWizard.setScreen(new EquipmentScreen(_perlerWizard));
+		}
+		
+		if(_worldController.navaigateEventScreen()){
+			_perlerWizard.setScreen(new EventScreen(_perlerWizard));
+		}
+		
+		if(_worldController.navigateMenuScreen()){
+			_perlerWizard.setScreen(new MainMenuScreen(_perlerWizard));
+		}
+		
+		if(_worldController.navigateGameScreen()){
+			_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard));
+		}
+		
+		_worldController.update(delta);
+		_renderer.render(delta);
+	}
+	
 	
 	@Override
 	public void resize(int width, int height) {

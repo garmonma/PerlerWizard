@@ -2,19 +2,16 @@ package com.nni.gamevate.perlerwizard.screens.loading;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
-import com.nni.gamevate.perlerwizard.screens.game.MainWorldScreen;
+import com.nni.gamevate.perlerwizard.screens.game.GameWorldScreen;
 import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
 
 public class LoadingScreen extends ScreenAdapter {
@@ -71,7 +68,19 @@ public class LoadingScreen extends ScreenAdapter {
 		_assetManager.load(AssetDescriptors.REFLECT_SKILL_BOX);
 		//TODO remove for real background... lol
 		_assetManager.load(AssetDescriptors.FLOOR_BACKGROUND);
+		_assetManager.load(AssetDescriptors.FONT);
 		
+		
+		// Game World Screen Assets
+		_assetManager.load(AssetDescriptors.EVENTS_BUTTON);
+		_assetManager.load(AssetDescriptors.EVENTS_BUTTON_PRESSED);
+		_assetManager.load(AssetDescriptors.EQUIPMENT_BUTTON);
+		_assetManager.load(AssetDescriptors.EQUIPMENT_BUTTON_PRESSED);
+		_assetManager.load(AssetDescriptors.MENU_BUTTON);
+		_assetManager.load(AssetDescriptors.MENU_BUTTON_PRESSED);
+		_assetManager.load(AssetDescriptors.GAME_NODE_BASIC);
+		_assetManager.load(AssetDescriptors.DIRT_ROAD_HORIZONTAL);
+		_assetManager.load(AssetDescriptors.DIRT_ROAD_VERTICAL);
 	}
 	
 	@Override

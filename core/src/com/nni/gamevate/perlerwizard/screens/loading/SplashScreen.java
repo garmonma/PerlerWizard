@@ -14,7 +14,7 @@ import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.screens.ScreenAdaptar;
-import com.nni.gamevate.perlerwizard.screens.game.MainWorldScreen;
+import com.nni.gamevate.perlerwizard.screens.game.GameWorldScreen;
 
 /**
  * @author Marcus Garmon 12/29/2016
