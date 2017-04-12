@@ -42,8 +42,9 @@ public abstract class Enemy extends GameObject implements Attacker{
 	}
 
 	public  boolean isDead(int damage){
-		Event e = new Event(EventType.ENEMY_ATTACKED,_waveNumber + "");		
-		EventManager.publish(EventType.ENEMY_ATTACKED, e);
+		//TODO Uncomment
+//		Event e = new Event(EventType.ENEMY_ATTACKED,_waveNumber + "");		
+//		EventManager.publish(EventType.ENEMY_ATTACKED, e);
 		_health = _health - damage;
 		
 		if(_health <= 0){

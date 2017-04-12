@@ -69,7 +69,7 @@ public abstract class Spell extends Skill implements Castable {
 	@Override
 	public void update(float delta) {
 		
-		if(getX() - getStartX() > GameConfig.WORLD_WIDTH  )
+		if(getX() - getStartX() > GameConfig.WORLD_WIDTH /2  )
 			alive = false;
 		
 		_movement.set(_velocity).scl(delta);

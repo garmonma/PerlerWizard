@@ -208,6 +208,11 @@ public class WaveRenderer {
 			_batch.begin();			
 			_font.draw(_batch, "Game Over\nClick to Return Home", 1, 5);
 			_batch.end();
+		}else if(WaveGameScreen.victory == true){
+			_batch.setProjectionMatrix(textCam.combined);
+			_batch.begin();			
+			_font.draw(_batch, "Victory! Congrats\nClick to Return Home", 1, 5);
+			_batch.end();
 		}
 	}
 	

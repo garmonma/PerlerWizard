@@ -13,9 +13,9 @@ public abstract class Level implements Subscriber {
 	public ArrayList<Enemy> wave1 = new ArrayList<Enemy>();	
 	public ArrayList<Enemy> wave2 = new ArrayList<Enemy>();
 	public ArrayList<Enemy> wave3 = new ArrayList<Enemy>();
-	public static int wave1Start = 20;
-	public static int wave2Start = 70;
-	public static int wave3Start = 120;
+	public static int wave1Start = 10;
+	public static int wave2Start = 30;
+	public static int wave3Start = 50;
 	
 	
 	protected Level(){

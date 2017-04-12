@@ -27,13 +27,15 @@ public class WaveGameScreen extends ScreenAdaptar {
 	private WaveInputHandler _inputHandler;
 	
 	private OrthographicCamera _camera;
-	public static boolean gameOver = false;
+	public static boolean gameOver;
+	public static boolean victory;
 	
 	public WaveGameScreen(PerlerWizard perlerWizard) {
 		_perlerWizard = perlerWizard;
 		_batch = _perlerWizard.getSpriteBatch();
 		_assetManager = _perlerWizard.getAssetManager();
 		gameOver = false;
+		victory = false;
 	}
 	
 	@Override
@@ -54,9 +56,11 @@ public class WaveGameScreen extends ScreenAdaptar {
 	public void render(float delta) {		
 		//_gamePlayController.
 		_inputHandler.tick(delta);
+		
 		_world.tick(delta);
 		_waveRenderer.render(delta);
-		if(gameOver && _inputHandler.fire == true){
+			// TODO do something different
+		if((gameOver || victory) && _inputHandler.fire == true){
 			_perlerWizard.setScreen(new GameWorldScreen(_perlerWizard));
 		}
 	}

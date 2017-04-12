@@ -3,6 +3,8 @@ package com.nni.gamevate.perlerwizard.object;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.net.ssl.HandshakeCompletedListener;
+
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.events.Event;
 import com.nni.gamevate.perlerwizard.events.Event.EventType;
@@ -26,10 +28,10 @@ public class World implements Subscriber {
 	public float camXPos;
 	public float forwardLine;
 	public float lastCamDelta;
-	private float camSpeed = 8;
-	private float chaseSpeed = -8;
-	private float runSpeed = 8;
-	
+	private float camSpeed = 2;
+	private float chaseSpeed = -2;
+	private float runSpeed = 2;
+	private float encroachSpeed = 0.5f;
 	private Level loadedLevel;
 	
 	public World() {
@@ -56,7 +58,9 @@ public class World implements Subscriber {
 	public void updateHero(float delta){	
 		
 		//_hero.setX(x);
-		_hero._position.x += lastCamDelta;
+		if(WaveGameScreen.victory == false)
+			_hero._position.x += lastCamDelta;
+		
 		_hero.update(delta);
 	}
 	
@@ -67,6 +71,9 @@ public class World implements Subscriber {
 
 	public void moveCamPos(float delta){
 		
+		if(WaveGameScreen.victory == true)
+			return;
+		
 		if(camSpeed < 0 && camXPos <= 4){
 			lastCamDelta = 0;
 			if (forwardLine <= -5.5f){
@@ -74,7 +81,7 @@ public class World implements Subscriber {
 				WaveGameScreen.gameOver = true;
 				
 			}else{
-				forwardLine -= 5f * delta;
+				forwardLine -= encroachSpeed * delta;
 				
 			}
 			return;
@@ -90,11 +97,12 @@ public class World implements Subscriber {
 			metWave1 = true;
 			Event e = new Event(EventType.ENEMY_ATTACKED,1+"");			
 			EventManager.publish(e._type,e );			
+			
 		}else if(metWave2 == false && camXPos + 1 >= Level.wave2Start){
 			metWave2 = true;
 			Event e = new Event(EventType.ENEMY_ATTACKED,2+"");			
 			EventManager.publish(e._type,e );
-		}else if(metWave3 == false && camXPos + 1 >= Level.wave2Start){
+		}else if(metWave3 == false && camXPos + 1 >= Level.wave3Start){
 			metWave3 = true;
 			Event e = new Event(EventType.ENEMY_ATTACKED,3+"");			
 			EventManager.publish(e._type,e );
@@ -203,7 +211,7 @@ public class World implements Subscriber {
 		
 		switch (e._type) {
 		case ENEMY_ATTACKED:
-			camSpeed = chaseSpeed;
+			handleEnemyAttacked(e);
 			break;
 		case ENEMY_DEATH:
 			handleEnemyDeath(e);
@@ -215,25 +223,45 @@ public class World implements Subscriber {
 		}
 		
 	}
+	
+	private void handleEnemyAttacked(Event e){
+		switch(e._message){
+		case "1":
+			if(loadedLevel.wave1.isEmpty() == false){
+				camSpeed = chaseSpeed;	
+			}
+			break;
+		case "2":
+			if(loadedLevel.wave2.isEmpty() == false){
+				camSpeed = chaseSpeed;	
+			}
+			break;
+		case "3":
+			if(loadedLevel.wave3.isEmpty() == false){
+				camSpeed = chaseSpeed;	
+			}
+			break;
+		}
+	}
 
 	private void handleEnemyDeath(Event e) {
 		switch (e._message) {
 		case "1":
 			Logger.log("wave 1 enemy Death. enemies Remain:  " + loadedLevel.wave1.size());
 			
-			if(loadedLevel.wave1.isEmpty()){
+			if(metWave1 && loadedLevel.wave1.isEmpty()){
 				Logger.log("empty");
-			camSpeed = runSpeed;	
+				camSpeed = runSpeed;	
 			}
 			break;
 		case "2":
-			if(loadedLevel.wave2.isEmpty()){
-			camSpeed = runSpeed;	
+			if(metWave2 && loadedLevel.wave2.isEmpty() && loadedLevel.wave1.isEmpty()){
+				camSpeed = runSpeed;	
 			}
 			break;
 		case "3":
-			if(loadedLevel.wave3.isEmpty()){
-			camSpeed = runSpeed;	
+			if(metWave3 && loadedLevel.wave3.isEmpty() && loadedLevel.wave2.isEmpty()){
+				WaveGameScreen.victory = true;
 			}
 			break;
 		default:
