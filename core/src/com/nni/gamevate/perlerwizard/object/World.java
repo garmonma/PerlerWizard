@@ -4,28 +4,46 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.nni.gamevate.perlerwizard.GameConfig;
+import com.nni.gamevate.perlerwizard.events.Event;
+import com.nni.gamevate.perlerwizard.events.Event.EventType;
+import com.nni.gamevate.perlerwizard.events.EventManager;
+import com.nni.gamevate.perlerwizard.events.Subscriber;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
-import com.nni.gamevate.perlerwizard.object.enemies.basic.Imps;
 import com.nni.gamevate.perlerwizard.object.hero.Hero;
 import com.nni.gamevate.perlerwizard.object.hero.Wizard;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
+import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
+import com.nni.gamevate.perlerwizard.utils.Logger;
 import com.nni.gamevate.perlerwizard.waves.Level;
 import com.nni.gamevate.perlerwizard.waves.Level_01;
 
-public class World {
+public class World implements Subscriber {
 	
 	private ArrayList<Skill> skills = new ArrayList<Skill>();
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
 	private Hero _hero;
-		
+	public float camXPos;
+	public float forwardLine;
+	public float lastCamDelta;
+	private float camSpeed = 8;
+	private float chaseSpeed = -8;
+	private float runSpeed = 8;
+	
+	private Level loadedLevel;
 	
 	public World() {
-		_hero = new Wizard(1, 1, 0, 0, 1);		
+		_hero = new Wizard(1, 1, 0, GameConfig.WORLD_HEIGHT/2, 1);		
+		Logger.log("init World");
+		_hero.setWorld(this);
+		Logger.log(_hero.getWorld() + "");
 		createWave(new Level_01());
+		EventManager.addSubscriber(EventType.ENEMY_ATTACKED, this);
+		EventManager.addSubscriber(EventType.ENEMY_DEATH, this);
 	}
 	
-	public void tick(float delta){		
+	public void tick(float delta){
+		moveCamPos(delta);
 		updateHero(delta);
 		updateSkills(delta);
 		updateEnemies(delta);
@@ -37,9 +55,51 @@ public class World {
 	}
 	public void updateHero(float delta){	
 		
+		//_hero.setX(x);
+		_hero._position.x += lastCamDelta;
 		_hero.update(delta);
 	}
 	
+	// these are here so we don't spam the event system. 
+	private boolean metWave1 = false;
+	private boolean metWave2 = false;
+	private boolean metWave3 = false;
+
+	public void moveCamPos(float delta){
+		
+		if(camSpeed < 0 && camXPos <= 4){
+			lastCamDelta = 0;
+			if (forwardLine <= -5.5f){
+				//Logger.log("Game over");
+				WaveGameScreen.gameOver = true;
+				
+			}else{
+				forwardLine -= 5f * delta;
+				
+			}
+			return;
+		}
+		
+		lastCamDelta = camSpeed * delta;
+		camXPos += lastCamDelta;
+		forwardLine = camXPos - 2;
+		
+		
+		
+		if(metWave1 == false && camXPos + 1 >= Level.wave1Start){
+			metWave1 = true;
+			Event e = new Event(EventType.ENEMY_ATTACKED,1+"");			
+			EventManager.publish(e._type,e );			
+		}else if(metWave2 == false && camXPos + 1 >= Level.wave2Start){
+			metWave2 = true;
+			Event e = new Event(EventType.ENEMY_ATTACKED,2+"");			
+			EventManager.publish(e._type,e );
+		}else if(metWave3 == false && camXPos + 1 >= Level.wave2Start){
+			metWave3 = true;
+			Event e = new Event(EventType.ENEMY_ATTACKED,3+"");			
+			EventManager.publish(e._type,e );
+		}
+	}
 	public void addSkill(Skill s){
 		if(s != null){
 			skills.add(s);
@@ -69,8 +129,6 @@ public class World {
 		while(sItor.hasNext()){
 			Skill s = sItor.next();
 			
-			if(s.getX() - s.getStartX() > GameConfig.WORLD_WIDTH /2 )
-				s.alive = false;
 			
 			if(s.alive == false){
 				sItor.remove();
@@ -89,6 +147,23 @@ public class World {
 		while(eItor.hasNext()){			
 			Enemy e = eItor.next();			
 			if(e.alive == false){
+				switch (e._waveNumber) {
+				// TODO figure out a better way to do this
+				case 1:
+					loadedLevel.wave1.remove(e);	
+					break;
+				case 2:
+					loadedLevel.wave2.remove(e);	
+					break;
+				case 3:
+					loadedLevel.wave3.remove(e);	
+					break;
+				default:
+					break;
+				}
+				
+				Event event = new Event(EventType.ENEMY_DEATH, e._waveNumber + "");
+				EventManager.publish(event._type, event);
 				eItor.remove();
 			}else{
 				e.update(delta);
@@ -106,17 +181,64 @@ public class World {
 	public void createWave(Level level){
 		
 		for(Enemy e :level.wave1){
-			enemies.add(e);
+			e.setWorld(this);
+			enemies.add(e);			
 		}
 		
 		for(Enemy e :level.wave2){
+			e.setWorld(this);
 			enemies.add(e);
 		}
 		
 		for(Enemy e :level.wave3){
+			e.setWorld(this);
 			enemies.add(e);
 		}
 		
+		loadedLevel = level;
+	}
+
+	@Override
+	public void handleEvent(Event e) {
+		
+		switch (e._type) {
+		case ENEMY_ATTACKED:
+			camSpeed = chaseSpeed;
+			break;
+		case ENEMY_DEATH:
+			handleEnemyDeath(e);
+			break;
+		case JOINED_GROUP:
+			break;
+		default:
+			break;		
+		}
+		
+	}
+
+	private void handleEnemyDeath(Event e) {
+		switch (e._message) {
+		case "1":
+			Logger.log("wave 1 enemy Death. enemies Remain:  " + loadedLevel.wave1.size());
+			
+			if(loadedLevel.wave1.isEmpty()){
+				Logger.log("empty");
+			camSpeed = runSpeed;	
+			}
+			break;
+		case "2":
+			if(loadedLevel.wave2.isEmpty()){
+			camSpeed = runSpeed;	
+			}
+			break;
+		case "3":
+			if(loadedLevel.wave3.isEmpty()){
+			camSpeed = runSpeed;	
+			}
+			break;
+		default:
+			break;
+		}
 		
 	}
 }

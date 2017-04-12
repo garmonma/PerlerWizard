@@ -11,6 +11,9 @@ import com.badlogic.gdx.math.Vector2;
  * @date Dec 29, 2016
  */
 public abstract class GameObject implements Collidable, Drawable {
+	
+	protected World world;
+	
 	public static final String tag = GameObject.class.getSimpleName();
 	protected float _width;
 	protected float _height;
@@ -41,6 +44,7 @@ public abstract class GameObject implements Collidable, Drawable {
 		_direction = new Vector2();
 		_velocity = new Vector2();
 		_movement = new Vector2();
+		_originalPosition = new Vector2(_position);
 	}
 	
 	//doing this here assumes everything is a box
@@ -115,6 +119,15 @@ public abstract class GameObject implements Collidable, Drawable {
 		this.alive = alive;
 	}
 
+	public World getWorld() {
+		return world;
+	}
+
+
+	public void setWorld(World world) {
+		this.world = world;
+	}
+	
 	@Override
 	public String toString() {
 		return String.format(

@@ -16,6 +16,7 @@ import com.nni.gamevate.perlerwizard.waves.Level;
  */
 public abstract class Enemy extends GameObject implements Attacker{
 	
+	
 	protected int _health = 1;
 	protected float _chaseSpeed = 1;
 	protected float _retreatSpeed = 3;
@@ -31,7 +32,7 @@ public abstract class Enemy extends GameObject implements Attacker{
 	protected boolean running = false;
 	protected boolean chasing = false;
 	
-	protected int _waveNumber = 0;
+	public int _waveNumber = 0;
 	
 	public Enemy(float width, float height, float x, float y,int waveNumber) {
 		super(width, height, x, y);
@@ -61,9 +62,13 @@ public abstract class Enemy extends GameObject implements Attacker{
 			}else if( running == true){
 				speed = _retreatSpeed;
 			}
-		
-		_position.x += speed  * delta * _direction.x;
-		_position.y += speed  * delta * _direction.y;
+		if(sleeping == false){
+			_position.x += world.lastCamDelta;
+		}
+			
+			
+		//_position.x += speed  * delta * _direction.x;
+		//_position.y += speed  * delta * _direction.y;
 		
 		if(_waveNumber == 1 && _position.x > Level.wave2Start - 3){
 			Event e = new Event(EventType.JOINED_GROUP,1+"");			

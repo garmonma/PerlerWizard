@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -29,6 +31,7 @@ import com.nni.gamevate.perlerwizard.network.gamedata.MatchResult;
 import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.World;
 import com.nni.gamevate.perlerwizard.object.hero.Hero;
+import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
 import com.nni.gamevate.perlerwizard.utils.Logger;
 
 public class WaveRenderer {
@@ -41,6 +44,9 @@ public class WaveRenderer {
 	private OrthographicCamera _hudCamera;
 	private Viewport _viewport;
 	private Viewport _hudViewport;
+	
+	private OrthographicCamera textCam;
+	private Viewport textViewport;
 
 	private ShapeRenderer _shapeRenderer;
 	
@@ -90,6 +96,9 @@ public class WaveRenderer {
 		_hudCamera =  new OrthographicCamera(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 		_hudViewport = new FitViewport(x, y,_hudCamera);
 		_hudViewport.apply(false);
+		
+		textCam = new OrthographicCamera(Gdx.app.getGraphics().getWidth(),Gdx.app.getGraphics().getHeight());
+		
 
 		_shapeRenderer = new ShapeRenderer();
 		
@@ -98,6 +107,9 @@ public class WaveRenderer {
 		
 		_batch = new SpriteBatch();		
 		
+		_font = new BitmapFont();
+		_font.setColor(Color.WHITE);
+		//_font.getData().setScale(2);
 		
 		_background = _assetManager.get(AssetDescriptors.FLOOR_BACKGROUND);
 		shader = new ShaderProgram(DefaultShader.getDefaultVertexShader()
@@ -124,9 +136,17 @@ public class WaveRenderer {
 		drawBackGround();
 		
 		drawGameObjects();
-		updateCamera(delta);
+		//updateCamera(delta);
+		updateCamera();
 		drawUI();
+		
 	}
+	
+	public void updateCamera(){
+		_camera.position.x = _world.camXPos;
+		_camera.update();
+	}
+	
 	
 	public void updateCamera(float delta){
 		//Logger.log(_world.getHero().getX() + " ");
@@ -176,8 +196,19 @@ public class WaveRenderer {
 		
 		_shapeRenderer.setColor(_world.getHero().getSkillManager().getSelectedSkillColor());
 		_shapeRenderer.rect(x-1.1f,0.1f , 1,1);
-		
+		_shapeRenderer.setProjectionMatrix(_camera.combined);
+		_shapeRenderer.setColor(Color.BLUE);		
+		_shapeRenderer.rect(_world.forwardLine+1,0,.1f,GameConfig.WORLD_HEIGHT);
 		_shapeRenderer.end();
+		
+		
+		if(WaveGameScreen.gameOver == true){
+			// TODO figure out better text solution
+			_batch.setProjectionMatrix(textCam.combined);
+			_batch.begin();			
+			_font.draw(_batch, "Game Over\nClick to Return Home", 1, 5);
+			_batch.end();
+		}
 	}
 	
 	

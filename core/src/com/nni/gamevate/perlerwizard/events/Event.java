@@ -3,7 +3,7 @@ package com.nni.gamevate.perlerwizard.events;
 public class Event {
 	
 	public enum EventType{
-		ENEMY_ATTACKED, JOINED_GROUP
+		ENEMY_ATTACKED, JOINED_GROUP, ENEMY_DEATH
 	}
 	
 	public EventType _type;

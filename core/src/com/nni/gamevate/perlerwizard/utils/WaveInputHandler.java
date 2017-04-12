@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.nni.gamevate.perlerwizard.object.World;
 import com.nni.gamevate.perlerwizard.object.hero.Hero;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
+import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
 
 public class WaveInputHandler extends InputAdapter {
 	private static final String tag = WaveInputHandler.class.getSimpleName();
@@ -55,10 +56,12 @@ public class WaveInputHandler extends InputAdapter {
 			dir.x++;
 		_hero.setDirection(dir);
 		
-		if(fire){			
-			Skill s = _hero.attack(_hero.getSkillManager().getSelectedSkill());
-			_world.addSkill(s);
-		}			
+		if(fire == true){			
+			if(WaveGameScreen.gameOver == false){			
+				Skill s = _hero.attack(_hero.getSkillManager().getSelectedSkill());
+				_world.addSkill(s);
+			}
+		}
 	}
 	
 	

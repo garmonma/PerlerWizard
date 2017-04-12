@@ -2,8 +2,6 @@ package com.nni.gamevate.perlerwizard.object.hero;
 
 import java.util.Set;
 
-import javax.swing.text.Position;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -14,7 +12,6 @@ import com.nni.gamevate.perlerwizard.object.Attacker;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.Equiper;
 import com.nni.gamevate.perlerwizard.object.GameObject;
-import com.nni.gamevate.perlerwizard.object.World;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 import com.nni.gamevate.perlerwizard.object.skills.SkillManager;
 import com.nni.gamevate.perlerwizard.object.skills.Skills;
@@ -25,6 +22,8 @@ import com.nni.gamevate.perlerwizard.object.skills.Skills;
  *
  */
 public abstract class Hero extends GameObject implements Attacker, Equiper{
+	
+	
 	protected final float MAX_SPEED_MULTIPLIER = 1.25f;
 	protected final float MAX_SPEED = 10.0f;
 
@@ -59,6 +58,10 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 		_level = level;
 		color = Color.BROWN;
 	}
+	
+
+	
+
 
 	@Override
 	public void update(float delta) {
@@ -66,7 +69,7 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 		_position.y += _speed  * delta * _direction.y;
 		
 		_position.y = MathUtils.clamp(_position.y, 0, GameConfig.WORLD_HEIGHT - _height);
-		_position.x = MathUtils.clamp(_position.x, -1, Integer.MAX_VALUE);
+		_position.x = MathUtils.clamp(_position.x, world.camXPos - GameConfig.WORLD_WIDTH/2, world.forwardLine);
 		
 	}
 
