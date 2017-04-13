@@ -51,8 +51,8 @@ public class LoadingScreen extends ScreenAdapter {
         _renderer.end();
         
         if(_changeScreen){
-        	_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard));
-        	//_perlerWizard.setScreen(new MainWorldScreen(_perlerWizard));
+        	//_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard));
+        	_perlerWizard.setScreen(new GameWorldScreen(_perlerWizard));
         }
 	}
 	
@@ -81,6 +81,9 @@ public class LoadingScreen extends ScreenAdapter {
 		_assetManager.load(AssetDescriptors.GAME_NODE_BASIC);
 		_assetManager.load(AssetDescriptors.DIRT_ROAD_HORIZONTAL);
 		_assetManager.load(AssetDescriptors.DIRT_ROAD_VERTICAL);
+		
+		
+		_assetManager.load(AssetDescriptors.QUINT_SOUND_TRACK);
 	}
 	
 	@Override

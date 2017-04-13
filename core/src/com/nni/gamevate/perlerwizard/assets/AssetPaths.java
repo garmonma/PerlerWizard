@@ -22,5 +22,8 @@ public class AssetPaths {
 	public static final String DIRT_ROAD_HORIZONTAL = "horizontalRoad.png";
 	
 	
+	public static final String QUINT_SOUND_TRACK = "music/quint.mp3";
+	
+	
 	private AssetPaths(){}
 }

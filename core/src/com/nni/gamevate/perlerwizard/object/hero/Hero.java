@@ -23,7 +23,6 @@ import com.nni.gamevate.perlerwizard.object.skills.Skills;
  */
 public abstract class Hero extends GameObject implements Attacker, Equiper{
 	
-	
 	protected final float MAX_SPEED_MULTIPLIER = 1.25f;
 	protected final float MAX_SPEED = 10.0f;
 

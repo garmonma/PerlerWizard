@@ -3,9 +3,11 @@ package com.nni.gamevate.perlerwizard.screens.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nni.gamevate.perlerwizard.GameWorldRenderer;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
+import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.controllers.GameWorldController;
 import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 import com.nni.gamevate.perlerwizard.screens.menu.EquipmentScreen;
@@ -24,6 +26,8 @@ public class GameWorldScreen extends ScreenAdapter {
 	private AssetManager _assetManager;
 	private NetworkController _networkController;
 	
+	private Music _backgroundTrack;
+	
 	public GameWorldScreen(PerlerWizard perlerWizard) {
 		_perlerWizard = perlerWizard;
 		_batch = _perlerWizard.getSpriteBatch();
@@ -35,6 +39,10 @@ public class GameWorldScreen extends ScreenAdapter {
 		_worldController = new GameWorldController();
 		_networkController = _perlerWizard.getNetworkController();
 		_renderer = new GameWorldRenderer(_worldController, _networkController, _batch, _assetManager);
+		
+		_backgroundTrack = _assetManager.get(AssetDescriptors.QUINT_SOUND_TRACK);
+		_backgroundTrack.setLooping(true);
+		_backgroundTrack.play();
 	}
 	
 
@@ -65,5 +73,12 @@ public class GameWorldScreen extends ScreenAdapter {
 	@Override
 	public void resize(int width, int height) {
 		_renderer.resize(width, height);
+	}
+	
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		super.dispose();
+		_backgroundTrack.dispose();
 	}
 }

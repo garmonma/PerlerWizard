@@ -3,6 +3,7 @@ package com.nni.gamevate.perlerwizard.assets;
 import java.nio.channels.AsynchronousServerSocketChannel;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -54,8 +55,11 @@ public class AssetDescriptors {
 	public static final AssetDescriptor<Texture> DIRT_ROAD_VERTICAL = 
 			new AssetDescriptor<Texture>(AssetPaths.DIRT_ROAD_VERTICAL, Texture.class);
 
-	public static final AssetDescriptor FLOOR_BACKGROUND = 
+	public static final AssetDescriptor<Texture> FLOOR_BACKGROUND = 
 			new AssetDescriptor<Texture>(AssetPaths.FLOOR_BACKGROUND, Texture.class);
+	
+	public static final AssetDescriptor<Music> QUINT_SOUND_TRACK = 
+			new AssetDescriptor<Music>(AssetPaths.QUINT_SOUND_TRACK, Music.class);
 	
 	private AssetDescriptors(){}
 }
