@@ -46,7 +46,7 @@ public class SplashScreen extends ScreenAdaptar {
 		
 		_batch.setProjectionMatrix(_camera.combined);
 		_batch.begin();
-		_batch.draw(_splashBackground, 0, 0);
+		_batch.draw(_splashBackground, 0, 0, 1600, 960);
 		_batch.end();
 		
 		if(TimeUtils.millis() - _startTime > 3000){

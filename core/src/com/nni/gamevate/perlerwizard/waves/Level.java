@@ -17,6 +17,10 @@ public abstract class Level implements Subscriber {
 	public static int wave2Start = 30;
 	public static int wave3Start = 50;
 	
+	protected int goldReward;
+	protected int timeLimit;
+	protected ArrayList<String> itemRewards = new ArrayList<String>();
+	
 	
 	protected Level(){
 		EventManager.addSubscriber(EventType.ENEMY_ATTACKED, this);

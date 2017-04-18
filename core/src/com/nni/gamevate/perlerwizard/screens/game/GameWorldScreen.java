@@ -1,6 +1,5 @@
 package com.nni.gamevate.perlerwizard.screens.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -76,9 +75,16 @@ public class GameWorldScreen extends ScreenAdapter {
 	}
 	
 	@Override
+	public void hide() {
+		super.hide();
+		
+		_backgroundTrack.stop();
+	}
+	
+	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 		super.dispose();
+		
 		_backgroundTrack.dispose();
 	}
 }

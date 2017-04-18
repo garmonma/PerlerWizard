@@ -84,6 +84,8 @@ public class LoadingScreen extends ScreenAdapter {
 		
 		
 		_assetManager.load(AssetDescriptors.QUINT_SOUND_TRACK);
+		
+		_assetManager.load(AssetDescriptors.WIZARD);
 	}
 	
 	@Override

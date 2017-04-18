@@ -21,6 +21,8 @@ public class AssetPaths {
 	public static final String DIRT_ROAD_VERTICAL = "verticalRoad.png";
 	public static final String DIRT_ROAD_HORIZONTAL = "horizontalRoad.png";
 	
+	public static final String WIZARD = "perler-V2-right-72-02.png";
+	
 	
 	public static final String QUINT_SOUND_TRACK = "music/quint.mp3";
 	

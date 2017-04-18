@@ -3,14 +3,14 @@ package com.nni.gamevate.perlerwizard.object.enemies.basic;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 
-public class Pixie extends Enemy {
-	
-	public Pixie(float x, float y, int waveNumber){
-		super(0.7f, 0.7f, x, y, waveNumber);
+public class Knight extends Enemy {
+
+	public Knight(float x, float y, int waveNumber){
+		super(1.0f, 1.0f, x, y, waveNumber);
 	}
 
-	public Pixie(int width, int height, float x, float y,int waveNumber) {
-		super(width, height, x, y,waveNumber);
+	public Knight(float width, float height, float x, float y, int waveNumber) {
+		super(width, height, x, y, waveNumber);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -30,12 +30,6 @@ public class Pixie extends Enemy {
 	public Skill castDefense() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void move(float delta) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

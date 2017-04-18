@@ -61,5 +61,8 @@ public class AssetDescriptors {
 	public static final AssetDescriptor<Music> QUINT_SOUND_TRACK = 
 			new AssetDescriptor<Music>(AssetPaths.QUINT_SOUND_TRACK, Music.class);
 	
+	public static final AssetDescriptor<Texture> WIZARD = 
+			new AssetDescriptor<Texture>(AssetPaths.WIZARD, Texture.class);
+	
 	private AssetDescriptors(){}
 }
