@@ -16,7 +16,6 @@ public interface Attacker {
 	
 	public boolean isCastingSpecial();
 	
-	public boolean isCastingAttack();
-	
+	public boolean isCastingAttack();	
 
 }
