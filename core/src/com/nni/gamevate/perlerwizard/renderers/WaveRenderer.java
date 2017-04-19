@@ -38,7 +38,7 @@ public class WaveRenderer {
 	
 	private static final String tag = WaveRenderer.class.getSimpleName();
 	
-	private GamePlayController _controller;
+	
 	private NetworkController _networkController;
 	private OrthographicCamera _camera;
 	private OrthographicCamera _hudCamera;
@@ -77,8 +77,8 @@ public class WaveRenderer {
 	private Mesh mesh;
 	private ShaderProgram shader;
 
-	public WaveRenderer(GamePlayController controller, NetworkController networkController, SpriteBatch batch, AssetManager assetManager, OrthographicCamera camera,World world) {
-		_controller = controller;
+	public WaveRenderer( NetworkController networkController, SpriteBatch batch, AssetManager assetManager, OrthographicCamera camera,World world) {
+		
 		_networkController = networkController;
 		_batch = batch;
 		_assetManager = assetManager;
@@ -230,9 +230,9 @@ public class WaveRenderer {
 		
 		for(GameObject g :list){
 			_shapeRenderer.setColor(g.getColor());
-			if(g instanceof Hero)
-				//_shapeRenderer.setColor(Color.BLUE);
-				System.out.println();
+			if(g instanceof Hero){
+				//_shapeRenderer.setColor(Color.BLUE);				
+			}				
 			else
 //			else if (g instanceof WhiteSpell)
 //				_shapeRenderer.setColor(Color.WHITE);

@@ -4,8 +4,8 @@ import java.lang.reflect.Constructor;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.nni.gamevate.perlerwizard.utils.WaveInputHandler;
 
 /**
  * Think of this class as a factory for skills
@@ -16,23 +16,27 @@ import com.nni.gamevate.perlerwizard.utils.WaveInputHandler;
 public class Wand {
 	private static final String tag = Wand.class.getSimpleName();
 	public Class<Skill> _skill;
-	private long _refreshTime;
+	private long refreshTime;
 	private long lastFire;
 	
 	
 	
 	public Wand(Class<Skill>skill,long refreshTime) {
 		_skill = skill;
-		_refreshTime = refreshTime;
+		this.refreshTime = refreshTime;
 	}
 	
 	private boolean canFire(){
-		if(TimeUtils.millis() - lastFire > _refreshTime){
+		if(TimeUtils.millis() - lastFire > refreshTime){
 			lastFire = TimeUtils.millis();
 			return true;
 		}
 		return false;
 		
+	}
+	public void setInitialCooldown(float f){
+		f = MathUtils.random(f);			
+		lastFire = (long)(refreshTime * f) + TimeUtils.millis();
 	}
 	public Color getSkillColor(){
 		try{			

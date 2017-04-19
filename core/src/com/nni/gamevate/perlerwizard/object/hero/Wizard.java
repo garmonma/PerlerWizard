@@ -13,7 +13,7 @@ public class Wizard extends Hero {
 	public Wizard(int width, int height, float x, float y, int level) {
 		super(width, height, x, y, level);
 		_speed = 8;
-		_hitPoints = (int) Math.ceil(_level * 16 * _currentHealthPct);
+		//cur = (int) Math.ceil(_level * 16 * currentHealth);
 		skillManager.addSkills(Skills.WHITE_SPELL);
 		skillManager.addSkills(Skills.BLACK_SPELL);
 		skillManager.addSkills(Skills.BLUE_SPELL);

@@ -21,7 +21,7 @@ public  enum  Skills {
 	BLACK_SPELL(25000,BlackSpell.class),
 	
 	// EnemySpells
-	BASIC_ENEMY_SPELL(1000,BasicEnemySpell.class);
+	BASIC_ENEMY_SPELL(10000,BasicEnemySpell.class);
 	
 	
 	private long _refreshTime;

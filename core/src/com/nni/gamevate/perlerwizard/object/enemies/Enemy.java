@@ -49,6 +49,7 @@ public abstract class Enemy extends GameObject implements Attacker{
 		_waveNumber = waveNumber;
 		basicWand  = new Wand(Skills.BASIC_ENEMY_SPELL.getType(), Skills.BASIC_ENEMY_SPELL.getRefreshTime());
 		
+		
 	}
 
 	public  boolean isDead(int damage){
@@ -67,19 +68,17 @@ public abstract class Enemy extends GameObject implements Attacker{
 	
 	public void move(float delta){
 		
-			float speed =0;
-			if(chasing == true){
-				speed = _chaseSpeed;				
-			}else if( running == true){
-				speed = _retreatSpeed;
-			}
+		float speed =0;
+		
+		if(chasing == true){
+			speed = _chaseSpeed;				
+		}else if( running == true){
+			speed = _retreatSpeed;
+		}
+		
 		if(sleeping == false){
 			_position.x += world.lastCamDelta;
 		}
-			
-			
-		//_position.x += speed  * delta * _direction.x;
-		//_position.y += speed  * delta * _direction.y;
 		
 		if(_waveNumber == 1 && _position.x > Level.wave2Start - 3){
 			Event e = new Event(EventType.JOINED_GROUP,1+"");			
@@ -99,14 +98,12 @@ public abstract class Enemy extends GameObject implements Attacker{
 	
 	@Override
 	public void castingSpecial(boolean casting) {
-		_castingSpecial = casting;
-		
+		_castingSpecial = casting;		
 	}
 	
 	@Override
 	public void castingAttack(boolean casting) {
-		_castingAttack = casting;
-		
+		_castingAttack = casting;		
 	}
 
 	@Override
@@ -124,12 +121,12 @@ public abstract class Enemy extends GameObject implements Attacker{
 	public void update(float delta) {
 		if(sleeping == true)
 			return;
-		//Logger.log("Update");
+		
 		if(chasing == true){
 			_direction.set(new Vector2(-1,0));
 		}else if(running == true){
 			_direction.set(new Vector2(1, 0));
-			//Logger.log("Runing");
+		
 		}
 		
 		move(delta);
@@ -149,6 +146,10 @@ public abstract class Enemy extends GameObject implements Attacker{
 	}
 
 	public void setSleeping(boolean sleeping) {
+		if(sleeping == false){			
+			basicWand.setInitialCooldown(.5f);
+			//Logger.log("No longer sleeping");
+		}
 		this.sleeping = sleeping;
 	}
 

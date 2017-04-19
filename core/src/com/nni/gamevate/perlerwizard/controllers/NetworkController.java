@@ -5,6 +5,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.nni.gamevate.perlerwizard.network.gamedata.GameCharacter;
 import com.nni.gamevate.perlerwizard.network.gamedata.MatchResult;
+import com.nni.gamevate.perlerwizard.utils.Logger;
 
 public class NetworkController {
 	private Client _client;
@@ -22,7 +23,8 @@ public class NetworkController {
 			public void received(Connection conn, Object object) {
 				if (object instanceof GameCharacter) {
 					_gc = (GameCharacter) object;
-					System.out.println("Character Recieved: " + _gc);		
+					Logger.log("Character Recieved: " + _gc);
+							
 				}
 			}
 		});
@@ -30,13 +32,13 @@ public class NetworkController {
 	
 	public void sendCharacter(GameCharacter gameCharacter){
 		_client.sendTCP(gameCharacter);
-		System.out.println("Game Character Sent");
+		Logger.log("Game Character Sent");
 	}
 	
 	public void sendMatchResult(MatchResult matchResult){
 		//_client.sendTCP(matchResult);
 		_client.sendUDP(matchResult);
-		System.out.println("Match Result Sent : " + matchResult);
+		Logger.log("Match Result Sent : " + matchResult);
 		
 	}
 	

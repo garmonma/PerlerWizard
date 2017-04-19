@@ -22,7 +22,7 @@ public class Knight extends Hero {
 		super(width, height, x, y, level);
 
 		_speed = 6;
-		_hitPoints = (int) Math.ceil(_level * 32 * _currentHealthPct);
+		//_hitPoints = (int) Math.ceil(_level * 32 * currentHealth);
 
 		reflectLastCast = 0;
 		javelinThrowLastCast = 0;
