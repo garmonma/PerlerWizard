@@ -11,6 +11,7 @@ import com.nni.gamevate.perlerwizard.object.World;
 import com.nni.gamevate.perlerwizard.renderers.WaveRenderer;
 import com.nni.gamevate.perlerwizard.screens.ScreenAdaptar;
 import com.nni.gamevate.perlerwizard.utils.WaveInputHandler;
+import com.nni.gamevate.perlerwizard.waves.Level;
 
 public class WaveGameScreen extends ScreenAdaptar {
 
@@ -30,12 +31,16 @@ public class WaveGameScreen extends ScreenAdaptar {
 	public static boolean gameOver;
 	public static boolean victory;
 	
-	public WaveGameScreen(PerlerWizard perlerWizard) {
+	public Level level;
+	
+	public WaveGameScreen(PerlerWizard perlerWizard, Level level) {
 		_perlerWizard = perlerWizard;
 		_batch = _perlerWizard.getSpriteBatch();
 		_assetManager = _perlerWizard.getAssetManager();
 		gameOver = false;
 		victory = false;
+		
+		this.level = level;
 	}
 	
 	@Override
@@ -44,7 +49,7 @@ public class WaveGameScreen extends ScreenAdaptar {
 		_networkController = _perlerWizard.getNetworkController();
 		_gamePlayController = new GamePlayController(_networkController);
 		_camera = new OrthographicCamera();
-		_world = new World();
+		_world = new World(level);
 		_inputHandler = new WaveInputHandler(_camera,_world);		
 		
 		_waveRenderer = new WaveRenderer(_gamePlayController, _networkController, _batch, _assetManager,_camera,_world);

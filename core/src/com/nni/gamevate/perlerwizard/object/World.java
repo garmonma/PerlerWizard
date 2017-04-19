@@ -34,12 +34,12 @@ public class World implements Subscriber {
 	private float encroachSpeed = 0.5f;
 	private Level loadedLevel;
 	
-	public World() {
+	public World(Level level) {
 		_hero = new Wizard(1, 1, 0, GameConfig.WORLD_HEIGHT/2, 1);		
 		Logger.log("init World");
 		_hero.setWorld(this);
 		Logger.log(_hero.getWorld() + "");
-		createWave(new Level_01());
+		createWave(level);
 		EventManager.addSubscriber(EventType.ENEMY_ATTACKED, this);
 		EventManager.addSubscriber(EventType.ENEMY_DEATH, this);
 	}

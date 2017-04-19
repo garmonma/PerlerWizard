@@ -6,10 +6,14 @@ import java.util.List;
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.object.Background;
 import com.nni.gamevate.perlerwizard.object.hero.HeroSprite;
+import com.nni.gamevate.perlerwizard.spawnloader.LevelSelector;
 import com.nni.gamevate.perlerwizard.utils.GameElement;
 import com.nni.gamevate.perlerwizard.utils.MapNode;
 import com.nni.gamevate.perlerwizard.utils.UIElement;
 import com.nni.gamevate.perlerwizard.utils.WorldMapInitializer;
+import com.nni.gamevate.perlerwizard.waves.Chapter_01_01;
+import com.nni.gamevate.perlerwizard.waves.Chapter_01_02;
+import com.nni.gamevate.perlerwizard.waves.Level;
 
 public class GameWorldController {
 	
@@ -33,6 +37,8 @@ public class GameWorldController {
 	private List<UIElement> _filledElements = new ArrayList<UIElement>();
 	
 	private MapNode _selectedNode;
+	
+	private String _level;
 	
 	private boolean _navigateEquipmentScreen, _navigateEventScreen, _navigateMenuScreen,
 				_navigateGameScreen;
@@ -186,5 +192,9 @@ public class GameWorldController {
 	
 	public boolean navigateMenuScreen(){
 		return _navigateMenuScreen;
+	}
+	
+	public Level getSelectedLevel(){
+		return LevelSelector.getLevel("ch0101");
 	}
 }

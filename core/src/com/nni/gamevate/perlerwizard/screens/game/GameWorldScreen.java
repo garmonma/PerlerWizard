@@ -4,11 +4,11 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.nni.gamevate.perlerwizard.GameWorldRenderer;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.controllers.GameWorldController;
 import com.nni.gamevate.perlerwizard.controllers.NetworkController;
+import com.nni.gamevate.perlerwizard.renderers.GameWorldRenderer;
 import com.nni.gamevate.perlerwizard.screens.menu.EquipmentScreen;
 import com.nni.gamevate.perlerwizard.screens.menu.EventScreen;
 import com.nni.gamevate.perlerwizard.screens.menu.MainMenuScreen;
@@ -61,7 +61,7 @@ public class GameWorldScreen extends ScreenAdapter {
 		}
 		
 		if(_worldController.navigateGameScreen()){
-			_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard));
+			_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard, _worldController.getSelectedLevel()));
 		}
 		
 		_worldController.update(delta);

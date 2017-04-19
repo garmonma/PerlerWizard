@@ -64,6 +64,7 @@ public class WaveRenderer {
 	private Texture _reflectBox;
 	private Texture _background;
 	private TextureRegion _backgroundRegion;
+	private Texture _wizard;
 	
 	//Network Instances;
 	private MatchResult _matchResult;
@@ -110,6 +111,8 @@ public class WaveRenderer {
 		_font = new BitmapFont();
 		_font.setColor(Color.WHITE);
 		//_font.getData().setScale(2);
+		
+		_wizard = _assetManager.get(AssetDescriptors.WIZARD);
 		
 		_background = _assetManager.get(AssetDescriptors.FLOOR_BACKGROUND);
 		shader = new ShaderProgram(DefaultShader.getDefaultVertexShader()
@@ -219,13 +222,18 @@ public class WaveRenderer {
 	
 	
 	public void drawGameObjects(){
+		ArrayList<GameObject> list = _world.getGameObjects();
+		
+		
 		_shapeRenderer.setProjectionMatrix(_camera.combined);
 		_shapeRenderer.begin(ShapeType.Filled);
-		ArrayList<GameObject> list = _world.getGameObjects();
+		
 		for(GameObject g :list){
 			_shapeRenderer.setColor(g.getColor());
-//			if(g instanceof Hero)
-//				_shapeRenderer.setColor(Color.BLUE);
+			if(g instanceof Hero)
+				//_shapeRenderer.setColor(Color.BLUE);
+				System.out.println();
+			else
 //			else if (g instanceof WhiteSpell)
 //				_shapeRenderer.setColor(Color.WHITE);
 //			else
@@ -233,6 +241,16 @@ public class WaveRenderer {
 			_shapeRenderer.rect(g.getX(), g.getY(), g.getWidth(), g.getHeight());			
 		}
 		_shapeRenderer.end();
+		
+		_batch.setProjectionMatrix(_camera.combined);
+		_batch.begin();
+		for(GameObject g :list){
+			
+			if(g instanceof Hero)
+				_batch.draw(_wizard, g.getX(), g.getY(), g.getWidth(), g.getHeight());			
+		}
+		
+		_batch.end();
 	}
 
 	public void resize(int width, int height) {
@@ -247,10 +265,5 @@ public class WaveRenderer {
 		
 		
 	}
-
-
-	
-
-	
 	
 }
