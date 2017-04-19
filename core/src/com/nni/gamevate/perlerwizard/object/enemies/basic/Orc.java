@@ -27,7 +27,7 @@ public class Orc extends Enemy {
 		_health = 2;
 		//_speed = 5;
 	}
-
+//
 	@Override
 	public Skill attack() {
 		

@@ -1,5 +1,6 @@
 package com.nni.gamevate.perlerwizard.object.skills;
 
+import com.nni.gamevate.perlerwizard.object.skills.reflectables.BasicEnemySpell;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.BlackSpell;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.BlueSpell;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.GreenSpell;
@@ -9,6 +10,7 @@ import com.nni.gamevate.perlerwizard.object.skills.reflectables.YellowSpell;
 
 public  enum  Skills {
 
+	//TODO move speeds into this class too
 	
 	// Wizard Spells
 	WHITE_SPELL(100, WhiteSpell.class),	
@@ -16,8 +18,10 @@ public  enum  Skills {
 	BLUE_SPELL(30000,BlueSpell.class),
 	YELLOW_SPELL(1000,YellowSpell.class),
 	GREEN_SPELL(60000,GreenSpell.class),
-	BLACK_SPELL(25000,BlackSpell.class);
+	BLACK_SPELL(25000,BlackSpell.class),
 	
+	// EnemySpells
+	BASIC_ENEMY_SPELL(1000,BasicEnemySpell.class);
 	
 	
 	private long _refreshTime;

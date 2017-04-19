@@ -17,6 +17,10 @@ public class WaveGameScreen extends ScreenAdaptar {
 
 	private static final String TAG = WaveGameScreen.class.getSimpleName();
 	
+	public static World _world;	
+	public static boolean gameOver;
+	public static boolean victory;
+	
 	private PerlerWizard _perlerWizard;
 	private GamePlayController _gamePlayController;
 	private WaveRenderer _waveRenderer;
@@ -24,12 +28,10 @@ public class WaveGameScreen extends ScreenAdaptar {
 	private SpriteBatch _batch;
 	private AssetManager _assetManager;
 	private NetworkController _networkController;
-	private World _world;
 	private WaveInputHandler _inputHandler;
 	
 	private OrthographicCamera _camera;
-	public static boolean gameOver;
-	public static boolean victory;
+	
 	
 	public WaveGameScreen(PerlerWizard perlerWizard,Level level) {
 		_perlerWizard = perlerWizard;
