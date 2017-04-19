@@ -5,8 +5,8 @@ import com.nni.gamevate.perlerwizard.object.skills.Skill;
 
 public class Mimic extends Enemy {
 
-	public Mimic(int width, int height, float x, float y) {
-		super(width, height, x, y);
+	public Mimic(int width, int height, float x, float y,int waveNumber) {
+		super(width, height, x, y,waveNumber);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -1,12 +1,20 @@
 package com.nni.gamevate.perlerwizard.object.hero;
 
+import java.util.Set;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.object.Attacker;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.Equiper;
 import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
+import com.nni.gamevate.perlerwizard.object.skills.SkillManager;
+import com.nni.gamevate.perlerwizard.object.skills.Skills;
 
 /**
  * 
@@ -14,6 +22,8 @@ import com.nni.gamevate.perlerwizard.object.skills.Skill;
  *
  */
 public abstract class Hero extends GameObject implements Attacker, Equiper{
+	
+	
 	protected final float MAX_SPEED_MULTIPLIER = 1.25f;
 	protected final float MAX_SPEED = 10.0f;
 
@@ -33,26 +43,34 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 	protected boolean _castingSpecial;
 	protected boolean _castingAttack;
 	
+	
+	protected SkillManager skillManager;
+	
+	
+	
+	
 	public Hero(int width, int height, float x, float y, int level) {
 		super(width, height, x, y);
-
+		skillManager = new SkillManager();
 		_healthMultiplier = 1.0f;
 		_speedMultiplier = 1.0f;
 
 		_level = level;
+		color = Color.BROWN;
 	}
+	
+
+	
+
 
 	@Override
 	public void update(float delta) {
-		move();
-
-		if (getX() < 4) {
-			_position.x = 4;
-		}
-
-		if (getX() > 15) {
-			_position.x = 15;
-		}
+		_position.x += _speed  * delta * _direction.x;
+		_position.y += _speed  * delta * _direction.y;
+		
+		_position.y = MathUtils.clamp(_position.y, 0, GameConfig.WORLD_HEIGHT - _height);
+		_position.x = MathUtils.clamp(_position.x, world.camXPos - GameConfig.WORLD_WIDTH/2, world.forwardLine);
+		
 	}
 
 	@Override
@@ -60,7 +78,12 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 		return false;
 	}
 	
+	@Deprecated
 	public abstract Skill attack(int selectedSkill);
+	
+	public  Skill attack(Skills skill){
+		return skillManager.useSkill(skill, _position.x + _width/2, _position.y + _height /2);
+	}
 
 	private void move() {
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.getAccelerometerY() < 0) {
@@ -108,6 +131,9 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 		if(_speed > MAX_SPEED){
 			_speed = MAX_SPEED;
 		}
+	}
+	public void setDirection(Vector2 direction){
+		_direction = direction;
 	}
 	
 	public void setAttack(int attack){
@@ -164,6 +190,16 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 		// TODO Auto-generated method stub
 		return _castingAttack;
 	}
+	public void SelectSkill(int ammount){
+		Set<Skills> skills = skillManager.getSkills();
+		Skills[] array = new Skills[skills.size()];
+		array = skills.toArray(array);
+	}
+	
+
+	public SkillManager getSkillManager() {
+		return skillManager;
+	}
 
 	@Override
 	public String toString() {
@@ -172,7 +208,7 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 				MAX_SPEED_MULTIPLIER, MAX_SPEED, _speed, _hitPoints, _defense, _attack, _dodge, _currentHealthPct,
 				_healthMultiplier, _speedMultiplier, _level);
 	}
-	
+
 	
 
 }

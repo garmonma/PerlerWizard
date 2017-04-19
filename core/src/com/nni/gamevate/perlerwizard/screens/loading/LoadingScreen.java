@@ -12,6 +12,8 @@ import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.screens.game.GameWorldScreen;
+import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
+import com.nni.gamevate.perlerwizard.waves.Level_01;
 
 public class LoadingScreen extends ScreenAdapter {
 	
@@ -50,7 +52,8 @@ public class LoadingScreen extends ScreenAdapter {
         _renderer.end();
         
         if(_changeScreen){
-        	_perlerWizard.setScreen(new GameWorldScreen(_perlerWizard));
+        	_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard,new Level_01()));
+        	//_perlerWizard.setScreen(new MainWorldScreen(_perlerWizard));
         }
 	}
 	
@@ -64,15 +67,21 @@ public class LoadingScreen extends ScreenAdapter {
 		_assetManager.load(AssetDescriptors.CASTLE_BACKGROUND);
 		_assetManager.load(AssetDescriptors.ENERGY_SHIELD_BOX);
 		_assetManager.load(AssetDescriptors.REFLECT_SKILL_BOX);
+		//TODO remove for real background... lol
+		_assetManager.load(AssetDescriptors.FLOOR_BACKGROUND);
 		_assetManager.load(AssetDescriptors.FONT);
 		
+		
+		// Game World Screen Assets
 		_assetManager.load(AssetDescriptors.EVENTS_BUTTON);
 		_assetManager.load(AssetDescriptors.EVENTS_BUTTON_PRESSED);
 		_assetManager.load(AssetDescriptors.EQUIPMENT_BUTTON);
 		_assetManager.load(AssetDescriptors.EQUIPMENT_BUTTON_PRESSED);
 		_assetManager.load(AssetDescriptors.MENU_BUTTON);
 		_assetManager.load(AssetDescriptors.MENU_BUTTON_PRESSED);
-		
+		_assetManager.load(AssetDescriptors.GAME_NODE_BASIC);
+		_assetManager.load(AssetDescriptors.DIRT_ROAD_HORIZONTAL);
+		_assetManager.load(AssetDescriptors.DIRT_ROAD_VERTICAL);
 	}
 	
 	@Override

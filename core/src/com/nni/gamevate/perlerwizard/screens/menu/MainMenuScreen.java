@@ -13,7 +13,7 @@ public class MainMenuScreen extends UIScreen {
 
 	@Override
 	protected Actor createUi() {
-		return null;
+		return new Actor();
 	}
 
 	@Override

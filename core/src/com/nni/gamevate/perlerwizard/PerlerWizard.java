@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 import com.nni.gamevate.perlerwizard.network.ClientConnection;
+import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
 import com.nni.gamevate.perlerwizard.screens.loading.SplashScreen;
 
 /**
@@ -17,14 +18,18 @@ public class PerlerWizard extends Game {
 	private AssetManager _assetManager;
 	private ClientConnection connection;
 	private NetworkController networkController;
-
+	
+	public static boolean DEBUG = true;
+		
 	@Override
 	public void create() {
 		_spriteBatch = new SpriteBatch();
 		_assetManager = new AssetManager();
 		//TODO Check for internet connection. If no connection close app.
-		connection = new ClientConnection();
-		networkController = new NetworkController(connection.getClient());
+		if(DEBUG == false){
+			connection = new ClientConnection();
+			networkController = new NetworkController(connection.getClient());			
+		}
 		this.setScreen(new SplashScreen(this));
 	}
 

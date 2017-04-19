@@ -15,7 +15,7 @@ public class EquipmentScreen extends UIScreen {
 	@Override
 	protected Actor createUi() {
 		// TODO Auto-generated method stub
-		return null;
+		return new Actor();
 	}
 	
 	@Override

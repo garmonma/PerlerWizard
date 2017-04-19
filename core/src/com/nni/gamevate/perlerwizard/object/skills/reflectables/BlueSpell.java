@@ -1,5 +1,6 @@
 package com.nni.gamevate.perlerwizard.object.skills.reflectables;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
@@ -12,6 +13,7 @@ public class BlueSpell extends Spell {
 	
 	public BlueSpell(float x, float y){
 		super(x, y);
+		color = Color.BLUE;
 
 	}
 

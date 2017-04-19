@@ -1,5 +1,7 @@
 package com.nni.gamevate.perlerwizard.assets;
 
+import java.nio.channels.AsynchronousServerSocketChannel;
+
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -42,6 +44,18 @@ public class AssetDescriptors {
 	
 	public static final AssetDescriptor<Texture> MENU_BUTTON_PRESSED =
             new AssetDescriptor<Texture>(AssetPaths.MENU_BUTTON_PRESSED, Texture.class);
+	
+	public static final AssetDescriptor<Texture> GAME_NODE_BASIC = 
+			new AssetDescriptor<Texture>(AssetPaths.GAME_NODE_BASIC, Texture.class);
+	
+	public static final AssetDescriptor<Texture> DIRT_ROAD_HORIZONTAL = 
+			new AssetDescriptor<Texture>(AssetPaths.DIRT_ROAD_HORIZONTAL, Texture.class);
+	
+	public static final AssetDescriptor<Texture> DIRT_ROAD_VERTICAL = 
+			new AssetDescriptor<Texture>(AssetPaths.DIRT_ROAD_VERTICAL, Texture.class);
+
+	public static final AssetDescriptor FLOOR_BACKGROUND = 
+			new AssetDescriptor<Texture>(AssetPaths.FLOOR_BACKGROUND, Texture.class);
 	
 	private AssetDescriptors(){}
 }
