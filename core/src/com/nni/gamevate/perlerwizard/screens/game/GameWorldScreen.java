@@ -12,6 +12,8 @@ import com.nni.gamevate.perlerwizard.renderers.GameWorldRenderer;
 import com.nni.gamevate.perlerwizard.screens.menu.EquipmentScreen;
 import com.nni.gamevate.perlerwizard.screens.menu.EventScreen;
 import com.nni.gamevate.perlerwizard.screens.menu.MainMenuScreen;
+import com.nni.gamevate.perlerwizard.waves.Chapter_01_01;
+import com.nni.gamevate.perlerwizard.waves.Level_01;
 
 /**
  * @author Marcus Garmon 12/29/2016
@@ -61,7 +63,8 @@ public class GameWorldScreen extends ScreenAdapter {
 		}
 		
 		if(_worldController.navigateGameScreen()){
-			_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard, _worldController.getSelectedLevel()));
+
+			_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard, new Chapter_01_01()));
 		}
 		
 		_worldController.update(delta);

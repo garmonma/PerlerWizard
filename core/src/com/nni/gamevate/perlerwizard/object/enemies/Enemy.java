@@ -1,12 +1,18 @@
 package com.nni.gamevate.perlerwizard.object.enemies;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.events.Event;
 import com.nni.gamevate.perlerwizard.events.Event.EventType;
 import com.nni.gamevate.perlerwizard.events.EventManager;
 import com.nni.gamevate.perlerwizard.object.Attacker;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.GameObject;
+import com.nni.gamevate.perlerwizard.object.skills.Skill;
+import com.nni.gamevate.perlerwizard.object.skills.Skills;
+import com.nni.gamevate.perlerwizard.object.skills.Wand;
+import com.nni.gamevate.perlerwizard.object.skills.throwables.RockThrow;
+import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
 import com.nni.gamevate.perlerwizard.utils.Logger;
 import com.nni.gamevate.perlerwizard.waves.Level;
 
@@ -24,9 +30,7 @@ public abstract class Enemy extends GameObject implements Attacker{
 	
 	protected boolean _castingSpecial;
 	protected boolean _castingAttack;
-	
-	protected boolean cycleCompleted = false;
-	
+    protected boolean cycleCompleted = false;	
 	
 	protected boolean sleeping = true;
 	protected boolean running = false;
@@ -34,10 +38,16 @@ public abstract class Enemy extends GameObject implements Attacker{
 	
 	public int _waveNumber = 0;
 	
+	
+	
+	
+	public Wand basicWand;
+	
+	
 	public Enemy(float width, float height, float x, float y,int waveNumber) {
 		super(width, height, x, y);
 		_waveNumber = waveNumber;
-		
+		basicWand  = new Wand(Skills.BASIC_ENEMY_SPELL.getType(), Skills.BASIC_ENEMY_SPELL.getRefreshTime());
 		
 	}
 
@@ -124,6 +134,8 @@ public abstract class Enemy extends GameObject implements Attacker{
 		
 		move(delta);
 		
+		WaveGameScreen._world.addEnemySkill(attack());
+		
 	}
 	
 	@Override
@@ -157,6 +169,10 @@ public abstract class Enemy extends GameObject implements Attacker{
 
 	public void setChasing(boolean chasing) {
 		this.chasing = chasing;
+	}
+	
+	public Skill attack(){		
+		return basicWand.fire(_position.x + _width/2, _position.y + _height /2);
 	}
 	
 	

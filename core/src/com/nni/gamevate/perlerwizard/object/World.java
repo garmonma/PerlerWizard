@@ -22,6 +22,7 @@ import com.nni.gamevate.perlerwizard.waves.Level_01;
 public class World implements Subscriber {
 	
 	private ArrayList<Skill> skills = new ArrayList<Skill>();
+	private ArrayList<Skill> enemySkills = new ArrayList<Skill>();
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
 	private Hero _hero;
@@ -49,6 +50,7 @@ public class World implements Subscriber {
 		updateHero(delta);
 		updateSkills(delta);
 		updateEnemies(delta);
+		updateEnemySkills(delta);
 		checkCollisions();
 	}
 	
@@ -78,6 +80,7 @@ public class World implements Subscriber {
 			lastCamDelta = 0;
 			if (forwardLine <= -5.5f){
 				//Logger.log("Game over");
+				//TODO only game over if more than 2 enemies are left
 				WaveGameScreen.gameOver = true;
 				
 			}else{
@@ -113,6 +116,11 @@ public class World implements Subscriber {
 			skills.add(s);
 		}
 	}
+	public void addEnemySkill(Skill s){
+		if(s != null){
+			enemySkills.add(s);
+		}
+	}
 	
 	/**
 	 * O(n^2)
@@ -135,8 +143,7 @@ public class World implements Subscriber {
 	public void updateSkills(float delta){
 		Iterator<Skill> sItor = skills.iterator();
 		while(sItor.hasNext()){
-			Skill s = sItor.next();
-			
+			Skill s = sItor.next();			
 			
 			if(s.alive == false){
 				sItor.remove();
@@ -146,6 +153,20 @@ public class World implements Subscriber {
 		}
 
 	}
+	
+	public void updateEnemySkills(float delta){
+		Iterator<Skill> sItor = enemySkills.iterator();
+		while(sItor.hasNext()){
+			Skill s = sItor.next();			
+			
+			if(s.alive == false){
+				sItor.remove();
+			}else{
+				s.update(delta);
+			}
+		}
+	}
+	
 	/**
 	 * O(n)
 	 * @param delta
@@ -181,8 +202,10 @@ public class World implements Subscriber {
 	
 	public ArrayList<GameObject> getGameObjects(){
 		ArrayList<GameObject> list = new ArrayList<GameObject>(skills);
+		list.addAll(enemySkills);
 		list.add(_hero);
 		list.addAll(enemies);
+		
 		return list;
 	}
 	

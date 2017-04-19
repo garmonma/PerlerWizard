@@ -11,11 +11,7 @@ public class Imps extends Enemy{
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public Skill attack() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	@Override
 	public Skill castSpecial() {

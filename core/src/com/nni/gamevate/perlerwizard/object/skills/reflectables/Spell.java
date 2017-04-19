@@ -26,7 +26,7 @@ public abstract class Spell extends Skill implements Castable {
 	protected int _bounceCount;
 	protected int _bounceCounter;
 	protected long _spellRefreshTimer;
-	private long lastCast;
+	
 	
 	protected float _bounceAngle;
 	
