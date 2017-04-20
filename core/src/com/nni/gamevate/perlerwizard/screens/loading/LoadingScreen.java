@@ -52,8 +52,8 @@ public class LoadingScreen extends ScreenAdapter {
         _renderer.end();
         
         if(_changeScreen){
-        	_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard,new Level_01()));
-        	//_perlerWizard.setScreen(new MainWorldScreen(_perlerWizard));
+        	//_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard,new Level_01()));
+        	_perlerWizard.setScreen(new GameWorldScreen(_perlerWizard));
 
         }
 	}

@@ -17,6 +17,9 @@ public class Orc extends Enemy {
 	private long _spearRushLastAttack;
 	
 
+	public Orc(float x, float y, int waveNumber){
+		super(1.0f, 1.0f, x, y, waveNumber);
+	}
 	
 	public Orc(int width, int height, float x, float y,int waveNumber) {
 		super(width, height, x, y,waveNumber);
