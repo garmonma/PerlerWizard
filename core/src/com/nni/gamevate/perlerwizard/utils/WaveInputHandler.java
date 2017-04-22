@@ -36,6 +36,8 @@ public class WaveInputHandler extends InputAdapter {
 	}
 
 	public void tick(float delta){
+		
+		
 		up = Gdx.input.isKeyPressed(Input.Keys.UP);
 		down = Gdx.input.isKeyPressed(Input.Keys.DOWN);
 		left = Gdx.input.isKeyPressed(Input.Keys.LEFT);

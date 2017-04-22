@@ -3,8 +3,6 @@ package com.nni.gamevate.perlerwizard.object;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.net.ssl.HandshakeCompletedListener;
-
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.events.Event;
 import com.nni.gamevate.perlerwizard.events.Event.EventType;
@@ -17,7 +15,6 @@ import com.nni.gamevate.perlerwizard.object.skills.Skill;
 import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
 import com.nni.gamevate.perlerwizard.utils.Logger;
 import com.nni.gamevate.perlerwizard.waves.Level;
-import com.nni.gamevate.perlerwizard.waves.Level_01;
 
 public class World implements Subscriber {
 	
@@ -30,9 +27,9 @@ public class World implements Subscriber {
 	public float forwardLine;
 	public float lastCamDelta;
 	private float camSpeed = 2;
-	private float chaseSpeed = -2;
+	private float chaseSpeed = -.5f;
 	private float runSpeed = 2;
-	private float encroachSpeed = 0.5f;
+	private float encroachSpeed = 0.25f;
 	private Level loadedLevel;
 	
 	public World(Level level) {
@@ -46,6 +43,12 @@ public class World implements Subscriber {
 	}
 	
 	public void tick(float delta){
+		if(WaveGameScreen.gameOver == true){
+			return;
+		}
+
+		
+		
 		moveCamPos(delta);
 		updateHero(delta);
 		updateSkills(delta);
@@ -64,6 +67,9 @@ public class World implements Subscriber {
 			_hero._position.x += lastCamDelta;
 		
 		_hero.update(delta);
+		if(_hero.alive == false){
+			WaveGameScreen.gameOver = true;
+		}
 	}
 	
 	// these are here so we don't spam the event system. 
@@ -123,7 +129,7 @@ public class World implements Subscriber {
 	}
 	
 	/**
-	 * O(n^2)
+	 * O(n^2) 
 	 */
 	public void checkCollisions(){
 		for(Enemy e : enemies){
@@ -132,6 +138,13 @@ public class World implements Subscriber {
 					e.isDead(5);
 					s.setAlive(false);
 				}
+			}
+		}
+		
+		for(Skill s : enemySkills){
+			if(s.alive == true && _hero.collided(s)){
+				_hero.damage(s.getDamage());
+				s.setAlive(false);
 			}
 		}
 	}
@@ -153,7 +166,10 @@ public class World implements Subscriber {
 		}
 
 	}
-	
+	/**
+	 * O(n)
+	 * @param delta
+	 */
 	public void updateEnemySkills(float delta){
 		Iterator<Skill> sItor = enemySkills.iterator();
 		while(sItor.hasNext()){

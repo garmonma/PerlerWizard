@@ -22,6 +22,7 @@ import com.nni.gamevate.perlerwizard.object.hero.Wizard;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.Spell;
 import com.nni.gamevate.perlerwizard.object.skills.throwables.JavelinThrow;
+import com.nni.gamevate.perlerwizard.utils.Logger;
 import com.nni.gamevate.perlerwizard.utils.UIElement;
 
 /**
@@ -86,7 +87,7 @@ public class GamePlayController {
 			_gameCharacter.gold = 13000;
 		}
 		
-		System.out.println(_gameCharacter);
+		Logger.log(_gameCharacter.toString());		
 		_heroLevel = _gameCharacter.level;
 		
 		init();	
@@ -122,9 +123,9 @@ public class GamePlayController {
 			_hero = new BattleMage(1, 1, GameConfig.WORLD_WIDTH / 2,  0, _heroLevel);
 		}
 		
-		System.out.println(_hero);
+		Logger.log(_hero.toString());		
 		
-		_hero.setCurrentHealthPct(_gameCharacter.healthPct);
+		//_hero.setCurrentHealthPct(_gameCharacter.healthPct);
 		
 
 		_skills = new Array<Skill>();

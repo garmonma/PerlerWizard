@@ -30,13 +30,15 @@ public abstract class Spell extends Skill implements Castable {
 	
 	protected float _bounceAngle;
 	
+	//TODO this shouldn't be static... need to change the constructor on the spells
+	private static float defaultSize = 0.25f;
 	/**
 	 * Centers the projectile
 	 * @param x
 	 * @param y
 	 */
-	public Spell(float x, float y){	
-		this(0.5f,0.5f,x -.25f,y -.25f);		
+	public Spell(float x, float y){			
+		this(defaultSize,defaultSize,x -defaultSize/2,y -defaultSize/2);		
 	}
 
 
