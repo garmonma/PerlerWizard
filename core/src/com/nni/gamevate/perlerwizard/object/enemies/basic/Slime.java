@@ -4,6 +4,10 @@ import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 
 public class Slime extends Enemy {
+	
+	public Slime(float x, float y, int waveNumber){
+		super(0.7f, 0.7f, x, y, waveNumber);
+	}
 
 	public Slime(int width, int height, float x, float y,int waveNumber) {
 		super(width, height, x, y,waveNumber);

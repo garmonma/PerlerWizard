@@ -2,11 +2,20 @@ package com.nni.gamevate.perlerwizard.object.enemies.basic;
 
 import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
+import com.nni.gamevate.perlerwizard.object.enemies.minibosses.Ent.EntType;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 import com.nni.gamevate.perlerwizard.object.skills.rushables.SpearRush;
 import com.nni.gamevate.perlerwizard.object.skills.throwables.RockThrow;
 
 public class Orc extends Enemy {
+	
+	public enum OrcType{
+		MALE,
+		FEMALE,
+		GIANT
+	}
+	
+	private OrcType _orcType = OrcType.MALE;
 
 	private final int ROCK_THROW_COOLDOWN = 5000;
 	private final int AXE_THROW_COOLDOWN = 15000;
@@ -69,6 +78,14 @@ public class Orc extends Enemy {
 	public Skill castDefense() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public OrcType getOrcType(){
+		return _orcType;
+	}
+	
+	public void setOrcType(OrcType type){
+		_orcType = type;
 	}
 
 }

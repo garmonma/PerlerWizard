@@ -1,7 +1,8 @@
-package com.nni.gamevate.perlerwizard.waves;
+package com.nni.gamevate.perlerwizard.waves.chapter02;
 
 import com.nni.gamevate.perlerwizard.object.enemies.basic.Goblin;
 import com.nni.gamevate.perlerwizard.object.enemies.basic.Imp;
+import com.nni.gamevate.perlerwizard.waves.Level;
 
 public class Chapter_02_02 extends Level {
 
