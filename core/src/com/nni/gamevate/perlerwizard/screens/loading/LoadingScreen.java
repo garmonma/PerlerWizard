@@ -2,6 +2,7 @@ package com.nni.gamevate.perlerwizard.screens.loading;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -88,6 +89,18 @@ public class LoadingScreen extends ScreenAdapter {
 		_assetManager.load(AssetDescriptors.QUINT_SOUND_TRACK);
 		
 		_assetManager.load(AssetDescriptors.WIZARD);
+		
+		// Sound Effects
+		_assetManager.load(AssetDescriptors.FIRE_SPELL_CAST);
+		_assetManager.load(AssetDescriptors.FIRE_SPELL_HIT);
+		_assetManager.load(AssetDescriptors.WATER_SPELL_CAST);
+		_assetManager.load(AssetDescriptors.WATER_SPELL_HIT);
+		_assetManager.load(AssetDescriptors.LIGHTNING_SPELL_CAST);
+		_assetManager.load(AssetDescriptors.LIGHTNING_SPELL_HIT);
+		_assetManager.load(AssetDescriptors.DEFAULT_SPELL_CAST);
+		_assetManager.load(AssetDescriptors.DEFAULT_SPELL_HIT);
+		_assetManager.load(AssetDescriptors.FOREST_SPELL_CAST);
+		_assetManager.load(AssetDescriptors.FOREST_SPELL_HIT);
 	}
 	
 	@Override

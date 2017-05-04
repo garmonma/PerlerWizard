@@ -1,7 +1,8 @@
 package com.nni.gamevate.perlerwizard.object.skills.reflectables;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.utils.TimeUtils;
+import com.nni.gamevate.perlerwizard.PerlerWizard;
+import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 
 /**
  * 
@@ -16,11 +17,13 @@ public class WhiteSpell extends Spell {
 	public WhiteSpell(float x, float y){
 		super(x, y);
 		color = Color.WHITE;
+		
+		castSound = PerlerWizard.assetManager.get(AssetDescriptors.DEFAULT_SPELL_CAST);
+		hitSound = PerlerWizard.assetManager.get(AssetDescriptors.DEFAULT_SPELL_HIT);
 	}
 
 	public WhiteSpell(float width, float height, float x, float y) {
 		super(width, height, x, y);
 	
 	}
-
 }
