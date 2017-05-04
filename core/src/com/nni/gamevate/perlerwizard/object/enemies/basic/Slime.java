@@ -9,7 +9,7 @@ public class Slime extends Enemy {
 		super(0.7f, 0.7f, x, y, waveNumber);
 	}
 
-	public Slime(int width, int height, float x, float y,int waveNumber) {
+	public Slime(float width, float height, float x, float y,int waveNumber) {
 		super(width, height, x, y,waveNumber);
 		// TODO Auto-generated constructor stub
 	}
