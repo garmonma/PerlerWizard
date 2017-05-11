@@ -1,7 +1,8 @@
 package com.nni.gamevate.perlerwizard.object.skills.reflectables;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.utils.TimeUtils;
+import com.nni.gamevate.perlerwizard.PerlerWizard;
+import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 
 /**
  * 
@@ -13,12 +14,14 @@ import com.badlogic.gdx.utils.TimeUtils;
  *
  */
 public class RedSpell extends Spell {
-
+	
 	public RedSpell(float x, float y) {
 		super(x, y);
 		color = Color.RED;
 		_speed = 7.5f;
 		_velocity.set(_direction).scl(_speed);
+		castSound = PerlerWizard.assetManager.get(AssetDescriptors.FIRE_SPELL_CAST);
+		hitSound = PerlerWizard.assetManager.get(AssetDescriptors.FIRE_SPELL_HIT);
 	}
 
 	public RedSpell(float width, float height, float x, float y) {
@@ -27,5 +30,4 @@ public class RedSpell extends Spell {
 		_speed = 7.5f;
 		_velocity.set(_direction).scl(_speed);
 	}
-
 }

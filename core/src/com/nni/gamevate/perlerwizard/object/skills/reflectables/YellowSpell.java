@@ -1,6 +1,8 @@
 package com.nni.gamevate.perlerwizard.object.skills.reflectables;
 
 import com.badlogic.gdx.graphics.Color;
+import com.nni.gamevate.perlerwizard.PerlerWizard;
+import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 
 /**
  * 
@@ -18,6 +20,8 @@ public class YellowSpell extends Spell {
 		color = Color.YELLOW;
 		_speed = 10;
 		_velocity.set(_direction).scl(_speed);
+		castSound = PerlerWizard.assetManager.get(AssetDescriptors.LIGHTNING_SPELL_CAST);
+		hitSound = PerlerWizard.assetManager.get(AssetDescriptors.LIGHTNING_SPELL_HIT);
 	}
 
 	public YellowSpell(float width, float height, float x, float y) {
@@ -26,6 +30,4 @@ public class YellowSpell extends Spell {
 		_speed = 10;
 		_velocity.set(_direction).scl(_speed);
 	}
-
-
 }

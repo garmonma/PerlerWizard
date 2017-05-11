@@ -1,5 +1,6 @@
 package com.nni.gamevate.perlerwizard.object;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -10,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
  * @author Marcus Garmon
  * @date Dec 29, 2016
  */
-public abstract class GameObject implements Collidable, Drawable {
+public abstract class GameObject implements Collidable, Drawable, Soundable {
 	
 	protected World world;
 	
@@ -113,6 +114,11 @@ public abstract class GameObject implements Collidable, Drawable {
 		// TODO Auto-generated method stub
 		shapeRenderer.setColor(getColor());
 		shapeRenderer.rect(getX(), getY(), getWidth(), getHeight());
+		
+	}
+	
+	@Override
+	public void sound(SoundType st){
 		
 	}
 	

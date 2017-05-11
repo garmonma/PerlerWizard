@@ -65,7 +65,7 @@ public class WaveGameScreen extends ScreenAdaptar {
 
 		
 		_waveRenderer.render(delta);
-			// TODO do something different
+		
 		if((gameOver || victory) && _inputHandler.fire == true){
 			_perlerWizard.setScreen(new GameWorldScreen(_perlerWizard));
 		}

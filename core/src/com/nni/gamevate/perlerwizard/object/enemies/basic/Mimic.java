@@ -4,6 +4,10 @@ import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 
 public class Mimic extends Enemy {
+	
+	public Mimic(float x, float y, int waveNumber){
+		super(1.0f, 1.0f, x, y, waveNumber);
+	}
 
 	public Mimic(int width, int height, float x, float y,int waveNumber) {
 		super(width, height, x, y,waveNumber);

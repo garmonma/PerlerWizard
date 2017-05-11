@@ -7,10 +7,10 @@ import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 import com.nni.gamevate.perlerwizard.utils.Logger;
 
-public class Imps extends Enemy{
+public class Imp extends Enemy{
 
 
-	public Imps( float x, float y,int waveNumber) {
+	public Imp( float x, float y,int waveNumber) {
 		super(0.7f,0.7f, x, y,waveNumber);
 		// TODO Auto-generated constructor stub
 	}

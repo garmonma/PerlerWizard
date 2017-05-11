@@ -119,6 +119,7 @@ public class World implements Subscriber {
 	}
 	public void addSkill(Skill s){
 		if(s != null){
+			s.sound(SoundType.SKILL_CAST);
 			skills.add(s);
 		}
 	}
@@ -136,6 +137,7 @@ public class World implements Subscriber {
 			for(Skill s : skills){
 				if(s.alive == true && e.collided(s)){					
 					e.isDead(5);
+					s.sound(SoundType.SKILL_HIT);
 					s.setAlive(false);
 				}
 			}

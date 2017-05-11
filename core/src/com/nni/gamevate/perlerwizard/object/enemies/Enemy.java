@@ -24,8 +24,12 @@ import com.nni.gamevate.perlerwizard.waves.Level;
  */
 public abstract class Enemy extends GameObject implements Attacker{
 	
+	public enum ElementType{
+		DEFAULT, WATER, FIRE, LIGHTNING, FOREST
+	}
 	
 	protected int _health = 1;
+	protected ElementType _elementType = ElementType.DEFAULT;
 	protected float _chaseSpeed = 1;
 	protected float _retreatSpeed = 3;
 	
@@ -41,10 +45,8 @@ public abstract class Enemy extends GameObject implements Attacker{
 	public int _waveNumber = 0;
 	
 	public Vector2  formationPosition;
-	
-	
-	
 	public Wand basicWand;
+	
 	
 	
 	public Enemy(float width, float height, float x, float y,int waveNumber) {
@@ -97,6 +99,9 @@ public abstract class Enemy extends GameObject implements Attacker{
 		uniquePattern(delta);
 	}
 	
+	public void setHealth(int health){
+		_health = health;
+	}
  
 	protected abstract void uniquePattern(float delta);
 
@@ -104,7 +109,13 @@ public abstract class Enemy extends GameObject implements Attacker{
 		return _health;
 	}
 	
+	public void setElementType(ElementType type){
+		_elementType = type;
+	}
 	
+	public ElementType getElementType(){
+		return _elementType;
+	}
 	
 	@Override
 	public void castingSpecial(boolean casting) {
@@ -154,7 +165,6 @@ public abstract class Enemy extends GameObject implements Attacker{
 		move(delta);
 		
 		WaveGameScreen._world.addEnemySkill(attack());
-		
 	}
 	
 	@Override
@@ -197,6 +207,4 @@ public abstract class Enemy extends GameObject implements Attacker{
 	public Skill attack(){		
 		return basicWand.fire(_position.x + _width/2, _position.y + _height /2);
 	}
-	
-	
 }

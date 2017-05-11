@@ -1,7 +1,9 @@
 package com.nni.gamevate.perlerwizard.object.skills;
 
+import com.badlogic.gdx.audio.Sound;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.GameObject;
+import com.nni.gamevate.perlerwizard.object.SoundType;
 
 public abstract class Skill extends GameObject {
 	protected static final float BASE_SPEED = 5f;
@@ -11,12 +13,21 @@ public abstract class Skill extends GameObject {
 	protected int _damage;
 	protected float _speed;
 	
+	protected Sound castSound;
+	protected Sound hitSound;
+	
 	public Skill(float x, float y){
 		super(x, y);
 		
 		_speed = BASE_SPEED;
 		_isEnemySkill = false;
 		
+	}
+	
+	public Skill(float width, float height, float x, float y) {
+		super(width, height, x, y);
+		
+		_speed = BASE_SPEED;
 	}
 	
 	@Override
@@ -31,10 +42,21 @@ public abstract class Skill extends GameObject {
 		return false;
 	}
 	
-	public Skill(float width, float height, float x, float y) {
-		super(width, height, x, y);
+	@Override
+	public void sound(SoundType st) {
+		if(castSound == null || hitSound == null){
+			return;
+		}
 		
-		_speed = BASE_SPEED;
+		if(st == SoundType.SKILL_CAST){
+			castSound.play(1.0f);	
+		}
+		
+		if(st == SoundType.SKILL_HIT){
+			hitSound.play(1.0f);
+		}
+		
+		//castSound.dispose();
 	}
 	
 	public void evaporate(){

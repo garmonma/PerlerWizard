@@ -8,6 +8,14 @@ import com.nni.gamevate.perlerwizard.object.skills.throwables.RockThrow;
 
 public class Orc extends Enemy {
 
+	public enum OrcType{
+		MALE,
+		FEMALE,
+		GIANT
+	}
+	
+	private OrcType _orcType = OrcType.MALE;
+
 	private final int ROCK_THROW_COOLDOWN = 5000;
 	private final int AXE_THROW_COOLDOWN = 15000;
 	private final int SPEAR_RUSH_COOLDOWN = 10000;
@@ -17,6 +25,9 @@ public class Orc extends Enemy {
 	private long _spearRushLastAttack;
 	
 
+	public Orc(float x, float y, int waveNumber){
+		super(1.0f, 1.0f, x, y, waveNumber);
+	}
 	
 	public Orc(int width, int height, float x, float y,int waveNumber) {
 		super(width, height, x, y,waveNumber);
@@ -70,7 +81,16 @@ public class Orc extends Enemy {
 	@Override
 	protected void uniquePattern(float delta) {
 		// TODO Auto-generated method stub
-		
+	}
+	
+	public OrcType getOrcType(){
+		return _orcType;
+	}
+
+
+	
+	public void setOrcType(OrcType type){
+		_orcType = type;
 	}
 
 }
