@@ -1,7 +1,11 @@
 package com.nni.gamevate.perlerwizard.object.enemies.basic;
 
+import javax.swing.text.Position;
+
+import com.badlogic.gdx.math.Vector2;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
+import com.nni.gamevate.perlerwizard.utils.Logger;
 
 public class Imps extends Enemy{
 
@@ -28,6 +32,15 @@ public class Imps extends Enemy{
 	@Override
 	public void move(float delta) {
 		super.move(delta);
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	protected void uniquePattern(float delta) {
+		
 		// TODO Auto-generated method stub
 		
 	}

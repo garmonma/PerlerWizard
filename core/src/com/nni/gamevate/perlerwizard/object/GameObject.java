@@ -1,8 +1,8 @@
 package com.nni.gamevate.perlerwizard.object;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 
@@ -35,6 +35,7 @@ public abstract class GameObject implements Collidable, Drawable {
 		_velocity = new Vector2();
 		_movement = new Vector2();
 		_originalPosition = new Vector2(_position);
+		
 	}
 	
 	public GameObject(float width, float height, float x, float y){
@@ -106,6 +107,15 @@ public abstract class GameObject implements Collidable, Drawable {
 	public void draw(Batch batch) {
 		// TODO Auto-generated method stub				
 	}
+	
+	@Override
+	public void draw(ShapeRenderer shapeRenderer) {
+		// TODO Auto-generated method stub
+		shapeRenderer.setColor(getColor());
+		shapeRenderer.rect(getX(), getY(), getWidth(), getHeight());
+		
+	}
+	
 	@Override
 	public Color getColor() {
 		return color;

@@ -67,5 +67,10 @@ public class Orc extends Enemy {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	protected void uniquePattern(float delta) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

@@ -229,16 +229,8 @@ public class WaveRenderer {
 		_shapeRenderer.begin(ShapeType.Filled);
 		
 		for(GameObject g :list){
-			_shapeRenderer.setColor(g.getColor());
-			if(g instanceof Hero){
-				//_shapeRenderer.setColor(Color.BLUE);				
-			}				
-			else
-//			else if (g instanceof WhiteSpell)
-//				_shapeRenderer.setColor(Color.WHITE);
-//			else
-//				_shapeRenderer.setColor(Color.PINK);
-			_shapeRenderer.rect(g.getX(), g.getY(), g.getWidth(), g.getHeight());			
+			g.draw(_shapeRenderer);
+						
 		}
 		_shapeRenderer.end();
 		
