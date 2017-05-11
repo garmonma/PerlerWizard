@@ -12,9 +12,9 @@ import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
  *         The Blue Spell travels at normal speed. It has the ability to
  *         explode, breaking off into four smaller pieces.
  */
-public class BlueSpell extends Spell {
+public class WaterCast extends Spell {
 	
-	public BlueSpell(float x, float y){
+	public WaterCast(float x, float y){
 		super(x, y);
 		color = Color.BLUE;
 		
@@ -27,7 +27,7 @@ public class BlueSpell extends Spell {
 
 	}
 
-	public BlueSpell(float width, float height, float x, float y) {
+	public WaterCast(float width, float height, float x, float y) {
 		super(width, height, x, y);
 		
 	}

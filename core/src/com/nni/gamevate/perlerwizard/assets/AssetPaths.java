@@ -5,6 +5,7 @@ public class AssetPaths {
 	//Texture Atlas
 	public static final String SPELLS = "sprites/spells.atlas";
 	public static final String ENEMIES = "sprites/enemies.atlas";
+	public static final String OBJECTS = "sprites/objects.atlas";
 
 	// Misc
 	public static final String SPLASH_BACKGROUND = "backgrounds/tempSplashLogo.png";

@@ -1,7 +1,5 @@
 package com.nni.gamevate.perlerwizard.object;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -16,36 +14,40 @@ public abstract class GameObject implements Collidable, Drawable, Soundable {
 	protected World world;
 	
 	public static final String tag = GameObject.class.getSimpleName();
-	protected float _width;
-	protected float _height;
-	protected Vector2 _position;
-	protected Vector2 _direction;
-	protected Vector2 _velocity;
-	protected Vector2 _movement;
+	protected float width;
+	protected float height;
+	protected Vector2 position;
+	protected Vector2 direction;
+	protected Vector2 velocity;
+	protected Vector2 movement;
 	
 	protected boolean alive = true;
-	protected Vector2 _originalPosition;
+	protected Vector2 originalPosition;
 	
 	// Temp var untill we get sprites
 	protected Color color = Color.PURPLE;
+	
+	protected float stateTime;
 	 
 	
 	public GameObject(float x, float y){
-		_position = new Vector2(x, y);
-		_direction = new Vector2();
-		_velocity = new Vector2();
-		_movement = new Vector2();
-		_originalPosition = new Vector2(_position);
+		position = new Vector2(x, y);
+		direction = new Vector2();
+		velocity = new Vector2();
+		movement = new Vector2();
+		originalPosition = new Vector2(position);
+		stateTime = 0f;
 	}
 	
 	public GameObject(float width, float height, float x, float y){
-		_width = width;
-		_height = height;
-		_position = new Vector2(x, y);
-		_direction = new Vector2();
-		_velocity = new Vector2();
-		_movement = new Vector2();
-		_originalPosition = new Vector2(_position);
+		this.width = width;
+		this.height = height;
+		position = new Vector2(x, y);
+		direction = new Vector2();
+		velocity = new Vector2();
+		movement = new Vector2();
+		originalPosition = new Vector2(position);
+		stateTime = 0f;
 	}
 	
 	//doing this here assumes everything is a box
@@ -68,39 +70,39 @@ public abstract class GameObject implements Collidable, Drawable, Soundable {
 	
 	
 	public float getX() {
-		return _position.x;
+		return position.x;
 	}
 	
 	public void setX(float x){
-		_position.x = x;
+		position.x = x;
 	}
 
 	public float getY() {
-		return _position.y;
+		return position.y;
 	}
 	
 	public void setY(float y){
-		_position.y = 9;
+		position.y = 9;
 	}
 
 	public float getHeight() {
-		return _height;
+		return height;
 	}
 
 	public float getWidth() {
-		return _width;
+		return width;
 	}
 	
 	public Vector2 getVelocity(){
-		return _velocity;
+		return velocity;
 	}
 	
 	public Vector2 getPosition(){
-		return _position;
+		return position;
 	}
 	
 	public void setPosition(Vector2 newPosition){
-		_position.set(newPosition);
+		position.set(newPosition);
 	}
 	
 	@Override
@@ -138,7 +140,7 @@ public abstract class GameObject implements Collidable, Drawable, Soundable {
 	@Override
 	public String toString() {
 		return String.format(
-				"GameObject [_width=%s, _height=%s, _position=%s, _direction=%s, _velocity=%s, _movement=%s]", _width,
-				_height, _position, _direction, _velocity, _movement);
+				"GameObject [_width=%s, _height=%s, _position=%s, _direction=%s, _velocity=%s, _movement=%s]", width,
+				height, position, direction, velocity, movement);
 	}	
 }

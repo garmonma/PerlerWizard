@@ -35,11 +35,8 @@ public abstract class Spell extends Skill implements Castable {
 	
 	protected float _bounceAngle;
 	
-	protected Animation castAnimation;
-	protected float castAnimationStateTime;
-	
 	//TODO this shouldn't be static... need to change the constructor on the spells
-	private static float defaultSize = 0.25f;
+	private static float defaultSize = 0.50f;
 	/**
 	 * Centers the projectile
 	 * @param x
@@ -53,18 +50,15 @@ public abstract class Spell extends Skill implements Castable {
 	public Spell(float width, float height, float x, float y) {
 		super(width, height, x, y);
 		
-		_damage = 1;
+		damage = 1;
 		
 		_bounceCount = DEFAULT_BOUNCE_COUNT;
 		_bounceCounter = _bounceCount;
 		_bounceAngle = 0;
 		
-		_direction.set(_position).setAngle(_bounceAngle).nor();
-		_velocity.set(_direction).scl(_speed);
-		
-		TextureAtlas atlas = PerlerWizard.assetManager.get(AssetDescriptors.SPELLS);
+		direction.set(position).setAngle(_bounceAngle).nor();
+		velocity.set(direction).scl(speed);
 
-		castAnimationStateTime = 0f;
 	}
 
 	@Override
@@ -83,28 +77,10 @@ public abstract class Spell extends Skill implements Castable {
 
 	@Override
 	public void update(float delta) {
+		super.update(delta);
 		
 		if(getX() - getStartX() > GameConfig.WORLD_WIDTH /2  )
 			alive = false;
-		
-		_movement.set(_velocity).scl(delta);
-		_position.add(_movement);		
-
-		if (_position.y < GameConfig.LOWER_VOID) {
-			evaporate();
-		}
-	}
-	
-	@Override
-	public void draw(Batch batch) {
-		super.draw(batch);
-		
-		castAnimationStateTime += Gdx.graphics.getDeltaTime(); 
-		if(castAnimation != null){
-			TextureRegion currentFrame = castAnimation.getKeyFrame(castAnimationStateTime, true);
-			batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());	
-		}
-		
 	}
 	
 	@Override
@@ -119,8 +95,8 @@ public abstract class Spell extends Skill implements Castable {
 			
 		if(change != null){
 			//_velocity.set(change).scl(_speed)
-			change.scl(_speed);
-			_velocity = change;
+			change.scl(speed);
+			velocity = change;
 		}
 	}
 	
@@ -229,7 +205,7 @@ public abstract class Spell extends Skill implements Castable {
 	}
 
 	public double getSpeed() {
-		return _speed;
+		return speed;
 	}
 
 	

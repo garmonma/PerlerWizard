@@ -50,12 +50,20 @@ public class Wand {
 	}
 			
 	
-	public Skill fire(float x,float y){
+	public Skill fire(float x, float y){
+		return fire(x, y, null);
 		
+	}
+	
+	public Skill fire(float x, float y, Float angle){
 		if(canFire() == true){
 			try {
 				Constructor<Skill> con = _skill.getConstructor(float.class,float.class);
-				Skill s = con.newInstance(x,y);			
+				Skill s = con.newInstance(x,y);
+				
+				if(angle != null)
+					s.setCastAngle(angle);
+				
 				return s;
 			} catch (Exception e) {
 				Gdx.app.log(tag, e.toString());
@@ -65,6 +73,5 @@ public class Wand {
 		
 		
 		return null;
-		
 	}
 }

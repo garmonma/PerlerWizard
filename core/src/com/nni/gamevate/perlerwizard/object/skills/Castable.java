@@ -7,7 +7,5 @@ package com.nni.gamevate.perlerwizard.object.skills;
  */
 public interface Castable {
 	
-	public void evaporate();
-	
 	public void transfiguration(Castable spell);
 }

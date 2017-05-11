@@ -51,7 +51,6 @@ public abstract class Enemy extends GameObject implements Attacker{
 	protected boolean chasing = false;
 	
 	protected Animation attackAnimation, idleAnimation;
-	protected float attackAnimationStateTime, idleAnimationStateTime;
 	
 	public int _waveNumber = 0;
 	
@@ -88,13 +87,13 @@ public abstract class Enemy extends GameObject implements Attacker{
 		}
 		
 		if(sleeping == false){
-			_position.x += world.lastCamDelta;
+			position.x += world.lastCamDelta;
 		}
 		
-		if(_waveNumber == 1 && _position.x > Level.wave2Start - 3){
+		if(_waveNumber == 1 && position.x > Level.wave2Start - 3){
 			Event e = new Event(EventType.JOINED_GROUP,1+"");			
 			EventManager.publish(e._type,e );
-		}else if(_waveNumber == 2 && _position.x > Level.wave3Start - 3){
+		}else if(_waveNumber == 2 && position.x > Level.wave3Start - 3){
 			Event e = new Event(EventType.JOINED_GROUP,2+"");			
 			EventManager.publish(e._type,e );
 		}
@@ -102,17 +101,20 @@ public abstract class Enemy extends GameObject implements Attacker{
 	
 	@Override
 	public void draw(Batch batch) {
-		// TODO Auto-generated method stub
 		super.draw(batch);
 		
+		stateTime += Gdx.graphics.getDeltaTime(); 
+		TextureRegion currentFrame = null;
+		
 		if(state == State.IDLE){
-			idleAnimationStateTime += Gdx.graphics.getDeltaTime(); 
-			TextureRegion currentFrame = idleAnimation.getKeyFrame(idleAnimationStateTime, true);
-			batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());	
+			currentFrame = idleAnimation.getKeyFrame(stateTime, true);	
 		} else if(state == State.ATTACKING){
-			
+			currentFrame = attackAnimation.getKeyFrame(stateTime, true);
 		}
 		
+		batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
+		
+		state = State.IDLE;
 	}
 
 	
@@ -143,9 +145,9 @@ public abstract class Enemy extends GameObject implements Attacker{
 			return;
 		
 		if(chasing == true){
-			_direction.set(new Vector2(-1,0));
+			direction.set(new Vector2(-1,0));
 		}else if(running == true){
-			_direction.set(new Vector2(1, 0));
+			direction.set(new Vector2(1, 0));
 		
 		}
 		
@@ -208,6 +210,7 @@ public abstract class Enemy extends GameObject implements Attacker{
 	}
 	
 	public Skill attack(){		
-		return basicWand.fire(_position.x + _width/2, _position.y + _height /2);
+		state = State.ATTACKING;
+		return basicWand.fire(position.x + width/2, position.y + height /2);
 	}	
 }

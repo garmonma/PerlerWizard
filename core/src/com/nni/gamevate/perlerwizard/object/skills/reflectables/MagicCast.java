@@ -12,9 +12,9 @@ import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
  *         cooldown of 3 seconds.
  *
  */
-public class WhiteSpell extends Spell {
+public class MagicCast extends Spell {
 	
-	public WhiteSpell(float x, float y){
+	public MagicCast(float x, float y){
 		super(x, y);
 		color = Color.WHITE;
 		
@@ -22,7 +22,7 @@ public class WhiteSpell extends Spell {
 		hitSound = PerlerWizard.assetManager.get(AssetDescriptors.DEFAULT_SPELL_HIT);
 	}
 
-	public WhiteSpell(float width, float height, float x, float y) {
+	public MagicCast(float width, float height, float x, float y) {
 		super(width, height, x, y);
 	
 	}

@@ -64,7 +64,7 @@ public class World implements Subscriber {
 		
 		//_hero.setX(x);
 		if(WaveGameScreen.victory == false)
-			_hero._position.x += lastCamDelta;
+			_hero.position.x += lastCamDelta;
 		
 		_hero.update(delta);
 		if(_hero.alive == false){

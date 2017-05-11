@@ -29,6 +29,7 @@ import com.nni.gamevate.perlerwizard.utils.UIElement;
  * @author Marcus Garmon
  * @date Dec 29, 2016
  */
+@Deprecated
 public class GamePlayController {
 
 	private Hero _hero;
@@ -140,38 +141,31 @@ public class GamePlayController {
 
 		for (Skill skill : _skills) {
 
-			if (skill.isEvaporated()) {
-				Gdx.app.log("Spell Evaporate", "Spell Evaporated!");
-				removeSpell(skill);
-			}
-
-			for (Enemy enemy : _enemies) {
-				if (!skill.enemySkill() && skill.collided(enemy)) {
-					if(skill instanceof Spell){
-						((Spell) skill).bounce(enemy);
-					}
-					
-					if(skill instanceof JavelinThrow){
-						skill.evaporate();
-					}
-						
-					if (enemy.isDead(skill.getDamage())) {
-						removeEnemy(enemy);
-					}
-				}
-				
-			}
+//			if (skill.isEvaporated()) {
+//				Gdx.app.log("Spell Evaporate", "Spell Evaporated!");
+//				removeSpell(skill);
+//			}
+//
+//			for (Enemy enemy : _enemies) {
+//				if (!skill.enemySkill() && skill.collided(enemy)) {
+//					if(skill instanceof Spell){
+//						((Spell) skill).bounce(enemy);
+//					}
+//					
+//					if(skill instanceof JavelinThrow){
+//						skill.evaporate();
+//					}
+//						
+//					if (enemy.isDead(skill.getDamage())) {
+//						removeEnemy(enemy);
+//					}
+//				}
+//				
+//			}
 
 			//TODO - Create a bounceable interface
 			if(skill instanceof Spell){
-				if (skill.collided(_hero) && skill.enemySkill()) {
-					// Damage hero
-				}
-				
-				if(skill.collided(_hero) && !skill.enemySkill()){
-					((Spell)skill).bounce(_hero);
-				}
-	
+		
 				if (skill.collided(_upperWall)) {
 					((Spell)skill).bounce(_upperWall);
 				}

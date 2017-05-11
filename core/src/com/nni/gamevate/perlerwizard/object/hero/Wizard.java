@@ -1,6 +1,5 @@
 package com.nni.gamevate.perlerwizard.object.hero;
 
-import com.badlogic.gdx.Gdx;
 import com.nni.gamevate.perlerwizard.object.hero.equipment.Equipment;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 import com.nni.gamevate.perlerwizard.object.skills.Skills;
@@ -14,15 +13,13 @@ public class Wizard extends Hero {
 		super(width, height, x, y, level);
 		_speed = 8;
 		//cur = (int) Math.ceil(_level * 16 * currentHealth);
-		skillManager.addSkills(Skills.WHITE_SPELL);
-		skillManager.addSkills(Skills.BLACK_SPELL);
-		skillManager.addSkills(Skills.BLUE_SPELL);
-		skillManager.addSkills(Skills.RED_SPELL);
-		skillManager.addSkills(Skills.YELLOW_SPELL);
-		skillManager.addSkills(Skills.GREEN_SPELL);
-		
-		
-		
+		skillManager.addSkills(Skills.MAGIC_CAST);
+		skillManager.addSkills(Skills.VOID_CAST);
+		skillManager.addSkills(Skills.WATER_CAST);
+		skillManager.addSkills(Skills.FIRE_CAST);
+		skillManager.addSkills(Skills.LIGHTNING_CAST);
+		skillManager.addSkills(Skills.FOREST_CAST);
+
 	}
 	
 //	@Override

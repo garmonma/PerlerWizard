@@ -14,9 +14,9 @@ public class Reflect extends Skill {
 		super(x, y);
 		_timeCounter = TimeUtils.millis();
 		
-		_width = 1.2f;
-		_height = .25f;
-		_speed = hero.getSpeed();
+		width = 1.2f;
+		height = .25f;
+		speed = hero.getSpeed();
 	}
 
 	public Reflect(float width, float height, float x, float y) {
@@ -26,29 +26,26 @@ public class Reflect extends Skill {
 
 	@Override
 	public void update(float delta) {
-		if(TimeUtils.millis() - _timeCounter > 100){
-			evaporate();
-		}
-		
+
 		move();
 		
 		if (getX() < 3.90f) {
-			_position.x = 3.90f;
+			position.x = 3.90f;
 		}
 
 		if (getX() > 14.90f) {
-			_position.x = 14.90f;
+			position.x = 14.90f;
 		}
 
 	}
 	
 	private void move() {
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.getAccelerometerY() < 0) {
-			_position.x -= _speed * Gdx.graphics.getDeltaTime();
+			position.x -= speed * Gdx.graphics.getDeltaTime();
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.getAccelerometerY() > 0)
-			_position.x += _speed * Gdx.graphics.getDeltaTime();
+			position.x += speed * Gdx.graphics.getDeltaTime();
 
 	}
 

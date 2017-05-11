@@ -40,7 +40,7 @@ public class Goblin extends Enemy {
 			
 			rockThrowLastAttack = TimeUtils.millis();
 			Skill rockThrow =  new RockThrow(getX() + getWidth() / 2, getY() + getHeight());
-			rockThrow.isEnemySpell(true);
+			//rockThrow.isEnemySpell(true);
 			return rockThrow;
 			
 		}

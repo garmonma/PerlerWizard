@@ -34,8 +34,9 @@ import com.nni.gamevate.perlerwizard.object.enemies.basic.Goblin;
 import com.nni.gamevate.perlerwizard.object.enemies.basic.Imp;
 import com.nni.gamevate.perlerwizard.object.enemies.basic.Orc;
 import com.nni.gamevate.perlerwizard.object.hero.Hero;
-import com.nni.gamevate.perlerwizard.object.skills.reflectables.RedSpell;
+import com.nni.gamevate.perlerwizard.object.skills.reflectables.FireCast;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.Spell;
+import com.nni.gamevate.perlerwizard.object.skills.throwables.AxeThrow;
 import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
 import com.nni.gamevate.perlerwizard.utils.Logger;
 
@@ -239,7 +240,7 @@ public class WaveRenderer {
 			_shapeRenderer.setColor(g.getColor());
 			if(g instanceof Hero || g instanceof Goblin 
 					|| g instanceof Orc || g instanceof Spell
-					|| g instanceof Imp){
+					|| g instanceof Imp || g instanceof AxeThrow) {
 				//_shapeRenderer.setColor(Color.BLUE);				
 			}				
 			else {
@@ -252,7 +253,8 @@ public class WaveRenderer {
 		_batch.begin();
 		
 		for(GameObject g :list){
-			if(g instanceof Spell || g instanceof Goblin || g instanceof Imp)
+			if(g instanceof Spell || g instanceof Goblin || g instanceof Imp
+					|| g instanceof AxeThrow)
 				g.draw(_batch);
 			
 			if(g instanceof Hero)

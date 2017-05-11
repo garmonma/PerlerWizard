@@ -1,14 +1,8 @@
 package com.nni.gamevate.perlerwizard.object.skills.reflectables;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Array;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 
@@ -21,25 +15,22 @@ import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
  *         burn which could destroy shields or lower defense.
  *
  */
-public class RedSpell extends Spell {
+public class FireCast extends Spell {
 	
-	public RedSpell(float x, float y) {
-		super(x, y);
+	public FireCast(float x, float y) {
+		this(.50f, .50f, x - (.50f/2), y - (.50f/2));
+
+	}
+
+	public FireCast(float width, float height, float x, float y) {
+		super(width, height, x, y);
 		color = Color.RED;
-		_speed = 7.5f;
-		_velocity.set(_direction).scl(_speed);
+		speed = 7.5f;
 		castSound = PerlerWizard.assetManager.get(AssetDescriptors.FIRE_SPELL_CAST);
 		hitSound = PerlerWizard.assetManager.get(AssetDescriptors.FIRE_SPELL_HIT);
 		
 		castAnimation = new Animation(0.10f, 
 				PerlerWizard.assetManager.get(AssetDescriptors.SPELLS).findRegions("fire_spell"), 
 				PlayMode.LOOP);
-	}
-
-	public RedSpell(float width, float height, float x, float y) {
-		super(width, height, x, y);
-		
-		_speed = 7.5f;
-		_velocity.set(_direction).scl(_speed);
 	}
 }

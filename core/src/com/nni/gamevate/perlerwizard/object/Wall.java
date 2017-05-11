@@ -30,7 +30,7 @@ public class Wall extends GameObject implements Collidable {
 	}
 	
 	public void setDirection(float degrees){
-		_direction.set(_position).setAngle(degrees);
+		direction.set(position).setAngle(degrees);
 	}
 
 }

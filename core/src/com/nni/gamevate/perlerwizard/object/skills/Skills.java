@@ -1,27 +1,31 @@
 package com.nni.gamevate.perlerwizard.object.skills;
 
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.BasicEnemySpell;
-import com.nni.gamevate.perlerwizard.object.skills.reflectables.BlackSpell;
-import com.nni.gamevate.perlerwizard.object.skills.reflectables.BlueSpell;
-import com.nni.gamevate.perlerwizard.object.skills.reflectables.GreenSpell;
-import com.nni.gamevate.perlerwizard.object.skills.reflectables.RedSpell;
-import com.nni.gamevate.perlerwizard.object.skills.reflectables.WhiteSpell;
-import com.nni.gamevate.perlerwizard.object.skills.reflectables.YellowSpell;
+import com.nni.gamevate.perlerwizard.object.skills.reflectables.VoidCast;
+import com.nni.gamevate.perlerwizard.object.skills.reflectables.WaterCast;
+import com.nni.gamevate.perlerwizard.object.skills.reflectables.ForestCast;
+import com.nni.gamevate.perlerwizard.object.skills.reflectables.FireCast;
+import com.nni.gamevate.perlerwizard.object.skills.reflectables.MagicCast;
+import com.nni.gamevate.perlerwizard.object.skills.reflectables.LightningCast;
+import com.nni.gamevate.perlerwizard.object.skills.throwables.AxeThrow;
+import com.nni.gamevate.perlerwizard.object.skills.throwables.RockThrow;
 
 public  enum  Skills {
 
 	//TODO move speeds into this class too
 	
 	// Wizard Spells
-	WHITE_SPELL(100, WhiteSpell.class),	
-	RED_SPELL(100,RedSpell.class),
-	BLUE_SPELL(100,BlueSpell.class),
-	YELLOW_SPELL(100,YellowSpell.class),
-	GREEN_SPELL(100,GreenSpell.class),
-	BLACK_SPELL(100,BlackSpell.class),
+	MAGIC_CAST(100, MagicCast.class),	
+	FIRE_CAST(100,FireCast.class),
+	WATER_CAST(100,WaterCast.class),
+	LIGHTNING_CAST(100,LightningCast.class),
+	FOREST_CAST(100,ForestCast.class),
+	VOID_CAST(100,VoidCast.class),
 	
 	// EnemySpells
-	BASIC_ENEMY_SPELL(10000,BasicEnemySpell.class);
+	BASIC_ENEMY_SPELL(10000,BasicEnemySpell.class),
+	AXE_THROW(4000, AxeThrow.class),
+	ROCK_THROW(4000, RockThrow.class);
 	
 	
 	private long _refreshTime;

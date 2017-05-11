@@ -15,13 +15,13 @@ import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
  * resets after bouncing off of the shield.
  *
  */
-public class YellowSpell extends Spell {
+public class LightningCast extends Spell {
 	
-	public YellowSpell(float x, float y){
+	public LightningCast(float x, float y){
 		super(x, y);
 		color = Color.YELLOW;
-		_speed = 10;
-		_velocity.set(_direction).scl(_speed);
+		speed = 10;
+		velocity.set(direction).scl(speed);
 		castSound = PerlerWizard.assetManager.get(AssetDescriptors.LIGHTNING_SPELL_CAST);
 		hitSound = PerlerWizard.assetManager.get(AssetDescriptors.LIGHTNING_SPELL_HIT);
 		
@@ -30,10 +30,10 @@ public class YellowSpell extends Spell {
 				PlayMode.LOOP);
 	}
 
-	public YellowSpell(float width, float height, float x, float y) {
+	public LightningCast(float width, float height, float x, float y) {
 		super(width, height, x, y);
 		
-		_speed = 10;
-		_velocity.set(_direction).scl(_speed);
+		speed = 10;
+		velocity.set(direction).scl(speed);
 	}
 }

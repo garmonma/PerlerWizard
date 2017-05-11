@@ -1,11 +1,14 @@
 package com.nni.gamevate.perlerwizard.object.enemies.basic;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.nni.gamevate.perlerwizard.PerlerWizard;
+import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
-import com.nni.gamevate.perlerwizard.object.enemies.minibosses.Ent.EntType;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
-import com.nni.gamevate.perlerwizard.object.skills.rushables.SpearRush;
-import com.nni.gamevate.perlerwizard.object.skills.throwables.RockThrow;
+import com.nni.gamevate.perlerwizard.object.skills.Skills;
+import com.nni.gamevate.perlerwizard.object.skills.Wand;
 
 public class Orc extends Enemy {
 	
@@ -15,62 +18,40 @@ public class Orc extends Enemy {
 		GIANT
 	}
 	
-	private OrcType _orcType = OrcType.MALE;
-
-	private final int ROCK_THROW_COOLDOWN = 5000;
-	private final int AXE_THROW_COOLDOWN = 15000;
-	private final int SPEAR_RUSH_COOLDOWN = 10000;
+	private OrcType orcType = OrcType.MALE;
 	
-	private long _rockThrowLastAttack;
-	private long _axeThrowLastAttack;
-	private long _spearRushLastAttack;
+	public Wand axeWand, rockWand, shockWaveWand;
 	
-
 	public Orc(float x, float y, int waveNumber){
-		super(1.0f, 1.0f, x, y, waveNumber);
+		this(1.0f, 1.0f, x, y, waveNumber);
 	}
 	
-	public Orc(int width, int height, float x, float y,int waveNumber) {
+	public Orc(float width, float height, float x, float y,int waveNumber) {
 		super(width, height, x, y,waveNumber);
 		
-		_rockThrowLastAttack = 0;
-		_axeThrowLastAttack = 0;
-		_spearRushLastAttack = 0;
 		_health = 2;
-		//_speed = 5;
+		
+		idleAnimation = new Animation(0.10f, 
+				PerlerWizard.assetManager.get(AssetDescriptors.ENEMIES).findRegions("orc_idle"), 
+				PlayMode.LOOP);
+		
+		attackAnimation = new Animation(1.0f, 
+				PerlerWizard.assetManager.get(AssetDescriptors.ENEMIES).findRegions("orc_attack"), 
+				PlayMode.LOOP);
+		
+		axeWand = new Wand(Skills.AXE_THROW.getType(), Skills.AXE_THROW.getRefreshTime());
+		
+		
 	}
 //
 	@Override
 	public Skill attack() {
-		
-		if(_rockThrowLastAttack == 0 
-				|| TimeUtils.millis() - _rockThrowLastAttack > ROCK_THROW_COOLDOWN ){
-			
-			_rockThrowLastAttack = TimeUtils.millis();
-			Skill rockThrow =  new RockThrow(getX() + getWidth() / 2, getY() + getHeight());
-			rockThrow.isEnemySpell(true);
-			_castingAttack = true;
-			return rockThrow;
-			
-		}
-		return null;
+		state = State.ATTACKING;
+		return axeWand.fire(position.x + width/2, position.y + height /2, 180.0f);
 	}
 
 	@Override
 	public Skill castSpecial() {
-		if(_castingAttack){
-			return null;
-		}
-		
-		if(_spearRushLastAttack == 0 
-				|| TimeUtils.millis() - _spearRushLastAttack > SPEAR_RUSH_COOLDOWN ){	
-			_spearRushLastAttack = TimeUtils.millis();
-			Skill spearRush =  new SpearRush(getWidth(), getHeight(), getX(), getY(), this);
-			spearRush.isEnemySpell(true);
-			
-			_castingSpecial = true;
-			return spearRush;
-		}
 		return null;
 	}
 
@@ -81,15 +62,17 @@ public class Orc extends Enemy {
 	}
 	
 	public OrcType getOrcType(){
-		return _orcType;
+		return orcType;
 	}
 	
 	public void setOrcType(OrcType type){
-		_orcType = type;
+		orcType = type;
 		
-		if(_orcType == OrcType.GIANT){
+		if(orcType == OrcType.GIANT){
 			_health = 50;
+		} else if(orcType == OrcType.FEMALE){
+			_health = 25;
+			rockWand = new Wand(Skills.ROCK_THROW.getType(), Skills.ROCK_THROW.getRefreshTime());
 		}
 	}
-
 }

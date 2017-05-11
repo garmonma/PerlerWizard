@@ -69,7 +69,7 @@ public class GameWorldScreen extends ScreenAdapter {
 		
 		if(_worldController.navigateGameScreen()){
 
-			_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard, new Chapter_01_01()));
+			_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard, new Chapter_01_05()));
 		}
 		
 		_worldController.update(delta);

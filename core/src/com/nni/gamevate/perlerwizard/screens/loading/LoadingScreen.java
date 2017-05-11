@@ -2,7 +2,6 @@ package com.nni.gamevate.perlerwizard.screens.loading;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,8 +12,6 @@ import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.screens.game.GameWorldScreen;
-import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
-import com.nni.gamevate.perlerwizard.waves.Level_01;
 
 public class LoadingScreen extends ScreenAdapter {
 	
@@ -68,6 +65,7 @@ public class LoadingScreen extends ScreenAdapter {
 		//Texture Atlas
 		_assetManager.load(AssetDescriptors.SPELLS);
 		_assetManager.load(AssetDescriptors.ENEMIES);
+		_assetManager.load(AssetDescriptors.OBJECTS);
 		
 		
 		//Misc

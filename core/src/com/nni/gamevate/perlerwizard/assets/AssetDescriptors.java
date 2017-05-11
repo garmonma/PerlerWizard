@@ -17,6 +17,9 @@ public class AssetDescriptors {
 	public static final AssetDescriptor<TextureAtlas> ENEMIES =
             new AssetDescriptor<TextureAtlas>(AssetPaths.ENEMIES, TextureAtlas.class);
 	
+	public static final AssetDescriptor<TextureAtlas> OBJECTS =
+            new AssetDescriptor<TextureAtlas>(AssetPaths.OBJECTS, TextureAtlas.class);
+	
 	
 	
 	
