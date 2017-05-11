@@ -3,6 +3,7 @@ package com.nni.gamevate.perlerwizard.object.skills;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.BasicEnemySpell;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.VoidCast;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.WaterCast;
+import com.nni.gamevate.perlerwizard.object.skills.rushables.Rush;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.ForestCast;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.FireCast;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.MagicCast;
@@ -25,7 +26,8 @@ public  enum  Skills {
 	// EnemySpells
 	BASIC_ENEMY_SPELL(10000,BasicEnemySpell.class),
 	AXE_THROW(4000, AxeThrow.class),
-	ROCK_THROW(4000, RockThrow.class);
+	ROCK_THROW(4000, RockThrow.class),
+	RUSH(6000, Rush.class);
 	
 	
 	private long _refreshTime;
@@ -49,7 +51,4 @@ public  enum  Skills {
 	public Class<Skill> getType() {
 		return _type;
 	}
-	
-	
-	
 }

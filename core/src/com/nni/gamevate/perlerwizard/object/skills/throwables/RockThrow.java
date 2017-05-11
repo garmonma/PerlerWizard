@@ -9,7 +9,7 @@ import com.nni.gamevate.perlerwizard.object.skills.Skill;
 public class RockThrow extends Skill {
 	
 	public RockThrow(float x, float y) {
-		this(0.20f, 0.20f, x, y);
+		this(0.45f, 0.45f, x, y);
 	}
 	
 	public RockThrow(float width, float height, float x, float y){
@@ -18,7 +18,7 @@ public class RockThrow extends Skill {
 		speed = 6;
 		
 		castAnimation = new Animation(0.10f, 
-				PerlerWizard.assetManager.get(AssetDescriptors.OBJECTS).findRegions("largeRock"), 
+				PerlerWizard.assetManager.get(AssetDescriptors.OBJECTS).findRegions("large_rock"), 
 				PlayMode.LOOP);
 	}
 }

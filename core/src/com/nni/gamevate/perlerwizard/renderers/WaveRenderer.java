@@ -36,7 +36,9 @@ import com.nni.gamevate.perlerwizard.object.enemies.basic.Orc;
 import com.nni.gamevate.perlerwizard.object.hero.Hero;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.FireCast;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.Spell;
+import com.nni.gamevate.perlerwizard.object.skills.rushables.Rush;
 import com.nni.gamevate.perlerwizard.object.skills.throwables.AxeThrow;
+import com.nni.gamevate.perlerwizard.object.skills.throwables.RockThrow;
 import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
 import com.nni.gamevate.perlerwizard.utils.Logger;
 
@@ -240,7 +242,8 @@ public class WaveRenderer {
 			_shapeRenderer.setColor(g.getColor());
 			if(g instanceof Hero || g instanceof Goblin 
 					|| g instanceof Orc || g instanceof Spell
-					|| g instanceof Imp || g instanceof AxeThrow) {
+					|| g instanceof Imp || g instanceof AxeThrow || g instanceof RockThrow
+					|| g instanceof Rush) {
 				//_shapeRenderer.setColor(Color.BLUE);				
 			}				
 			else {
@@ -254,14 +257,11 @@ public class WaveRenderer {
 		
 		for(GameObject g :list){
 			if(g instanceof Spell || g instanceof Goblin || g instanceof Imp
-					|| g instanceof AxeThrow)
+					|| g instanceof AxeThrow || g instanceof Orc || g instanceof RockThrow || g instanceof Rush)
 				g.draw(_batch);
 			
 			if(g instanceof Hero)
 				_batch.draw(_wizard, g.getX(), g.getY(), g.getWidth(), g.getHeight());	
-			
-			if(g instanceof Orc)
-				_batch.draw(_orc, g.getX(), g.getY(), g.getWidth(), g.getHeight());
 		}
 		
 		_batch.end();

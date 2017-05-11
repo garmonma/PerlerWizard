@@ -27,6 +27,11 @@ public abstract class Skill extends GameObject {
 		speed = BASE_SPEED;
 	}
 	
+	public Skill(float x, float y, GameObject g) {
+		super(x, y);
+		
+	}
+	
 	public Skill(float width, float height, float x, float y) {
 		super(width, height, x, y);
 		
