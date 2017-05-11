@@ -1,7 +1,6 @@
 package com.nni.gamevate.perlerwizard.object.skills.reflectables;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.GameObject;
@@ -19,8 +18,6 @@ import com.nni.gamevate.perlerwizard.object.skills.defense.EnergyShield;
  */
 public abstract class Spell extends Skill implements Castable {
 
-	
-	
 	private static final int DEFAULT_BOUNCE_COUNT = 3;
 
 	protected int _bounceCount;
@@ -30,13 +27,15 @@ public abstract class Spell extends Skill implements Castable {
 	
 	protected float _bounceAngle;
 	
+	//TODO this shouldn't be static... need to change the constructor on the spells
+	private static float defaultSize = 0.25f;
 	/**
 	 * Centers the projectile
 	 * @param x
 	 * @param y
 	 */
-	public Spell(float x, float y){	
-		this(0.5f,0.5f,x -.25f,y -.25f);		
+	public Spell(float x, float y){			
+		this(defaultSize,defaultSize,x -defaultSize/2,y -defaultSize/2);		
 	}
 
 
@@ -59,6 +58,7 @@ public abstract class Spell extends Skill implements Castable {
 				&& getX() <= ((GameObject) object).getX() + ((GameObject) object).getWidth()
 				&& getY() >= ((GameObject) object).getY()
 				&& getY() <= ((GameObject) object).getY() + ((GameObject) object).getHeight()) {
+			
 			
 			return true;
 		}

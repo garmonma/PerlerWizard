@@ -15,6 +15,7 @@ import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 import com.nni.gamevate.perlerwizard.object.skills.SkillManager;
 import com.nni.gamevate.perlerwizard.object.skills.Skills;
+import com.nni.gamevate.perlerwizard.utils.Logger;
 
 /**
  * 
@@ -23,18 +24,14 @@ import com.nni.gamevate.perlerwizard.object.skills.Skills;
  */
 public abstract class Hero extends GameObject implements Attacker, Equiper{
 	
-	
 	protected final float MAX_SPEED_MULTIPLIER = 1.25f;
 	protected final float MAX_SPEED = 10.0f;
 
 	protected float _speed;
-	protected int _hitPoints;
-	protected int _defense;
-	protected int _attack;
-	protected float _dodge;
-	
-	protected float _currentHealthPct;
 
+	protected int maxHealth;
+	protected float currentHealth;
+	
 	protected float _healthMultiplier;
 	protected float _speedMultiplier;
 
@@ -54,6 +51,7 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 		skillManager = new SkillManager();
 		_healthMultiplier = 1.0f;
 		_speedMultiplier = 1.0f;
+		currentHealth = 5;
 
 		_level = level;
 		color = Color.BROWN;
@@ -73,10 +71,7 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 		
 	}
 
-	@Override
-	public boolean collided(Collidable object) {
-		return false;
-	}
+	
 	
 	@Deprecated
 	public abstract Skill attack(int selectedSkill);
@@ -116,10 +111,7 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 	public void setLevel(int level) {
 		_level = level;
 	}
-	
-	public void setDodge(float dodge){
-		_dodge = dodge;
-	}
+		
 	
 	public void setSpeed(float speed){
 		setSpeed(speed, _speedMultiplier);
@@ -135,17 +127,14 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 	public void setDirection(Vector2 direction){
 		_direction = direction;
 	}
+
 	
-	public void setAttack(int attack){
-		_attack = attack;
-	}
-	
-	public void setDefense(int defense){
-		_defense = defense;
-	}
-	
-	public void setCurrentHealthPct(float healthPct){
-		_currentHealthPct = healthPct;
+	public void damage(float damage){
+		currentHealth -= damage;
+		
+		Logger.log("Current Health: " +currentHealth);
+		if(currentHealth <= 0)
+			alive = false;		
 	}
 	
 	public void castingSpecial(boolean casting){
@@ -156,29 +145,15 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 		_castingAttack = false;
 	}
 	
-	public int getHitPoints(){
-		return _hitPoints;
-	}
-	
 	public float getCurrentHealthPct(){
-		return _currentHealthPct;
+		return currentHealth;
 	}
 	
-	public int getDefense(){
-		return _defense;
-	}
-	
-	public int getAttack(){
-		return _attack;
-	}
 	
 	public float getSpeed(){
 		return _speed;
 	}
 	
-	public float getDodge(){
-		return _dodge;
-	}
 
 	@Override
 	public boolean isCastingSpecial() {
@@ -205,7 +180,7 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 	public String toString() {
 		return String.format(
 				"Hero [MAX_SPEED_MULTIPLIER=%s, MAX_SPEED=%s, _speed=%s, _hitPoints=%s, _defense=%s, _attack=%s, _dodge=%s, _currentHealthPct=%s, _healthMultiplier=%s, _speedMultiplier=%s, _level=%s]",
-				MAX_SPEED_MULTIPLIER, MAX_SPEED, _speed, _hitPoints, _defense, _attack, _dodge, _currentHealthPct,
+				MAX_SPEED_MULTIPLIER, MAX_SPEED, _speed, maxHealth, 0 ,0 ,0 , currentHealth,
 				_healthMultiplier, _speedMultiplier, _level);
 	}
 

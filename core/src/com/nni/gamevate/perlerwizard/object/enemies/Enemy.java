@@ -1,5 +1,7 @@
 package com.nni.gamevate.perlerwizard.object.enemies;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.events.Event;
@@ -22,8 +24,12 @@ import com.nni.gamevate.perlerwizard.waves.Level;
  */
 public abstract class Enemy extends GameObject implements Attacker{
 	
+	public enum ElementType{
+		DEFAULT, WATER, FIRE, LIGHTNING, FOREST
+	}
 	
 	protected int _health = 1;
+	protected ElementType _elementType = ElementType.DEFAULT;
 	protected float _chaseSpeed = 1;
 	protected float _retreatSpeed = 3;
 	
@@ -38,16 +44,16 @@ public abstract class Enemy extends GameObject implements Attacker{
 	
 	public int _waveNumber = 0;
 	
-	
-	
-	
+	public Vector2  formationPosition;
 	public Wand basicWand;
+	
 	
 	
 	public Enemy(float width, float height, float x, float y,int waveNumber) {
 		super(width, height, x, y);
 		_waveNumber = waveNumber;
 		basicWand  = new Wand(Skills.BASIC_ENEMY_SPELL.getType(), Skills.BASIC_ENEMY_SPELL.getRefreshTime());
+		formationPosition = new Vector2(_position);
 		
 	}
 
@@ -67,46 +73,58 @@ public abstract class Enemy extends GameObject implements Attacker{
 	
 	public void move(float delta){
 		
-			float speed =0;
-			if(chasing == true){
-				speed = _chaseSpeed;				
-			}else if( running == true){
-				speed = _retreatSpeed;
-			}
-		if(sleeping == false){
-			_position.x += world.lastCamDelta;
-		}
-			
-			
-		//_position.x += speed  * delta * _direction.x;
-		//_position.y += speed  * delta * _direction.y;
+		float speed =0;
 		
-		if(_waveNumber == 1 && _position.x > Level.wave2Start - 3){
+		if(chasing == true){
+			speed = _chaseSpeed;				
+		}else if( running == true){
+			speed = _retreatSpeed;
+		}
+		
+		if(sleeping == false){
+			formationPosition.x += world.lastCamDelta;
+		}
+		
+		
+		//TODO fix wave logic
+		if(_waveNumber == 1 && formationPosition.x > Level.wave2Start - 3){
 			Event e = new Event(EventType.JOINED_GROUP,1+"");			
 			EventManager.publish(e._type,e );
-		}else if(_waveNumber == 2 && _position.x > Level.wave3Start - 3){
+		}else if(_waveNumber == 2 && formationPosition.x > Level.wave3Start - 3){
 			Event e = new Event(EventType.JOINED_GROUP,2+"");			
 			EventManager.publish(e._type,e );
 		}
+		
+		
+		uniquePattern(delta);
 	}
 	
+	public void setHealth(int health){
+		_health = health;
+	}
  
+	protected abstract void uniquePattern(float delta);
+
 	public int getHealth(){
 		return _health;
 	}
 	
+	public void setElementType(ElementType type){
+		_elementType = type;
+	}
 	
+	public ElementType getElementType(){
+		return _elementType;
+	}
 	
 	@Override
 	public void castingSpecial(boolean casting) {
-		_castingSpecial = casting;
-		
+		_castingSpecial = casting;		
 	}
 	
 	@Override
 	public void castingAttack(boolean casting) {
-		_castingAttack = casting;
-		
+		_castingAttack = casting;		
 	}
 
 	@Override
@@ -121,21 +139,32 @@ public abstract class Enemy extends GameObject implements Attacker{
 	}
 	
 	@Override
+	public void draw(Batch batch) {
+		// TODO Auto-generated method stub
+		super.draw(batch);		
+	}
+	
+	@Override
+	public void draw(ShapeRenderer shapeRenderer) {
+		shapeRenderer.setColor(getColor());
+		shapeRenderer.rect(_position.x, _position.y, getWidth(), getHeight());
+	}
+	
+	@Override
 	public void update(float delta) {
 		if(sleeping == true)
 			return;
-		//Logger.log("Update");
+		
 		if(chasing == true){
 			_direction.set(new Vector2(-1,0));
 		}else if(running == true){
 			_direction.set(new Vector2(1, 0));
-			//Logger.log("Runing");
+		
 		}
 		
 		move(delta);
 		
 		WaveGameScreen._world.addEnemySkill(attack());
-		
 	}
 	
 	@Override
@@ -149,6 +178,10 @@ public abstract class Enemy extends GameObject implements Attacker{
 	}
 
 	public void setSleeping(boolean sleeping) {
+		if(sleeping == false){			
+			basicWand.setInitialCooldown(.5f);
+			//Logger.log("No longer sleeping");
+		}
 		this.sleeping = sleeping;
 	}
 
@@ -174,6 +207,4 @@ public abstract class Enemy extends GameObject implements Attacker{
 	public Skill attack(){		
 		return basicWand.fire(_position.x + _width/2, _position.y + _height /2);
 	}
-	
-	
 }

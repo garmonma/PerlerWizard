@@ -1,8 +1,8 @@
 package com.nni.gamevate.perlerwizard.assets;
 
-import java.nio.channels.AsynchronousServerSocketChannel;
-
 import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -54,8 +54,44 @@ public class AssetDescriptors {
 	public static final AssetDescriptor<Texture> DIRT_ROAD_VERTICAL = 
 			new AssetDescriptor<Texture>(AssetPaths.DIRT_ROAD_VERTICAL, Texture.class);
 
-	public static final AssetDescriptor FLOOR_BACKGROUND = 
+	public static final AssetDescriptor<Texture> FLOOR_BACKGROUND = 
 			new AssetDescriptor<Texture>(AssetPaths.FLOOR_BACKGROUND, Texture.class);
+	
+	public static final AssetDescriptor<Music> QUINT_SOUND_TRACK = 
+			new AssetDescriptor<Music>(AssetPaths.QUINT_SOUND_TRACK, Music.class);
+	
+	public static final AssetDescriptor<Texture> WIZARD = 
+			new AssetDescriptor<Texture>(AssetPaths.WIZARD, Texture.class);
+	
+	public static final AssetDescriptor<Sound> DEFAULT_SPELL_HIT = 
+			new AssetDescriptor<Sound>(AssetPaths.DEFAULT_SPELL_HIT, Sound.class);
+	
+	public static final AssetDescriptor<Sound> DEFAULT_SPELL_CAST = 
+			new AssetDescriptor<Sound>(AssetPaths.DEFAULT_SPELL_CAST, Sound.class);
+	
+	public static final AssetDescriptor<Sound> FIRE_SPELL_HIT = 
+			new AssetDescriptor<Sound>(AssetPaths.FIRE_SPELL_HIT, Sound.class);
+	
+	public static final AssetDescriptor<Sound> FIRE_SPELL_CAST = 
+			new AssetDescriptor<Sound>(AssetPaths.FIRE_SPELL_CAST, Sound.class);
+	
+	public static final AssetDescriptor<Sound> WATER_SPELL_HIT = 
+			new AssetDescriptor<Sound>(AssetPaths.WATER_SPELL_HIT, Sound.class);
+	
+	public static final AssetDescriptor<Sound> WATER_SPELL_CAST = 
+			new AssetDescriptor<Sound>(AssetPaths.WATER_SPELL_CAST, Sound.class);
+	
+	public static final AssetDescriptor<Sound> FOREST_SPELL_HIT = 
+			new AssetDescriptor<Sound>(AssetPaths.FOREST_SPELL_HIT, Sound.class);
+	
+	public static final AssetDescriptor<Sound> FOREST_SPELL_CAST = 
+			new AssetDescriptor<Sound>(AssetPaths.FOREST_SPELL_CAST, Sound.class);
+	
+	public static final AssetDescriptor<Sound> LIGHTNING_SPELL_HIT = 
+			new AssetDescriptor<Sound>(AssetPaths.LIGHTNING_SPELL_HIT, Sound.class);
+	
+	public static final AssetDescriptor<Sound> LIGHTNING_SPELL_CAST = 
+			new AssetDescriptor<Sound>(AssetPaths.LIGHTNING_SPELL_CAST, Sound.class);
 	
 	private AssetDescriptors(){}
 }

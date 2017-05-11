@@ -1,17 +1,21 @@
 package com.nni.gamevate.perlerwizard.screens.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.nni.gamevate.perlerwizard.GameWorldRenderer;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
+import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.controllers.GameWorldController;
 import com.nni.gamevate.perlerwizard.controllers.NetworkController;
+import com.nni.gamevate.perlerwizard.renderers.GameWorldRenderer;
 import com.nni.gamevate.perlerwizard.screens.menu.EquipmentScreen;
 import com.nni.gamevate.perlerwizard.screens.menu.EventScreen;
 import com.nni.gamevate.perlerwizard.screens.menu.MainMenuScreen;
 import com.nni.gamevate.perlerwizard.waves.Level_01;
+import com.nni.gamevate.perlerwizard.waves.chapter01.Chapter_01_01;
+import com.nni.gamevate.perlerwizard.waves.chapter02.Chapter_02_HoodedFigure;
+import com.nni.gamevate.perlerwizard.waves.chapter02.Chapter_02_RedSouth;
 
 /**
  * @author Marcus Garmon 12/29/2016
@@ -25,6 +29,8 @@ public class GameWorldScreen extends ScreenAdapter {
 	private AssetManager _assetManager;
 	private NetworkController _networkController;
 	
+	private Music _backgroundTrack;
+	
 	public GameWorldScreen(PerlerWizard perlerWizard) {
 		_perlerWizard = perlerWizard;
 		_batch = _perlerWizard.getSpriteBatch();
@@ -36,6 +42,10 @@ public class GameWorldScreen extends ScreenAdapter {
 		_worldController = new GameWorldController();
 		_networkController = _perlerWizard.getNetworkController();
 		_renderer = new GameWorldRenderer(_worldController, _networkController, _batch, _assetManager);
+		
+		_backgroundTrack = _assetManager.get(AssetDescriptors.QUINT_SOUND_TRACK);
+		_backgroundTrack.setLooping(true);
+		_backgroundTrack.play();
 	}
 	
 
@@ -55,7 +65,8 @@ public class GameWorldScreen extends ScreenAdapter {
 		}
 		
 		if(_worldController.navigateGameScreen()){
-			_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard,new Level_01()));
+
+			_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard, new Chapter_02_RedSouth()));
 		}
 		
 		_worldController.update(delta);
@@ -66,5 +77,19 @@ public class GameWorldScreen extends ScreenAdapter {
 	@Override
 	public void resize(int width, int height) {
 		_renderer.resize(width, height);
+	}
+	
+	@Override
+	public void hide() {
+		super.hide();
+		
+		_backgroundTrack.stop();
+	}
+	
+	@Override
+	public void dispose() {
+		super.dispose();
+		
+		_backgroundTrack.dispose();
 	}
 }

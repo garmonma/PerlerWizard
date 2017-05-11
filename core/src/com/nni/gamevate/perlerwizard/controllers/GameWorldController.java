@@ -5,10 +5,15 @@ import java.util.List;
 
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.object.Background;
+import com.nni.gamevate.perlerwizard.object.hero.HeroSprite;
+import com.nni.gamevate.perlerwizard.spawnloader.LevelSelector;
 import com.nni.gamevate.perlerwizard.utils.GameElement;
 import com.nni.gamevate.perlerwizard.utils.MapNode;
 import com.nni.gamevate.perlerwizard.utils.UIElement;
 import com.nni.gamevate.perlerwizard.utils.WorldMapInitializer;
+import com.nni.gamevate.perlerwizard.waves.Level;
+import com.nni.gamevate.perlerwizard.waves.chapter01.Chapter_01_01;
+import com.nni.gamevate.perlerwizard.waves.chapter01.Chapter_01_02;
 
 public class GameWorldController {
 	
@@ -27,11 +32,13 @@ public class GameWorldController {
 	private UIElement _levelIndicator;
 	private UIElement _expBar;
 	
-	private UIElement _heroSprite;
+	private HeroSprite _heroSprite;
 	
 	private List<UIElement> _filledElements = new ArrayList<UIElement>();
 	
 	private MapNode _selectedNode;
+	
+	private String _level;
 	
 	private boolean _navigateEquipmentScreen, _navigateEventScreen, _navigateMenuScreen,
 				_navigateGameScreen;
@@ -45,22 +52,27 @@ public class GameWorldController {
 		
 	}
 	
-
-	
 	private void init(){
 		_heroLevel = "12";
 		_heroGold  = "100121";
 		
-		
 		_castleBackground = new Background();
 		_castleBackground.setPosition(4, 0);
 		_castleBackground.setDimensions(
-				(int)GameConfig.WORLD_WIDTH - 5, 
+				(int)GameConfig.WORLD_WIDTH - 10, 
 				(int)GameConfig.WORLD_HEIGHT);
 		
 		String map = "maps\\gameWorldMap.txt";
 		WorldMapInitializer mapInitializer = new WorldMapInitializer(map);
 		_mapPositions = mapInitializer.getMap();
+		
+		_heroSprite = new HeroSprite(
+				_mapPositions.get(0).getX(), 
+				_mapPositions.get(0).getY(), 
+				_mapPositions.get(0).getWidth(), 
+				_mapPositions.get(0).getHeight());
+		
+		_heroSprite.changeNode(1);
 		
 		//_expBar = new UIElement(38,  GameConfig.UI_SCREEN_HEIGHT-20, 64, 16);
 		//_filledElements.add(_expBar);
@@ -180,5 +192,9 @@ public class GameWorldController {
 	
 	public boolean navigateMenuScreen(){
 		return _navigateMenuScreen;
+	}
+	
+	public Level getSelectedLevel(){
+		return LevelSelector.getLevel("ch0101");
 	}
 }

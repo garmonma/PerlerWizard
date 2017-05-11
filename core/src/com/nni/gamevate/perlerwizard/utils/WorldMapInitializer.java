@@ -33,10 +33,9 @@ public class WorldMapInitializer {
 					
 					processPosition(lineCount, position, Integer.parseInt(line[position]));
 					
-					System.out.print(line[position]);
-				}
+					Logger.log(line[position]);
+				}				
 				
-				System.out.println();
 				lineCount++;
 				
 			}
@@ -77,7 +76,7 @@ public class WorldMapInitializer {
 
 	public List<GameElement> getMap() {
 		for(GameElement e: _mapList){
-			System.out.println(e);
+			Logger.log(e.toString());
 		}
 		return _mapList;
 

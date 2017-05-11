@@ -38,7 +38,7 @@ public class WaveRenderer {
 	
 	private static final String tag = WaveRenderer.class.getSimpleName();
 	
-	private GamePlayController _controller;
+	
 	private NetworkController _networkController;
 	private OrthographicCamera _camera;
 	private OrthographicCamera _hudCamera;
@@ -64,6 +64,7 @@ public class WaveRenderer {
 	private Texture _reflectBox;
 	private Texture _background;
 	private TextureRegion _backgroundRegion;
+	private Texture _wizard;
 	
 	//Network Instances;
 	private MatchResult _matchResult;
@@ -76,8 +77,8 @@ public class WaveRenderer {
 	private Mesh mesh;
 	private ShaderProgram shader;
 
-	public WaveRenderer(GamePlayController controller, NetworkController networkController, SpriteBatch batch, AssetManager assetManager, OrthographicCamera camera,World world) {
-		_controller = controller;
+	public WaveRenderer( NetworkController networkController, SpriteBatch batch, AssetManager assetManager, OrthographicCamera camera,World world) {
+		
 		_networkController = networkController;
 		_batch = batch;
 		_assetManager = assetManager;
@@ -110,6 +111,8 @@ public class WaveRenderer {
 		_font = new BitmapFont();
 		_font.setColor(Color.WHITE);
 		//_font.getData().setScale(2);
+		
+		_wizard = _assetManager.get(AssetDescriptors.WIZARD);
 		
 		_background = _assetManager.get(AssetDescriptors.FLOOR_BACKGROUND);
 		shader = new ShaderProgram(DefaultShader.getDefaultVertexShader()
@@ -219,20 +222,27 @@ public class WaveRenderer {
 	
 	
 	public void drawGameObjects(){
+		ArrayList<GameObject> list = _world.getGameObjects();
+		
+		
 		_shapeRenderer.setProjectionMatrix(_camera.combined);
 		_shapeRenderer.begin(ShapeType.Filled);
-		ArrayList<GameObject> list = _world.getGameObjects();
+		
 		for(GameObject g :list){
-			_shapeRenderer.setColor(g.getColor());
-//			if(g instanceof Hero)
-//				_shapeRenderer.setColor(Color.BLUE);
-//			else if (g instanceof WhiteSpell)
-//				_shapeRenderer.setColor(Color.WHITE);
-//			else
-//				_shapeRenderer.setColor(Color.PINK);
-			_shapeRenderer.rect(g.getX(), g.getY(), g.getWidth(), g.getHeight());			
+			g.draw(_shapeRenderer);
+						
 		}
 		_shapeRenderer.end();
+		
+		_batch.setProjectionMatrix(_camera.combined);
+		_batch.begin();
+		for(GameObject g :list){
+			
+			if(g instanceof Hero)
+				_batch.draw(_wizard, g.getX(), g.getY(), g.getWidth(), g.getHeight());			
+		}
+		
+		_batch.end();
 	}
 
 	public void resize(int width, int height) {
@@ -247,10 +257,5 @@ public class WaveRenderer {
 		
 		
 	}
-
-
-	
-
-	
 	
 }

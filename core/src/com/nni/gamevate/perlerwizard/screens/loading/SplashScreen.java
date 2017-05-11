@@ -15,6 +15,7 @@ import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.screens.ScreenAdaptar;
 import com.nni.gamevate.perlerwizard.screens.game.GameWorldScreen;
+import com.nni.gamevate.perlerwizard.utils.Logger;
 
 /**
  * @author Marcus Garmon 12/29/2016
@@ -33,7 +34,7 @@ public class SplashScreen extends ScreenAdaptar {
 	private long _startTime;
 
 	public SplashScreen(PerlerWizard perlerWizard) {
-		System.out.println("On Splash Screen");
+		Logger.log("On Splash Screen");
 		
 		_perlerWizard = perlerWizard;
 		_batch = _perlerWizard.getSpriteBatch();
@@ -46,7 +47,7 @@ public class SplashScreen extends ScreenAdaptar {
 		
 		_batch.setProjectionMatrix(_camera.combined);
 		_batch.begin();
-		_batch.draw(_splashBackground, 0, 0);
+		_batch.draw(_splashBackground, 0, 0, 1600, 960);
 		_batch.end();
 		
 		if(TimeUtils.millis() - _startTime > 3000){

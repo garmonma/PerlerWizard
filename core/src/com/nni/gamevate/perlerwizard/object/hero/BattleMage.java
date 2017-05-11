@@ -34,7 +34,7 @@ public class BattleMage extends Hero {
 	public BattleMage(int width, int height, float x, float y, int level) {
 		super(width, height, x, y, level);
 		_speed = 7;
-		_hitPoints = (int) Math.ceil(_level * 22 * _currentHealthPct);
+		//_hitPoints = (int) Math.ceil(_level * 22 * currentHealth);
 	}
 	
 	@Override

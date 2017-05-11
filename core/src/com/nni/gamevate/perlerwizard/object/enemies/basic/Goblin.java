@@ -16,7 +16,9 @@ public class Goblin extends Enemy {
 	private long axeThrowLastAttack;
 	
 	
-	
+	public Goblin(float x, float y, int waveNumber){
+		super(0.7f,0.7f, x, y,waveNumber);
+	}
 
 	public Goblin(int width, int height, float x, float y,int waveNumber) {
 		super(width, height, x, y,waveNumber);
@@ -51,6 +53,12 @@ public class Goblin extends Enemy {
 	public Skill castDefense() {
 		return null;
 
+	}
+
+	@Override
+	protected void uniquePattern(float delta) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

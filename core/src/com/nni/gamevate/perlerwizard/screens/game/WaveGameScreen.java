@@ -22,7 +22,7 @@ public class WaveGameScreen extends ScreenAdaptar {
 	public static boolean victory;
 	
 	private PerlerWizard _perlerWizard;
-	private GamePlayController _gamePlayController;
+	
 	private WaveRenderer _waveRenderer;
 	
 	private SpriteBatch _batch;
@@ -32,26 +32,26 @@ public class WaveGameScreen extends ScreenAdaptar {
 	
 	private OrthographicCamera _camera;
 	
-	
 	public WaveGameScreen(PerlerWizard perlerWizard,Level level) {
 		_perlerWizard = perlerWizard;
 		_batch = _perlerWizard.getSpriteBatch();
 		_assetManager = _perlerWizard.getAssetManager();
 		gameOver = false;
 		victory = false;
+
 		_world = new World(level);
+
 	}
 	
 	@Override
 	public void show() {
 		Gdx.app.log(TAG, "Strarting Wave Screeen");
-		_networkController = _perlerWizard.getNetworkController();
-		_gamePlayController = new GamePlayController(_networkController);
-		_camera = new OrthographicCamera();
-		//_world = new World();
+		_networkController = _perlerWizard.getNetworkController();		
+		_camera = new OrthographicCamera();	
+
 		_inputHandler = new WaveInputHandler(_camera,_world);		
 		
-		_waveRenderer = new WaveRenderer(_gamePlayController, _networkController, _batch, _assetManager,_camera,_world);
+		_waveRenderer = new WaveRenderer(_networkController, _batch, _assetManager,_camera,_world);
 		Gdx.input.setInputProcessor(_inputHandler);
 		
 	}
@@ -59,11 +59,13 @@ public class WaveGameScreen extends ScreenAdaptar {
 	@Override
 	public void render(float delta) {		
 		//_gamePlayController.
-		_inputHandler.tick(delta);
 		
 		_world.tick(delta);
+		_inputHandler.tick(delta);
+
+		
 		_waveRenderer.render(delta);
-			// TODO do something different
+		
 		if((gameOver || victory) && _inputHandler.fire == true){
 			_perlerWizard.setScreen(new GameWorldScreen(_perlerWizard));
 		}

@@ -14,14 +14,14 @@ public  enum  Skills {
 	
 	// Wizard Spells
 	WHITE_SPELL(100, WhiteSpell.class),	
-	RED_SPELL(5000,RedSpell.class),
-	BLUE_SPELL(30000,BlueSpell.class),
-	YELLOW_SPELL(1000,YellowSpell.class),
-	GREEN_SPELL(60000,GreenSpell.class),
-	BLACK_SPELL(25000,BlackSpell.class),
+	RED_SPELL(100,RedSpell.class),
+	BLUE_SPELL(100,BlueSpell.class),
+	YELLOW_SPELL(100,YellowSpell.class),
+	GREEN_SPELL(100,GreenSpell.class),
+	BLACK_SPELL(100,BlackSpell.class),
 	
 	// EnemySpells
-	BASIC_ENEMY_SPELL(1000,BasicEnemySpell.class);
+	BASIC_ENEMY_SPELL(10000,BasicEnemySpell.class);
 	
 	
 	private long _refreshTime;

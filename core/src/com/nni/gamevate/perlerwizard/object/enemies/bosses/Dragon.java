@@ -34,4 +34,10 @@ public class Dragon extends Enemy {
 
 	}
 
+	@Override
+	protected void uniquePattern(float delta) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
