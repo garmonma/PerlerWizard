@@ -5,9 +5,22 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class AssetDescriptors {
+	
+	//Texture Atlas
+	public static final AssetDescriptor<TextureAtlas> SPELLS =
+            new AssetDescriptor<TextureAtlas>(AssetPaths.SPELLS, TextureAtlas.class);
+	
+	public static final AssetDescriptor<TextureAtlas> ENEMIES =
+            new AssetDescriptor<TextureAtlas>(AssetPaths.ENEMIES, TextureAtlas.class);
+	
+	
+	
+	
+	//Misc
 
 	public static final AssetDescriptor<Texture> SPLASH_BACKGROUND =
             new AssetDescriptor<Texture>(AssetPaths.SPLASH_BACKGROUND, Texture.class);
@@ -57,11 +70,25 @@ public class AssetDescriptors {
 	public static final AssetDescriptor<Texture> FLOOR_BACKGROUND = 
 			new AssetDescriptor<Texture>(AssetPaths.FLOOR_BACKGROUND, Texture.class);
 	
-	public static final AssetDescriptor<Music> QUINT_SOUND_TRACK = 
-			new AssetDescriptor<Music>(AssetPaths.QUINT_SOUND_TRACK, Music.class);
 	
+	//Characters
 	public static final AssetDescriptor<Texture> WIZARD = 
 			new AssetDescriptor<Texture>(AssetPaths.WIZARD, Texture.class);
+	
+	public static final AssetDescriptor<Texture> GOBLIN_ATTACK = 
+			new AssetDescriptor<Texture>(AssetPaths.GOBLIN_ATTACK, Texture.class);
+	
+	public static final AssetDescriptor<Texture> ORC_STEP_ONE = 
+			new AssetDescriptor<Texture>(AssetPaths.ORC_STEP_ONE, Texture.class);
+	
+	//Spells
+	public static final AssetDescriptor<Texture> FIRE_SPELL_SPRITE = 
+			new AssetDescriptor<Texture>(AssetPaths.FIRE_SPELL_SPRITE, Texture.class);
+	
+	
+	// Sounds and Music
+	public static final AssetDescriptor<Music> OVERWORLD_SOUNDTRACK = 
+			new AssetDescriptor<Music>(AssetPaths.OVERWORLD_SOUNDTRACK, Music.class);
 	
 	public static final AssetDescriptor<Sound> DEFAULT_SPELL_HIT = 
 			new AssetDescriptor<Sound>(AssetPaths.DEFAULT_SPELL_HIT, Sound.class);

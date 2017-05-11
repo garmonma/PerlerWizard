@@ -1,5 +1,9 @@
 package com.nni.gamevate.perlerwizard.object.enemies;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.events.Event;
@@ -26,6 +30,12 @@ public abstract class Enemy extends GameObject implements Attacker{
 		DEFAULT, WATER, FIRE, LIGHTNING, FOREST
 	}
 	
+	public enum State{
+		IDLE, ATTACKING, MOVING
+	}
+	
+	public State state = State.IDLE;
+	
 	protected int _health = 1;
 	protected ElementType _elementType = ElementType.DEFAULT;
 	protected float _chaseSpeed = 1;
@@ -40,11 +50,12 @@ public abstract class Enemy extends GameObject implements Attacker{
 	protected boolean running = false;
 	protected boolean chasing = false;
 	
+	protected Animation attackAnimation, idleAnimation;
+	protected float attackAnimationStateTime, idleAnimationStateTime;
+	
 	public int _waveNumber = 0;
 	
 	public Wand basicWand;
-	
-	
 	
 	public Enemy(float width, float height, float x, float y,int waveNumber) {
 		super(width, height, x, y);
@@ -89,21 +100,21 @@ public abstract class Enemy extends GameObject implements Attacker{
 		}
 	}
 	
-	public void setHealth(int health){
-		_health = health;
+	@Override
+	public void draw(Batch batch) {
+		// TODO Auto-generated method stub
+		super.draw(batch);
+		
+		if(state == State.IDLE){
+			idleAnimationStateTime += Gdx.graphics.getDeltaTime(); 
+			TextureRegion currentFrame = idleAnimation.getKeyFrame(idleAnimationStateTime, true);
+			batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());	
+		} else if(state == State.ATTACKING){
+			
+		}
+		
 	}
- 
-	public int getHealth(){
-		return _health;
-	}
-	
-	public void setElementType(ElementType type){
-		_elementType = type;
-	}
-	
-	public ElementType getElementType(){
-		return _elementType;
-	}
+
 	
 	@Override
 	public void castingSpecial(boolean casting) {
@@ -147,6 +158,22 @@ public abstract class Enemy extends GameObject implements Attacker{
 	public boolean collided(Collidable object) {		
 		return super.collided(object);
 		
+	}
+	
+	public void setHealth(int health){
+		_health = health;
+	}
+ 
+	public int getHealth(){
+		return _health;
+	}
+	
+	public void setElementType(ElementType type){
+		_elementType = type;
+	}
+	
+	public ElementType getElementType(){
+		return _elementType;
 	}
 
 	public boolean isSleeping() {

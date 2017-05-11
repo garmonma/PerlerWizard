@@ -1,7 +1,12 @@
 package com.nni.gamevate.perlerwizard.assets;
 
 public class AssetPaths {
+	
+	//Texture Atlas
+	public static final String SPELLS = "sprites/spells.atlas";
+	public static final String ENEMIES = "sprites/enemies.atlas";
 
+	// Misc
 	public static final String SPLASH_BACKGROUND = "backgrounds/tempSplashLogo.png";
 	public static final String CASTLE_BACKGROUND = "backgrounds/tempGameBackground.png";
 	public static final String UI_SKIN = "ui/uiskin.json";
@@ -21,11 +26,30 @@ public class AssetPaths {
 	public static final String DIRT_ROAD_VERTICAL = "verticalRoad.png";
 	public static final String DIRT_ROAD_HORIZONTAL = "horizontalRoad.png";
 	
+	
+	// Characters
 	public static final String WIZARD = "perler-V2-right-72-02.png";
 	
+	public static final String GOBLIN_ATTACK = "Goblin-Attack.png";
 	
-	public static final String QUINT_SOUND_TRACK = "music/quint.mp3";
+	public static final String ORC_STEP_ONE = "Orc_Step_Two.png";
 	
+	
+	//Skill Sprites
+	public static final String FIRE_SPELL_SPRITE = "FireSpellSprite.png";
+	public static final String FOREST_SPELL_SPRITE = "ForestSpellSprite.png";
+	public static final String ELECTRIC_SPELL_SPRITE_ONE = "ElectricSpellSpriteOne.png";
+	public static final String ELECTRIC_SPELL_SPRITE_TWO = "ElectricSpellSpriteTwo.png";
+	public static final String WATER_SPELL_SPRITE_ONE = "WaterSpellSpriteOne.png";
+	public static final String WATER_SPELL_SPRITE_TWO = "WaterSpellSpriteTwo.png";
+	public static final String SMALL_ROCK = "SmallRock.png";
+	public static final String LARGE_ROCK = "LargeRock.png";
+	public static final String AXE = "Axe.png";
+	
+	//Music
+	public static final String OVERWORLD_SOUNDTRACK = "music/QuintOverworld.mp3";
+	
+	//Sound Effects
 	public static final String DEFAULT_SPELL_HIT = "sounds/DefaultSpellHit.wav";
 	public static final String DEFAULT_SPELL_CAST = "sounds/DefaultSpellCast.wav";
 	public static final String FIRE_SPELL_HIT = "sounds/FireSpellHit.wav";

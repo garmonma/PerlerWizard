@@ -105,7 +105,7 @@ public abstract class GameObject implements Collidable, Drawable, Soundable {
 	
 	@Override
 	public void draw(Batch batch) {
-		// TODO Auto-generated method stub				
+		//batch.draw(_wizard, getX(), getY(), getWidth(), getHeight());		
 	}
 	
 	@Override
@@ -140,7 +140,5 @@ public abstract class GameObject implements Collidable, Drawable, Soundable {
 		return String.format(
 				"GameObject [_width=%s, _height=%s, _position=%s, _direction=%s, _velocity=%s, _movement=%s]", _width,
 				_height, _position, _direction, _velocity, _movement);
-	}
-	
-	
+	}	
 }

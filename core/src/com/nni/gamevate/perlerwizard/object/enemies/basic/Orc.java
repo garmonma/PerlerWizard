@@ -86,6 +86,10 @@ public class Orc extends Enemy {
 	
 	public void setOrcType(OrcType type){
 		_orcType = type;
+		
+		if(_orcType == OrcType.GIANT){
+			_health = 50;
+		}
 	}
 
 }

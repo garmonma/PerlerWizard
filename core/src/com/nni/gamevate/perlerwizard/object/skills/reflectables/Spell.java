@@ -1,7 +1,15 @@
 package com.nni.gamevate.perlerwizard.object.skills.reflectables;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Vector2;
 import com.nni.gamevate.perlerwizard.GameConfig;
+import com.nni.gamevate.perlerwizard.PerlerWizard;
+import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.Wall;
@@ -27,6 +35,9 @@ public abstract class Spell extends Skill implements Castable {
 	
 	protected float _bounceAngle;
 	
+	protected Animation castAnimation;
+	protected float castAnimationStateTime;
+	
 	//TODO this shouldn't be static... need to change the constructor on the spells
 	private static float defaultSize = 0.25f;
 	/**
@@ -35,7 +46,7 @@ public abstract class Spell extends Skill implements Castable {
 	 * @param y
 	 */
 	public Spell(float x, float y){			
-		this(defaultSize,defaultSize,x -defaultSize/2,y -defaultSize/2);		
+		this(defaultSize, defaultSize, x -defaultSize/2, y -defaultSize/2);		
 	}
 
 
@@ -50,6 +61,10 @@ public abstract class Spell extends Skill implements Castable {
 		
 		_direction.set(_position).setAngle(_bounceAngle).nor();
 		_velocity.set(_direction).scl(_speed);
+		
+		TextureAtlas atlas = PerlerWizard.assetManager.get(AssetDescriptors.SPELLS);
+
+		castAnimationStateTime = 0f;
 	}
 
 	@Override
@@ -78,6 +93,18 @@ public abstract class Spell extends Skill implements Castable {
 		if (_position.y < GameConfig.LOWER_VOID) {
 			evaporate();
 		}
+	}
+	
+	@Override
+	public void draw(Batch batch) {
+		super.draw(batch);
+		
+		castAnimationStateTime += Gdx.graphics.getDeltaTime(); 
+		if(castAnimation != null){
+			TextureRegion currentFrame = castAnimation.getKeyFrame(castAnimationStateTime, true);
+			batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());	
+		}
+		
 	}
 	
 	@Override

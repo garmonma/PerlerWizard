@@ -30,7 +30,12 @@ import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 import com.nni.gamevate.perlerwizard.network.gamedata.MatchResult;
 import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.World;
+import com.nni.gamevate.perlerwizard.object.enemies.basic.Goblin;
+import com.nni.gamevate.perlerwizard.object.enemies.basic.Imp;
+import com.nni.gamevate.perlerwizard.object.enemies.basic.Orc;
 import com.nni.gamevate.perlerwizard.object.hero.Hero;
+import com.nni.gamevate.perlerwizard.object.skills.reflectables.RedSpell;
+import com.nni.gamevate.perlerwizard.object.skills.reflectables.Spell;
 import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
 import com.nni.gamevate.perlerwizard.utils.Logger;
 
@@ -65,6 +70,8 @@ public class WaveRenderer {
 	private Texture _background;
 	private TextureRegion _backgroundRegion;
 	private Texture _wizard;
+	private Texture _goblin;
+	private Texture _orc;
 	
 	//Network Instances;
 	private MatchResult _matchResult;
@@ -113,6 +120,8 @@ public class WaveRenderer {
 		//_font.getData().setScale(2);
 		
 		_wizard = _assetManager.get(AssetDescriptors.WIZARD);
+		_goblin = _assetManager.get(AssetDescriptors.GOBLIN_ATTACK);
+		_orc = _assetManager.get(AssetDescriptors.ORC_STEP_ONE);
 		
 		_background = _assetManager.get(AssetDescriptors.FLOOR_BACKGROUND);
 		shader = new ShaderProgram(DefaultShader.getDefaultVertexShader()
@@ -121,8 +130,6 @@ public class WaveRenderer {
 		_background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		_backgroundRegion = new TextureRegion(_background);
 		_backgroundRegion.setRegion(0,0,_background.getWidth() *3,_background.getHeight());
-		
-
 	}
 
 	public void render(float delta) {
@@ -230,24 +237,29 @@ public class WaveRenderer {
 		
 		for(GameObject g :list){
 			_shapeRenderer.setColor(g.getColor());
-			if(g instanceof Hero){
+			if(g instanceof Hero || g instanceof Goblin 
+					|| g instanceof Orc || g instanceof Spell
+					|| g instanceof Imp){
 				//_shapeRenderer.setColor(Color.BLUE);				
 			}				
-			else
-//			else if (g instanceof WhiteSpell)
-//				_shapeRenderer.setColor(Color.WHITE);
-//			else
-//				_shapeRenderer.setColor(Color.PINK);
-			_shapeRenderer.rect(g.getX(), g.getY(), g.getWidth(), g.getHeight());			
+			else {
+			_shapeRenderer.rect(g.getX(), g.getY(), g.getWidth(), g.getHeight());	
+			}
 		}
 		_shapeRenderer.end();
 		
 		_batch.setProjectionMatrix(_camera.combined);
 		_batch.begin();
+		
 		for(GameObject g :list){
+			if(g instanceof Spell || g instanceof Goblin || g instanceof Imp)
+				g.draw(_batch);
 			
 			if(g instanceof Hero)
-				_batch.draw(_wizard, g.getX(), g.getY(), g.getWidth(), g.getHeight());			
+				_batch.draw(_wizard, g.getX(), g.getY(), g.getWidth(), g.getHeight());	
+			
+			if(g instanceof Orc)
+				_batch.draw(_orc, g.getX(), g.getY(), g.getWidth(), g.getHeight());
 		}
 		
 		_batch.end();
