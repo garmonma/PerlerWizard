@@ -20,7 +20,7 @@ public class Pixie extends Enemy {
 
 	public Pixie(float width, float height, float x, float y,int waveNumber) {
 		super(width, height, x, y,waveNumber);
-		_health = 1;
+		health = 1;
 		
 		idleAnimation = new Animation(0.10f, 
 				PerlerWizard.assetManager.get(AssetDescriptors.ENEMIES).findRegions("sprite"), 

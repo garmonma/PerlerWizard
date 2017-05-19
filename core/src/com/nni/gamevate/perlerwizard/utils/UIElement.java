@@ -6,33 +6,33 @@ package com.nni.gamevate.perlerwizard.utils;
  */
 public class UIElement implements Pressable {
 
-	private float _x;
-	private float _y;
-	private float _width;
-	private float _height;
+	private float x;
+	private float y;
+	private float width;
+	private float height;
 
 	public UIElement(float x, float y, float width, float height) {
-		_x = x;
-		_y = y;
-		_width = width;
-		_height = height;
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
 	}
 	
 	
 	public float getX() {
-		return _x;
+		return x;
 	}
 
 	public float getY() {
-		return _y;
+		return y;
 	}
 
 	public float getWidth() {
-		return _width;
+		return width;
 	}
 
 	public float getHeight() {
-		return _height;
+		return height;
 	}
 
 

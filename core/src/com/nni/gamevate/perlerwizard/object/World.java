@@ -22,7 +22,7 @@ public class World implements Subscriber {
 	private ArrayList<Skill> enemySkills = new ArrayList<Skill>();
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
-	private Hero _hero;
+	private Hero hero;
 	public float camXPos;
 	public float forwardLine;
 	public float lastCamDelta;
@@ -33,10 +33,10 @@ public class World implements Subscriber {
 	private Level loadedLevel;
 	
 	public World(Level level) {
-		_hero = new Wizard(1, 1, 0, GameConfig.WORLD_HEIGHT/2, 1);		
+		hero = new Wizard(1, 1, 0, GameConfig.WORLD_HEIGHT/2, 1);		
 		Logger.log("init World");
-		_hero.setWorld(this);
-		Logger.log(_hero.getWorld() + "");
+		hero.setWorld(this);
+		Logger.log(hero.getWorld() + "");
 		createWave(level);
 		EventManager.addSubscriber(EventType.ENEMY_ATTACKED, this);
 		EventManager.addSubscriber(EventType.ENEMY_DEATH, this);
@@ -58,16 +58,16 @@ public class World implements Subscriber {
 	}
 	
 	public Hero getHero(){
-		return _hero;
+		return hero;
 	}
 	public void updateHero(float delta){	
 		
 		//_hero.setX(x);
 		if(WaveGameScreen.victory == false)
-			_hero.position.x += lastCamDelta;
+			hero.position.x += lastCamDelta;
 		
-		_hero.update(delta);
-		if(_hero.alive == false){
+		hero.update(delta);
+		if(hero.alive == false){
 			WaveGameScreen.gameOver = true;
 		}
 	}
@@ -105,16 +105,16 @@ public class World implements Subscriber {
 		if(metWave1 == false && camXPos + 1 >= Level.wave1Start){
 			metWave1 = true;
 			Event e = new Event(EventType.ENEMY_ATTACKED,1+"");			
-			EventManager.publish(e._type,e );			
+			EventManager.publish(e.type,e );			
 			
 		}else if(metWave2 == false && camXPos + 1 >= Level.wave2Start){
 			metWave2 = true;
 			Event e = new Event(EventType.ENEMY_ATTACKED,2+"");			
-			EventManager.publish(e._type,e );
+			EventManager.publish(e.type,e );
 		}else if(metWave3 == false && camXPos + 1 >= Level.wave3Start){
 			metWave3 = true;
 			Event e = new Event(EventType.ENEMY_ATTACKED,3+"");			
-			EventManager.publish(e._type,e );
+			EventManager.publish(e.type,e );
 		}
 	}
 	public void addSkill(Skill s){
@@ -144,8 +144,8 @@ public class World implements Subscriber {
 		}
 		
 		for(Skill s : enemySkills){
-			if(s.alive == true && _hero.collided(s)){
-				_hero.damage(s.getDamage());
+			if(s.alive == true && hero.collided(s)){
+				hero.damage(s.getDamage());
 				s.setAlive(false);
 			}
 		}
@@ -210,7 +210,7 @@ public class World implements Subscriber {
 				}
 				
 				Event event = new Event(EventType.ENEMY_DEATH, e._waveNumber + "");
-				EventManager.publish(event._type, event);
+				EventManager.publish(event.type, event);
 				eItor.remove();
 			}else{
 				e.update(delta);
@@ -221,7 +221,7 @@ public class World implements Subscriber {
 	public ArrayList<GameObject> getGameObjects(){
 		ArrayList<GameObject> list = new ArrayList<GameObject>(skills);
 		list.addAll(enemySkills);
-		list.add(_hero);
+		list.add(hero);
 		list.addAll(enemies);
 		
 		return list;
@@ -250,7 +250,7 @@ public class World implements Subscriber {
 	@Override
 	public void handleEvent(Event e) {
 		
-		switch (e._type) {
+		switch (e.type) {
 		case ENEMY_ATTACKED:
 			handleEnemyAttacked(e);
 			break;
@@ -266,7 +266,7 @@ public class World implements Subscriber {
 	}
 	
 	private void handleEnemyAttacked(Event e){
-		switch(e._message){
+		switch(e.message){
 		case "1":
 			if(loadedLevel.wave1.isEmpty() == false){
 				camSpeed = chaseSpeed;	
@@ -286,7 +286,7 @@ public class World implements Subscriber {
 	}
 
 	private void handleEnemyDeath(Event e) {
-		switch (e._message) {
+		switch (e.message) {
 		case "1":
 			Logger.log("wave 1 enemy Death. enemies Remain:  " + loadedLevel.wave1.size());
 			

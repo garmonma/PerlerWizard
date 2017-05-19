@@ -16,14 +16,14 @@ import com.nni.gamevate.perlerwizard.object.GameObject;
  */
 public class Wand {
 	private static final String tag = Wand.class.getSimpleName();
-	public Class<Skill> _skill;
+	public Class<Skill> skill;
 	private long refreshTime;
 	private long lastFire;
 	
 	
 	
 	public Wand(Class<Skill>skill,long refreshTime) {
-		_skill = skill;
+		this.skill = skill;
 		this.refreshTime = refreshTime;
 	}
 	
@@ -41,7 +41,7 @@ public class Wand {
 	}
 	public Color getSkillColor(){
 		try{			
-			Constructor<Skill> con = _skill.getConstructor(float.class,float.class);
+			Constructor<Skill> con = skill.getConstructor(float.class,float.class);
 			Skill s = con.newInstance(-10,-10);	
 			return s.getColor();
 		}catch(Exception e){
@@ -59,7 +59,7 @@ public class Wand {
 	public Skill fire(float x, float y, Float angle){
 		if(canFire() == true){
 			try {
-				Constructor<Skill> con = _skill.getConstructor(float.class,float.class);
+				Constructor<Skill> con = skill.getConstructor(float.class,float.class);
 				Skill s = con.newInstance(x,y);
 				
 				if(angle != null)
@@ -77,7 +77,7 @@ public class Wand {
 	public Skill rush(float x, float y, Float angle, GameObject g ){
 		if(canFire() == true){
 			try {
-				Constructor<Skill> con = _skill.getConstructor(float.class, float.class, GameObject.class);
+				Constructor<Skill> con = skill.getConstructor(float.class, float.class, GameObject.class);
 				Skill s = con.newInstance(x,y, g);
 				
 				if(angle != null)

@@ -12,8 +12,8 @@ import com.opencsv.CSVReader;
 
 public class WorldMapInitializer {
 
-	private GameElement[][] _map = new GameElement[12][20];
-	private List<GameElement> _mapList = new ArrayList<GameElement>();
+	private GameElement[][] map = new GameElement[12][20];
+	private List<GameElement> mapList = new ArrayList<GameElement>();
 
 	public WorldMapInitializer(String url) {
 		FileHandle handle = Gdx.files.internal(url);
@@ -54,31 +54,31 @@ public class WorldMapInitializer {
 		case ElementType.EMPTY:
 			return;
 		case ElementType.BASIC_NODE:
-			_map[lineCount][position] = new MapNode(position, lineCount, element);
+			map[lineCount][position] = new MapNode(position, lineCount, element);
 			break;
 		case ElementType.HORIZONTAL_DIRT_ROAD:
-			_map[lineCount][position] = new MapRoad(position, lineCount, element);
+			map[lineCount][position] = new MapRoad(position, lineCount, element);
 			break;
 		case ElementType.VERTICAL_DIRT_ROAD:
-			_map[lineCount][position] = new MapRoad(position, lineCount, element);
+			map[lineCount][position] = new MapRoad(position, lineCount, element);
 			break;
 		case ElementType.KING_CHAMBER_NODE:
-			_map[lineCount][position] = new MapNode(position, lineCount, element);
+			map[lineCount][position] = new MapNode(position, lineCount, element);
 			break;
 			
 		}
 		
-		if(_map[lineCount][position] != null){
-			_mapList.add(_map[lineCount][position]);
+		if(map[lineCount][position] != null){
+			mapList.add(map[lineCount][position]);
 		}
 		
 	}
 
 	public List<GameElement> getMap() {
-		for(GameElement e: _mapList){
+		for(GameElement e: mapList){
 			Logger.log(e.toString());
 		}
-		return _mapList;
+		return mapList;
 
 	}
 

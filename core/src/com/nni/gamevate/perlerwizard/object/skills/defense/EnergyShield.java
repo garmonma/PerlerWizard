@@ -10,12 +10,12 @@ import com.nni.gamevate.perlerwizard.object.hero.Hero;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 
 public class EnergyShield extends Skill {
-	private long _timeCounter;
+	private long timeCounter;
 		
 	public EnergyShield(float x, float y, GameObject caster) {
 		super(x, y);
 		
-		_timeCounter = TimeUtils.millis();
+		timeCounter = TimeUtils.millis();
 		
 		width = .2f;
 		height = 1.25f;

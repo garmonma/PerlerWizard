@@ -34,14 +34,14 @@ public abstract class Enemy extends GameObject implements Attacker{
 	
 	public State state = State.IDLE;
 	
-	protected int _health = 1;
+	protected int health = 1;
 	protected ElementType _elementType = ElementType.DEFAULT;
-	protected float _chaseSpeed = 1;
-	protected float _retreatSpeed = 3;
+	protected float chaseSpeed = 1;
+	protected float retreatSpeed = 3;
 	
 	
-	protected boolean _castingSpecial;
-	protected boolean _castingAttack;
+	protected boolean castingSpecial;
+	protected boolean castingAttack;
     protected boolean cycleCompleted = false;	
 	
 	protected boolean sleeping = true;
@@ -67,9 +67,9 @@ public abstract class Enemy extends GameObject implements Attacker{
 		//TODO Uncomment
 //		Event e = new Event(EventType.ENEMY_ATTACKED,_waveNumber + "");		
 //		EventManager.publish(EventType.ENEMY_ATTACKED, e);
-		_health = _health - damage;
+		health -= damage;
 		
-		if(_health <= 0){
+		if(health <= 0){
 			alive = false;
 			return true;
 		} 
@@ -82,9 +82,9 @@ public abstract class Enemy extends GameObject implements Attacker{
 		float speed =0;
 		
 		if(chasing == true){
-			speed = _chaseSpeed;				
+			speed = chaseSpeed;				
 		}else if( running == true){
-			speed = _retreatSpeed;
+			speed = retreatSpeed;
 		}
 		
 		if(sleeping == false){
@@ -95,10 +95,10 @@ public abstract class Enemy extends GameObject implements Attacker{
 		//TODO fix wave logic
 		if(_waveNumber == 1 && formationPosition.x > Level.wave2Start - 3){
 			Event e = new Event(EventType.JOINED_GROUP,1+"");			
-			EventManager.publish(e._type,e );
+			EventManager.publish(e.type,e );
 		}else if(_waveNumber == 2 && formationPosition.x > Level.wave3Start - 3){
 			Event e = new Event(EventType.JOINED_GROUP,2+"");			
-			EventManager.publish(e._type,e );
+			EventManager.publish(e.type,e );
 		}
 		
 		
@@ -108,7 +108,7 @@ public abstract class Enemy extends GameObject implements Attacker{
 	protected abstract void uniquePattern(float delta);
 	
 	public int getHealth(){
-		return _health;
+		return health;
 	}
 	
 	@Override
@@ -132,23 +132,23 @@ public abstract class Enemy extends GameObject implements Attacker{
 	
 	@Override
 	public void castingSpecial(boolean casting) {
-		_castingSpecial = casting;		
+		castingSpecial = casting;		
 	}
 	
 	@Override
 	public void castingAttack(boolean casting) {
-		_castingAttack = casting;		
+		castingAttack = casting;		
 	}
 
 	@Override
 	public boolean isCastingSpecial() {
-		return _castingSpecial;
+		return castingSpecial;
 	}
 
 	@Override
 	public boolean isCastingAttack() {
 		// TODO Auto-generated method stub
-		return _castingAttack;
+		return castingAttack;
 	}
 	
 	
@@ -175,7 +175,7 @@ public abstract class Enemy extends GameObject implements Attacker{
 		
 		move(delta);
 		
-		WaveGameScreen._world.addEnemySkill(attack());
+		WaveGameScreen.world.addEnemySkill(attack());
 	}
 	
 	@Override
@@ -185,7 +185,7 @@ public abstract class Enemy extends GameObject implements Attacker{
 	}
 
 	public void setHealth(int health){
-		_health = health;
+		this.health = health;
 	}
  
 	
@@ -221,7 +221,7 @@ public abstract class Enemy extends GameObject implements Attacker{
 		return chasing;
 	}
 	public float getSpeed(){
-		return _chaseSpeed;
+		return chaseSpeed;
 	}
 
 	public void setChasing(boolean chasing) {

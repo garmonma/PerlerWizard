@@ -4,9 +4,9 @@ import com.nni.gamevate.perlerwizard.object.skills.Skill;
 
 public class JavelinThrow extends Skill {
 	
-	private float _angle;
+	private float angle;
 	
-	public long _timeCounter;
+	public long timeCounter;
 	
 	public JavelinThrow(float x, float y) {
 		this(.20f, 1.25f, x, y);

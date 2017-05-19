@@ -12,19 +12,19 @@ import com.nni.gamevate.perlerwizard.controllers.GameWorldController;
  */
 public class WorldInputHandler {
 
-	private GameWorldController _controller;
-	private Vector3 _touchCords;
-	private OrthographicCamera _camera;
-	private OrthographicCamera _hudCamera;
+	private GameWorldController controller;
+	private Vector3 touchCords;
+	private OrthographicCamera camera;
+	private OrthographicCamera hudCamera;
 
-	private InputAdapter _inputAdapter;
-	private InputAdapter _hudInputAdapter;
+	private InputAdapter inputAdapter;
+	private InputAdapter hudInputAdapter;
 
 	public WorldInputHandler(GameWorldController controller, OrthographicCamera camera, OrthographicCamera hudCamera) {
-		_controller = controller;
-		_touchCords = new Vector3();
-		_camera = camera;
-		_hudCamera = hudCamera;
+		this.controller = controller;
+		this.touchCords = new Vector3();
+		this.camera = camera;
+		this.hudCamera = hudCamera;
 		
 		initWorldAdapter();
 		initHudAdapter();
@@ -32,36 +32,36 @@ public class WorldInputHandler {
 	}
 	
 	public InputAdapter getWorldAdapter(){
-		return _inputAdapter;
+		return inputAdapter;
 	}
 	
 	public InputAdapter getHudAdapter(){
-		return _hudInputAdapter;
+		return hudInputAdapter;
 	}
 
 	private void initWorldAdapter() {
-		_inputAdapter = new InputAdapter() {
+		inputAdapter = new InputAdapter() {
 
 			@Override
 			public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-				_touchCords.set(screenX, screenY, 0);
-				_camera.unproject(_touchCords);
+				touchCords.set(screenX, screenY, 0);
+				camera.unproject(touchCords);
 
-				for (GameElement gameElement : _controller.getMapNodes()) {
+				for (GameElement gameElement : controller.getMapNodes()) {
 					MapNode mapNode;
 					
 					if(gameElement instanceof MapNode){
 						mapNode = (MapNode) gameElement;
 					
 					
-						if (_touchCords.x >= mapNode.getX() 
-								&& _touchCords.x <= mapNode.getX() + mapNode.getWidth()
-								&& _touchCords.y >= mapNode.getY()
-								&& _touchCords.y <= mapNode.getY() + mapNode.getHeight()) {
+						if (touchCords.x >= mapNode.getX() 
+								&& touchCords.x <= mapNode.getX() + mapNode.getWidth()
+								&& touchCords.y >= mapNode.getY()
+								&& touchCords.y <= mapNode.getY() + mapNode.getHeight()) {
 	
-							_controller.selectNode(mapNode);
-							_controller.initializedMatch(true);
+							controller.selectNode(mapNode);
+							controller.initializedMatch(true);
 							
 							return true;
 						}
@@ -74,38 +74,38 @@ public class WorldInputHandler {
 	}
 
 	private void initHudAdapter(){
-		_hudInputAdapter = new InputAdapter(){
+		hudInputAdapter = new InputAdapter(){
 			@Override
 			public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 				
-				_touchCords.set(screenX, screenY, 0);
-				_hudCamera.unproject(_touchCords);
+				touchCords.set(screenX, screenY, 0);
+				hudCamera.unproject(touchCords);
 				
 				
-				if (_touchCords.x >= _controller.getEquipmentButton().getX() 
-						&& _touchCords.x <= _controller.getEquipmentButton().getX() + _controller.getEquipmentButton().getWidth()
-						&& _touchCords.y >= _controller.getEquipmentButton().getY() 
-						&& _touchCords.y <= _controller.getEquipmentButton().getY() + _controller.getEquipmentButton().getHeight()) {
+				if (touchCords.x >= controller.getEquipmentButton().getX() 
+						&& touchCords.x <= controller.getEquipmentButton().getX() + controller.getEquipmentButton().getWidth()
+						&& touchCords.y >= controller.getEquipmentButton().getY() 
+						&& touchCords.y <= controller.getEquipmentButton().getY() + controller.getEquipmentButton().getHeight()) {
 
-					_controller.pressedEquipmentButton(true);
+					controller.pressedEquipmentButton(true);
 					return true;
 				}
 
-				if (_touchCords.x >= _controller.getEventsButton().getX() 
-						&& _touchCords.x <= _controller.getEventsButton().getX() + _controller.getEventsButton().getWidth()
-						&& _touchCords.y >= _controller.getEventsButton().getY() 
-						&& _touchCords.y <= _controller.getEventsButton().getY() + _controller.getEventsButton().getHeight()) {
+				if (touchCords.x >= controller.getEventsButton().getX() 
+						&& touchCords.x <= controller.getEventsButton().getX() + controller.getEventsButton().getWidth()
+						&& touchCords.y >= controller.getEventsButton().getY() 
+						&& touchCords.y <= controller.getEventsButton().getY() + controller.getEventsButton().getHeight()) {
 
-					_controller.pressedEventButton(true);
+					controller.pressedEventButton(true);
 					return true;
 				}
 
-				if (_touchCords.x >= _controller.getMenuButton().getX() 
-						&& _touchCords.x <= _controller.getMenuButton().getX() + _controller.getMenuButton().getWidth()
-						&& _touchCords.y >= _controller.getMenuButton().getY() 
-						&& _touchCords.y <= _controller.getMenuButton().getY() + _controller.getMenuButton().getHeight()) {
+				if (touchCords.x >= controller.getMenuButton().getX() 
+						&& touchCords.x <= controller.getMenuButton().getX() + controller.getMenuButton().getWidth()
+						&& touchCords.y >= controller.getMenuButton().getY() 
+						&& touchCords.y <= controller.getMenuButton().getY() + controller.getMenuButton().getHeight()) {
 
-					_controller.pressedMenuButton(true);
+					controller.pressedMenuButton(true);
 					return true;
 				}
 

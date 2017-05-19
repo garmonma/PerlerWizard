@@ -28,7 +28,7 @@ public class Orc extends Enemy {
 	public Orc(float width, float height, float x, float y,int waveNumber) {
 		super(width, height, x, y,waveNumber);
 		
-		_health = 2;
+		health = 2;
 		
 		idleAnimation = new Animation(0.10f, 
 				PerlerWizard.assetManager.get(AssetDescriptors.ENEMIES).findRegions("orc_idle"), 
@@ -74,9 +74,9 @@ public class Orc extends Enemy {
 		orcType = type;
 		
 		if(orcType == OrcType.GIANT){
-			_health = 50;
+			health = 50;
 		} else if(orcType == OrcType.FEMALE){
-			_health = 25;
+			health = 25;
 			rockWand = new Wand(Skills.ROCK_THROW.getType(), Skills.ROCK_THROW.getRefreshTime());
 		}
 	}

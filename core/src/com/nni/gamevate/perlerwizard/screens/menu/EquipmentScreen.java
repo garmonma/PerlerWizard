@@ -20,7 +20,7 @@ public class EquipmentScreen extends UIScreen {
 	
 	@Override
 	protected void back() {
-        _perlerWizard.setScreen(new GameWorldScreen(_perlerWizard));
+        perlerWizard.setScreen(new GameWorldScreen(perlerWizard));
 		
 	}
 

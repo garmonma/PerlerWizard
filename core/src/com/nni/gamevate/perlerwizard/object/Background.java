@@ -2,38 +2,38 @@ package com.nni.gamevate.perlerwizard.object;
 
 public class Background {
 
-	private int _x;
-	private int _y;
-	private int _width;
-	private int _height;
+	private int x;
+	private int y;
+	private int width;
+	private int height;
 	
 	public Background(){
 		
 	}
 	
 	public void setPosition(int x, int y){
-		_x = x;
-		_y = y;
+		this.x = x;
+		this.y = y;
 	}
 	
 	public void setDimensions(int width, int height){
-		_width = width;
-		_height = height;
+		this.width = width;
+		this.height = height;
 	}
 	
 	public int getX(){
-		return _x;
+		return x;
 	}
 	
 	public int getY(){
-		return _y;
+		return y;
 	}
 	
 	public int getWidth(){
-		return _width;
+		return width;
 	}
 	
 	public int getHeight(){
-		return _height;
+		return height;
 	}
 }

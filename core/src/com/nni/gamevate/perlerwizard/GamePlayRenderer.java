@@ -33,54 +33,54 @@ import com.nni.gamevate.perlerwizard.utils.ViewportUtils;
  */
 public class GamePlayRenderer {
 
-	private GamePlayController _controller;
-	private NetworkController _networkController;
-	private OrthographicCamera _camera;
-	private OrthographicCamera _hudCamera;
-	private Viewport _viewport;
-	private Viewport _hudViewport;
+	private GamePlayController controller;
+	private NetworkController networkController;
+	private OrthographicCamera camera;
+	private OrthographicCamera hudCamera;
+	private Viewport viewport;
+	private Viewport hudViewport;
 
-	private ShapeRenderer _shapeRenderer;
-	private SpriteBatch _batch;
+	private ShapeRenderer shapeRenderer;
+	private SpriteBatch batch;
 	
-	private BitmapFont _font;
+	private BitmapFont font;
 	private GamePlayInputHandler _inputHandler;
 	
 	private Hero _hero;
 	
-	private AssetManager _assetManager;
+	private AssetManager assetManager;
 	
-	private Texture _energyShieldBox;
-	private Texture _reflectBox;
+	private Texture energyShieldBox;
+	private Texture reflectBox;
 	
 	//Network Instances;
-	private MatchResult _matchResult;
+	private MatchResult matchResult;
 	
-	private boolean _matchRendering;
+	private boolean matchRendering;
 
 	public GamePlayRenderer(GamePlayController controller, NetworkController networkController, SpriteBatch batch, AssetManager assetManager) {
-		_controller = controller;
-		_networkController = networkController;
-		_batch = batch;
-		_assetManager = assetManager;
+		this.controller = controller;
+		this.networkController = networkController;
+		this.batch = batch;
+		this.assetManager = assetManager;
 		
 		init();
 	}
 	
 	private void init(){
-		_camera = new OrthographicCamera();
+		camera = new OrthographicCamera();
 
-		_inputHandler = new GamePlayInputHandler(_controller, _camera);
+		_inputHandler = new GamePlayInputHandler(controller, camera);
 		Gdx.input.setInputProcessor(_inputHandler.getSkillBarProcessor());
 
-		_viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, _camera);
+		viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera);
 
-		_shapeRenderer = new ShapeRenderer();
+		shapeRenderer = new ShapeRenderer();
 		
-		_energyShieldBox = _assetManager.get(AssetDescriptors.ENERGY_SHIELD_BOX);
-		_reflectBox = _assetManager.get(AssetDescriptors.REFLECT_SKILL_BOX);
+		energyShieldBox = assetManager.get(AssetDescriptors.ENERGY_SHIELD_BOX);
+		reflectBox = assetManager.get(AssetDescriptors.REFLECT_SKILL_BOX);
 		
-		_batch = new SpriteBatch();
+		batch = new SpriteBatch();
 		//_batch.setProjectionMatrix(_camera.combined);
 
 		//FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/blocky_font.TTF"));
@@ -92,35 +92,35 @@ public class GamePlayRenderer {
 
 		//generator.dispose();
 		
-		_matchResult = new MatchResult();
-		_matchResult.character_id = _networkController.getCharacterID();
+		matchResult = new MatchResult();
+		matchResult.character_id = networkController.getCharacterID();
 		
-		_matchRendering = true;
+		matchRendering = true;
 		
-		_hero = _controller.getHero();
+		_hero = controller.getHero();
 
 	}
 
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		_shapeRenderer.setProjectionMatrix(_camera.combined);
-		if(_controller.getEnemies().size == 0){
+		shapeRenderer.setProjectionMatrix(camera.combined);
+		if(controller.getEnemies().size == 0){
 			//Game Over - You won 
 			
-			_matchResult.experience = 15;
-			_matchResult.gold = 25;
-			_matchResult.health = 3;
-			_matchResult.node = 1;
-			_matchResult.storyMode = false;
-			_networkController.sendMatchResult(_matchResult);
+			matchResult.experience = 15;
+			matchResult.gold = 25;
+			matchResult.health = 3;
+			matchResult.node = 1;
+			matchResult.storyMode = false;
+			networkController.sendMatchResult(matchResult);
 			//Gdx.app.log("Match Result", "Sent");
 			
 			//How do I transition back to the World Map Screen;
 			
-			_matchRendering = false;
+			matchRendering = false;
 		}  else {	
-			ViewportUtils.drawGrid(_viewport, _shapeRenderer);
+			ViewportUtils.drawGrid(viewport, shapeRenderer);
 			drawGameBounds();
 			drawSkillSlots();
 			drawDefenseCastBox();
@@ -136,229 +136,229 @@ public class GamePlayRenderer {
 	}
 
 	public void resize(int width, int height) {
-		_viewport.update(width, height, true);
+		viewport.update(width, height, true);
 		// hudViewport.update(width, height, true);
 		// ViewportUtils.debugPixelPerUnit(viewport);
 	}
 
 	private void drawSkillSlots(){
-		_shapeRenderer.begin(ShapeType.Filled);
-		_shapeRenderer.setColor(Color.GRAY);
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setColor(Color.GRAY);
 
-		_shapeRenderer.rect(
-				_controller.getSkillSlotFive().getX(),
-				_controller.getSkillSlotFive().getY(),
-				_controller.getSkillSlotFive().getWidth(),
-				_controller.getSkillSlotFive().getHeight()
-		);
-
-		_shapeRenderer.setColor(Color.GREEN);
-		_shapeRenderer.rect(
-				_controller.getSkillSlotFour().getX(),
-				_controller.getSkillSlotFour().getY(),
-				_controller.getSkillSlotFour().getWidth(),
-				_controller.getSkillSlotFour().getHeight()
-		);
-		_shapeRenderer.setColor(Color.YELLOW);
-		_shapeRenderer.rect(
-				_controller.getSkillSlotThree().getX(),
-				_controller.getSkillSlotThree().getY(),
-				_controller.getSkillSlotThree().getWidth(),
-				_controller.getSkillSlotThree().getHeight()
-		);
-		_shapeRenderer.setColor(Color.BLUE);
-		_shapeRenderer.rect(
-				_controller.getSkillSlotTwo().getX(),
-				_controller.getSkillSlotTwo().getY(),
-				_controller.getSkillSlotTwo().getWidth(),
-				_controller.getSkillSlotTwo().getHeight()
-		);
-		_shapeRenderer.setColor(Color.RED);
-		_shapeRenderer.rect(
-				_controller.getSkillSlotOne().getX(),
-				_controller.getSkillSlotOne().getY(),
-				_controller.getSkillSlotOne().getWidth(),
-				_controller.getSkillSlotOne().getHeight()
+		shapeRenderer.rect(
+				controller.getSkillSlotFive().getX(),
+				controller.getSkillSlotFive().getY(),
+				controller.getSkillSlotFive().getWidth(),
+				controller.getSkillSlotFive().getHeight()
 		);
 
-		_shapeRenderer.end();
+		shapeRenderer.setColor(Color.GREEN);
+		shapeRenderer.rect(
+				controller.getSkillSlotFour().getX(),
+				controller.getSkillSlotFour().getY(),
+				controller.getSkillSlotFour().getWidth(),
+				controller.getSkillSlotFour().getHeight()
+		);
+		shapeRenderer.setColor(Color.YELLOW);
+		shapeRenderer.rect(
+				controller.getSkillSlotThree().getX(),
+				controller.getSkillSlotThree().getY(),
+				controller.getSkillSlotThree().getWidth(),
+				controller.getSkillSlotThree().getHeight()
+		);
+		shapeRenderer.setColor(Color.BLUE);
+		shapeRenderer.rect(
+				controller.getSkillSlotTwo().getX(),
+				controller.getSkillSlotTwo().getY(),
+				controller.getSkillSlotTwo().getWidth(),
+				controller.getSkillSlotTwo().getHeight()
+		);
+		shapeRenderer.setColor(Color.RED);
+		shapeRenderer.rect(
+				controller.getSkillSlotOne().getX(),
+				controller.getSkillSlotOne().getY(),
+				controller.getSkillSlotOne().getWidth(),
+				controller.getSkillSlotOne().getHeight()
+		);
+
+		shapeRenderer.end();
 		/////////////////////////////////////////////////////////////////
-		_shapeRenderer.begin(ShapeType.Line);
-		_shapeRenderer.setColor(Color.WHITE);
-		switch(_controller.getSelectedSkill()){	
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.setColor(Color.WHITE);
+		switch(controller.getSelectedSkill()){	
 		case 5:
-			_shapeRenderer.rect(
-					_controller.getSkillSlotFive().getX(),
-					_controller.getSkillSlotFive().getY(),
-					_controller.getSkillSlotFive().getWidth(),
-					_controller.getSkillSlotFive().getHeight()
+			shapeRenderer.rect(
+					controller.getSkillSlotFive().getX(),
+					controller.getSkillSlotFive().getY(),
+					controller.getSkillSlotFive().getWidth(),
+					controller.getSkillSlotFive().getHeight()
 			);
 			break;
 		case 4:
-			_shapeRenderer.rect(
-					_controller.getSkillSlotFour().getX(),
-					_controller.getSkillSlotFour().getY(),
-					_controller.getSkillSlotFour().getWidth(),
-					_controller.getSkillSlotFour().getHeight()
+			shapeRenderer.rect(
+					controller.getSkillSlotFour().getX(),
+					controller.getSkillSlotFour().getY(),
+					controller.getSkillSlotFour().getWidth(),
+					controller.getSkillSlotFour().getHeight()
 			);
 			break;
 		case 3:
-			_shapeRenderer.rect(
-					_controller.getSkillSlotThree().getX(),
-					_controller.getSkillSlotThree().getY(),
-					_controller.getSkillSlotThree().getWidth(),
-					_controller.getSkillSlotThree().getHeight()
+			shapeRenderer.rect(
+					controller.getSkillSlotThree().getX(),
+					controller.getSkillSlotThree().getY(),
+					controller.getSkillSlotThree().getWidth(),
+					controller.getSkillSlotThree().getHeight()
 			);
 			break;
 		case 2:
-			_shapeRenderer.rect(
-					_controller.getSkillSlotTwo().getX(),
-					_controller.getSkillSlotTwo().getY(),
-					_controller.getSkillSlotTwo().getWidth(),
-					_controller.getSkillSlotTwo().getHeight()
+			shapeRenderer.rect(
+					controller.getSkillSlotTwo().getX(),
+					controller.getSkillSlotTwo().getY(),
+					controller.getSkillSlotTwo().getWidth(),
+					controller.getSkillSlotTwo().getHeight()
 			);
 			break;
 		case 1:
-			_shapeRenderer.rect(
-					_controller.getSkillSlotOne().getX(),
-					_controller.getSkillSlotOne().getY(),
-					_controller.getSkillSlotOne().getWidth(),
-					_controller.getSkillSlotOne().getHeight()
+			shapeRenderer.rect(
+					controller.getSkillSlotOne().getX(),
+					controller.getSkillSlotOne().getY(),
+					controller.getSkillSlotOne().getWidth(),
+					controller.getSkillSlotOne().getHeight()
 			);
 			break;
 			
 		}
 		
-		_shapeRenderer.end();
+		shapeRenderer.end();
 	}
 
 	private void drawSigilButton() {
-		_shapeRenderer.begin(ShapeType.Filled);
-		_shapeRenderer.setColor(Color.CHARTREUSE);
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setColor(Color.CHARTREUSE);
 
-		_shapeRenderer.rect(
-				_controller.getSigilButton().getX(),
-				_controller.getSigilButton().getY(),
-				_controller.getSigilButton().getWidth(),
-				_controller.getSigilButton().getHeight()
+		shapeRenderer.rect(
+				controller.getSigilButton().getX(),
+				controller.getSigilButton().getY(),
+				controller.getSigilButton().getWidth(),
+				controller.getSigilButton().getHeight()
 		);
 
-		_shapeRenderer.end();
+		shapeRenderer.end();
 	}
 	
 	private void drawDefenseCastBox(){
-		_shapeRenderer.begin(ShapeType.Filled);
-		_shapeRenderer.setColor(Color.GRAY);
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setColor(Color.GRAY);
 
-		_shapeRenderer.rect(
-				_controller.getDefenseCastBox().getX(),
-				_controller.getDefenseCastBox().getY(),
-				_controller.getDefenseCastBox().getWidth(),
-				_controller.getDefenseCastBox().getHeight()
+		shapeRenderer.rect(
+				controller.getDefenseCastBox().getX(),
+				controller.getDefenseCastBox().getY(),
+				controller.getDefenseCastBox().getWidth(),
+				controller.getDefenseCastBox().getHeight()
 		);
 
-		_shapeRenderer.end();
+		shapeRenderer.end();
 		
-		_batch.setProjectionMatrix(_camera.combined);
-		_batch.begin();
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
 		
 		if(_hero instanceof Wizard)
-			_batch.draw(_energyShieldBox, 
-					_controller.getDefenseCastBox().getX(),
-					_controller.getDefenseCastBox().getY(),
-					_controller.getDefenseCastBox().getWidth(),
-					_controller.getDefenseCastBox().getHeight()
+			batch.draw(energyShieldBox, 
+					controller.getDefenseCastBox().getX(),
+					controller.getDefenseCastBox().getY(),
+					controller.getDefenseCastBox().getWidth(),
+					controller.getDefenseCastBox().getHeight()
 			);
 		
 		if(_hero instanceof BattleMage || _hero instanceof Knight){
-			_batch.draw(_reflectBox, 
-					_controller.getDefenseCastBox().getX(),
-					_controller.getDefenseCastBox().getY(),
-					_controller.getDefenseCastBox().getWidth(),
-					_controller.getDefenseCastBox().getHeight()
+			batch.draw(reflectBox, 
+					controller.getDefenseCastBox().getX(),
+					controller.getDefenseCastBox().getY(),
+					controller.getDefenseCastBox().getWidth(),
+					controller.getDefenseCastBox().getHeight()
 			);
 		}
 		
 		
-		_batch.end();
+		batch.end();
 	}
 	
 	private void drawHeroUIComponents() {	
-		UIElement node = _controller.getHealthNode();
-		float healthBarWidth = _controller.getHero().getCurrentHealthPct() * node.getWidth() / 100;
+		UIElement node = controller.getHealthNode();
+		float healthBarWidth = controller.getHero().getCurrentHealthPct() * node.getWidth() / 100;
 		
-		_shapeRenderer.begin(ShapeType.Line);
-		_shapeRenderer.setColor(Color.GREEN);
-		_shapeRenderer.rect(node.getX(), node.getY(), node.getWidth(), node.getHeight());
-		_shapeRenderer.end();
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.setColor(Color.GREEN);
+		shapeRenderer.rect(node.getX(), node.getY(), node.getWidth(), node.getHeight());
+		shapeRenderer.end();
 		
-		_shapeRenderer.begin(ShapeType.Filled);
-		_shapeRenderer.setColor(Color.GREEN);
-		_shapeRenderer.rect(node.getX(), node.getY(), healthBarWidth, node.getHeight());
-		_shapeRenderer.end();
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setColor(Color.GREEN);
+		shapeRenderer.rect(node.getX(), node.getY(), healthBarWidth, node.getHeight());
+		shapeRenderer.end();
 	}
 
 	private void drawHero() {
 		// Drawing hero
-		_shapeRenderer.begin(ShapeType.Line);
-		_shapeRenderer.setColor(Color.BLUE);
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.setColor(Color.BLUE);
 
-		_shapeRenderer.rect(_controller.getHero().getX(), _controller.getHero().getY(), 
-				_controller.getHero().getWidth(), _controller.getHero().getHeight());
+		shapeRenderer.rect(controller.getHero().getX(), controller.getHero().getY(), 
+				controller.getHero().getWidth(), controller.getHero().getHeight());
 
-		_shapeRenderer.end();
+		shapeRenderer.end();
 	}
 
 	private void drawEnemies() {
-		_shapeRenderer.begin(ShapeType.Line);
-		_shapeRenderer.setColor(Color.RED);
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.setColor(Color.RED);
 		
-		for (Enemy enemy : _controller.getEnemies()) {
-			_shapeRenderer.rect(enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight());
+		for (Enemy enemy : controller.getEnemies()) {
+			shapeRenderer.rect(enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight());
 
 		}
 
-		_shapeRenderer.end();
+		shapeRenderer.end();
 	}
 
 	private void drawGameBounds() {
-		_shapeRenderer.begin(ShapeType.Filled);
-		_shapeRenderer.setColor(Color.SLATE);
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setColor(Color.SLATE);
 
-		_shapeRenderer.rectLine(_controller.getLeftWall().getX(), _controller.getLeftWall().getY(), _controller.getLeftWall().getX(),
-				_controller.getLeftWall().getY() + _controller.getLeftWall().getHeight(), _controller.getLeftWall().getWidth());
+		shapeRenderer.rectLine(controller.getLeftWall().getX(), controller.getLeftWall().getY(), controller.getLeftWall().getX(),
+				controller.getLeftWall().getY() + controller.getLeftWall().getHeight(), controller.getLeftWall().getWidth());
 
-		_shapeRenderer.rectLine(_controller.getRightWall().getX(), _controller.getRightWall().getY(),
-				_controller.getRightWall().getX(), _controller.getRightWall().getY() + _controller.getRightWall().getHeight(),
-				_controller.getRightWall().getWidth());
+		shapeRenderer.rectLine(controller.getRightWall().getX(), controller.getRightWall().getY(),
+				controller.getRightWall().getX(), controller.getRightWall().getY() + controller.getRightWall().getHeight(),
+				controller.getRightWall().getWidth());
 
-		_shapeRenderer.rectLine(_controller.getUpperWall().getX(), _controller.getUpperWall().getY(),
-				_controller.getUpperWall().getX() + _controller.getUpperWall().getWidth(), _controller.getUpperWall().getY(),
-				_controller.getUpperWall().getHeight());
+		shapeRenderer.rectLine(controller.getUpperWall().getX(), controller.getUpperWall().getY(),
+				controller.getUpperWall().getX() + controller.getUpperWall().getWidth(), controller.getUpperWall().getY(),
+				controller.getUpperWall().getHeight());
 
-		_shapeRenderer.end();
+		shapeRenderer.end();
 	}
 
 	private void drawSpells() {
-		_shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.begin(ShapeType.Line);
 
-		for (Skill skill : _controller.getSkills()) {
-			_shapeRenderer.setColor(Color.WHITE);
+		for (Skill skill : controller.getSkills()) {
+			shapeRenderer.setColor(Color.WHITE);
 			
 			if( skill instanceof EnergyShield){
-				_shapeRenderer.rect(skill.getX(), 
+				shapeRenderer.rect(skill.getX(), 
 						skill.getY(), 
 						skill.getWidth(),
 						skill.getHeight());
 			} else {
-				_shapeRenderer.ellipse(skill.getX(), 
+				shapeRenderer.ellipse(skill.getX(), 
 							skill.getY(), 
 							skill.getWidth(),
 							skill.getHeight());
 			}
 		}
 
-		_shapeRenderer.end();
+		shapeRenderer.end();
 	}
 	
 	
@@ -375,6 +375,6 @@ public class GamePlayRenderer {
 	}
 	
 	public boolean isMatchRendering(){
-		return _matchRendering;
+		return matchRendering;
 	}
 }
