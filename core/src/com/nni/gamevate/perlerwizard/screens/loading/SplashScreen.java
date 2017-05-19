@@ -1,7 +1,6 @@
 package com.nni.gamevate.perlerwizard.screens.loading;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -14,7 +13,6 @@ import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.screens.ScreenAdaptar;
-import com.nni.gamevate.perlerwizard.screens.game.GameWorldScreen;
 import com.nni.gamevate.perlerwizard.utils.Logger;
 
 /**

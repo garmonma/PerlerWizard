@@ -12,8 +12,6 @@ import com.nni.gamevate.perlerwizard.utils.MapNode;
 import com.nni.gamevate.perlerwizard.utils.UIElement;
 import com.nni.gamevate.perlerwizard.utils.WorldMapInitializer;
 import com.nni.gamevate.perlerwizard.waves.Level;
-import com.nni.gamevate.perlerwizard.waves.chapter01.Chapter_01_01;
-import com.nni.gamevate.perlerwizard.waves.chapter01.Chapter_01_02;
 
 public class GameWorldController {
 	

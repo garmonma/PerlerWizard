@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
-import com.nni.gamevate.perlerwizard.screens.game.GameScreen;
 import com.nni.gamevate.perlerwizard.screens.game.GameWorldScreen;
 
 public abstract class UIScreen extends ScreenAdaptar {

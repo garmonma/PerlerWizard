@@ -12,14 +12,7 @@ import com.nni.gamevate.perlerwizard.renderers.GameWorldRenderer;
 import com.nni.gamevate.perlerwizard.screens.menu.EquipmentScreen;
 import com.nni.gamevate.perlerwizard.screens.menu.EventScreen;
 import com.nni.gamevate.perlerwizard.screens.menu.MainMenuScreen;
-import com.nni.gamevate.perlerwizard.waves.Level_01;
 import com.nni.gamevate.perlerwizard.waves.chapter01.Chapter_01_01;
-import com.nni.gamevate.perlerwizard.waves.chapter01.Chapter_01_02;
-import com.nni.gamevate.perlerwizard.waves.chapter01.Chapter_01_05;
-import com.nni.gamevate.perlerwizard.waves.chapter02.Chapter_02_HoodedFigure;
-import com.nni.gamevate.perlerwizard.waves.chapter02.Chapter_02_RedSouth;
-import com.nni.gamevate.perlerwizard.waves.chapter02.Chapter_02_RedWest;
-import com.nni.gamevate.perlerwizard.waves.chapter03.Chapter_03_01;
 
 /**
  * @author Marcus Garmon 12/29/2016

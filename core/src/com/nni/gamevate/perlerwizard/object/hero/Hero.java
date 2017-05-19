@@ -5,6 +5,10 @@ import java.util.Set;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.nni.gamevate.perlerwizard.GameConfig;
@@ -39,6 +43,8 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 	protected boolean _castingSpecial;
 	protected boolean _castingAttack;
 	
+	protected Animation idleAnimation;
+	protected Texture texture;
 	
 	protected SkillManager skillManager;
 	
@@ -69,8 +75,20 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 		position.x = MathUtils.clamp(position.x, world.camXPos - GameConfig.WORLD_WIDTH/2, world.forwardLine);
 		
 	}
-
 	
+	@Override
+	public void draw(ShapeRenderer shapeRenderer) {
+		if(texture == null){			
+			shapeRenderer.setColor(getColor());
+			shapeRenderer.rect(getX(), getY(), getWidth(), getHeight());
+		}
+	}
+
+	@Override
+	public void draw(Batch batch) {
+	
+		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
+	}
 	
 	@Deprecated
 	public abstract Skill attack(int selectedSkill);

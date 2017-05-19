@@ -5,7 +5,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
-import com.nni.gamevate.perlerwizard.controllers.GamePlayController;
 import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 import com.nni.gamevate.perlerwizard.object.World;
 import com.nni.gamevate.perlerwizard.renderers.WaveRenderer;

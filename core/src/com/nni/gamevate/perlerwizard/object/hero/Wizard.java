@@ -1,5 +1,7 @@
 package com.nni.gamevate.perlerwizard.object.hero;
 
+import com.nni.gamevate.perlerwizard.PerlerWizard;
+import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.object.hero.equipment.Equipment;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 import com.nni.gamevate.perlerwizard.object.skills.Skills;
@@ -19,14 +21,11 @@ public class Wizard extends Hero {
 		skillManager.addSkills(Skills.FIRE_CAST);
 		skillManager.addSkills(Skills.LIGHTNING_CAST);
 		skillManager.addSkills(Skills.FOREST_CAST);
+		texture = PerlerWizard.assetManager.get(AssetDescriptors.WIZARD);
+		
 
 	}
 	
-//	@Override
-//	public Skill attack(Skills selectedSkill) {
-//		//Gdx.app.log(tag, "Attacked");
-//		return skillManager.useSkill(selectedSkill, _position.x, _position.y);
-//	}
 
 	@Override
 	public Skill castSpecial() {

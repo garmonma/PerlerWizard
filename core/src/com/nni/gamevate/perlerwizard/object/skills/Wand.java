@@ -4,11 +4,9 @@ import java.lang.reflect.Constructor;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.object.GameObject;
-import com.nni.gamevate.perlerwizard.object.skills.rushables.Rush;
 
 /**
  * Think of this class as a factory for skills

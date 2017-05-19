@@ -2,7 +2,6 @@ package com.nni.gamevate.perlerwizard.renderers;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
@@ -18,27 +17,16 @@ import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
-import com.nni.gamevate.perlerwizard.controllers.GamePlayController;
 import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 import com.nni.gamevate.perlerwizard.network.gamedata.MatchResult;
 import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.World;
-import com.nni.gamevate.perlerwizard.object.enemies.basic.Goblin;
-import com.nni.gamevate.perlerwizard.object.enemies.basic.Imp;
-import com.nni.gamevate.perlerwizard.object.enemies.basic.Orc;
 import com.nni.gamevate.perlerwizard.object.hero.Hero;
-import com.nni.gamevate.perlerwizard.object.skills.reflectables.FireCast;
-import com.nni.gamevate.perlerwizard.object.skills.reflectables.Spell;
-import com.nni.gamevate.perlerwizard.object.skills.rushables.Rush;
-import com.nni.gamevate.perlerwizard.object.skills.throwables.AxeThrow;
-import com.nni.gamevate.perlerwizard.object.skills.throwables.RockThrow;
 import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
 import com.nni.gamevate.perlerwizard.utils.Logger;
 
@@ -66,20 +54,15 @@ public class WaveRenderer {
 	
 	//private Hero _hero;
 	
-	private AssetManager _assetManager;
-	
-	private Texture _energyShieldBox;
-	private Texture _reflectBox;
+	private AssetManager _assetManager;	
 	private Texture _background;
 	private TextureRegion _backgroundRegion;
-	private Texture _wizard;
-	private Texture _goblin;
-	private Texture _orc;
 	
 	//Network Instances;
-	private MatchResult _matchResult;
-	
+	private MatchResult _matchResult;	
 	private boolean _matchRendering;
+	
+	
 	//TODO change to global config
 	private int x = (int) GameConfig.WORLD_WIDTH;
 	private int y = (int) GameConfig.WORLD_HEIGHT;
@@ -112,19 +95,13 @@ public class WaveRenderer {
 		
 
 		_shapeRenderer = new ShapeRenderer();
-		
-		_energyShieldBox = _assetManager.get(AssetDescriptors.ENERGY_SHIELD_BOX);
-		_reflectBox = _assetManager.get(AssetDescriptors.REFLECT_SKILL_BOX);
-		
+
 		_batch = new SpriteBatch();		
 		
 		_font = new BitmapFont();
 		_font.setColor(Color.WHITE);
 		//_font.getData().setScale(2);
-		
-		_wizard = _assetManager.get(AssetDescriptors.WIZARD);
-		_goblin = _assetManager.get(AssetDescriptors.GOBLIN_ATTACK);
-		_orc = _assetManager.get(AssetDescriptors.ORC_STEP_ONE);
+
 		
 		_background = _assetManager.get(AssetDescriptors.FLOOR_BACKGROUND);
 		shader = new ShaderProgram(DefaultShader.getDefaultVertexShader()
@@ -239,17 +216,7 @@ public class WaveRenderer {
 		_shapeRenderer.begin(ShapeType.Filled);
 		
 		for(GameObject g :list){
-			g.draw(_shapeRenderer);
-			_shapeRenderer.setColor(g.getColor());
-			if(g instanceof Hero || g instanceof Goblin 
-					|| g instanceof Orc || g instanceof Spell
-					|| g instanceof Imp || g instanceof AxeThrow || g instanceof RockThrow
-					|| g instanceof Rush) {
-				//_shapeRenderer.setColor(Color.BLUE);				
-		}
-			else {
-			_shapeRenderer.rect(g.getX(), g.getY(), g.getWidth(), g.getHeight());	
-			}
+			g.draw(_shapeRenderer);		
 		}
 		_shapeRenderer.end();
 		
@@ -257,12 +224,9 @@ public class WaveRenderer {
 		_batch.begin();
 		
 		for(GameObject g :list){
-			if(g instanceof Spell || g instanceof Goblin || g instanceof Imp
-					|| g instanceof AxeThrow || g instanceof Orc || g instanceof RockThrow || g instanceof Rush)
-				g.draw(_batch);
-			
-			if(g instanceof Hero)
-				_batch.draw(_wizard, g.getX(), g.getY(), g.getWidth(), g.getHeight());			
+			g.draw(_batch);			
+//			if(g instanceof Hero)
+//				_batch.draw(_wizard, g.getX(), g.getY(), g.getWidth(), g.getHeight());			
 		}
 		
 		_batch.end();

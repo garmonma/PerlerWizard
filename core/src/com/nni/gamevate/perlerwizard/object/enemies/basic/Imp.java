@@ -1,18 +1,13 @@
 package com.nni.gamevate.perlerwizard.object.enemies.basic;
 
-import javax.swing.text.Position;
-
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
-import com.nni.gamevate.perlerwizard.object.enemies.Enemy.State;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 import com.nni.gamevate.perlerwizard.object.skills.Skills;
-import com.nni.gamevate.perlerwizard.utils.Logger;
 import com.nni.gamevate.perlerwizard.object.skills.Wand;
 
 public class Imp extends Enemy{
