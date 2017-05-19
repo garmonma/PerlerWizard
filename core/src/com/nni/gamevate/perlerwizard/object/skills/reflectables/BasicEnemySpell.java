@@ -7,9 +7,9 @@ public class BasicEnemySpell extends Spell {
 	public BasicEnemySpell(float x, float y) {
 		super(.25f,.25f,x, y);
 		color = Color.WHITE;
-		_speed = - BASE_SPEED;
+		speed = - BASE_SPEED;
 		//TODO fix this
-		_velocity.set(_direction).scl(_speed);
+		velocity.set(direction).scl(speed);
 	}
 
 }

@@ -1,6 +1,9 @@
 package com.nni.gamevate.perlerwizard.object.enemies;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -28,6 +31,12 @@ public abstract class Enemy extends GameObject implements Attacker{
 		DEFAULT, WATER, FIRE, LIGHTNING, FOREST
 	}
 	
+	public enum State{
+		IDLE, ATTACKING, MOVING
+	}
+	
+	public State state = State.IDLE;
+	
 	protected int _health = 1;
 	protected ElementType _elementType = ElementType.DEFAULT;
 	protected float _chaseSpeed = 1;
@@ -42,18 +51,18 @@ public abstract class Enemy extends GameObject implements Attacker{
 	protected boolean running = false;
 	protected boolean chasing = false;
 	
+	protected Animation attackAnimation, idleAnimation;
+	
 	public int _waveNumber = 0;
 	
 	public Vector2  formationPosition;
 	public Wand basicWand;
 	
-	
-	
 	public Enemy(float width, float height, float x, float y,int waveNumber) {
 		super(width, height, x, y);
 		_waveNumber = waveNumber;
 		basicWand  = new Wand(Skills.BASIC_ENEMY_SPELL.getType(), Skills.BASIC_ENEMY_SPELL.getRefreshTime());
-		formationPosition = new Vector2(_position);
+		formationPosition = new Vector2(position);
 		
 	}
 
@@ -99,23 +108,30 @@ public abstract class Enemy extends GameObject implements Attacker{
 		uniquePattern(delta);
 	}
 	
-	public void setHealth(int health){
-		_health = health;
-	}
- 
 	protected abstract void uniquePattern(float delta);
-
+	
 	public int getHealth(){
 		return _health;
 	}
 	
-	public void setElementType(ElementType type){
-		_elementType = type;
+	@Override
+	public void draw(Batch batch) {
+		super.draw(batch);
+	
+		stateTime += Gdx.graphics.getDeltaTime(); 
+		TextureRegion currentFrame = null;
+	
+		if(state == State.IDLE){
+			currentFrame = idleAnimation.getKeyFrame(stateTime, true);	
+		} else if(state == State.ATTACKING){
+			currentFrame = attackAnimation.getKeyFrame(stateTime, true);
 	}
 	
-	public ElementType getElementType(){
-		return _elementType;
+		batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
+		
+		state = State.IDLE;
 	}
+	
 	
 	@Override
 	public void castingSpecial(boolean casting) {
@@ -138,16 +154,11 @@ public abstract class Enemy extends GameObject implements Attacker{
 		return _castingAttack;
 	}
 	
-	@Override
-	public void draw(Batch batch) {
-		// TODO Auto-generated method stub
-		super.draw(batch);		
-	}
 	
 	@Override
 	public void draw(ShapeRenderer shapeRenderer) {
 		shapeRenderer.setColor(getColor());
-		shapeRenderer.rect(_position.x, _position.y, getWidth(), getHeight());
+		shapeRenderer.rect(position.x,position.y, getWidth(), getHeight());
 	}
 	
 	@Override
@@ -156,9 +167,9 @@ public abstract class Enemy extends GameObject implements Attacker{
 			return;
 		
 		if(chasing == true){
-			_direction.set(new Vector2(-1,0));
+			direction.set(new Vector2(-1,0));
 		}else if(running == true){
-			_direction.set(new Vector2(1, 0));
+			direction.set(new Vector2(1, 0));
 		
 		}
 		
@@ -171,6 +182,19 @@ public abstract class Enemy extends GameObject implements Attacker{
 	public boolean collided(Collidable object) {		
 		return super.collided(object);
 		
+	}
+
+	public void setHealth(int health){
+		_health = health;
+	}
+ 
+	
+	public void setElementType(ElementType type){
+		_elementType = type;
+	}
+	
+	public ElementType getElementType(){
+		return _elementType;
 	}
 
 	public boolean isSleeping() {
@@ -205,6 +229,7 @@ public abstract class Enemy extends GameObject implements Attacker{
 	}
 	
 	public Skill attack(){		
-		return basicWand.fire(_position.x + _width/2, _position.y + _height /2);
+		state = State.ATTACKING;
+		return basicWand.fire(position.x + width/2, position.y + height /2);
 	}
 }

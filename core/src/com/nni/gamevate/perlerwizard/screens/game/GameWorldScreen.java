@@ -14,8 +14,12 @@ import com.nni.gamevate.perlerwizard.screens.menu.EventScreen;
 import com.nni.gamevate.perlerwizard.screens.menu.MainMenuScreen;
 import com.nni.gamevate.perlerwizard.waves.Level_01;
 import com.nni.gamevate.perlerwizard.waves.chapter01.Chapter_01_01;
+import com.nni.gamevate.perlerwizard.waves.chapter01.Chapter_01_02;
+import com.nni.gamevate.perlerwizard.waves.chapter01.Chapter_01_05;
 import com.nni.gamevate.perlerwizard.waves.chapter02.Chapter_02_HoodedFigure;
 import com.nni.gamevate.perlerwizard.waves.chapter02.Chapter_02_RedSouth;
+import com.nni.gamevate.perlerwizard.waves.chapter02.Chapter_02_RedWest;
+import com.nni.gamevate.perlerwizard.waves.chapter03.Chapter_03_01;
 
 /**
  * @author Marcus Garmon 12/29/2016
@@ -43,7 +47,7 @@ public class GameWorldScreen extends ScreenAdapter {
 		_networkController = _perlerWizard.getNetworkController();
 		_renderer = new GameWorldRenderer(_worldController, _networkController, _batch, _assetManager);
 		
-		_backgroundTrack = _assetManager.get(AssetDescriptors.QUINT_SOUND_TRACK);
+		_backgroundTrack = _assetManager.get(AssetDescriptors.OVERWORLD_SOUNDTRACK);
 		_backgroundTrack.setLooping(true);
 		_backgroundTrack.play();
 	}
@@ -66,7 +70,7 @@ public class GameWorldScreen extends ScreenAdapter {
 		
 		if(_worldController.navigateGameScreen()){
 
-			_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard, new Chapter_02_RedSouth()));
+			_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard, new Chapter_01_01()));
 		}
 		
 		_worldController.update(delta);

@@ -17,13 +17,13 @@ public class EnergyShield extends Skill {
 		
 		_timeCounter = TimeUtils.millis();
 		
-		_width = .2f;
-		_height = 1.25f;
+		width = .2f;
+		height = 1.25f;
 		
 		if(caster instanceof Hero){
-			_speed = ((Hero)caster).getSpeed();
+			speed = ((Hero)caster).getSpeed();
 		} else {
-			_speed = ((Enemy)caster).getSpeed();
+			speed = ((Enemy)caster).getSpeed();
 		}
 	}
 
@@ -35,29 +35,25 @@ public class EnergyShield extends Skill {
 	@Override
 	public void update(float delta) {
 		
-		if(TimeUtils.millis() - _timeCounter > 10000){
-			evaporate();
-		}
-		
 		move();
 		
 		if (getX() < 3.90f) {
-			_position.x = 3.90f;
+			position.x = 3.90f;
 		}
 
 		if (getX() > 14.90f) {
-			_position.x = 14.90f;
+			position.x = 14.90f;
 		}
 
 	}
 	
 	private void move() {
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.getAccelerometerY() < 0) {
-			_position.x -= _speed * Gdx.graphics.getDeltaTime();
+			position.x -= speed * Gdx.graphics.getDeltaTime();
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.getAccelerometerY() > 0)
-			_position.x += _speed * Gdx.graphics.getDeltaTime();
+			position.x += speed * Gdx.graphics.getDeltaTime();
 
 	}
 

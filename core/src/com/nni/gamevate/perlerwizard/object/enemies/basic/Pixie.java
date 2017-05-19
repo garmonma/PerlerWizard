@@ -3,6 +3,10 @@ package com.nni.gamevate.perlerwizard.object.enemies.basic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.nni.gamevate.perlerwizard.PerlerWizard;
+import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 import com.nni.gamevate.perlerwizard.utils.Logger;
@@ -17,9 +21,13 @@ public class Pixie extends Enemy {
 		foo = MathUtils.random(0, MathUtils.PI * 2)  ; 
 	}
 
-	public Pixie(int width, int height, float x, float y,int waveNumber) {
+	public Pixie(float width, float height, float x, float y,int waveNumber) {
 		super(width, height, x, y,waveNumber);
-		// TODO Auto-generated constructor stub
+		_health = 1;
+		
+		idleAnimation = new Animation(0.10f, 
+				PerlerWizard.assetManager.get(AssetDescriptors.ENEMIES).findRegions("sprite"), 
+				PlayMode.LOOP);
 	}
 
 	@Override
@@ -47,8 +55,8 @@ public class Pixie extends Enemy {
 		float frequencyModifier = 0.5f;
 		foo += delta;
 		//Logger.log("hrm");
-		_position.x = formationPosition.x + MathUtils.cos(foo * frequencyModifier) * radius;
-		_position.y = formationPosition.y + MathUtils.sin(foo * frequencyModifier) * radius;
+		position.x = formationPosition.x + MathUtils.cos(foo * frequencyModifier) * radius;
+		position.y = formationPosition.y + MathUtils.sin(foo * frequencyModifier) * radius;
 		
 		//_position.x = formationPosition.x ;
 		//_position.y = formationPosition.y + foo ;

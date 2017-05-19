@@ -8,8 +8,8 @@ public class GameConfig {
 	
 	private GameConfig(){}
 	
-	public static final float WORLD_WIDTH = 20f; // world units
-	public static final float WORLD_HEIGHT = 12f; // world units
+	public static final float WORLD_WIDTH = 25f; // world units /32px
+	public static final float WORLD_HEIGHT = 15f; // world units /32px
 	
 	public static final float UI_SCREEN_WIDTH = 1600;
 	public static final float UI_SCREEN_HEIGHT = 960;

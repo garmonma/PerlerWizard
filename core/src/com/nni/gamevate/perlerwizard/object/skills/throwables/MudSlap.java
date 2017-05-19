@@ -11,12 +11,6 @@ public class MudSlap extends Skill {
 
 	public MudSlap(float width, float height, float x, float y) {
 		super(width, height, x, y);
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public void update(float delta) {
-		// TODO Auto-generated method stub
 
 	}
 

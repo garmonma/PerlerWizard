@@ -4,8 +4,11 @@ import java.lang.reflect.Constructor;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.nni.gamevate.perlerwizard.object.GameObject;
+import com.nni.gamevate.perlerwizard.object.skills.rushables.Rush;
 
 /**
  * Think of this class as a factory for skills
@@ -50,21 +53,44 @@ public class Wand {
 	}
 			
 	
-	public Skill fire(float x,float y){
+	public Skill fire(float x, float y){
+		return fire(x, y, null);
 		
+	}
+	
+	public Skill fire(float x, float y, Float angle){
 		if(canFire() == true){
 			try {
 				Constructor<Skill> con = _skill.getConstructor(float.class,float.class);
-				Skill s = con.newInstance(x,y);			
+				Skill s = con.newInstance(x,y);
+				
+				if(angle != null)
+					s.setCastAngle(angle);
+				
 				return s;
 			} catch (Exception e) {
 				Gdx.app.log(tag, e.toString());
 			}			
 		}
 		
-		
+		return null;
+	}
+	
+	public Skill rush(float x, float y, Float angle, GameObject g ){
+		if(canFire() == true){
+			try {
+				Constructor<Skill> con = _skill.getConstructor(float.class, float.class, GameObject.class);
+				Skill s = con.newInstance(x,y, g);
+				
+				if(angle != null)
+					s.setCastAngle(angle);
+				
+				return s;
+			} catch (Exception e) {
+				Gdx.app.log(tag, e.toString());
+			}			
+		}
 		
 		return null;
-		
 	}
 }

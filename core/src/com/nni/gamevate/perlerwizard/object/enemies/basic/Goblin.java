@@ -1,48 +1,45 @@
 package com.nni.gamevate.perlerwizard.object.enemies.basic;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.nni.gamevate.perlerwizard.PerlerWizard;
+import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
+import com.nni.gamevate.perlerwizard.object.enemies.Enemy.State;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
+import com.nni.gamevate.perlerwizard.object.skills.Skills;
+import com.nni.gamevate.perlerwizard.object.skills.Wand;
 import com.nni.gamevate.perlerwizard.object.skills.throwables.RockThrow;
 
 public class Goblin extends Enemy {
 	
-	private final int ROCK_THROW_COOLDOWN = 5000;
-	private final int AXE_THROW_COOLDOWN = 15000;
-	
-	private long rockThrowLastAttack;
-	private long axeThrowLastAttack;
-	
+	private Wand rockWand;
 	
 	public Goblin(float x, float y, int waveNumber){
-		super(0.7f,0.7f, x, y,waveNumber);
+		this(0.7f,0.7f, x, y, waveNumber);
 	}
 
-	public Goblin(int width, int height, float x, float y,int waveNumber) {
+	public Goblin(float width, float height, float x, float y,int waveNumber) {
 		super(width, height, x, y,waveNumber);
-		rockThrowLastAttack = 0;
-		axeThrowLastAttack = 0;
 		_health = 1;
-		//_speed = 3;
 		
+		idleAnimation = new Animation(0.10f, 
+				PerlerWizard.assetManager.get(AssetDescriptors.ENEMIES).findRegions("goblin_idle"), 
+				PlayMode.LOOP);
 		
+		attackAnimation = new Animation(1.0f, 
+				PerlerWizard.assetManager.get(AssetDescriptors.ENEMIES).findRegions("goblin_idle"), 
+				PlayMode.LOOP);
+		
+		rockWand = new Wand(Skills.ROCK_THROW.getType(), Skills.ROCK_THROW.getRefreshTime());
 	}
 
 	@Override
 	public Skill attack() {
-		if(rockThrowLastAttack == 0 
-				|| TimeUtils.millis() - rockThrowLastAttack > ROCK_THROW_COOLDOWN ){
-			
-			rockThrowLastAttack = TimeUtils.millis();
-			Skill rockThrow =  new RockThrow(getX() + getWidth() / 2, getY() + getHeight());
-			rockThrow.isEnemySpell(true);
-			return rockThrow;
-			
+		state = State.ATTACKING;
+		return rockWand.fire(position.x + width/2, position.y + height /2, 180.0f);
 		}
-		return null;
-	}
 
 	@Override
 	public Skill castSpecial() {

@@ -2,7 +2,6 @@ package com.nni.gamevate.perlerwizard.screens.loading;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,8 +12,6 @@ import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.screens.game.GameWorldScreen;
-import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
-import com.nni.gamevate.perlerwizard.waves.Level_01;
 
 public class LoadingScreen extends ScreenAdapter {
 	
@@ -65,6 +62,13 @@ public class LoadingScreen extends ScreenAdapter {
 		_viewport = new FitViewport(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT, _camera);
 		_renderer = new ShapeRenderer();
 		
+		//Texture Atlas
+		_assetManager.load(AssetDescriptors.SPELLS);
+		_assetManager.load(AssetDescriptors.ENEMIES);
+		_assetManager.load(AssetDescriptors.OBJECTS);
+		
+		
+		//Misc
 		_assetManager.load(AssetDescriptors.UI_SKIN);
 		_assetManager.load(AssetDescriptors.CASTLE_BACKGROUND);
 		_assetManager.load(AssetDescriptors.ENERGY_SHIELD_BOX);
@@ -86,9 +90,13 @@ public class LoadingScreen extends ScreenAdapter {
 		_assetManager.load(AssetDescriptors.DIRT_ROAD_VERTICAL);
 		
 		
-		_assetManager.load(AssetDescriptors.QUINT_SOUND_TRACK);
+		_assetManager.load(AssetDescriptors.OVERWORLD_SOUNDTRACK);
 		
 		_assetManager.load(AssetDescriptors.WIZARD);
+		
+		//Enemies
+		_assetManager.load(AssetDescriptors.GOBLIN_ATTACK);
+		_assetManager.load(AssetDescriptors.ORC_STEP_ONE);
 		
 		// Sound Effects
 		_assetManager.load(AssetDescriptors.FIRE_SPELL_CAST);

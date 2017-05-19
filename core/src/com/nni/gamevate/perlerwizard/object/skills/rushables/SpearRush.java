@@ -18,14 +18,14 @@ public class SpearRush extends Skill {
 	
 	public SpearRush(float x, float y, GameObject caster) {
 		super(x, y);
-		_width = 0;
-		_height = 0;
+		width = 0;
+		height = 0;
 		
 		_caster = caster;
 		if(caster instanceof Hero){
-			_speed = ((Hero)caster).getSpeed() + 1;
+			speed = ((Hero)caster).getSpeed() + 1;
 		} else {
-			_speed = ((Enemy)caster).getSpeed() + 1;
+			speed = ((Enemy)caster).getSpeed() + 1;
 		}	
 		
 		_originalPosition = new Vector2(_caster.getPosition());
@@ -36,9 +36,9 @@ public class SpearRush extends Skill {
 		
 		_caster = caster;
 		if(caster instanceof Hero){
-			_speed = ((Hero)caster).getSpeed() + 1;
+			speed = ((Hero)caster).getSpeed() + 1;
 		} else {
-			_speed = ((Enemy)caster).getSpeed() + 1;
+			speed = ((Enemy)caster).getSpeed() + 1;
 		}	
 		
 		_originalPosition = new Vector2(_caster.getPosition());
@@ -47,25 +47,17 @@ public class SpearRush extends Skill {
 
 	@Override
 	public void update(float delta) {
+		direction.set(position).setAngle(_angle).nor();
+		velocity.set(direction).scl(speed);
+		movement.set(velocity).scl(delta);
+		position.add(movement);	
 		
-		if(enemySkill()){
-			_angle = 270;
-		} else {
-			_angle = 90;
-		}
-		
-		_direction.set(_position).setAngle(_angle).nor();
-		_velocity.set(_direction).scl(_speed);
-		_movement.set(_velocity).scl(delta);
-		_position.add(_movement);	
-		
-		_caster.setPosition(_position);
+		_caster.setPosition(position);
 		//_caster.update(delta);
 		
-		if (_position.y < GameConfig.LOWER_VOID || _position.y > GameConfig.UPPER_WALL) {
+		if (position.y < GameConfig.LOWER_VOID || position.y > GameConfig.UPPER_WALL) {
 			_caster.setPosition(_originalPosition);
 			((Attacker)_caster).castingSpecial(false);
-			evaporate();
 		}
 	
 	}

@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.object.Attacker;
-import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.Equiper;
 import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
@@ -63,11 +62,11 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 
 	@Override
 	public void update(float delta) {
-		_position.x += _speed  * delta * _direction.x;
-		_position.y += _speed  * delta * _direction.y;
+		position.x += _speed  * delta * direction.x;
+		position.y += _speed  * delta * direction.y;
 		
-		_position.y = MathUtils.clamp(_position.y, 0, GameConfig.WORLD_HEIGHT - _height);
-		_position.x = MathUtils.clamp(_position.x, world.camXPos - GameConfig.WORLD_WIDTH/2, world.forwardLine);
+		position.y = MathUtils.clamp(position.y, 0, GameConfig.WORLD_HEIGHT - height);
+		position.x = MathUtils.clamp(position.x, world.camXPos - GameConfig.WORLD_WIDTH/2, world.forwardLine);
 		
 	}
 
@@ -77,16 +76,16 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 	public abstract Skill attack(int selectedSkill);
 	
 	public  Skill attack(Skills skill){
-		return skillManager.useSkill(skill, _position.x + _width/2, _position.y + _height /2);
+		return skillManager.useSkill(skill, position.x + width/2, position.y + height /2);
 	}
 
 	private void move() {
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.getAccelerometerY() < 0) {
-			_position.x -= _speed * _speedMultiplier * Gdx.graphics.getDeltaTime();
+			position.x -= _speed * _speedMultiplier * Gdx.graphics.getDeltaTime();
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.getAccelerometerY() > 0)
-			_position.x += _speed * _speedMultiplier * Gdx.graphics.getDeltaTime();
+			position.x += _speed * _speedMultiplier * Gdx.graphics.getDeltaTime();
 
 	}
 
@@ -125,7 +124,7 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 		}
 	}
 	public void setDirection(Vector2 direction){
-		_direction = direction;
+		this.direction = direction;
 	}
 
 	

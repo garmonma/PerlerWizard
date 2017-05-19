@@ -1,6 +1,10 @@
 package com.nni.gamevate.perlerwizard.object.skills;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.SoundType;
@@ -8,26 +12,30 @@ import com.nni.gamevate.perlerwizard.object.SoundType;
 public abstract class Skill extends GameObject {
 	protected static final float BASE_SPEED = 5f;
 	
-	private boolean _isEvaporated;
-	private boolean _isEnemySkill;
-	protected int _damage;
-	protected float _speed;
+	protected int damage;
+	protected float speed;
+	protected float castAngle;
 	
 	protected Sound castSound;
 	protected Sound hitSound;
 	
+	protected Animation castAnimation;
+	
 	public Skill(float x, float y){
 		super(x, y);
 		
-		_speed = BASE_SPEED;
-		_isEnemySkill = false;
+		speed = BASE_SPEED;
+	}
+	
+	public Skill(float x, float y, GameObject g) {
+		super(x, y);
 		
 	}
 	
 	public Skill(float width, float height, float x, float y) {
 		super(width, height, x, y);
 		
-		_speed = BASE_SPEED;
+		speed = BASE_SPEED;
 	}
 	
 	@Override
@@ -43,6 +51,14 @@ public abstract class Skill extends GameObject {
 	}
 	
 	@Override
+	public void update(float delta) {
+		direction.set(position).setAngle(castAngle).nor();
+		velocity.set(direction).scl(speed);
+		movement.set(velocity).scl(delta);
+		position.add(movement);		
+	}
+	
+	@Override
 	public void sound(SoundType st) {
 		if(castSound == null || hitSound == null){
 			return;
@@ -55,32 +71,35 @@ public abstract class Skill extends GameObject {
 		if(st == SoundType.SKILL_HIT){
 			hitSound.play(1.0f);
 		}
+	}
+	
+	@Override
+	public void draw(Batch batch) {
+		super.draw(batch);
 		
-		//castSound.dispose();
-	}
-	
-	public void evaporate(){
-		_isEvaporated = true;
-	}
-	
-	public boolean isEvaporated(){
-		return _isEvaporated;
-	}
-	
-	public void isEnemySpell(boolean t){
-		_isEnemySkill = t;
-	}
-	
-	public boolean enemySkill(){
-		return _isEnemySkill;
+		stateTime += Gdx.graphics.getDeltaTime(); 
+		TextureRegion currentFrame = null;
+
+		if(castAnimation != null){
+		    currentFrame = castAnimation.getKeyFrame(stateTime, true);
+			batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());	
+		}
 	}
 	
 	public int getDamage(){
-		return _damage;
+		return damage;
 	}
 
 	public float getStartX() {
-		return _originalPosition.x;		
+		return originalPosition.x;		
+	}
+	
+	public float getCastAngle(){
+		return castAngle;
+	}
+	
+	public void setCastAngle(float angle){
+		castAngle = angle;
 	}
 
 }

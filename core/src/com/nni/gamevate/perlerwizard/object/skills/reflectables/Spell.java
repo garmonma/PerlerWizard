@@ -1,7 +1,15 @@
 package com.nni.gamevate.perlerwizard.object.skills.reflectables;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Vector2;
 import com.nni.gamevate.perlerwizard.GameConfig;
+import com.nni.gamevate.perlerwizard.PerlerWizard;
+import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.Wall;
@@ -28,28 +36,29 @@ public abstract class Spell extends Skill implements Castable {
 	protected float _bounceAngle;
 	
 	//TODO this shouldn't be static... need to change the constructor on the spells
-	private static float defaultSize = 0.25f;
+	private static float defaultSize = 0.50f;
 	/**
 	 * Centers the projectile
 	 * @param x
 	 * @param y
 	 */
 	public Spell(float x, float y){			
-		this(defaultSize,defaultSize,x -defaultSize/2,y -defaultSize/2);		
+		this(defaultSize, defaultSize, x -defaultSize/2, y -defaultSize/2);		
 	}
 
 
 	public Spell(float width, float height, float x, float y) {
 		super(width, height, x, y);
 		
-		_damage = 1;
+		damage = 1;
 		
 		_bounceCount = DEFAULT_BOUNCE_COUNT;
 		_bounceCounter = _bounceCount;
 		_bounceAngle = 0;
 		
-		_direction.set(_position).setAngle(_bounceAngle).nor();
-		_velocity.set(_direction).scl(_speed);
+		direction.set(position).setAngle(_bounceAngle).nor();
+		velocity.set(direction).scl(speed);
+
 	}
 
 	@Override
@@ -68,16 +77,10 @@ public abstract class Spell extends Skill implements Castable {
 
 	@Override
 	public void update(float delta) {
+		super.update(delta);
 		
-		if(getX() - getStartX() > GameConfig.WORLD_WIDTH /2  )
+		if(Math.abs(getX() - getStartX()) > GameConfig.WORLD_WIDTH /2  )
 			alive = false;
-		
-		_movement.set(_velocity).scl(delta);
-		_position.add(_movement);		
-
-		if (_position.y < GameConfig.LOWER_VOID) {
-			evaporate();
-		}
 	}
 	
 	@Override
@@ -92,8 +95,8 @@ public abstract class Spell extends Skill implements Castable {
 			
 		if(change != null){
 			//_velocity.set(change).scl(_speed)
-			change.scl(_speed);
-			_velocity = change;
+			change.scl(speed);
+			velocity = change;
 		}
 	}
 	
@@ -202,7 +205,7 @@ public abstract class Spell extends Skill implements Castable {
 	}
 
 	public double getSpeed() {
-		return _speed;
+		return speed;
 	}
 
 	
