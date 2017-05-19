@@ -16,11 +16,11 @@ public class MapNode extends GameElement {
 	}
 	
 	public void setX(float x){
-		x = x;
+		this.x = x;
 	}
 	
 	public void setY(float y){
-		y = y;
+		this.y = y;
 	}
 	
 	public int getNodeId(){
