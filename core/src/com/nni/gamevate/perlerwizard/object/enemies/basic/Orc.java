@@ -39,11 +39,9 @@ public class Orc extends Enemy {
 				PerlerWizard.assetManager.get(AssetDescriptors.ENEMIES).findRegions("orc_attack"), 
 				PlayMode.LOOP);
 		
-		axeWand = new Wand(Skills.AXE_THROW.getType(), Skills.AXE_THROW.getRefreshTime());
-		
-		
+		axeWand = new Wand(Skills.AXE_THROW.getType(), Skills.AXE_THROW.getRefreshTime());	
 	}
-//
+
 	@Override
 	public Skill attack() {
 		state = State.ATTACKING;

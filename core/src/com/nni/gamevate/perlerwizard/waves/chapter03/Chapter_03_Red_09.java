@@ -79,7 +79,7 @@ public class Chapter_03_Red_09 extends Level {
 		wave2.add(fireGoblin04);
 		////////////////////////////////
 		
-		Pixie waterPixie01 = new Pixie(wave3Start, 5, 3);
+		Pixie waterPixie01 = new Pixie(wave3Start+1, 5, 3);
 		waterPixie01.setElementType(ElementType.WATER);
 		
 		wave3.add(waterPixie01);

@@ -20,11 +20,10 @@ public class AssetDescriptors {
 	public static final AssetDescriptor<TextureAtlas> OBJECTS =
             new AssetDescriptor<TextureAtlas>(AssetPaths.OBJECTS, TextureAtlas.class);
 	
-	
-	
+	public static final AssetDescriptor<Texture> TEMP_BACKGROUND =
+			new AssetDescriptor<Texture>(AssetPaths.TEMP_BACKGROUND, Texture.class);
 	
 	//Misc
-
 	public static final AssetDescriptor<Texture> SPLASH_BACKGROUND =
             new AssetDescriptor<Texture>(AssetPaths.SPLASH_BACKGROUND, Texture.class);
 	

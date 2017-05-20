@@ -6,7 +6,6 @@ import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
-import com.nni.gamevate.perlerwizard.object.enemies.Enemy.State;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 import com.nni.gamevate.perlerwizard.object.skills.Skills;
 import com.nni.gamevate.perlerwizard.object.skills.Wand;

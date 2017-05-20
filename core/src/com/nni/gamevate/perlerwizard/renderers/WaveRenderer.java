@@ -33,6 +33,7 @@ import com.nni.gamevate.perlerwizard.object.World;
 import com.nni.gamevate.perlerwizard.object.enemies.basic.Goblin;
 import com.nni.gamevate.perlerwizard.object.enemies.basic.Imp;
 import com.nni.gamevate.perlerwizard.object.enemies.basic.Orc;
+import com.nni.gamevate.perlerwizard.object.enemies.basic.Pixie;
 import com.nni.gamevate.perlerwizard.object.hero.Hero;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.FireCast;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.Spell;
@@ -126,7 +127,7 @@ public class WaveRenderer {
 		_goblin = _assetManager.get(AssetDescriptors.GOBLIN_ATTACK);
 		_orc = _assetManager.get(AssetDescriptors.ORC_STEP_ONE);
 		
-		_background = _assetManager.get(AssetDescriptors.FLOOR_BACKGROUND);
+		_background = _assetManager.get(AssetDescriptors.TEMP_BACKGROUND);
 		shader = new ShaderProgram(DefaultShader.getDefaultVertexShader()
 				,DefaultShader.getDefaultFragmentShader());
 		
@@ -141,11 +142,6 @@ public class WaveRenderer {
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		
-		//
-		
-	
-
 		drawBackGround();
 		
 		drawGameObjects();
@@ -183,10 +179,8 @@ public class WaveRenderer {
 		
 		_camera.position.set(pos);
 		_camera.update();
-		
-		
-		
 	}
+	
 	public void drawBackGround(){
 		_batch.setProjectionMatrix(_camera.combined);
 		_batch.begin();
@@ -229,8 +223,6 @@ public class WaveRenderer {
 		}
 	}
 	
-	
-	
 	public void drawGameObjects(){
 		ArrayList<GameObject> list = _world.getGameObjects();
 		
@@ -243,7 +235,7 @@ public class WaveRenderer {
 			if(g instanceof Hero || g instanceof Goblin 
 					|| g instanceof Orc || g instanceof Spell
 					|| g instanceof Imp || g instanceof AxeThrow || g instanceof RockThrow
-					|| g instanceof Rush) {
+					|| g instanceof Rush || g instanceof Pixie) {
 				//_shapeRenderer.setColor(Color.BLUE);				
 			}				
 			else {
@@ -257,7 +249,8 @@ public class WaveRenderer {
 		
 		for(GameObject g :list){
 			if(g instanceof Spell || g instanceof Goblin || g instanceof Imp
-					|| g instanceof AxeThrow || g instanceof Orc || g instanceof RockThrow || g instanceof Rush)
+					|| g instanceof AxeThrow || g instanceof Orc || g instanceof RockThrow 
+					|| g instanceof Rush || g instanceof Pixie)
 				g.draw(_batch);
 			
 			if(g instanceof Hero)

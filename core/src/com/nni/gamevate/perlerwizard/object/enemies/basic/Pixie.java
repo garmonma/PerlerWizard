@@ -18,7 +18,7 @@ public class Pixie extends Enemy {
 		_health = 1;
 		
 		idleAnimation = new Animation(0.10f, 
-				PerlerWizard.assetManager.get(AssetDescriptors.ENEMIES).findRegions("sprite"), 
+				PerlerWizard.assetManager.get(AssetDescriptors.ENEMIES).findRegions("pixie_idle"), 
 				PlayMode.LOOP);
 	}
 

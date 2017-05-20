@@ -75,6 +75,7 @@ public class LoadingScreen extends ScreenAdapter {
 		_assetManager.load(AssetDescriptors.REFLECT_SKILL_BOX);
 		//TODO remove for real background... lol
 		_assetManager.load(AssetDescriptors.FLOOR_BACKGROUND);
+		_assetManager.load(AssetDescriptors.TEMP_BACKGROUND);
 		_assetManager.load(AssetDescriptors.FONT);
 		
 		
