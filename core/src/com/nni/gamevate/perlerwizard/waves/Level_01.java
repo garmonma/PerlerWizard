@@ -1,6 +1,7 @@
 package com.nni.gamevate.perlerwizard.waves;
 
 import com.nni.gamevate.perlerwizard.object.enemies.basic.Imp;
+import com.nni.gamevate.perlerwizard.object.enemies.basic.Pixie;
 
 public class Level_01  extends Level{
 	
@@ -8,17 +9,17 @@ public class Level_01  extends Level{
 		super();
 		
 	
-		wave1.add(new Imp(wave1Start, 1,1));
-		wave1.add(new Imp(wave1Start, 2,1));
-		wave1.add(new Imp(wave1Start, 3,1));
-		wave1.add(new Imp(wave1Start, 4,1));
-		wave1.add(new Imp(wave1Start, 5,1));
-		wave1.add(new Imp(wave1Start, 6,1));
-		wave1.add(new Imp(wave1Start, 7,1));
-		wave1.add(new Imp(wave1Start, 8,1));
-		wave1.add(new Imp(wave1Start, 9,1));
-		wave1.add(new Imp(wave1Start, 10,1));
-		wave1.add(new Imp(wave1Start, 11,1));
+		wave1.add(new Pixie(wave1Start, 1,1));
+		wave1.add(new Pixie(wave1Start, 2,1));
+		wave1.add(new Pixie(wave1Start, 3,1));
+		wave1.add(new Pixie(wave1Start, 4,1));
+		wave1.add(new Pixie(wave1Start, 5,1));
+		wave1.add(new Pixie(wave1Start, 6,1));
+		wave1.add(new Pixie(wave1Start, 7,1));
+		wave1.add(new Pixie(wave1Start, 8,1));
+		wave1.add(new Pixie(wave1Start, 9,1));
+		wave1.add(new Pixie(wave1Start, 10,1));
+		wave1.add(new Pixie(wave1Start, 11,1));
 		
 		wave2.add(new Imp(wave2Start, 1,2));
 		wave2.add(new Imp(wave2Start, 2,2));

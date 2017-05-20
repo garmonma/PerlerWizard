@@ -29,7 +29,7 @@ public abstract class Level implements Subscriber {
 	
 	@Override
 	public void handleEvent(Event e) {
-		switch (e._type) {
+		switch (e.type) {
 		case ENEMY_ATTACKED:
 			handleAttackEvent(e);
 			break;
@@ -42,7 +42,7 @@ public abstract class Level implements Subscriber {
 	}
 	
 	private void handleJoinGroupEvent(Event e){
-		switch(e._message){
+		switch(e.message){
 		case "1":			
 			chase(wave1);
 			chase(wave2);
@@ -56,7 +56,7 @@ public abstract class Level implements Subscriber {
 	}
 	
 	private  void handleAttackEvent(Event e){
-		switch (e._message) {
+		switch (e.message) {
 		case "1":			
 			scare(wave1);
 			break;

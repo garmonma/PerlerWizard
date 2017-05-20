@@ -1,6 +1,5 @@
 package com.nni.gamevate.perlerwizard.object.skills.rushables;
 
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.object.GameObject;

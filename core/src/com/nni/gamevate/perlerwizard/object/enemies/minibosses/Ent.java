@@ -15,13 +15,13 @@ public class Ent extends Enemy {
 	
 	public Ent(float x, float y, int waveNumber){
 		super(2.0f, 2.0f, x, y, waveNumber);
-		 _health = 100;
+		 health = 100;
 	}
 
 	public Ent(float width, float height, float x, float y, int waveNumber) {
 		super(width, height, x, y, waveNumber);
 		
-		_health = 100;
+		health = 100;
 		
 	}
 
@@ -43,6 +43,12 @@ public class Ent extends Enemy {
 	
 	public void setEntType(EntType type){
 		_entType = type;
+	}
+
+	@Override
+	protected void uniquePattern(float delta) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

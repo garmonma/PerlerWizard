@@ -10,18 +10,18 @@ import com.nni.gamevate.perlerwizard.screens.ScreenAdaptar;
 
 public class MatchResultsScreen extends ScreenAdaptar {
 
-	private PerlerWizard _perlerWizard;
-	private GamePlayController _gamePlayController;
-	private GamePlayRenderer _renderer;
+	private PerlerWizard perlerWizard;
+	private GamePlayController gamePlayController;
+	private GamePlayRenderer renderer;
 	
-	private SpriteBatch _batch;
-	private AssetManager _assetManager;
-	private NetworkController _networkController;
+	private SpriteBatch batch;
+	private AssetManager assetManager;
+	private NetworkController networkController;
 	
 	public MatchResultsScreen(PerlerWizard perlerWizard) {
-		_perlerWizard = perlerWizard;
-		_batch = _perlerWizard.getSpriteBatch();
-		_assetManager = _perlerWizard.getAssetManager();
+		this.perlerWizard = perlerWizard;
+		batch = perlerWizard.getSpriteBatch();
+		assetManager = perlerWizard.getAssetManager();
 	}
 
 	@Override

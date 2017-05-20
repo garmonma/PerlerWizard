@@ -1,7 +1,6 @@
 package com.nni.gamevate.perlerwizard.screens.loading;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -14,7 +13,6 @@ import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.screens.ScreenAdaptar;
-import com.nni.gamevate.perlerwizard.screens.game.GameWorldScreen;
 import com.nni.gamevate.perlerwizard.utils.Logger;
 
 /**
@@ -23,48 +21,48 @@ import com.nni.gamevate.perlerwizard.utils.Logger;
  */
 public class SplashScreen extends ScreenAdaptar {
 
-	private PerlerWizard _perlerWizard;
-	private OrthographicCamera _camera;
-	private Viewport _viewport;
-	private Texture _splashBackground;
-	private AssetManager _assetManager;
+	private PerlerWizard perlerWizard;
+	private OrthographicCamera camera;
+	private Viewport viewport;
+	private Texture splashBackground;
+	private AssetManager assetManager;
 	
-	private final SpriteBatch _batch;
+	private final SpriteBatch batch;
 	
 	private long _startTime;
 
 	public SplashScreen(PerlerWizard perlerWizard) {
 		Logger.log("On Splash Screen");
 		
-		_perlerWizard = perlerWizard;
-		_batch = _perlerWizard.getSpriteBatch();
-		_assetManager = perlerWizard.getAssetManager();
+		this.perlerWizard = perlerWizard;
+		batch = perlerWizard.getSpriteBatch();
+		assetManager = perlerWizard.getAssetManager();
 	}
 
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		_batch.setProjectionMatrix(_camera.combined);
-		_batch.begin();
-		_batch.draw(_splashBackground, 0, 0, 1600, 960);
-		_batch.end();
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+		batch.draw(splashBackground, 0, 0, 1600, 960);
+		batch.end();
 		
 		if(TimeUtils.millis() - _startTime > 3000){
-			_perlerWizard.setScreen(new LoadingScreen(_perlerWizard));	
+			perlerWizard.setScreen(new LoadingScreen(perlerWizard));	
 		}		
 	}
 
 	@Override
 	public void show() {
-		_camera = new OrthographicCamera();
-		_viewport = new FitViewport(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT, _camera);
+		camera = new OrthographicCamera();
+		viewport = new FitViewport(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT, camera);
 		_startTime = TimeUtils.millis();
 		
-		_assetManager.load(AssetDescriptors.SPLASH_BACKGROUND);
-		_assetManager.finishLoading();
+		assetManager.load(AssetDescriptors.SPLASH_BACKGROUND);
+		assetManager.finishLoading();
 		
-		_splashBackground = _assetManager.get(AssetDescriptors.SPLASH_BACKGROUND);
+		splashBackground = assetManager.get(AssetDescriptors.SPLASH_BACKGROUND);
 	}
 
 	@Override
@@ -74,7 +72,7 @@ public class SplashScreen extends ScreenAdaptar {
 	
 	@Override
 	public void resize(int width, int height) {
-		_viewport.update(width, height, true);
+		viewport.update(width, height, true);
 	}
 	
 	@Override

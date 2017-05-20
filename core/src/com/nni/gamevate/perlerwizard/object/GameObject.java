@@ -2,6 +2,7 @@ package com.nni.gamevate.perlerwizard.object;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 
@@ -26,9 +27,9 @@ public abstract class GameObject implements Collidable, Drawable, Soundable {
 	
 	// Temp var untill we get sprites
 	protected Color color = Color.PURPLE;
-	
-	protected float stateTime;
 	 
+	protected float stateTime;
+	
 	
 	public GameObject(float x, float y){
 		position = new Vector2(x, y);
@@ -37,6 +38,7 @@ public abstract class GameObject implements Collidable, Drawable, Soundable {
 		movement = new Vector2();
 		originalPosition = new Vector2(position);
 		stateTime = 0f;
+		
 	}
 	
 	public GameObject(float width, float height, float x, float y){
@@ -111,6 +113,14 @@ public abstract class GameObject implements Collidable, Drawable, Soundable {
 	}
 	
 	@Override
+	public void draw(ShapeRenderer shapeRenderer) {
+		// TODO Auto-generated method stub
+		shapeRenderer.setColor(getColor());
+		shapeRenderer.rect(getX(), getY(), getWidth(), getHeight());
+		
+	}
+	
+	@Override
 	public void sound(SoundType st){
 		
 	}
@@ -142,5 +152,5 @@ public abstract class GameObject implements Collidable, Drawable, Soundable {
 		return String.format(
 				"GameObject [_width=%s, _height=%s, _position=%s, _direction=%s, _velocity=%s, _movement=%s]", width,
 				height, position, direction, velocity, movement);
-	}	
+	}
 }

@@ -6,12 +6,11 @@ public class Event {
 		ENEMY_ATTACKED, JOINED_GROUP, ENEMY_DEATH
 	}
 	
-	public EventType _type;
-	public String _message;
+	public EventType type;
+	public String message;
 	public Event(EventType type, String message) {
-		_type = type;
-		_message = message;
-		// TODO Auto-generated constructor stub
+		this.type = type;
+		this.message = message;		
 	}
 	
 

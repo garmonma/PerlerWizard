@@ -2,52 +2,52 @@ package com.nni.gamevate.perlerwizard.utils;
 
 public abstract class GameElement {
 	
-	protected float _x;
-	protected float _y;
+	protected float x;
+	protected float y;
 	
-	protected float _width;
-	protected float _height;
+	protected float width;
+	protected float height;
 	
-	protected int _type;
+	protected int type;
 
 	public GameElement(float x, float y, int type) {
-		_x = x;
-		_y = y;
-		_type = type;
+		this.x = x;
+		this.y = y;
+		this.type = type;
 	}
 	
 	public void setWidth(float width){
-		_width = width;
+		this.width = width;
 	}
 	
 	public void setHeight(float height){
-		_height = height;
+		this.height = height;
 	}
 	
 	public float getX(){
-		return _x;
+		return x;
 	}
 	
 	public float getY(){
-		return _y;
+		return y;
 	}
 
 	public float getWidth() {
-		return _width;
+		return width;
 	}
 
 	public float getHeight() {
-		return _height;
+		return height;
 	}
 	
 	public int getType(){
-		return _type;
+		return type;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("GameElement [_x=%s, _y=%s, _width=%s, _height=%s, _type=%s]", _x, _y, _width, _height,
-				_type);
+		return String.format("GameElement [_x=%s, _y=%s, _width=%s, _height=%s, _type=%s]", x, y, width, height,
+				type);
 	}
 	
 	

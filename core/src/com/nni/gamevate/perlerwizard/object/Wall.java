@@ -6,11 +6,11 @@ package com.nni.gamevate.perlerwizard.object;
  */
 public class Wall extends GameObject implements Collidable {
 
-	private String _side;
+	private String side;
 	
 	public Wall(float width, float height, float x, float y, String side) {
 		super(width, height, x, y);
-		_side = side;
+		this.side = side;
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class Wall extends GameObject implements Collidable {
 	}
 	
 	public String getSide(){
-		return _side;
+		return side;
 	}
 	
 	public void setDirection(float degrees){

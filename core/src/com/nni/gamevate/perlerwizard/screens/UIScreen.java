@@ -9,26 +9,25 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
-import com.nni.gamevate.perlerwizard.screens.game.GameScreen;
 import com.nni.gamevate.perlerwizard.screens.game.GameWorldScreen;
 
 public abstract class UIScreen extends ScreenAdaptar {
-    protected final PerlerWizard _perlerWizard;
-    protected final AssetManager _assetManager;
+    protected final PerlerWizard perlerWizard;
+    protected final AssetManager assetManager;
 
     private Viewport _viewport;
     private Stage _stage;
 
 
     public UIScreen(PerlerWizard game) {
-        _perlerWizard = game;
-        _assetManager = game.getAssetManager();
+        perlerWizard = game;
+        assetManager = game.getAssetManager();
     }
 
     @Override
     public void show() {
         _viewport = new FitViewport(GameConfig.UI_SCREEN_WIDTH, GameConfig.UI_SCREEN_HEIGHT);
-        _stage = new Stage(_viewport, _perlerWizard.getSpriteBatch());
+        _stage = new Stage(_viewport, perlerWizard.getSpriteBatch());
 
         Gdx.input.setInputProcessor(_stage);
 
@@ -55,7 +54,7 @@ public abstract class UIScreen extends ScreenAdaptar {
         _stage.draw();
         
         if(Gdx.input.isTouched()){
-			_perlerWizard.setScreen(new GameWorldScreen(_perlerWizard));
+			perlerWizard.setScreen(new GameWorldScreen(perlerWizard));
 		}
     }
 

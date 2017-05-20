@@ -8,22 +8,22 @@ import com.nni.gamevate.perlerwizard.network.gamedata.MatchResult;
 import com.nni.gamevate.perlerwizard.utils.Logger;
 
 public class NetworkController {
-	private Client _client;
-	private GameCharacter _gc;
+	private Client client;
+	private GameCharacter gc;
 	
 	public NetworkController(Client client){
-		_client = client;
+		this.client = client;
 		
-		_gc = new GameCharacter();
-		_gc.characterID = 1;
-		sendCharacter(_gc);
+		gc = new GameCharacter();
+		gc.characterID = 1;
+		sendCharacter(gc);
 
-		_client.addListener(new Listener() {
+		client.addListener(new Listener() {
 			@Override
 			public void received(Connection conn, Object object) {
 				if (object instanceof GameCharacter) {
-					_gc = (GameCharacter) object;
-					Logger.log("Character Recieved: " + _gc);
+					gc = (GameCharacter) object;
+					Logger.log("Character Recieved: " + gc);
 							
 				}
 			}
@@ -31,19 +31,19 @@ public class NetworkController {
 	}
 	
 	public void sendCharacter(GameCharacter gameCharacter){
-		_client.sendTCP(gameCharacter);
+		client.sendTCP(gameCharacter);
 		Logger.log("Game Character Sent");
 	}
 	
 	public void sendMatchResult(MatchResult matchResult){
 		//_client.sendTCP(matchResult);
-		_client.sendUDP(matchResult);
+		client.sendUDP(matchResult);
 		Logger.log("Match Result Sent : " + matchResult);
 		
 	}
 	
 	public GameCharacter getCharacter(){
-		return _gc;
+		return gc;
 	}
 	
 	public void getSpawns(){
@@ -51,6 +51,6 @@ public class NetworkController {
 	}
 	
 	public Integer getCharacterID(){
-		return _gc.characterID;
+		return gc.characterID;
 	}
 }

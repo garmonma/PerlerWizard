@@ -3,7 +3,6 @@ package com.nni.gamevate.perlerwizard.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.PerlerWizard;
@@ -12,8 +11,6 @@ import com.nni.gamevate.perlerwizard.network.gamedata.Spawn;
 import com.nni.gamevate.perlerwizard.network.gamedata.Wave;
 import com.nni.gamevate.perlerwizard.object.Wall;
 import com.nni.gamevate.perlerwizard.object.enemies.Enemy;
-import com.nni.gamevate.perlerwizard.object.enemies.basic.Goblin;
-import com.nni.gamevate.perlerwizard.object.enemies.basic.Orc;
 import com.nni.gamevate.perlerwizard.object.hero.BattleMage;
 import com.nni.gamevate.perlerwizard.object.hero.Hero;
 import com.nni.gamevate.perlerwizard.object.hero.HeroTypes;
@@ -21,7 +18,6 @@ import com.nni.gamevate.perlerwizard.object.hero.Knight;
 import com.nni.gamevate.perlerwizard.object.hero.Wizard;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 import com.nni.gamevate.perlerwizard.object.skills.reflectables.Spell;
-import com.nni.gamevate.perlerwizard.object.skills.throwables.JavelinThrow;
 import com.nni.gamevate.perlerwizard.utils.Logger;
 import com.nni.gamevate.perlerwizard.utils.UIElement;
 

@@ -1,7 +1,6 @@
 package com.nni.gamevate.perlerwizard.screens;
 
 import com.badlogic.gdx.Screen;
-import com.nni.gamevate.perlerwizard.PerlerWizard;
 
 /**
  * 

@@ -10,7 +10,7 @@ public class Knight extends Hero {
 	public Knight(int width, int height, float x, float y, int level) {
 		super(width, height, x, y, level);
 
-		_speed = 6;
+		speed = 6;
 	}
 
 

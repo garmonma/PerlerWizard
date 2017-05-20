@@ -1,9 +1,5 @@
 package com.nni.gamevate.perlerwizard.spawnloader;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.Json;
-import com.nni.gamevate.perlerwizard.network.gamedata.Spawn;
 import com.nni.gamevate.perlerwizard.waves.Level;
 import com.nni.gamevate.perlerwizard.waves.Level_01;
 import com.nni.gamevate.perlerwizard.waves.chapter01.Chapter_01_01;

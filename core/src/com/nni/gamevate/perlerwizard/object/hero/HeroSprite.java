@@ -2,39 +2,39 @@ package com.nni.gamevate.perlerwizard.object.hero;
 
 public class HeroSprite {
 	
-	private int _currentNode;
+	private int currentNode;
 	
-	private float _x, _y, _width, _height;
+	private float x, y, width, height;
 	
 	public HeroSprite(float x, float y, float width, float height) {
-		_x = x;
-		_y = y;
-		_width = width;
-		_height = height;
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
 	}
 	
 	public float getX() {
-		return _x;
+		return x;
 	}
 
 	public float getY() {
-		return _y;
+		return y;
 	}
 
 	public float getWidth() {
-		return _width;
+		return width;
 	}
 
 	public float getHeight() {
-		return _height;
+		return height;
 	}
 	
 	public void changeNode(int node){
-		_currentNode = node;
+		currentNode = node;
 	}
 	
 	public int getNode(){
-		return _currentNode;
+		return currentNode;
 	}
 
 }

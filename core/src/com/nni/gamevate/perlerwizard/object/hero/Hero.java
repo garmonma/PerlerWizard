@@ -5,6 +5,10 @@ import java.util.Set;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.nni.gamevate.perlerwizard.GameConfig;
@@ -26,19 +30,21 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 	protected final float MAX_SPEED_MULTIPLIER = 1.25f;
 	protected final float MAX_SPEED = 10.0f;
 
-	protected float _speed;
+	protected float speed;
 
 	protected int maxHealth;
 	protected float currentHealth;
 	
-	protected float _healthMultiplier;
-	protected float _speedMultiplier;
+	protected float healthMultiplier;
+	protected float speedMultiplier;
 
-	protected int _level;
+	protected int level;
 	
-	protected boolean _castingSpecial;
-	protected boolean _castingAttack;
+	protected boolean castingSpecial;
+	protected boolean castingAttack;
 	
+	protected Animation idleAnimation;
+	protected Texture texture;
 	
 	protected SkillManager skillManager;
 	
@@ -48,11 +54,11 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 	public Hero(int width, int height, float x, float y, int level) {
 		super(width, height, x, y);
 		skillManager = new SkillManager();
-		_healthMultiplier = 1.0f;
-		_speedMultiplier = 1.0f;
+		healthMultiplier = 1.0f;
+		speedMultiplier = 1.0f;
 		currentHealth = 5;
 
-		_level = level;
+		this.level = level;
 		color = Color.BROWN;
 	}
 	
@@ -62,15 +68,27 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 
 	@Override
 	public void update(float delta) {
-		position.x += _speed  * delta * direction.x;
-		position.y += _speed  * delta * direction.y;
+		position.x += speed  * delta * direction.x;
+		position.y += speed  * delta * direction.y;
 		
 		position.y = MathUtils.clamp(position.y, 0, GameConfig.WORLD_HEIGHT - height);
 		position.x = MathUtils.clamp(position.x, world.camXPos - GameConfig.WORLD_WIDTH/2, world.forwardLine);
 		
 	}
-
 	
+	@Override
+	public void draw(ShapeRenderer shapeRenderer) {
+		if(texture == null){			
+			shapeRenderer.setColor(getColor());
+			shapeRenderer.rect(getX(), getY(), getWidth(), getHeight());
+		}
+	}
+
+	@Override
+	public void draw(Batch batch) {
+	
+		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
+	}
 	
 	@Deprecated
 	public abstract Skill attack(int selectedSkill);
@@ -81,11 +99,11 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 
 	private void move() {
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.getAccelerometerY() < 0) {
-			position.x -= _speed * _speedMultiplier * Gdx.graphics.getDeltaTime();
+			position.x -= speed * speedMultiplier * Gdx.graphics.getDeltaTime();
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.getAccelerometerY() > 0)
-			position.x += _speed * _speedMultiplier * Gdx.graphics.getDeltaTime();
+			position.x += speed * speedMultiplier * Gdx.graphics.getDeltaTime();
 
 	}
 
@@ -94,33 +112,33 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 	}
 	
 	public void setHealthMultiplier(float healthMultiplier) {
-		_healthMultiplier = healthMultiplier;
+		this.healthMultiplier = healthMultiplier;
 	}
 
 	public void setSpeedMultiplier(float speedMultiplier) {
-		_speedMultiplier = speedMultiplier;
+		this.speedMultiplier = speedMultiplier;
 		
-		if(_speedMultiplier > MAX_SPEED_MULTIPLIER){
-			_speedMultiplier = MAX_SPEED_MULTIPLIER;
+		if(this.speedMultiplier > MAX_SPEED_MULTIPLIER){
+			this.speedMultiplier = MAX_SPEED_MULTIPLIER;
 		}
 		
-		setSpeed(_speed, _speedMultiplier);
+		setSpeed(speed, this.speedMultiplier);
 	}
 
 	public void setLevel(int level) {
-		_level = level;
+		this.level = level;
 	}
 		
 	
 	public void setSpeed(float speed){
-		setSpeed(speed, _speedMultiplier);
+		setSpeed(speed, speedMultiplier);
 	}
 	
 	public void setSpeed(float speed, float speedMultiplier){
-		_speed = speed * speedMultiplier;
+		this.speed = speed * speedMultiplier;
 		
-		if(_speed > MAX_SPEED){
-			_speed = MAX_SPEED;
+		if(this.speed > MAX_SPEED){
+			this.speed = MAX_SPEED;
 		}
 	}
 	public void setDirection(Vector2 direction){
@@ -137,11 +155,11 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 	}
 	
 	public void castingSpecial(boolean casting){
-		_castingSpecial = false;
+		castingSpecial = false;
 	}
 	
 	public void castingAttack(boolean casting){
-		_castingAttack = false;
+		castingAttack = false;
 	}
 	
 	public float getCurrentHealthPct(){
@@ -150,19 +168,18 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 	
 	
 	public float getSpeed(){
-		return _speed;
+		return speed;
 	}
 	
 
 	@Override
 	public boolean isCastingSpecial() {
-		return _castingSpecial;
+		return castingSpecial;
 	}
 
 	@Override
-	public boolean isCastingAttack() {
-		// TODO Auto-generated method stub
-		return _castingAttack;
+	public boolean isCastingAttack() {		
+		return castingAttack;
 	}
 	public void SelectSkill(int ammount){
 		Set<Skills> skills = skillManager.getSkills();
@@ -179,8 +196,8 @@ public abstract class Hero extends GameObject implements Attacker, Equiper{
 	public String toString() {
 		return String.format(
 				"Hero [MAX_SPEED_MULTIPLIER=%s, MAX_SPEED=%s, _speed=%s, _hitPoints=%s, _defense=%s, _attack=%s, _dodge=%s, _currentHealthPct=%s, _healthMultiplier=%s, _speedMultiplier=%s, _level=%s]",
-				MAX_SPEED_MULTIPLIER, MAX_SPEED, _speed, maxHealth, 0 ,0 ,0 , currentHealth,
-				_healthMultiplier, _speedMultiplier, _level);
+				MAX_SPEED_MULTIPLIER, MAX_SPEED, speed, maxHealth, 0 ,0 ,0 , currentHealth,
+				healthMultiplier, speedMultiplier, level);
 	}
 
 	

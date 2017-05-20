@@ -18,7 +18,9 @@ public class PerlerWizard extends Game {
 	private ClientConnection connection;
 	private NetworkController networkController;
 	
+	//TODO move these settings to another class
 	public static boolean DEBUG = true;
+	public static boolean DRAW_DEBUG_BOXES = true;
 		
 	@Override
 	public void create() {

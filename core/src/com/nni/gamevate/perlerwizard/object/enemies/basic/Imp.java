@@ -11,19 +11,19 @@ import com.nni.gamevate.perlerwizard.object.skills.Skills;
 import com.nni.gamevate.perlerwizard.object.skills.Wand;
 
 public class Imp extends Enemy{
-	
+
 	private Wand rushWand;
 
 
 	public Imp( float x, float y,int waveNumber) {
 		this(0.7f,0.7f, x, y,waveNumber);
 	}
-	
+
 	public Imp(float width, float height, float x, float y,int waveNumber) {
 		super(width, height, x, y,waveNumber);
-		
-		_health = 1;
-		
+
+		health = 1;
+
 		idleAnimation = new Animation(0.10f, 
 				PerlerWizard.assetManager.get(AssetDescriptors.ENEMIES).findRegions("imp_idle"), 
 				PlayMode.LOOP);
@@ -58,6 +58,15 @@ public class Imp extends Enemy{
 	@Override
 	public void move(float delta) {
 		super.move(delta);
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	protected void uniquePattern(float delta) {
+		
 		// TODO Auto-generated method stub
 		
 	}
