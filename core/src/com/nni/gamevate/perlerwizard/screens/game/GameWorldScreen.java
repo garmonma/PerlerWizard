@@ -12,88 +12,81 @@ import com.nni.gamevate.perlerwizard.renderers.GameWorldRenderer;
 import com.nni.gamevate.perlerwizard.screens.menu.EquipmentScreen;
 import com.nni.gamevate.perlerwizard.screens.menu.EventScreen;
 import com.nni.gamevate.perlerwizard.screens.menu.MainMenuScreen;
-import com.nni.gamevate.perlerwizard.waves.Level_01;
 import com.nni.gamevate.perlerwizard.waves.chapter01.Chapter_01_01;
-import com.nni.gamevate.perlerwizard.waves.chapter01.Chapter_01_02;
-import com.nni.gamevate.perlerwizard.waves.chapter01.Chapter_01_05;
-import com.nni.gamevate.perlerwizard.waves.chapter02.Chapter_02_HoodedFigure;
-import com.nni.gamevate.perlerwizard.waves.chapter02.Chapter_02_RedSouth;
-import com.nni.gamevate.perlerwizard.waves.chapter02.Chapter_02_RedWest;
-import com.nni.gamevate.perlerwizard.waves.chapter03.Chapter_03_01;
 
 /**
  * @author Marcus Garmon 12/29/2016
  */
 public class GameWorldScreen extends ScreenAdapter {
-	private PerlerWizard _perlerWizard;
-	private GameWorldController _worldController;
-	private GameWorldRenderer _renderer;
+	private PerlerWizard perlerWizard;
+	private GameWorldController worldController;
+	private GameWorldRenderer renderer;
 	
-	private SpriteBatch _batch;
-	private AssetManager _assetManager;
-	private NetworkController _networkController;
+	private SpriteBatch batch;
+	private AssetManager assetManager;
+	private NetworkController networkController;
 	
-	private Music _backgroundTrack;
+	private Music backgroundTrack;
 	
 	public GameWorldScreen(PerlerWizard perlerWizard) {
-		_perlerWizard = perlerWizard;
-		_batch = _perlerWizard.getSpriteBatch();
-		_assetManager = _perlerWizard.getAssetManager();
+		this.perlerWizard = perlerWizard;
+		this.batch = perlerWizard.getSpriteBatch();
+		this.assetManager = perlerWizard.getAssetManager();
 	}
 	
 	@Override
 	public void show() {
-		_worldController = new GameWorldController();
-		_networkController = _perlerWizard.getNetworkController();
-		_renderer = new GameWorldRenderer(_worldController, _networkController, _batch, _assetManager);
+		worldController = new GameWorldController();
+		networkController = perlerWizard.getNetworkController();
+		renderer = new GameWorldRenderer(worldController, networkController, batch, assetManager);
 		
-		_backgroundTrack = _assetManager.get(AssetDescriptors.OVERWORLD_SOUNDTRACK);
-		_backgroundTrack.setLooping(true);
-		_backgroundTrack.play();
+		backgroundTrack = assetManager.get(AssetDescriptors.OVERWORLD_SOUNDTRACK);
+		backgroundTrack.setLooping(true);
+		backgroundTrack.play();
 	}
 	
 
 	@Override
 	public void render(float delta) {
 		
-		if(_worldController.navigateEquipmentScreen()){
-			_perlerWizard.setScreen(new EquipmentScreen(_perlerWizard));
+		if(worldController.navigateEquipmentScreen()){
+			perlerWizard.setScreen(new EquipmentScreen(perlerWizard));
 		}
 		
-		if(_worldController.navaigateEventScreen()){
-			_perlerWizard.setScreen(new EventScreen(_perlerWizard));
+		if(worldController.navaigateEventScreen()){
+			perlerWizard.setScreen(new EventScreen(perlerWizard));
 		}
 		
-		if(_worldController.navigateMenuScreen()){
-			_perlerWizard.setScreen(new MainMenuScreen(_perlerWizard));
+		if(worldController.navigateMenuScreen()){
+			perlerWizard.setScreen(new MainMenuScreen(perlerWizard));
 		}
 		
-		if(_worldController.navigateGameScreen()){
+		if(worldController.navigateGameScreen()){
 
-			_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard, new Chapter_01_01()));
+			perlerWizard.setScreen(new WaveGameScreen(perlerWizard, new Chapter_01_01()));
 		}
 		
-		_worldController.update(delta);
-		_renderer.render(delta);
+		worldController.update(delta);
+		renderer.render(delta);
 	}
 	
 	
 	@Override
 	public void resize(int width, int height) {
-		_renderer.resize(width, height);
+		renderer.resize(width, height);
 	}
 	
 	@Override
 	public void hide() {
 		super.hide();
 		
-		_backgroundTrack.stop();
+		backgroundTrack.stop();
 	}
 	
 	@Override
 	public void dispose() {
 		super.dispose();
 		
-		_backgroundTrack.dispose();
+		backgroundTrack.dispose();
 	}
 }

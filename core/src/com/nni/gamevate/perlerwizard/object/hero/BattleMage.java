@@ -9,7 +9,7 @@ public class BattleMage extends Hero {
 
 	public BattleMage(int width, int height, float x, float y, int level) {
 		super(width, height, x, y, level);
-		_speed = 7;
+		speed = 7;
 		
 		skillManager.addSkills(Skills.MAGIC_CAST);
 		skillManager.addSkills(Skills.VOID_CAST);

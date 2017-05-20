@@ -14,8 +14,8 @@ import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
 public class WaveInputHandler extends InputAdapter {
 	private static final String tag = WaveInputHandler.class.getSimpleName();
 	
-	private Vector3 _touchCords;
-	private OrthographicCamera _camera;
+	private Vector3 touchCords;
+	private OrthographicCamera camera;
 
 	public boolean up;
 	public boolean down;
@@ -23,15 +23,15 @@ public class WaveInputHandler extends InputAdapter {
 	public boolean left;
 	public boolean fire;
 	
-	private World _world;
-	private Hero _hero;
+	private World world;
+	private Hero hero;
 
 	public WaveInputHandler(OrthographicCamera camera,World world) {
 		
-		_touchCords = new Vector3();
-		_camera = camera;
-		_world = world;
-		_hero = world.getHero();
+		touchCords = new Vector3();
+		this.camera = camera;
+		this.world = world;
+		this.hero = world.getHero();
 		
 	}
 
@@ -56,12 +56,12 @@ public class WaveInputHandler extends InputAdapter {
 			dir.x--;
 		if(right)
 			dir.x++;
-		_hero.setDirection(dir);
+		hero.setDirection(dir);
 		
 		if(fire == true){			
 			if(WaveGameScreen.gameOver == false){			
-				Skill s = _hero.attack(_hero.getSkillManager().getSelectedSkill());
-				_world.addSkill(s);
+				Skill s = hero.attack(hero.getSkillManager().getSelectedSkill());
+				world.addSkill(s);
 			}
 		}
 	}
@@ -71,9 +71,9 @@ public class WaveInputHandler extends InputAdapter {
 	public boolean scrolled(int amount) {
 		//Gdx.app.log(tag, "Scrolled : " + amount);
 		if(amount > 0)
-			_hero.getSkillManager().selectNext();
+			hero.getSkillManager().selectNext();
 		else if(amount < 0)
-			_hero.getSkillManager().selectPrevious();
+			hero.getSkillManager().selectPrevious();
 		
 		return super.scrolled(amount);
 	}

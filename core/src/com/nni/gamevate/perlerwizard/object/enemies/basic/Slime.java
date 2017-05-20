@@ -38,5 +38,11 @@ public class Slime extends Enemy {
 		
 	}
 
+	@Override
+	protected void uniquePattern(float delta) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

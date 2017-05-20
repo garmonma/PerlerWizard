@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.SoundType;
@@ -70,6 +71,16 @@ public abstract class Skill extends GameObject {
 		
 		if(st == SoundType.SKILL_HIT){
 			hitSound.play(1.0f);
+		}
+	}
+	
+	
+	@Override
+	public void draw(ShapeRenderer shapeRenderer) {
+		
+		if(castAnimation == null){			
+			shapeRenderer.setColor(getColor());
+			shapeRenderer.rect(getX(), getY(), getWidth(), getHeight());
 		}
 	}
 	

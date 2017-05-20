@@ -18,20 +18,20 @@ public class LoadingScreen extends ScreenAdapter {
 	private static final float PROGRESS_BAR_WIDTH = GameConfig.UI_SCREEN_WIDTH / 2f; // world units
     private static final float PROGRESS_BAR_HEIGHT = 60; // world units
     
-	private PerlerWizard _perlerWizard;
-	private AssetManager _assetManager;
+	private PerlerWizard perlerWizard;
+	private AssetManager assetManager;
 	
-	private OrthographicCamera _camera;
-	private Viewport _viewport;
-	private ShapeRenderer _renderer;
+	private OrthographicCamera camera;
+	private Viewport viewport;
+	private ShapeRenderer renderer;
 	
-	private float _progress;
-    private float _waitTime = 0.75f;
-    private boolean _changeScreen;
+	private float progress;
+    private float waitTime = 0.75f;
+    private boolean changeScreen;
 	
 	public LoadingScreen(PerlerWizard perlerWizard){
-		_perlerWizard = perlerWizard;
-		_assetManager = perlerWizard.getAssetManager();
+		this.perlerWizard = perlerWizard;
+		this.assetManager = perlerWizard.getAssetManager();
 	}
 	
 	@Override
@@ -41,79 +41,79 @@ public class LoadingScreen extends ScreenAdapter {
 		Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        _viewport.apply();
-        _renderer.setProjectionMatrix(_camera.combined);
-        _renderer.begin(ShapeRenderer.ShapeType.Filled);
+        viewport.apply();
+        renderer.setProjectionMatrix(camera.combined);
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
         
         draw();
         
-        _renderer.end();
+        renderer.end();
         
-        if(_changeScreen){
+        if(changeScreen){
         	//_perlerWizard.setScreen(new WaveGameScreen(_perlerWizard,new Level_01()));
-        	_perlerWizard.setScreen(new GameWorldScreen(_perlerWizard));
+        	perlerWizard.setScreen(new GameWorldScreen(perlerWizard));
 
         }
 	}
 	
 	@Override
 	public void show() {
-		_camera = new OrthographicCamera();
-		_viewport = new FitViewport(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT, _camera);
-		_renderer = new ShapeRenderer();
+		camera = new OrthographicCamera();
+		viewport = new FitViewport(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT, camera);
+		renderer = new ShapeRenderer();
 		
 		//Texture Atlas
-		_assetManager.load(AssetDescriptors.SPELLS);
-		_assetManager.load(AssetDescriptors.ENEMIES);
-		_assetManager.load(AssetDescriptors.OBJECTS);
+		assetManager.load(AssetDescriptors.SPELLS);
+		assetManager.load(AssetDescriptors.ENEMIES);
+		assetManager.load(AssetDescriptors.OBJECTS);
 		
 		
 		//Misc
-		_assetManager.load(AssetDescriptors.UI_SKIN);
-		_assetManager.load(AssetDescriptors.CASTLE_BACKGROUND);
-		_assetManager.load(AssetDescriptors.ENERGY_SHIELD_BOX);
-		_assetManager.load(AssetDescriptors.REFLECT_SKILL_BOX);
+		assetManager.load(AssetDescriptors.UI_SKIN);
+		assetManager.load(AssetDescriptors.CASTLE_BACKGROUND);
+		assetManager.load(AssetDescriptors.ENERGY_SHIELD_BOX);
+		assetManager.load(AssetDescriptors.REFLECT_SKILL_BOX);
 		//TODO remove for real background... lol
-		_assetManager.load(AssetDescriptors.FLOOR_BACKGROUND);
-		_assetManager.load(AssetDescriptors.FONT);
+		assetManager.load(AssetDescriptors.FLOOR_BACKGROUND);
+		assetManager.load(AssetDescriptors.FONT);
 		
 		
 		// Game World Screen Assets
-		_assetManager.load(AssetDescriptors.EVENTS_BUTTON);
-		_assetManager.load(AssetDescriptors.EVENTS_BUTTON_PRESSED);
-		_assetManager.load(AssetDescriptors.EQUIPMENT_BUTTON);
-		_assetManager.load(AssetDescriptors.EQUIPMENT_BUTTON_PRESSED);
-		_assetManager.load(AssetDescriptors.MENU_BUTTON);
-		_assetManager.load(AssetDescriptors.MENU_BUTTON_PRESSED);
-		_assetManager.load(AssetDescriptors.GAME_NODE_BASIC);
-		_assetManager.load(AssetDescriptors.DIRT_ROAD_HORIZONTAL);
-		_assetManager.load(AssetDescriptors.DIRT_ROAD_VERTICAL);
+		assetManager.load(AssetDescriptors.EVENTS_BUTTON);
+		assetManager.load(AssetDescriptors.EVENTS_BUTTON_PRESSED);
+		assetManager.load(AssetDescriptors.EQUIPMENT_BUTTON);
+		assetManager.load(AssetDescriptors.EQUIPMENT_BUTTON_PRESSED);
+		assetManager.load(AssetDescriptors.MENU_BUTTON);
+		assetManager.load(AssetDescriptors.MENU_BUTTON_PRESSED);
+		assetManager.load(AssetDescriptors.GAME_NODE_BASIC);
+		assetManager.load(AssetDescriptors.DIRT_ROAD_HORIZONTAL);
+		assetManager.load(AssetDescriptors.DIRT_ROAD_VERTICAL);
 		
 		
-		_assetManager.load(AssetDescriptors.OVERWORLD_SOUNDTRACK);
+		assetManager.load(AssetDescriptors.OVERWORLD_SOUNDTRACK);
 		
-		_assetManager.load(AssetDescriptors.WIZARD);
+		assetManager.load(AssetDescriptors.WIZARD);
 		
 		//Enemies
-		_assetManager.load(AssetDescriptors.GOBLIN_ATTACK);
-		_assetManager.load(AssetDescriptors.ORC_STEP_ONE);
+		assetManager.load(AssetDescriptors.GOBLIN_ATTACK);
+		assetManager.load(AssetDescriptors.ORC_STEP_ONE);
 		
 		// Sound Effects
-		_assetManager.load(AssetDescriptors.FIRE_SPELL_CAST);
-		_assetManager.load(AssetDescriptors.FIRE_SPELL_HIT);
-		_assetManager.load(AssetDescriptors.WATER_SPELL_CAST);
-		_assetManager.load(AssetDescriptors.WATER_SPELL_HIT);
-		_assetManager.load(AssetDescriptors.LIGHTNING_SPELL_CAST);
-		_assetManager.load(AssetDescriptors.LIGHTNING_SPELL_HIT);
-		_assetManager.load(AssetDescriptors.DEFAULT_SPELL_CAST);
-		_assetManager.load(AssetDescriptors.DEFAULT_SPELL_HIT);
-		_assetManager.load(AssetDescriptors.FOREST_SPELL_CAST);
-		_assetManager.load(AssetDescriptors.FOREST_SPELL_HIT);
+		assetManager.load(AssetDescriptors.FIRE_SPELL_CAST);
+		assetManager.load(AssetDescriptors.FIRE_SPELL_HIT);
+		assetManager.load(AssetDescriptors.WATER_SPELL_CAST);
+		assetManager.load(AssetDescriptors.WATER_SPELL_HIT);
+		assetManager.load(AssetDescriptors.LIGHTNING_SPELL_CAST);
+		assetManager.load(AssetDescriptors.LIGHTNING_SPELL_HIT);
+		assetManager.load(AssetDescriptors.DEFAULT_SPELL_CAST);
+		assetManager.load(AssetDescriptors.DEFAULT_SPELL_HIT);
+		assetManager.load(AssetDescriptors.FOREST_SPELL_CAST);
+		assetManager.load(AssetDescriptors.FOREST_SPELL_HIT);
 	}
 	
 	@Override
 	public void resize(int width, int height) {
-		_viewport.update(width, height, true);
+		viewport.update(width, height, true);
 	}
 	
 	@Override
@@ -125,18 +125,18 @@ public class LoadingScreen extends ScreenAdapter {
 	@Override
 	public void dispose() {
 		Gdx.app.log("LoadingScreen", "dispose()");
-		_renderer.dispose();
-		_renderer = null;
+		renderer.dispose();
+		renderer = null;
 	}
 	
 	private void update(float delta){
-		_progress = _assetManager.getProgress();
+		progress = assetManager.getProgress();
 		
-		if(_assetManager.update()){
-			_waitTime -= delta;
+		if(assetManager.update()){
+			waitTime -= delta;
 			
-			if(_waitTime <= 0){
-				_changeScreen = true;
+			if(waitTime <= 0){
+				changeScreen = true;
 			}
 		}
 	}
@@ -145,8 +145,8 @@ public class LoadingScreen extends ScreenAdapter {
 		float progressBarX = (GameConfig.UI_SCREEN_WIDTH - PROGRESS_BAR_WIDTH) / 2f;
         float progressBarY = (GameConfig.UI_SCREEN_HEIGHT - PROGRESS_BAR_HEIGHT) / 2f;
 
-        _renderer.rect(progressBarX, progressBarY,
-                _progress * PROGRESS_BAR_WIDTH, PROGRESS_BAR_HEIGHT
+        renderer.rect(progressBarX, progressBarY,
+                progress * PROGRESS_BAR_WIDTH, PROGRESS_BAR_HEIGHT
         );
 	}
 	

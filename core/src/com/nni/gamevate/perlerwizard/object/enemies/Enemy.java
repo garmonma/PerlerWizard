@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.nni.gamevate.perlerwizard.events.Event;
 import com.nni.gamevate.perlerwizard.events.Event.EventType;
 import com.nni.gamevate.perlerwizard.events.EventManager;
@@ -15,9 +15,7 @@ import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.skills.Skill;
 import com.nni.gamevate.perlerwizard.object.skills.Skills;
 import com.nni.gamevate.perlerwizard.object.skills.Wand;
-import com.nni.gamevate.perlerwizard.object.skills.throwables.RockThrow;
 import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
-import com.nni.gamevate.perlerwizard.utils.Logger;
 import com.nni.gamevate.perlerwizard.waves.Level;
 
 /**
@@ -36,14 +34,14 @@ public abstract class Enemy extends GameObject implements Attacker{
 	
 	public State state = State.IDLE;
 	
-	protected int _health = 1;
+	protected int health = 1;
 	protected ElementType _elementType = ElementType.DEFAULT;
-	protected float _chaseSpeed = 1;
-	protected float _retreatSpeed = 3;
+	protected float chaseSpeed = 1;
+	protected float retreatSpeed = 3;
 	
 	
-	protected boolean _castingSpecial;
-	protected boolean _castingAttack;
+	protected boolean castingSpecial;
+	protected boolean castingAttack;
     protected boolean cycleCompleted = false;	
 	
 	protected boolean sleeping = true;
@@ -54,21 +52,24 @@ public abstract class Enemy extends GameObject implements Attacker{
 	
 	public int _waveNumber = 0;
 	
+	public Vector2  formationPosition;
 	public Wand basicWand;
 	
 	public Enemy(float width, float height, float x, float y,int waveNumber) {
 		super(width, height, x, y);
 		_waveNumber = waveNumber;
 		basicWand  = new Wand(Skills.BASIC_ENEMY_SPELL.getType(), Skills.BASIC_ENEMY_SPELL.getRefreshTime());
+		formationPosition = new Vector2(position);
+		
 	}
 
 	public  boolean isDead(int damage){
 		//TODO Uncomment
 //		Event e = new Event(EventType.ENEMY_ATTACKED,_waveNumber + "");		
 //		EventManager.publish(EventType.ENEMY_ATTACKED, e);
-		_health = _health - damage;
+		health -= damage;
 		
-		if(_health <= 0){
+		if(health <= 0){
 			alive = false;
 			return true;
 		} 
@@ -81,62 +82,83 @@ public abstract class Enemy extends GameObject implements Attacker{
 		float speed =0;
 		
 		if(chasing == true){
-			speed = _chaseSpeed;				
+			speed = chaseSpeed;				
 		}else if( running == true){
-			speed = _retreatSpeed;
+			speed = retreatSpeed;
 		}
 		
 		if(sleeping == false){
-			position.x += world.lastCamDelta;
+			formationPosition.x += world.lastCamDelta;
 		}
 		
-		if(_waveNumber == 1 && position.x > Level.wave2Start - 3){
+		
+		//TODO fix wave logic
+		if(_waveNumber == 1 && formationPosition.x > Level.wave2Start - 3){
 			Event e = new Event(EventType.JOINED_GROUP,1+"");			
-			EventManager.publish(e._type,e );
-		}else if(_waveNumber == 2 && position.x > Level.wave3Start - 3){
+			EventManager.publish(e.type,e );
+		}else if(_waveNumber == 2 && formationPosition.x > Level.wave3Start - 3){
 			Event e = new Event(EventType.JOINED_GROUP,2+"");			
-			EventManager.publish(e._type,e );
+			EventManager.publish(e.type,e );
 		}
+		
+		
+		uniquePattern(delta);
+	}
+	
+	protected abstract void uniquePattern(float delta);
+	
+	public int getHealth(){
+		return health;
 	}
 	
 	@Override
 	public void draw(Batch batch) {
 		super.draw(batch);
-		
+	
 		stateTime += Gdx.graphics.getDeltaTime(); 
 		TextureRegion currentFrame = null;
-		
+	
 		if(state == State.IDLE){
 			currentFrame = idleAnimation.getKeyFrame(stateTime, true);	
 		} else if(state == State.ATTACKING){
 			currentFrame = attackAnimation.getKeyFrame(stateTime, true);
-		}
-		
+	}
+	
 		batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
 		
 		state = State.IDLE;
 	}
-
+	
 	
 	@Override
 	public void castingSpecial(boolean casting) {
-		_castingSpecial = casting;		
+		castingSpecial = casting;		
 	}
 	
 	@Override
 	public void castingAttack(boolean casting) {
-		_castingAttack = casting;		
+		castingAttack = casting;		
 	}
 
 	@Override
 	public boolean isCastingSpecial() {
-		return _castingSpecial;
+		return castingSpecial;
 	}
 
 	@Override
 	public boolean isCastingAttack() {
 		// TODO Auto-generated method stub
-		return _castingAttack;
+		return castingAttack;
+	}
+	
+	
+	@Override
+	public void draw(ShapeRenderer shapeRenderer) {
+		// don't need to draw anything if there is something set
+		if(idleAnimation != null)
+			return;
+		shapeRenderer.setColor(getColor());
+		shapeRenderer.rect(position.x,position.y, getWidth(), getHeight());
 	}
 	
 	@Override
@@ -153,7 +175,7 @@ public abstract class Enemy extends GameObject implements Attacker{
 		
 		move(delta);
 		
-		WaveGameScreen._world.addEnemySkill(attack());	
+		WaveGameScreen.world.addEnemySkill(attack());
 	}
 	
 	@Override
@@ -161,14 +183,11 @@ public abstract class Enemy extends GameObject implements Attacker{
 		return super.collided(object);
 		
 	}
-	
+
 	public void setHealth(int health){
-		_health = health;
+		this.health = health;
 	}
  
-	public int getHealth(){
-		return _health;
-	}
 	
 	public void setElementType(ElementType type){
 		_elementType = type;
@@ -202,7 +221,7 @@ public abstract class Enemy extends GameObject implements Attacker{
 		return chasing;
 	}
 	public float getSpeed(){
-		return _chaseSpeed;
+		return chaseSpeed;
 	}
 
 	public void setChasing(boolean chasing) {
@@ -212,5 +231,5 @@ public abstract class Enemy extends GameObject implements Attacker{
 	public Skill attack(){		
 		state = State.ATTACKING;
 		return basicWand.fire(position.x + width/2, position.y + height /2);
-	}	
+	}
 }

@@ -7,8 +7,8 @@ public class MapNode extends GameElement {
 	public MapNode(float x, float y, int type){
 		super(x, y, type);
 		
-		_width = 1.0f;
-		_height = 1.0f;
+		width = 1.0f;
+		height = 1.0f;
 	}
 	
 	public void setNodeId(int id){
@@ -16,11 +16,11 @@ public class MapNode extends GameElement {
 	}
 	
 	public void setX(float x){
-		_x = x;
+		this.x = x;
 	}
 	
 	public void setY(float y){
-		_y = y;
+		this.y = y;
 	}
 	
 	public int getNodeId(){

@@ -25,4 +25,10 @@ public class HoodedFigure extends Enemy {
 		return null;
 	}
 
+	@Override
+	protected void uniquePattern(float delta) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

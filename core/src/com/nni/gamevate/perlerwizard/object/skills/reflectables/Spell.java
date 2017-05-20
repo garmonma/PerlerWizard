@@ -1,15 +1,7 @@
 package com.nni.gamevate.perlerwizard.object.skills.reflectables;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Vector2;
 import com.nni.gamevate.perlerwizard.GameConfig;
-import com.nni.gamevate.perlerwizard.PerlerWizard;
-import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
 import com.nni.gamevate.perlerwizard.object.Collidable;
 import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.Wall;
@@ -28,12 +20,12 @@ public abstract class Spell extends Skill implements Castable {
 
 	private static final int DEFAULT_BOUNCE_COUNT = 3;
 
-	protected int _bounceCount;
-	protected int _bounceCounter;
-	protected long _spellRefreshTimer;
+	protected int bounceCount;
+	protected int bounceCounter;
+	protected long spellRefreshTimer;
 	
 	
-	protected float _bounceAngle;
+	protected float bounceAngle;
 	
 	//TODO this shouldn't be static... need to change the constructor on the spells
 	private static float defaultSize = 0.50f;
@@ -52,11 +44,11 @@ public abstract class Spell extends Skill implements Castable {
 		
 		damage = 1;
 		
-		_bounceCount = DEFAULT_BOUNCE_COUNT;
-		_bounceCounter = _bounceCount;
-		_bounceAngle = 0;
+		bounceCount = DEFAULT_BOUNCE_COUNT;
+		bounceCounter = bounceCount;
+		bounceAngle = 0;
 		
-		direction.set(position).setAngle(_bounceAngle).nor();
+		direction.set(position).setAngle(bounceAngle).nor();
 		velocity.set(direction).scl(speed);
 
 	}
@@ -188,7 +180,7 @@ public abstract class Spell extends Skill implements Castable {
 		// Gdx.app.log("Bounce Difference", difference + "");
 		// Gdx.app.log("BouncePct", pct + "");
 
-		_bounceAngle = ((pct * 1.4f) + 20f);// * -1f;
+		bounceAngle = ((pct * 1.4f) + 20f);// * -1f;
 		
 		Vector2 reflectionAngle = hero.getVelocity().cpy();
 		Vector2 wallVector = hero.getPosition().cpy().rotate90(0);
@@ -198,7 +190,7 @@ public abstract class Spell extends Skill implements Castable {
 		wallVector.scl(dot);
 		wallVector.add(reflectionAngle);
 
-		reflectionAngle.set(wallVector).nor().setAngle(_bounceAngle);
+		reflectionAngle.set(wallVector).nor().setAngle(bounceAngle);
 
 		return reflectionAngle;
 

@@ -38,4 +38,10 @@ public class Mimic extends Enemy {
 
 	}
 
+	@Override
+	protected void uniquePattern(float delta) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

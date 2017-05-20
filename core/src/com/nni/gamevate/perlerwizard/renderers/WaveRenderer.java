@@ -2,7 +2,6 @@ package com.nni.gamevate.perlerwizard.renderers;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
@@ -18,27 +17,16 @@ import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nni.gamevate.perlerwizard.GameConfig;
 import com.nni.gamevate.perlerwizard.assets.AssetDescriptors;
-import com.nni.gamevate.perlerwizard.controllers.GamePlayController;
 import com.nni.gamevate.perlerwizard.controllers.NetworkController;
 import com.nni.gamevate.perlerwizard.network.gamedata.MatchResult;
 import com.nni.gamevate.perlerwizard.object.GameObject;
 import com.nni.gamevate.perlerwizard.object.World;
-import com.nni.gamevate.perlerwizard.object.enemies.basic.Goblin;
-import com.nni.gamevate.perlerwizard.object.enemies.basic.Imp;
-import com.nni.gamevate.perlerwizard.object.enemies.basic.Orc;
 import com.nni.gamevate.perlerwizard.object.hero.Hero;
-import com.nni.gamevate.perlerwizard.object.skills.reflectables.FireCast;
-import com.nni.gamevate.perlerwizard.object.skills.reflectables.Spell;
-import com.nni.gamevate.perlerwizard.object.skills.rushables.Rush;
-import com.nni.gamevate.perlerwizard.object.skills.throwables.AxeThrow;
-import com.nni.gamevate.perlerwizard.object.skills.throwables.RockThrow;
 import com.nni.gamevate.perlerwizard.screens.game.WaveGameScreen;
 import com.nni.gamevate.perlerwizard.utils.Logger;
 
@@ -47,39 +35,34 @@ public class WaveRenderer {
 	private static final String tag = WaveRenderer.class.getSimpleName();
 	
 	
-	private NetworkController _networkController;
-	private OrthographicCamera _camera;
-	private OrthographicCamera _hudCamera;
-	private Viewport _viewport;
-	private Viewport _hudViewport;
+	private NetworkController networkController;
+	private OrthographicCamera camera;
+	private OrthographicCamera hudCamera;
+	private Viewport viewport;
+	private Viewport hudViewport;
 	
 	private OrthographicCamera textCam;
 	private Viewport textViewport;
 
-	private ShapeRenderer _shapeRenderer;
+	private ShapeRenderer shapeRenderer;
 	
-	private SpriteBatch _batch;
+	private SpriteBatch batch;
 	
-	private BitmapFont _font;
+	private BitmapFont font;
 	
-	private World _world;
+	private World world;
 	
 	//private Hero _hero;
 	
-	private AssetManager _assetManager;
-	
-	private Texture _energyShieldBox;
-	private Texture _reflectBox;
+	private AssetManager assetManager;	
 	private Texture _background;
 	private TextureRegion _backgroundRegion;
-	private Texture _wizard;
-	private Texture _goblin;
-	private Texture _orc;
 	
 	//Network Instances;
-	private MatchResult _matchResult;
+	private MatchResult matchResult;	
+	private boolean matchRendering;
 	
-	private boolean _matchRendering;
+	
 	//TODO change to global config
 	private int x = (int) GameConfig.WORLD_WIDTH;
 	private int y = (int) GameConfig.WORLD_HEIGHT;
@@ -89,44 +72,38 @@ public class WaveRenderer {
 
 	public WaveRenderer( NetworkController networkController, SpriteBatch batch, AssetManager assetManager, OrthographicCamera camera,World world) {
 		
-		_networkController = networkController;
-		_batch = batch;
-		_assetManager = assetManager;
-		_camera = camera;
-		_world = world;
+		this.networkController = networkController;
+		this.batch = batch;
+		this.assetManager = assetManager;
+		this.camera = camera;
+		this.world = world;
 		init();
 	}
 	
 	private void init(){		
 		Logger.log("init");
 
-		_camera = new OrthographicCamera(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
-		_viewport = new FitViewport(x, y, _camera);
-		_viewport.apply(false);
+		camera = new OrthographicCamera(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
+		viewport = new FitViewport(x, y, camera);
+		viewport.apply(false);
 		
-		_hudCamera =  new OrthographicCamera(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
-		_hudViewport = new FitViewport(x, y,_hudCamera);
-		_hudViewport.apply(false);
+		hudCamera =  new OrthographicCamera(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
+		hudViewport = new FitViewport(x, y,hudCamera);
+		hudViewport.apply(false);
 		
 		textCam = new OrthographicCamera(Gdx.app.getGraphics().getWidth(),Gdx.app.getGraphics().getHeight());
 		
 
-		_shapeRenderer = new ShapeRenderer();
+		shapeRenderer = new ShapeRenderer();
+
+		batch = new SpriteBatch();		
 		
-		_energyShieldBox = _assetManager.get(AssetDescriptors.ENERGY_SHIELD_BOX);
-		_reflectBox = _assetManager.get(AssetDescriptors.REFLECT_SKILL_BOX);
-		
-		_batch = new SpriteBatch();		
-		
-		_font = new BitmapFont();
-		_font.setColor(Color.WHITE);
+		font = new BitmapFont();
+		font.setColor(Color.WHITE);
 		//_font.getData().setScale(2);
+
 		
-		_wizard = _assetManager.get(AssetDescriptors.WIZARD);
-		_goblin = _assetManager.get(AssetDescriptors.GOBLIN_ATTACK);
-		_orc = _assetManager.get(AssetDescriptors.ORC_STEP_ONE);
-		
-		_background = _assetManager.get(AssetDescriptors.FLOOR_BACKGROUND);
+		_background = assetManager.get(AssetDescriptors.FLOOR_BACKGROUND);
 		shader = new ShaderProgram(DefaultShader.getDefaultVertexShader()
 				,DefaultShader.getDefaultFragmentShader());
 		
@@ -136,8 +113,8 @@ public class WaveRenderer {
 	}
 
 	public void render(float delta) {
-		_camera.update();
-		_hudCamera.update();
+		camera.update();
+		hudCamera.update();
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
@@ -156,8 +133,8 @@ public class WaveRenderer {
 	}
 	
 	public void updateCamera(){
-		_camera.position.x = _world.camXPos;
-		_camera.update();
+		camera.position.x = world.camXPos;
+		camera.update();
 	}
 	
 	
@@ -165,8 +142,8 @@ public class WaveRenderer {
 		//Logger.log(_world.getHero().getX() + " ");
 		float lerp = 4f;
 		float offset = 7;
-		Vector3 pos = _camera.position;
-		Hero hero = _world.getHero();
+		Vector3 pos = camera.position;
+		Hero hero = world.getHero();
 		
 		//Logger.log("cam.x: "+ pos.x + " hero.x: "+ hero.getX());
 		pos.x -= offset;
@@ -181,20 +158,20 @@ public class WaveRenderer {
 		
 		pos.x += offset;
 		
-		_camera.position.set(pos);
-		_camera.update();
+		camera.position.set(pos);
+		camera.update();
 		
 		
 		
 	}
 	public void drawBackGround(){
-		_batch.setProjectionMatrix(_camera.combined);
-		_batch.begin();
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
 		
 		//_batch.draw(_background, 0, 0);
-		_batch.draw(_backgroundRegion, -9, 0, 0, 0, _backgroundRegion.getRegionWidth(), _backgroundRegion.getRegionHeight(), .01f, .01f, 0);
+		batch.draw(_backgroundRegion, -9, 0, 0, 0, _backgroundRegion.getRegionWidth(), _backgroundRegion.getRegionHeight(), .01f, .01f, 0);
 		//_batch.draw(_background, -9, 0, 0, 0, _background.getWidth(), _background.getHeight(), .01f, .01f, 0,0,0,_background.getWidth(),_background.getHeight(), false, false);
-		_batch.end();
+		batch.end();
 		
 //		_shapeRenderer.begin(ShapeType.Filled);
 //		_shapeRenderer.setColor(Color.GRAY);
@@ -204,78 +181,66 @@ public class WaveRenderer {
 
 	
 	public void drawUI(){
-		_shapeRenderer.setProjectionMatrix(_hudCamera.combined);
-		_shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setProjectionMatrix(hudCamera.combined);
+		shapeRenderer.begin(ShapeType.Filled);
 		
-		_shapeRenderer.setColor(_world.getHero().getSkillManager().getSelectedSkillColor());
-		_shapeRenderer.rect(x-1.1f,0.1f , 1,1);
-		_shapeRenderer.setProjectionMatrix(_camera.combined);
-		_shapeRenderer.setColor(Color.BLUE);		
-		_shapeRenderer.rect(_world.forwardLine+1,0,.1f,GameConfig.WORLD_HEIGHT);
-		_shapeRenderer.end();
+		shapeRenderer.setColor(world.getHero().getSkillManager().getSelectedSkillColor());
+		shapeRenderer.rect(x-1.1f,0.1f , 1,1);
+		shapeRenderer.setProjectionMatrix(camera.combined);
+		shapeRenderer.setColor(Color.BLUE);		
+		shapeRenderer.rect(world.forwardLine+1,0,.1f,GameConfig.WORLD_HEIGHT);
+		shapeRenderer.end();
 		
 		
 		if(WaveGameScreen.gameOver == true){
 			// TODO figure out better text solution
-			_batch.setProjectionMatrix(textCam.combined);
-			_batch.begin();			
-			_font.draw(_batch, "Game Over\nClick to Return Home", 1, 5);
-			_batch.end();
+			batch.setProjectionMatrix(textCam.combined);
+			batch.begin();			
+			font.draw(batch, "Game Over\nClick to Return Home", 1, 5);
+			batch.end();
 		}else if(WaveGameScreen.victory == true){
-			_batch.setProjectionMatrix(textCam.combined);
-			_batch.begin();			
-			_font.draw(_batch, "Victory! Congrats\nClick to Return Home", 1, 5);
-			_batch.end();
+			batch.setProjectionMatrix(textCam.combined);
+			batch.begin();			
+			font.draw(batch, "Victory! Congrats\nClick to Return Home", 1, 5);
+			batch.end();
 		}
 	}
 	
 	
 	
 	public void drawGameObjects(){
-		ArrayList<GameObject> list = _world.getGameObjects();
+		ArrayList<GameObject> list = world.getGameObjects();
 		
 		
-		_shapeRenderer.setProjectionMatrix(_camera.combined);
-		_shapeRenderer.begin(ShapeType.Filled);
-		
-		for(GameObject g :list){
-			_shapeRenderer.setColor(g.getColor());
-			if(g instanceof Hero || g instanceof Goblin 
-					|| g instanceof Orc || g instanceof Spell
-					|| g instanceof Imp || g instanceof AxeThrow || g instanceof RockThrow
-					|| g instanceof Rush) {
-				//_shapeRenderer.setColor(Color.BLUE);				
-			}				
-			else {
-			_shapeRenderer.rect(g.getX(), g.getY(), g.getWidth(), g.getHeight());	
-			}
-		}
-		_shapeRenderer.end();
-		
-		_batch.setProjectionMatrix(_camera.combined);
-		_batch.begin();
+		shapeRenderer.setProjectionMatrix(camera.combined);
+		shapeRenderer.begin(ShapeType.Filled);
 		
 		for(GameObject g :list){
-			if(g instanceof Spell || g instanceof Goblin || g instanceof Imp
-					|| g instanceof AxeThrow || g instanceof Orc || g instanceof RockThrow || g instanceof Rush)
-				g.draw(_batch);
-			
-			if(g instanceof Hero)
-				_batch.draw(_wizard, g.getX(), g.getY(), g.getWidth(), g.getHeight());	
+			g.draw(shapeRenderer);		
+		}
+		shapeRenderer.end();
+		
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+		
+		for(GameObject g :list){
+			g.draw(batch);			
+//			if(g instanceof Hero)
+//				_batch.draw(_wizard, g.getX(), g.getY(), g.getWidth(), g.getHeight());			
 		}
 		
-		_batch.end();
+		batch.end();
 	}
 
 	public void resize(int width, int height) {
 		Gdx.app.log(tag, "Resized");
-		_viewport.update(width ,height, false);
-		_viewport.apply();
-		_camera.position.set((float)x /2, (float) y/2, 0);
+		viewport.update(width ,height, false);
+		viewport.apply();
+		camera.position.set((float)x /2, (float) y/2, 0);
 		
-		_hudViewport.update(width ,height, false);
-		_hudViewport.apply();
-		_hudCamera.position.set((float)x /2, (float) y/2, 0);
+		hudViewport.update(width ,height, false);
+		hudViewport.apply();
+		hudCamera.position.set((float)x /2, (float) y/2, 0);
 		
 		
 	}
